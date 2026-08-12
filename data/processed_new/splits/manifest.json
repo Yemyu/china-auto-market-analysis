@@ -1,0 +1,58 @@
+{
+  "schema_version": "v1",
+  "generated_at": "2026-08-12T13:22:20.783493+00:00",
+  "source_sales": "data/processed_new/sales_filtered_24m.csv",
+  "source_config": "data/raw/feature.csv (车系×年, 因果回退 join)",
+  "population": "feature 主表车系 (有配置), 月度面板",
+  "time_cutoffs": {
+    "train_end": "2025-06",
+    "val_end": "2025-12",
+    "test_end": "2026-06"
+  },
+  "n_series": 371,
+  "n_rows": {
+    "train_total": 12036,
+    "train_usable": 9468,
+    "val": 2172,
+    "test": 2226
+  },
+  "feature_columns": [
+    "lag_1",
+    "lag_2",
+    "lag_3",
+    "roll_mean_3",
+    "roll_mean_6",
+    "month_sin",
+    "month_cos",
+    "year",
+    "official_price_wan",
+    "engine_max_power_kw",
+    "engine_max_torque_nm",
+    "battery_capacity_kwh",
+    "battery_range_km",
+    "length_mm",
+    "width_mm",
+    "height_mm",
+    "wheelbase_mm",
+    "curb_weight_kg",
+    "seat_count",
+    "door_count",
+    "trunk_volume_l",
+    "acceleration_0_100_s",
+    "fuel_consumption_l_100km",
+    "energy_type_enc",
+    "vehicle_class_enc",
+    "brand_name_enc",
+    "body_structure_enc",
+    "gearbox_type_enc",
+    "seat_material_enc"
+  ],
+  "target": "monthly_sales",
+  "leakage_guarantees": [
+    "切分按绝对时间 (全局切点), 非随机/非按车系打乱",
+    "lag/roll 特征由 groupby(series).shift 计算, 仅用真实过去销量",
+    "配置 join 因果回退: 只用 <= 行年份的最新规格, 不借未来年份",
+    "训练仅用 train.csv; val/test 仅供评估, 不参与训练"
+  ],
+  "leg_a_note": "年度配置归因 (腿A) 用 GroupKFold(5) by series_name 防泄漏, 属另一套切分, 见 20_config_attribution.py"
+}

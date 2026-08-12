@@ -1,0 +1,150 @@
+#!/usr/bin/env python3
+"""
+14_arima_prophet.py — ARIMA & 普通 Prophet（无舆情基线 · 腿B）
+
+数据来源（统一）：06_make_splits.py 的 train / test。全部从新数据(processed_new)来，
+在 **test (2026-01..06, 6 个月)** 上评估，与 07/08/13 同一拨切分，便于 09 横向对比。
+  * 训练只在 train（每车系 2022-01..2025-06），test 仅用于报告最终指标；
+  * 不使用任何未来信息 -> 无泄漏。
+
+输出（data/processed_new/stage3/）：
+  arima_preds.csv / arima_results.csv
+  prophet_preds.csv / prophet_results.csv
+
+Run:
+  python scripts/new_pipeline/14_arima_prophet.py
+"""
+import os
+os.environ["OMP_NUM_THREADS"] = "1"
+import warnings
+import logging
+warnings.filterwarnings("ignore")
+logging.getLogger("cmdstanpy").setLevel(logging.WARNING)
+logging.getLogger("prophet").setLevel(logging.WARNING)
+
+import numpy as np
+import pandas as pd
+from statsmodels.tsa.arima.model import ARIMA
+from prophet import Prophet
+
+import _model_utils as mu
+import _subset
+
+BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+os.makedirs(PROC, exist_ok=True)
+
+
+def auto_order(train):
+    best_aic, best = np.inf, (1, 1, 1)
+    for p in range(3):
+        for d in range(2):
+            for q in range(3):
+                try:
+                    fit = ARIMA(train, order=(p, d, q)).fit()
+                    if np.isfinite(fit.aic) and fit.aic < best_aic:
+                        best_aic, best = fit.aic, (p, d, q)
+                except Exception:
+                    continue
+    return best
+
+
+def arima_run(subset, tr_by, te, te_by):
+    rows, preds_rows = [], []
+    for name in subset:
+        s = tr_by[name]
+        if len(s) <= 12:
+            rows.append({"series_name": name, "status": "too_short"})
+            continue
+        tgt = te_by.get(name, np.array([]))
+        if len(tgt) == 0:
+            rows.append({"series_name": name, "status": "no_test"})
+            continue
+        try:
+            order = auto_order(s)
+            res = ARIMA(s, order=order).fit()
+            fc = res.get_forecast(len(tgt))
+            mean = np.asarray(fc.predicted_mean).clip(min=0)
+            met = mu.metrics(tgt, mean)
+            met.update({"series_name": name, "order": str(order), "status": "ok"})
+            rows.append(met)
+            tdates = te[te["series_name"].astype(str) == name].sort_values("date")["date"].values
+            for j, d in enumerate(tdates):
+                preds_rows.append({"series_name": name, "date": pd.Timestamp(d).strftime("%Y-%m-%d"),
+                                   "actual": float(tgt[j]), "pred": float(mean[j])})
+        except Exception as e:
+            rows.append({"series_name": name, "status": f"error: {type(e).__name__}"})
+    return rows, preds_rows
+
+
+def prophet_run(subset, tr_by, te, te_by):
+    rows, preds_rows = [], []
+    for name in subset:
+        s = tr_by[name]
+        if len(s) <= 12:
+            rows.append({"series_name": name, "status": "too_short"})
+            continue
+        tgt = te_by.get(name, np.array([]))
+        if len(tgt) == 0:
+            rows.append({"series_name": name, "status": "no_test"})
+            continue
+        try:
+            df = pd.DataFrame({"ds": pd.date_range("2018-01-01", periods=len(s), freq="MS"),
+                               "y": s.astype(float)})
+            m = Prophet(weekly_seasonality=False, daily_seasonality=False,
+                        yearly_seasonality=True, seasonality_mode="additive")
+            m.fit(df)
+            future = m.make_future_dataframe(periods=len(tgt), freq="MS")
+            fc = m.predict(future).iloc[-len(tgt):]["yhat"].clip(lower=0).values
+            met = mu.metrics(tgt, fc)
+            met.update({"series_name": name, "status": "ok"})
+            rows.append(met)
+            tdates = te[te["series_name"].astype(str) == name].sort_values("date")["date"].values
+            for j, d in enumerate(tdates):
+                preds_rows.append({"series_name": name, "date": pd.Timestamp(d).strftime("%Y-%m-%d"),
+                                   "actual": float(tgt[j]), "pred": float(fc[j])})
+        except Exception as e:
+            rows.append({"series_name": name, "status": f"error: {type(e).__name__}"})
+    return rows, preds_rows
+
+
+def main():
+    tr, _, te = mu.load_splits()
+    subset = _subset.load_subset()
+    tr_by = {n: tr[tr["series_name"].astype(str) == n].sort_values("date")["monthly_sales"]
+             .astype(float).values for n in subset}
+    te_by = {n: te[te["series_name"].astype(str) == n].sort_values("date")["monthly_sales"]
+             .astype(float).values for n in subset}
+    print(f"[14] 新数据源: data/processed_new/splits | 子集 {len(subset)} 系 | "
+          f"train 拟合, test(6月) 评估, 无泄漏")
+
+    print("[14] ARIMA ...")
+    ar, ap = arima_run(subset, tr_by, te, te_by)
+    print("[14] Prophet ...")
+    pr, pp = prophet_run(subset, tr_by, te, te_by)
+
+    ar_df, ap_df = pd.DataFrame(ar), pd.DataFrame(ap)
+    pr_df, pp_df = pd.DataFrame(pr), pd.DataFrame(pp)
+    ar_df.to_csv(os.path.join(PROC, "arima_results.csv"), index=False)
+    if len(ap_df):
+        ap_df.to_csv(os.path.join(PROC, "arima_preds.csv"), index=False)
+    pr_df.to_csv(os.path.join(PROC, "prophet_results.csv"), index=False)
+    if len(pp_df):
+        pp_df.to_csv(os.path.join(PROC, "prophet_preds.csv"), index=False)
+
+    ok_ar = ar_df[ar_df["status"] == "ok"] if "status" in ar_df else pd.DataFrame()
+    ok_pr = pr_df[pr_df["status"] == "ok"] if "status" in pr_df else pd.DataFrame()
+    if len(ok_ar):
+        a = ap_df["actual"].values.astype(float); p = ap_df["pred"].values.astype(float)
+        print(f"[14] ARIMA    ok={len(ok_ar)}  WMAPE_vol={mu.wmape_vol(a, p):.1f}%  "
+              f"per-series mean={ok_ar['WMAPE'].mean():.1f}%  median={ok_ar['WMAPE'].median():.1f}%")
+    if len(ok_pr):
+        a = pp_df["actual"].values.astype(float); p = pp_df["pred"].values.astype(float)
+        print(f"[14] Prophet  ok={len(ok_pr)}  WMAPE_vol={mu.wmape_vol(a, p):.1f}%  "
+              f"per-series mean={ok_pr['WMAPE'].mean():.1f}%  median={ok_pr['WMAPE'].median():.1f}%")
+    print("[14] written -> data/processed_new/stage3/{arima,prophet}_preds.csv (+_results.csv)")
+    print("[14] done.")
+
+
+if __name__ == "__main__":
+    main()

@@ -4,152 +4,43 @@
 
 # Data Documentation
 
-This file is the single source of truth for all AutoPulse datasets — vehicle specifications, monthly sales, series-ID mapping, and user sentiment — used for modeling, analysis, and the dashboard. All data come from public automotive platforms and are used for learning, research, and demonstration only.
+This file is the single source of truth for all AutoPulse datasets, covering two core tables — monthly sales and vehicle configurations — plus user sentiment data (Phase B), for modeling, analysis, and the dashboard. All data come from public automotive platforms and are used for learning, research, and demonstration only.
 
 ## Data Sources
 
-| Data category | Source platform(s) | Collection method |
-|---------------|--------------------|-------------------|
-| Vehicle specs / monthly sales (raw) | Public auto platforms such as Autohome (汽车之家) and PCauto (太平洋汽车) | Comprehensively collected |
-| User sentiment / reviews | Dongchedi (懂车帝) public reviews | Automated via `scripts/01_crawl_reviews.py` |
+| Data category | Source platform | Collection method |
+|---------------|----------------|-------------------|
+| Monthly sales (raw) | 太平洋汽车 (pcauto) | Aggregated collection |
+| Vehicle configs (raw) | 汽车之家 (autohome), 太平洋汽车 (pcauto) & other public platforms | Aggregated collection |
+| User sentiment (Phase B) | 懂车帝 (dongchedi) public reviews | `scripts/01_crawl_reviews.py` automated crawler |
 
-## Dataset Overview
+## Project Data Overview
 
-The three core tables are linked through `series_id` (car-series ID):
+The two tables are aligned directly by `series_name` (the new pipeline needs no legacy `series_mapping` bridge):
 
 ```
-vehicles ———— series_id ———— series_mapping ———— series_id ———— sales
-(vehicle spec features)                                      (monthly sales)
+monthly_sales ──series_name──┐
+                             ├──> align → 371 "monthly+config" series (Leg B) + 736 series with annual sales (Leg A)
+feature       ──series_name──┘
 ```
 
-For XGBoost: aggregate `sales` by series → left-join `vehicles` (take the first spec row) →
-filter `has_sales_data=True` → a 1,122-row × 90+-column training set.
+For Leg B monthly forecasting: `monthly_sales` is aligned to `feature` by series (config joined on `(series_name, year)`) → filtered to 371 in-population series (with both monthly panel and configs, continuous coverage 2022-01~2026-06).
 
 ---
 
-## 1. `vehicles.csv` — Vehicle Specification Data
+## 1. `monthly_sales.csv` — Monthly Sales
 
 ### Overview
 
 | Item | Value |
 |------|-------|
-| Records | 4,334 (1,139 series × multiple trim versions) |
-| Brands | 153 |
-| Feature columns | 92 (reduced from 248 raw columns after cleaning) |
-| Model years | 2022–2026 |
-| Source | Public auto platforms (Autohome, PCauto, etc.), comprehensively collected |
-
-**Energy-type distribution (deduplicated by series):**
-
-| Type | Series | Share |
-|------|--------|-------|
-| Fuel | 493 | 43.3% |
-| BEV (Battery EV) | 344 | 30.2% |
-| PHEV (Plug-in Hybrid) | 211 | 18.5% |
-| Range Extender (EREV) | 76 | 6.7% |
-| HEV (Hybrid) | 10 | 0.9% |
-| PHEV + BEV | 4 | 0.4% |
-| Other (Fuel Cell) | 1 | 0.1% |
-
-**Top-5 body classes (deduplicated by series):** Compact SUV (246) > Mid-size SUV (170) > Compact Car (150) > Large SUV (95) > Small SUV (93)
-
-### Missing Values
-
-Total missing = 90,042, all **conditional missing** (legitimate, no imputation needed):
-
-- BEV / EREV → no engine parameters (26 NaN columns)
-- Fuel → no motor / battery parameters (13 NaN columns)
-- Core fields (price, dimensions, energy type, brand, class) are **100% complete**
-
-### Key Columns
-
-#### Basic specs (4 cols, no missing)
-
-| Column | Description | Range |
-|--------|-------------|-------|
-| `official_price_wan` | MSRP (10k CNY) | 2.98 ~ 130, mean 19 |
-| `energy_type` | Energy type | Fuel / BEV / PHEV / EREV / HEV |
-| `vehicle_class` | Body class | Compact SUV / Mid-size Car / MPV, etc. (18 classes) |
-| `manufacturer` | Manufacturer | — |
-
-**Price:** median 153.8k CNY for fuel & BEV; EREV most expensive (median 209.8k); priciest model 1.3M CNY (EREV).
-
-#### Engine params (26 cols; present for Fuel/PHEV, NaN for BEV/EREV)
-
-| Column | Description | Typical |
-|--------|-------------|---------|
-| `engine_displacement_l` | Displacement (L) | 1.2 ~ 3.0 |
-| `engine_max_horsepower_ps` | Max horsepower (PS) | mean 181 |
-| `engine_max_torque_nm` | Max torque (N·m) | mean 269 |
-| `engine_intake_type` | Intake type | Turbo / NA |
-| `fuel_form` | Fuel type | Gasoline / Diesel |
-| `gearbox_type` | Gearbox | DCT / AT / CVT / Manual |
-
-#### Motor params (9 cols; present for EV/Hybrid, NaN for Fuel)
-
-| Column | Description | Typical |
-|--------|-------------|---------|
-| `motor_total_power_kw` | Total motor power (kW) | mean 191, max 880 |
-| `motor_total_torque_nm` | Total motor torque (N·m) | — |
-| `motor_front_power_kw` | Front motor power (kW) | FWD-dominated |
-| `motor_rear_power_kw` | Rear motor power (kW) | Key for AWD / performance |
-
-#### Battery params (4 cols; partial, heavily missing)
-
-| Column | Description | Note |
-|--------|-------------|------|
-| `battery_range_km` | Electric range (km) | mean 424, well covered |
-| `battery_capacity_kwh` | Capacity (kWh) | ⚠️ 97.4% missing, not a feature |
-| `battery_type` | Battery type | ⚠️ 96.9% missing |
-| `battery_warranty` | Battery warranty | ⚠️ 92.5% missing |
-
-#### Dimensions (13 cols, no missing)
-
-| Column | Description | Mean |
-|--------|-------------|------|
-| `length_mm` | Length | 4,761 mm |
-| `width_mm` | Width | 1,876 mm |
-| `height_mm` | Height | 1,656 mm |
-| `wheelbase_mm` | **Wheelbase** (space metric) | 2,831 mm |
-| `curb_weight_kg` | Curb weight | 1,782 kg |
-| `body_structure` | Body structure | Sedan / SUV / MPV |
-
-#### Safety (3 cols, no missing)
-
-| Column | Description |
-|--------|-------------|
-| `driver_airbag` | Driver airbag |
-| `side_airbag` | Side / curtain airbag |
-| `knee_airbag` | Knee airbag (high-end, not standard) |
-
-#### Comfort & Tech (13 cols, no missing)
-
-| Column | Description |
-|--------|-------------|
-| `center_screen` | Center display |
-| `seat_material` | Seat material (synthetic / leather / fabric) |
-| `sound_brand` | Audio brand (Harman Kardon / BOSE, etc.) |
-| `speaker_count` | Speaker count |
-| `seat_heating` | Seat heating |
-| `seat_massage` | Seat massage |
-| `seat_ventilation` | Seat ventilation |
-| `aircon_control` | A/C control (auto / manual) |
-
----
-
-## 2. `sales.csv` — Monthly Sales Data
-
-### Overview
-
-| Item | Value |
-|------|-------|
-| Records | 33,845 |
-| Series | 1,122 |
-| Brands | 152 |
-| Period | 2022-01 ~ 2026-05 |
-| Total sales | ~96.52 million units |
-| Quality | 0 negative sales ✅ 0 zero-sales anomalies ✅ |
-| Main source | pcauto (98.5%) + dongchedi_fill interpolation (1.5%) |
+| Total records | 54,918 rows |
+| Series | 1,017 |
+| Brands | 162 |
+| Time range | 2022-01 ~ 2026-06 |
+| Total sales | ~70.29 million units |
+| Data quality | 0 negative sales ✅; 70.6% are zero sales (suspension / pre-launch gaps, not anomalies) |
+| Main source | pcauto (100%) |
 
 ### Columns
 
@@ -157,190 +48,262 @@ Total missing = 90,042, all **conditional missing** (legitimate, no imputation n
 |--------|------|-------------|
 | `year` | int | Year (2022~2026) |
 | `month` | int | Month (1~12) |
-| `series_id` | str | Series ID, joins vehicles.series_id |
-| `series_name` | str | Series name |
+| `period` | str | Year-month label (e.g. `Jan-22`) |
+| `series_id` | str | pcauto numeric series ID |
+| `source_series_id` | str | Source-platform series ID (e.g. `sgXXXXX`) |
+| `series_name` | str | Series name (cross-table join key) |
 | `brand` | str | Brand |
 | `category` | str | SUV / Sedan / MPV |
 | `monthly_sales` | int | **Monthly sales (units)** |
-| `data_source` | str | pcauto / dongchedi_fill |
+| `数据来源` | str | pcauto |
 
-### Annual Trend
+> Other columns (`零销量类型`, `record_status`, `period_status`, `website_cumulative_sales`, `source_rank`, `source_last_rank`, `source_official_price`, `品牌月总销量`, `品牌车型数`) are platform metadata and are not used for modeling.
 
-| Year | Total (M units) | Series covered | Full-12-month series |
-|------|-----------------|---------------|----------------------|
-| 2022 | 20.30 | 680 | 476 (70%) |
-| 2023 | 21.87 | 725 | 526 (73%) |
-| 2024 | 23.07 | 748 | 575 (77%) |
-| 2025 | 24.04 | 796 | 596 (75%) |
-| 2026 (Jan–May) | 7.24 | 733 | — |
+### Annual Sales Trend
 
-**Trend:** SUV annual sales grew from 9.15M (2022) to 11.96M (2025), overtaking sedans as China's #1 category in 2024.
+| Year | Total sales (10k units) | Series covered |
+|------|------------------------|----------------|
+| 2022 | 1,506 | 1,017 |
+| 2023 | 1,609 | 1,017 |
+| 2024 | 1,656 | 1,017 |
+| 2025 | 1,675 | 1,017 |
+| 2026 (Jan–Jun) | 583 | 1,017 |
 
-### Monthly Sales Distribution
+**Trend:** Across the sample (pcauto-covered series), annual sales grew steadily from 2022 to 2025, peaking at 16.75 million units in 2025; the NEV share (BEV + PHEV + EREV + HEV) now exceeds that of ICE vehicles.
+
+### Monthly Sales Quantiles (non-zero valid months)
 
 | Percentile | Monthly sales | Interpretation |
 |-----------|---------------|---------------|
-| **P10** | 12 | Niche, sells <几十 units/month |
-| P25 | 123 | Small-volume model |
-| **P50 (median)** | 748 | Half of models sell < 1k/month |
-| P75 | 3,043 | Hot-seller threshold |
-| **P90** | 8,455 | Near-10k = top 10% |
-| P95 | 13,055 | Top 5% evergreen |
-| **P99** | 25,707 | "Legend" tier |
+| **P10** | 68 units | Niche cars, sell only dozens per month |
+| P25 | 360 units | Small-volume models |
+| **P50 (median)** | 1,654 units | Half of valid models sell under ~2k/month |
+| P75 | 5,586 units | Popular-model threshold |
+| **P90** | 12,340 units | Selling >10k/month puts you in the top 10% |
+| P95 | 17,123 units | Top 5% evergreen models |
+| **P99** | 31,377 units | "Halo" models |
 
-### Brand Landscape (2022–2026 cumulative)
+> Note: `monthly_sales` contains 70.6% zeros (suspension / pre-launch gaps); the table above is based on non-zero valid months (16,166 rows). Zero-inflation is handled in Leg B forecasting via a `log1p` target / two-stage (hurdle) approach.
 
-| Rank | Brand | Total (M units) | Note |
-|------|-------|-----------------|------|
-| 1 | **BYD** | **11.63** | Dominant NEV leader |
-| 2 | Volkswagen | 8.98 | Traditional fuel king |
-| 3 | Toyota | 7.13 | Steady |
-| 4 | Honda | 4.26 | |
-| 5 | Geely | 4.13 | #2 domestic |
-| 6 | Wuling | 3.45 | Mini-car king |
-| 7 | Nissan | 2.83 | |
-| 8 | Changan | 2.77 | |
-| 9 | BMW | 2.69 | #1 luxury |
-| 10 | Audi | 2.63 | |
-| 11 | Tesla | 2.51 | Only pure-EV in top 10 |
-| 12 | Mercedes-Benz | 2.44 | |
+### Brand Landscape (cumulative 2022–2026)
 
-### Top-10 Series by Cumulative Sales
+| Rank | Brand | Total sales (10k units) | Note |
+|------|-------|------------------------|------|
+| 1 | **BYD** | **1,165** | Dominant NEV leader |
+| 2 | Volkswagen | 888 | Legacy ICE leader |
+| 3 | Toyota | 666 | Steady |
+| 4 | Honda | 402 | |
+| 5 | Changan | 291 | Top domestic brand |
+| 6 | Nissan | 282 | |
+| 7 | Geely | 279 | 2nd domestic brand |
+| 8 | BMW | 270 | Top luxury brand |
+| 9 | Audi | 263 | |
+| 10 | Mercedes-Benz | 229 | |
+| 11 | Wuling | 203 | Micro-EV king |
+| 12 | Chery | 191 | |
 
-| Series | Brand | Cumulative (M units) |
-|--------|-------|----------------------|
-| Model Y | Tesla | 1.81 |
-| Qin PLUS | BYD | 1.66 |
-| Sylphy | Nissan | 1.54 |
-| Song PLUS NEV | BYD | 1.47 |
-| Hongguang MINIEV | Wuling | 1.40 |
-| Lavida | Volkswagen | 1.38 |
-| Sagitar | Volkswagen | 1.09 |
-| Seagull | BYD | 1.05 |
-| CS75 PLUS | Changan | 0.93 |
-| Yuan PLUS | BYD | 0.91 |
+### Top 10 Series by Cumulative Sales
+
+| Series | Brand | Cumulative (10k units) |
+|--------|-------|------------------------|
+| 秦PLUS (Qin PLUS) | BYD | 168 |
+| 轩逸 (Sylphy) | Nissan | 156 |
+| 宋PLUS新能源 (Song PLUS NEV) | BYD | 147 |
+| 宏光MINIEV (Hongguang MINIEV) | Wuling | 142 |
+| 朗逸 (Lavida) | Volkswagen | 140 |
+| 速腾 (Sagitar) | Volkswagen | 109 |
+| 海鸥 (Seagull) | BYD | 106 |
+| 长安CS75 PLUS (CS75 PLUS) | Changan | 97 |
+| 凯美瑞 (Camry) | Toyota | 92 |
+| 元PLUS (Yuan PLUS) | BYD | 91 |
 
 ---
 
-## 3. `series_mapping.csv` — Series ID Mapping
-
-### Purpose
-
-Bridge table. Vehicle specs and monthly sales come from different platform ID systems; this table aligns them so the three core tables join on a unified `series_id`.
+## 2. `feature.csv` — Vehicle Configurations
 
 ### Overview
 
 | Item | Value |
 |------|-------|
-| Records | 1,139 |
-| Brands | 155 |
-| Quality | 100% complete, no missing |
+| Records | 2,084 rows (766 series × multiple model years) |
+| Series | 766 |
+| Brands | 126 |
+| Feature columns | 84 |
+| Time range | Model years 2015–2027 (annual sales cover 2022–2026) |
+| Granularity | **series × year**, unique key `(series_name, year)` |
+| Annual sales | `annual_sales` column (present for 760 / 766 series, 99.2% coverage) |
+| Source | 汽车之家 (autohome), 太平洋汽车 (pcauto) & other public platforms |
 
-### Columns
+> **Granularity note:** Unlike the legacy `vehicles.csv`, each row of `feature.csv` is a configuration snapshot of *one series in one model year* (one representative trim per series-year), not a trim-level breakdown. Configs update with model year (reflecting generation/facelift changes) but should not be used for "multi-trim supply mix" style analysis.
+
+**Energy-type distribution (deduplicated by series):**
+
+| Type | Series | Share |
+|------|--------|-------|
+| ICE | 337 | 44.0% |
+| BEV | 249 | 32.5% |
+| PHEV | 127 | 16.6% |
+| EREV | 50 | 6.5% |
+| HEV | 3 | 0.4% |
+
+**Top 5 vehicle classes (deduplicated by series):** Compact SUV (153) > Mid-size SUV (119) > Compact car (98) > Mid-large SUV (79) > Mid-size car (73)
+
+**Price distribution (official guide price, deduplicated by series):** median 15.48, mean 18.9, range 3.0 ~ 156.0 (10k CNY).
+
+### Missing Values
+
+Core spec fields (`official_price_wan`, `energy_type`, `vehicle_class`, `manufacturer`, `year`, dimensions) are **100% complete**. Missingness is confined to conditional fields:
+
+- BEV / EREV models → no engine parameters (related columns NaN)
+- ICE models → no motor / battery parameters (related columns NaN)
+- Battery fields are heavily missing: `battery_capacity_kwh` 81.1% / `battery_type` 80.2% / `battery_warranty` 77.4% / `battery_range_km` 49.1% (conditional missingness, handled as needed during modeling)
+
+### Key Column Reference
+
+#### Basic specs (4 columns, no missing)
+
+| Column | Description | Range |
+|--------|-------------|-------|
+| `official_price_wan` | Guide price (10k CNY) | 3.0 ~ 156.0, median 15.48 |
+| `energy_type` | Energy type | ICE / BEV / PHEV / EREV / HEV |
+| `vehicle_class` | Vehicle class | Compact SUV / Mid-size car / MPV, etc. (18 classes) |
+| `manufacturer` | Maker | — |
+
+#### Engine params (ICE / PHEV present, BEV / EREV NaN)
+
+| Column | Description | Typical value |
+|--------|-------------|---------------|
+| `engine_displacement_l` | Displacement (L) | 1.0 ~ 4.0, mean 1.7 |
+| `engine_max_horsepower_ps` | Max horsepower (PS) | mean 173, range 72 ~ 544 |
+| `engine_max_torque_nm` | Max torque (N·m) | mean 254, range 93 ~ 725 |
+| `engine_intake_type` | Intake type | Turbo / NA / Twin-turbo |
+| `fuel_form` | Fuel form | Gasoline / BEV / PHEV |
+| `gearbox_type` | Gearbox type | Fixed-ratio / Wet DCT / AT / Manual |
+
+#### Motor params (BEV / hybrid present, ICE NaN)
+
+| Column | Description | Typical value |
+|--------|-------------|---------------|
+| `motor_total_power_kw` | Total motor power (kW) | mean 171, max 880 |
+| `motor_total_torque_nm` | Total motor torque (N·m) | mean 334, max 1,520 |
+| `motor_front_power_kw` | Front motor power (kW) | FWD-dominated |
+| `motor_rear_power_kw` | Rear motor power (kW) | Key for AWD / performance |
+
+#### Battery params (BEV / hybrid partial, heavily missing)
+
+| Column | Description | Note |
+|--------|-------------|------|
+| `battery_range_km` | Pure-electric range (km) | mean 362, ~51% coverage |
+| `battery_capacity_kwh` | Battery capacity (kWh) | ⚠️ 81.1% missing, use with caution |
+| `battery_type` | Battery type | ⚠️ 80.2% missing |
+| `battery_warranty` | Battery warranty | ⚠️ 77.4% missing |
+
+#### Body dimensions (no missing)
+
+| Column | Description | Mean |
+|--------|-------------|------|
+| `length_mm` | Length | 4,723 mm |
+| `width_mm` | Width | 1,865 mm |
+| `height_mm` | Height | 1,628 mm |
+| `wheelbase_mm` | **Wheelbase** (space core metric) | 2,813 mm |
+| `curb_weight_kg` | Curb weight | 1,735 kg |
+| `body_structure` | Body structure | Sedan / SUV / MPV |
+| `acceleration_0_100_s` | 0–100 km/h (s) | mean 7.8, range 3.1 ~ 20.0 |
+
+#### Safety config (no missing)
 
 | Column | Description |
 |--------|-------------|
-| `统一后series_id` | **Final unified ID**, use this for JOINs |
-| `车辆主表series_id` | vehicles original series_id |
-| `销量表原series_id` | sales original series_id |
-| `series_name` | Series name |
-| `brand_name` | Brand name |
-| `核对状态` | consistent (14) / unified (536) / series-level补采 (589) |
-| `has_sales_data` | has sales data? (1,122 yes / 17 no) |
+| `driver_airbag` | Driver airbag |
+| `side_airbag` | Side / curtain airbag |
+| `knee_airbag` | Knee airbag (high-end, not standard) |
 
-### Status Meaning
+#### Comfort & tech config (no missing)
 
-- **consistent (14):** IDs identical across sources, no action needed
-- **unified (536):** name/ID differences (e.g. "型格-Integra"→"型格"), rule-aligned
-- **series-level补采 (589):** vehicles ID from Dongchedi supplemental crawl, no pcauto match. **No impact on joins**
+| Column | Description |
+|--------|-------------|
+| `center_screen` | Center display |
+| `seat_material` | Seat material (synthetic / leather / fabric) |
+| `sound_brand` | Audio brand (Harman Kardon / BOSE, etc.) |
+| `seat_heating` | Seat heating |
+| `seat_massage` | Seat massage |
+| `seat_ventilation` | Seat ventilation |
+| `aircon_control` | A/C control (auto / manual) |
 
----
-
-## 4. Series Missing Sales
-
-17 series have spec data but no sales (flagged `has_sales_data=False`):
-
-| Series | Brand | Energy | Reason |
-|--------|-------|--------|--------|
-| Avatr 06/07/11/12 | Avatr | EREV | New, not yet recorded |
-| Arcfox 贝塔S3/T1/问道V9 | BAIC BJEV | BEV/EREV | New, not yet recorded |
-| iCAR 超级V23 | Chery NEV | BEV | New |
-| Star Era ET | Exeed | EREV | New |
-| Tiggo 8L | Chery | Fuel | Launched 2024 |
-| Ariya | Dongfeng Nissan | BEV | Source gap |
-| CS35 / CS55 PLUS | Changan | Fuel | Source gap |
-| S50 EV / D60 / T60 EV | Dongfeng | BEV | Source gap |
-| ID. ERA 9X | SAIC Volkswagen | EREV | Not yet launched |
-
-**Impact:** all are new models with < 24 months of data; no effect on ARIMA, just filter in XGBoost.
+> Note: `speaker_count` carries anomalous filler values in the source table and has been dropped from features.
 
 ---
 
-## 5. Usage Guide
+## 3. Alignment & Modeling Subsets
 
-### For XGBoost / LightGBM
+Align `monthly_sales` (1,017 series) and `feature` (766 series) directly by `series_name`:
 
-1. Aggregate `sales.csv` by `series_id` (sum monthly sales as label, or take latest month)
-2. Left-join `vehicles.csv`, one row per series
-3. Filter `has_sales_data=True` → 1,122-row training set
-4. Usable features: price, dimensions, energy type, horsepower/power, gearbox, safety, comfort
-5. Conditional NaN needs no imputation; XGBoost handles it natively
+- **371 in-population series (Leg B):** have both a monthly sales panel and configs; enter Leg B monthly forecasting (continuous coverage 2022-01~2026-06).
+- **736 series with annual sales (Leg A):** `feature.csv` rows with `annual_sales` falling in the 2022–2026 window; enter Leg A config→sales cross-sectional attribution.
+- **646 sales-only series:** present in `monthly_sales` but lacking `feature` configs; excluded from the modeling population (to avoid diluting metrics with out-of-population series).
 
-### For ARIMA / Prophet / LSTM
+```
+monthly_sales(1017) ─┐
+                     ├─ intersection 371 ──> Leg B monthly forecasting
+feature(766) ────────┘
+feature series with annual_sales (736) ──> Leg A annual attribution
+monthly_sales series without feature (646) ──> excluded
+```
 
-1. Filter `data_source='pcauto'` and mature series with ≥ 36 months coverage
-2. Build a date column from `year` + `month`
-3. Model per `series_id` group
-4. Note: 2026 only has Jan–May data
-
-### Feature Engineering Tips
-
-**Numeric features ready to use:**
-`official_price_wan`, `length_mm`, `wheelbase_mm`, `curb_weight_kg`, `engine_max_horsepower_ps`, `engine_max_torque_nm`, `motor_total_power_kw`, `battery_range_km`, `seat_count`, `max_speed_kmh`
-
-**Categorical features to encode:**
-`energy_type`, `vehicle_class`, `manufacturer`, `gearbox_type`, `engine_intake_type`, `fuel_form`, `body_structure`, `seat_material`, `sound_brand`, `driver_airbag`, `side_airbag`
-
-**Columns to avoid:**
-`battery_type` (96.9% missing), `battery_capacity_kwh` (97.4% missing), `fuel_consumption_l_100km` (85.3% missing), and all ID/URL/crawler-metadata fields
-
-### For Sentiment Impact-Factor Regression
-
-1. Left-join `sentiment_summary.csv` to `sales.csv` by `series_id` (aggregate monthly sales as label Y)
-2. Then left-join `vehicles.csv` (price / class / energy as features X)
-3. Features: sentiment (positive-rate / avg-score / 8 dimensions) + vehicle (price / class / energy)
-4. Use standardized coefficients + Bootstrap CI (more robust than p-values with limited series)
-5. Sentiment only covers a subset of series; intersect with sales before regression
+**Impact:** The 646 sales-only series are mostly long-tail / suspended models; excluding them brought Leg B volume-weighted WMAPE from ~51% down to 26.9% (the old figure was inflated by orphan series), confirming the correctness of "do not pad with out-of-population series".
 
 ---
 
-## 6. Sentiment / Review Data
+## 4. Data Usage Guide
 
-**Source:** Dongchedi public review API (`dongchedi.com/motor/pc/car/series/get_review_list`),
-pure `requests`. Crawler: `scripts/01_crawl_reviews.py`.
+### For Leg B monthly forecasting (ARIMA / Prophet / XGBoost / LSTM)
+
+1. Read `data/processed_new/splits/` (absolute-time split: `train` 2022-01~2025-06 / `val` 2025-07~2025-12 / `test` 2026-01~2026-06).
+2. On the 371 in-population series, join `feature` by `series_name` (config taken at `(series_name, year)` ≤ row's model year, to prevent future-config leakage).
+3. Target `monthly_sales` → `log1p` for zero-inflation; historical lag features dominate, config features are secondary.
+4. Metrics: WMAPE (volume-weighted + per-series median, dual口径) + feature ablation + 90% prediction interval.
+
+### For Leg A config attribution (XGBoost cross-section)
+
+1. Take the 736 series in `feature.csv` with non-null `annual_sales` (~2,007 series×year rows).
+2. Target `y = log1p(annual_sales)`; `GroupKFold(5) by series_name` (config is near-constant within a series across years, so grouping by series is required to prevent leakage).
+3. Features = configs (price / size / energy / horsepower / battery…) + brand + year.
+4. Note: configs explain **between-series** differences, not within-series year-over-year moves (see Stage 4 conclusion).
+
+### For sentiment impact-factor regression (Phase B, pending)
+
+1. Align `sentiment_summary.csv` to `monthly_sales` / `feature` by `series_name` (the new pipeline uses `series_name` uniformly, dropping the legacy `series_id` bridge).
+2. Intersect sentiment with the 371 / 736 series first, then feed it as an exogenous variable into the Leg B / Leg A framework.
+3. Note: legacy sentiment covers 490 dongchedi series under a different ID system; Phase B must re-align by `series_name` to the new 371 / 736 series scope.
+
+---
+
+## 5. User Sentiment (Phase B, Pending)
+
+> **Stage note:** The sentiment data below come from an earlier dongchedi collection (490 series, completed 2026-07) and are **Phase B (pending new-data integration)** material. The new pipeline has switched to the "pcauto sales + autohome/pcauto configs" dual source aligned by `series_name`; Phase B will re-align sentiment by `series_name` to the new 371 / 736 series scope before integration. This section is retained as the Phase B reference.
+
+**Source**: dongchedi public review API (`dongchedi.com/motor/pc/car/series/get_review_list`), plain `requests` crawler. Script `scripts/01_crawl_reviews.py`.
 
 ### File List
 
-| File | Records | Period | Description |
-|------|---------|--------|-------------|
-| `data/sentiment/sentiment_reviews.csv` | 40,054 (490 series) | 2019-06 ~ 2026-07 | Review details |
-| `data/sentiment/sentiment_summary.csv` | 490 series | — | Series-level sentiment aggregation |
-| `data/README.md` Chapter 8 | — | — | Coverage & quality report (merged into this data README) |
+| File | Records | Time range | Description |
+|------|---------|-----------|-------------|
+| `data/sentiment/sentiment_reviews.csv` | 40,054 rows (490 series) | 2019-06 ~ 2026-07 | Review details |
+| `data/sentiment/sentiment_summary.csv` | 490 series | — | Series-level sentiment aggregates |
+| Chapter 6 of this doc | — | — | Coverage & quality report (merged here) |
 
-> Regenerate summary / quality report: `python scripts/03_build_sentiment_summary.py` (reads
-> `sentiment_reviews.csv`, outputs `sentiment_summary.csv` and
-> `data_quality_report.json` / `.md` to `data/sentiment/`, reproducible).
+> Regenerate aggregates / quality report: `python scripts/03_build_sentiment_summary.py` (reads `sentiment_reviews.csv`, writes `sentiment_summary.csv` and `data_quality_report.json` / `.md` under `data/sentiment/`, reproducible).
 
 ### Collection Scope (full crawl completed 2026-07-10)
 
-- **Target:** all **integer-ID series** in the sales table (Dongchedi API only accepts integer IDs) — 502 total
-- **Actual:** **490 series / 40,054 reviews**, covering **95 brands** (the other 12 target series had no review data on the platform, recorded as empty)
+- **Target:** all integer-ID series in the sales table (dongchedi API accepts integer IDs only), 502 in total
+- **Completed:** **490 series / 40,054 rows**, covering **95 brands** (12 target series had no review data on the platform, marked empty)
 - Review time span ~7 years (2019-06 ~ 2026-07), enabling long-term sentiment trend analysis
 
-**Top-20 brands by coverage (by review count):**
+**Top 20 brands by coverage (by review count):**
 
-| Brand | Series | Reviews | Avg score |
-|-------|--------|---------|-----------|
+| Brand | Series | Reviews | Avg rating |
+|-------|--------|---------|------------|
 | Volkswagen | 23 | 4,242 | 4.10 |
 | Toyota | 18 | 1,548 | 4.11 |
 | Honda | 16 | 1,461 | 3.99 |
@@ -350,42 +313,40 @@ pure `requests`. Crawler: `scripts/01_crawl_reviews.py`.
 | Hongqi | 17 | 1,169 | 4.27 |
 | Mercedes-Benz | 13 | 1,120 | 4.15 |
 | Chery | 11 | 915 | 4.04 |
-| Exeed | 10 | 884 | 4.32 |
+| Xingtu | 10 | 884 | 4.32 |
 | Leapmotor | 9 | 854 | 4.27 |
 | GAC Trumpchi | 9 | 823 | 4.22 |
 | Geely | 9 | 817 | 4.26 |
-| Lynk & Co | 8 | 800 | 4.32 |
+| Lynk | 8 | 800 | 4.32 |
 | Cadillac | 10 | 787 | 4.24 |
-| Chery Fulwin | 9 | 757 | 4.20 |
+| Chery Fengyun | 9 | 757 | 4.20 |
 | Buick | 8 | 739 | 4.07 |
 | Aion | 8 | 728 | 4.24 |
 | Nissan | 8 | 725 | 4.06 |
 | BMW | 9 | 713 | 4.24 |
 
-> Full 95-brand breakdown: see Chapter 8 "Sentiment Data Quality & Coverage Report" in this file.
+> Full 95-brand detail in Chapter 6, "Sentiment Data Quality & Coverage Report".
 
 ### Data Quality
 
 | Metric | Value |
 |--------|-------|
 | Duplicate `review_id` | 558 (1.39%) |
-| Missing overall score | 259 (0.65%) |
+| Missing overall rating | 259 (0.65%) |
 | Empty content | 0 |
-| Series with no score | 0 |
+| Series with no rating | 0 |
 
-→ Quality is good; duplication / missingness are negligible. Just `drop_duplicates(subset='review_id')` before analysis.
+→ Good quality; duplicates / missing are negligible; `drop_duplicates(subset='review_id')` before analysis.
 
-### Sentiment Polarity (rated subset, 39,795 reviews)
+### Sentiment Polarity (scored subset, 39,795 rows)
 
-- Positive (≥4.5): 11,953 (**30.0%**)
-- Neutral (3.5–4.5): 24,696 (**62.1%**)
-- Negative (<3.5): 3,146 (**7.9%**)
+- Positive (≥4.5): 11,953 (30.0%)
+- Neutral (3.5–4.5): 24,696 (62.1%)
+- Negative (<3.5): 3,146 (7.9%)
 
-> Note: Dongchedi reviews cluster at 4–5 stars, so high neutral share is normal. Text-level
-> sentiment (NLP) will supplement the star rating to catch隐性 negative sentiment like
-> "high score but low praise".
+> Note: dongchedi reviews skew to 4–5 stars, so high neutral share is normal; text-level NLP sentiment complements star ratings to catch implicit negatives ("high score, low praise").
 
-### `sentiment_reviews.csv` Columns
+### `sentiment_reviews.csv` columns
 
 | Column | Description |
 |--------|-------------|
@@ -395,57 +356,39 @@ pure `requests`. Crawler: `scripts/01_crawl_reviews.py`.
 | `user_nickname` / `user_id` | User nickname / ID |
 | `publish_time` | Publish time |
 | `content` / `content_len` | Review text / length |
-| `rating_overall` | Overall score (5-point) |
-| `rating_appearance` ~ `rating_config` | 8-dimension scores (appearance / space / interior / power / handling / comfort / fuel / config) |
+| `rating_overall` | Overall rating (5-point) |
+| `rating_appearance` ~ `rating_config` | 8-dimension ratings (appearance / space / interior / power / handling / comfort / fuel / config) |
 | `digg_count` / `comment_count` | Likes / comments |
 | `car_model` / `buy_location` / `buy_price` / `buy_time` / `fuel_type` / `consumption` | Purchase info |
 
-> ⚠️ `sentiment_reviews.csv` has **no brand column**. Recover brand via `series_id` join to
-> `sales.csv` (`brand`) or `vehicles.csv` (`brand_name`); see `attach_brand()` in
-> `scripts/03_build_sentiment_summary.py`.
+> ⚠️ `sentiment_reviews.csv` has **no brand column**. Brand must be back-filled via `series_name` join to `monthly_sales.csv` (`brand`) or `feature.csv` (`brand_name`), see `attach_brand()` in `scripts/03_build_sentiment_summary.py`.
 
-### `sentiment_summary.csv` Columns
+### `sentiment_summary.csv` columns
 
-Series-level aggregation, one row per series:
+Series-level aggregates, one row per series:
 
 - `review_count` / `avg_rating` / `median_rating` / `min_rating` / `max_rating`
 - `avg_content_len` / `total_digg` / `total_comment`
 - `earliest_review` / `latest_review`
-- `positive_cnt` / `neutral_cnt` / `negative_cnt` + their `_ratio`
+- `positive_cnt` / `neutral_cnt` / `negative_cnt` + corresponding `_ratio`
 - `avg_rating_appearance` … `avg_rating_config` (8-dimension means)
 
-### Relation to the Other Two Tables
+### Relationship to the other two tables
 
 ```
-vehicles ──series_id──┐
-                      ├──> sentiment_reviews / sentiment_summary
-sales    ──series_id──┘
+feature ──series_name──┐
+                       ├──> sentiment_reviews / sentiment_summary
+monthly_sales ──series_name──┘
 ```
 
-- Sentiment × spec → explain "what kind of cars get good reviews"
-- Sentiment × monthly sales → impact-factor regression (does reputation drive sales?)
+- Sentiment × configs → explains "what kind of cars have good word-of-mouth"
+- Sentiment × monthly sales → impact-factor regression (does sentiment drive sales, Phase B)
 
 ---
 
-## 7. Analysis-Ready Table (`analysis_input.csv`)
+## 6. Sentiment Data Quality & Coverage Report (full, Phase B, Pending)
 
-Generated by `scripts/02_clean_and_align.py` — the aligned analysis input after joining all three tables:
-
-- **Input:** `sentiment_reviews.csv` (cleaned & deduped) → series-level aggregation ＋ `sales.csv` (sales aggregated by series) ＋ `vehicles.csv` (series-level spec features)
-- **Output:** one row per series, columns include
-  - Sentiment: `review_count` / `avg_rating` / `median_rating` / `positive_ratio` / `negative_ratio` / 8-dimension means (`avg_rating_*`)
-  - Sales label: `total_sales` / `avg_monthly_sales` / `log_avg_monthly_sales` / `n_months` / `brand` / `category`
-  - Vehicle features: `official_price_wan` / `vehicle_class` / `energy_type` / `manufacturer` / `brand_name`
-- **Join logic:** all three `series_id` cast to `str` then left-joined; sentiment series matched to sales first (label Y), then to spec (feature X).
-- **Current status** (full crawl done): 490 series → 489 matched sales, ready for regression; rerun `02_clean_and_align.py` to refresh with new data.
-
----
-
-## 8. Sentiment Data Quality & Coverage Report (Full)
-
-> The generation logic lives in `scripts/03_build_sentiment_summary.py`; rerunning outputs
-> `data_quality_report.json` and `data_quality_report.md` to `data/sentiment/` (reproducible). The
-> snapshot below is merged into this data README.
+> The original generation logic is in `scripts/03_build_sentiment_summary.py`; re-running writes `data_quality_report.json` and `data_quality_report.md` under `data/sentiment/` (reproducible). Snapshot merged into this doc (Phase B reference).
 
 - Total reviews: **40,054**
 - Series covered: **490**
@@ -455,20 +398,20 @@ Generated by `scripts/02_clean_and_align.py` — the aligned analysis input afte
 ### Data Quality
 
 - Duplicate review_id: 558 (1.39%)
-- Missing overall score: 259 (0.65%)
+- Missing overall rating: 259 (0.65%)
 - Empty content: 0
-- Series with no score: 0
+- Series with no rating: 0
 
-### Sentiment Polarity (rated subset)
+### Sentiment Polarity (scored subset)
 
-- Positive (≥4.5): 11,953 (30.0%)
-- Neutral (3.5–4.5): 24,696
-- Negative (<3.5): 3,146 (7.9%)
+- Positive (≥4.5): 11953 (30.0%)
+- Neutral (3.5–4.5): 24696
+- Negative (<3.5): 3146 (7.9%)
 
 ### Brand Coverage (full 95 brands)
 
-| Brand | Series | Reviews | Avg score |
-|-------|--------|---------|-----------|
+| Brand | Series | Reviews | Avg rating |
+|-------|--------|---------|------------|
 | Volkswagen | 23 | 4,242 | 4.10 |
 | Toyota | 18 | 1,548 | 4.11 |
 | Honda | 16 | 1,461 | 3.99 |
@@ -478,13 +421,13 @@ Generated by `scripts/02_clean_and_align.py` — the aligned analysis input afte
 | Hongqi | 17 | 1,169 | 4.27 |
 | Mercedes-Benz | 13 | 1,120 | 4.15 |
 | Chery | 11 | 915 | 4.04 |
-| Exeed | 10 | 884 | 4.32 |
+| Xingtu | 10 | 884 | 4.32 |
 | Leapmotor | 9 | 854 | 4.27 |
 | GAC Trumpchi | 9 | 823 | 4.22 |
 | Geely | 9 | 817 | 4.26 |
-| Lynk & Co | 8 | 800 | 4.32 |
+| Lynk | 8 | 800 | 4.32 |
 | Cadillac | 10 | 787 | 4.24 |
-| Chery Fulwin | 9 | 757 | 4.20 |
+| Chery Fengyun | 9 | 757 | 4.20 |
 | Buick | 8 | 739 | 4.07 |
 | Aion | 8 | 728 | 4.24 |
 | Nissan | 8 | 725 | 4.06 |
@@ -500,7 +443,7 @@ Generated by `scripts/02_clean_and_align.py` — the aligned analysis input afte
 | Skoda | 5 | 500 | 3.87 |
 | Haval | 5 | 500 | 4.28 |
 | IM Motors | 6 | 499 | 4.44 |
-| Venucia | 5 | 482 | 3.91 |
+| Qichen | 5 | 482 | 3.91 |
 | Jetour | 5 | 474 | 4.06 |
 | Roewe | 6 | 457 | 4.12 |
 | Volvo | 6 | 436 | 4.29 |
@@ -511,42 +454,42 @@ Generated by `scripts/02_clean_and_align.py` — the aligned analysis input afte
 | Jetta | 5 | 332 | 3.86 |
 | Dongfeng Aeolus | 4 | 326 | 3.98 |
 | Dongfeng Forthing | 6 | 311 | 3.88 |
-| Fangchengbao | 3 | 300 | 4.47 |
+| Fang Cheng Bao | 3 | 300 | 4.47 |
 | Bestune | 5 | 287 | 3.86 |
 | Dongfeng Fengguang | 5 | 263 | 3.61 |
-| Ledo | 3 | 239 | 4.45 |
+| Onvo | 3 | 239 | 4.45 |
 | ORA | 3 | 234 | 4.13 |
 | Tank | 3 | 229 | 4.35 |
 | smart | 3 | 207 | 4.23 |
-| Livan | 2 | 200 | 4.06 |
-| Citroën | 2 | 200 | 4.22 |
+| Landian | 2 | 200 | 4.06 |
+| Citroen | 2 | 200 | 4.22 |
 | Tesla | 2 | 200 | 4.24 |
 | Feifan | 2 | 200 | 4.27 |
 | Infiniti | 2 | 200 | 4.14 |
-| Arcfox | 2 | 200 | 4.26 |
-| Xiaomi | 2 | 200 | 4.53 |
+| ARCFOX | 2 | 200 | 4.26 |
+| Xiaomi Auto | 2 | 200 | 4.53 |
 | Wuling | 6 | 191 | 3.59 |
 | Maxus | 5 | 187 | 3.97 |
 | Polestar | 3 | 171 | 4.06 |
-| Geely Geometry | 3 | 158 | 3.90 |
+| Geometry | 3 | 158 | 3.90 |
 | Cowin | 3 | 153 | 3.80 |
 | Jaguar | 2 | 145 | 4.25 |
 | Mengshi | 2 | 140 | 4.38 |
-| Beijing | 2 | 122 | 4.08 |
+| BAIC | 2 | 122 | 4.08 |
 | Yangwang | 2 | 109 | 4.50 |
 | Sihao | 3 | 106 | 3.70 |
 | Zongheng | 1 | 100 | 4.29 |
 | Land Rover | 1 | 100 | 4.07 |
 | Denza | 1 | 100 | 4.38 |
-| Changan Oshan | 1 | 100 | 4.15 |
+| Changan Oushang | 1 | 100 | 4.15 |
 | iCAR | 1 | 100 | 4.47 |
-| Firefly | 1 | 95 | 4.30 |
-| Audi (AUDI) | 2 | 93 | 4.42 |
+| firefly | 1 | 95 | 4.30 |
+| Audi AUDI | 2 | 93 | 4.42 |
 | Huajing | 1 | 90 | 4.58 |
-| JMEV | 4 | 70 | 3.84 |
-| Levc | 5 | 70 | 4.10 |
-| JAC Yiwei | 2 | 62 | 3.94 |
-| JAC Refine | 2 | 55 | 3.74 |
+| Jiangling NEV | 4 | 70 | 3.84 |
+| Ruipee | 5 | 70 | 4.10 |
+| Jianghuai Yiwei | 2 | 62 | 3.94 |
+| Jianghuai Ruifeng | 2 | 55 | 3.74 |
 | Shijie | 1 | 43 | 3.96 |
 | Unknown | 1 | 42 | 4.51 |
 | Changan Kaicheng | 2 | 36 | 3.50 |
@@ -554,24 +497,25 @@ Generated by `scripts/02_clean_and_align.py` — the aligned analysis input afte
 | Haima | 1 | 32 | 4.00 |
 | Dongfeng Fengdu | 1 | 23 | 4.13 |
 | Zhidou | 1 | 22 | 4.15 |
-| Lingbox | 2 | 15 | 3.08 |
+| Lingbao | 2 | 15 | 3.08 |
 | Caocao | 1 | 9 | 3.82 |
 | Ruichi | 1 | 9 | 3.72 |
 | Dayun | 2 | 9 | 3.59 |
-| Skyworth | 1 | 8 | 3.75 |
+| Skyworth Auto | 1 | 8 | 3.75 |
 | Aishang | 1 | 5 | 4.36 |
 | Xiaohu | 1 | 5 | 3.42 |
 | Foton | 1 | 4 | 2.72 |
 | Lingxi | 1 | 3 | 3.83 |
 | Dongfeng Fukang | 1 | 1 | 3.50 |
 
-## 9. Dashboard Data Bridge
+---
 
-The Stage 6 web dashboard (`app/`) does not produce raw data itself. It reads the CSV files described above and pre-bakes them into JSON data bridges via `app/build_dashboard_data.py` for the frontend ECharts to render:
+## 7. Stage 6 Dashboard Data Bridge
 
-- Inputs: artifacts under `data/processed/stage3/`, `data/processed/stage4/`, `data/processed/stage5/`, and `data/sentiment/`.
-- Outputs: `app/static/data/*.json` (overview, forecast, absa, attribution, relation, alerts, drilldown).
-- Run: `python app/build_dashboard_data.py` to regenerate; `python app/app.py` to launch the dashboard.
+The Stage 6 web dashboard (`app/`) does not produce raw data itself; it reads the CSVs described above and pre-bakes them into a JSON data bridge via `app/build_dashboard_data.py` for direct ECharts rendering:
 
-These JSON files are pre-baked and committed with the code, so the dashboard works locally or via GitHub Pages static deployment without re-running the full data pipeline.
+- Input: products under `data/processed_new/stage3/`, `data/processed_new/stage4/`, and `data/sentiment/`.
+- Output: `app/static/data/*.json` (overview, forecast, absa, attribution, relation, alerts, drilldown).
+- Run: `python app/build_dashboard_data.py` to regenerate; `python app/app.py` to launch.
 
+> The dashboard data bridge is currently based on an initial-pipeline snapshot; after Phase B integration it will be refreshed to the new 371 / 736 series scope.

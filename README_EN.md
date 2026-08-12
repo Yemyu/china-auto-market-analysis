@@ -14,7 +14,7 @@
 
 ## Project Overview
 
-**AutoPulse** is an automotive data-insights project that connects three public data sources — **Dongchedi user reviews**, **vehicle specification parameters**, and **PCauto monthly sales** — to answer three core questions:
+**AutoPulse** is an automotive data-insights project that connects two public data sources — **PCauto monthly sales** and **vehicle specification parameters** (Autohome/PCauto) — to deliver a **no-sentiment baseline** (sales forecasting + config attribution) first, then onboard user-review sentiment (**Phase B**). It answers three core questions:
 
 1. **How many cars will we sell next month?** — Sales forecasting with ARIMA / Prophet / XGBoost / LSTM / ensemble models.
 2. **Does user sentiment really affect sales?** — Deep ABSA (Aspect-Based Sentiment Analysis) with a large language model, plus SHAP / Granger causality to quantify the impact.
@@ -35,21 +35,29 @@
 
 ## Six-Stage Workflow
 
-The project is organized into six real-world stages, corresponding to the `01_` ~ `20_` pipeline scripts in `scripts/` and the `notebook/AutoPulse_Analysis_EN.ipynb`.
+The project is organized into six real-world stages, corresponding to the `06_` ~ `20_` pipeline scripts in `scripts/new_pipeline/` and the `notebook/AutoPulse_Analysis_EN.ipynb`.
+
+> The **no-sentiment baseline** is complete: Stages 1–4 (data / filtering / monthly forecasting + config attribution). The sentiment-related Stages 5–6 belong to **Phase B (pending, new-data)**; the methodology is ready and will be redone on the new 371-series scope.
 
 ### Stage 1 · Data Preparation
 
-**Question**: How do we align three heterogeneous sources — vehicle specs, sales, and user reviews?
+**Question**: How do we align two public sources — PCauto monthly sales and vehicle specifications (Autohome/PCauto)?
 
 **Approach**:
-- Collect `vehicles.csv` (1,139 series / 4,334 trims), `sales.csv` (1,122 series / 33,845 monthly records), and `sentiment_reviews.csv` (40,054 reviews).
-- Bridge cross-platform IDs with `series_mapping.csv` so all three tables share a single `series_id`.
-- Clean `vehicles.csv`: reduce 248 raw columns to 92 meaningful features; keep "conditional missing" values (e.g., BEVs have no engine specs) instead of zero-filling.
+- Collect `monthly_sales.csv` (1,017 series / 54,918 monthly records, 2022-01~2026-06, from pcauto).
+- Collect `feature.csv` (766 series / 2,084 rows / 84 columns; grain = **series × year**, `(series_name, year)` unique key, with `annual_sales` yearly-sum; from Autohome/PCauto).
+- Align the two datasets directly by `series_name` (the new pipeline needs no legacy `series_mapping` bridge):
 
-**Result**: Three-table alignment yields `analysis_input.csv` (489 rows), one row per series with sales, specs, and sentiment aggregates.
+```
+monthly_sales ──series_name──┐
+                             ├──> align → 371 series with monthly+config (Leg B) + 736 series with yearly sales (Leg A)
+feature       ──series_name──┘
+```
+
+**Result**: Alignment yields 371 in-population series (Leg B monthly forecast) and 736 series with yearly sales (Leg A config attribution); 646 sales-only series without config are excluded.
 
 <p align="center">
-  <img src="figures/sentiment_vs_sales.png" alt="Stage 1: positive review ratio vs. average monthly sales" width="700">
+  <img src="figures/sentiment_vs_sales.png" alt="Stage 1: config coverage and sales" width="700">
 </p>
 
 ---
@@ -59,12 +67,12 @@ The project is organized into six real-world stages, corresponding to the `01_` 
 **Question**: Which series are suitable for forecasting, and what does the overall market look like?
 
 **Approach**:
-- Filter series with at least 24 consecutive months of sales, giving 669 stable series.
-- Visualize market sales trend, category distribution, and hardware features (price, energy type, range, acceleration).
+- Filter the monthly panel by continuous coverage; final modeling uses 371 in-population series (monthly sales + config complete).
+- Visualize market sales trend, segment / energy-type distribution, and price & hardware features.
 
 **Result**:
-- 669 series enter downstream modeling with higher time-window quality.
-- Seasonality, EV share, and segment distribution are identified at the macro level.
+- 371 series enter Leg B monthly modeling; 736 series enter Leg A yearly attribution.
+- Macro features such as EV share, segment distribution, and head concentration are identified.
 
 <p align="center">
   <img src="figures/sales_trend.png" alt="Stage 2: total monthly sales trend" width="700">
@@ -72,17 +80,18 @@ The project is organized into six real-world stages, corresponding to the `01_` 
 
 ---
 
-### Stage 3 · Sales Forecasting Modeling
+### Stage 3 · Sales Forecasting Modeling (Leg B, no sentiment)
 
-**Question**: Among time-series models, which forecasts monthly sales most robustly? Are external regressors useful?
+**Question**: Among time-series models, which forecasts monthly sales most robustly? Are config / external regressors useful?
 
 **Approach**:
-- Compare ARIMA, Prophet, Prophet+exogenous, XGBoost, LSTM, and Prophet+XGBoost ensemble on a stratified 150-series evaluation set.
-- Use WMAPE (volume-weighted, robust to long-tail), rolling cross-validation, feature ablation, and 90% prediction intervals.
+- On 371 in-population series, split by **absolute time**: `train` 2022-01~2025-06 / `val` 2025-07~2025-12 / `test` 2026-01~2026-06 (see `data/processed_new/splits/`).
+- Compare ARIMA / Prophet / Prophet+exogenous / XGBoost / LSTM; XGBoost does recursive multi-step (6-month) forecasting with early-stopping on val.
+- Metrics: WMAPE (volume-weighted + per-series median, both reported, robust to long-tail) + feature ablation + 90% prediction intervals.
 
 **Result**:
-- **XGBoost** has the lowest volume-weighted WMAPE (~29.26%), followed by the Prophet+XGBoost ensemble.
-- Holidays, promotions, and guide price add little at monthly granularity; historical sales lag features dominate.
+- **XGBoost** is the monthly-forecast baseline: test volume-weighted WMAPE **63.2%** (per-series median 59.4%).
+- Ablation shows **historical sales lag features dominate**: dropping lag → 73.2%; config features give **no positive contribution** in monthly forecasting (NO-CONFIG 48.8% is actually lower — the old "config +16%" was a future-config leakage artifact, now fixed).
 - Error grows with forecast horizon, as expected.
 
 <p align="center">
@@ -91,39 +100,32 @@ The project is organized into six real-world stages, corresponding to the `01_` 
 
 ---
 
-### Stage 4 · Deep Sentiment Analytics & Sales Attribution
+### Stage 4 · Config → Sales Attribution (Leg A, no sentiment)
 
-**Question**: What are users actually talking about? Can we quantify sentiment's contribution to sales?
+**Question**: What kind of configuration sells well? How much can configuration explain sales variation?
 
 **Approach**:
-- **Deep ABSA**: Use the DeepSeek LLM to score 28,724 reviews across 10 aspects — appearance, interior, space, power, handling, comfort, fuel consumption, configuration, intelligence, and value (-1/0/+1).
-- **Sales attribution**: Add sentiment features to a series-level XGBoost sales model and explain each aspect with SHAP.
-- **Granger causality**: Test "past sentiment → future sales" at brand and market levels.
+- **Series × year cross-sectional regression**: target `y = log1p(annual_sales)`; `GroupKFold(5) by series_name` (prevents same-series leakage across folds, since a series' config is nearly constant year over year).
+- Features = config (price/size/energy/power/battery…) + brand + year; explain each dimension's contribution with XGBoost importance.
 
 **Result**:
-- Adding sentiment features lifts series-level R² from -0.073 to 0.138 and cuts MAPE from 16.5% to 14.7%.
-- SHAP ranks **comfort > value > intelligence** as the most sales-relevant sentiment aspects.
-- Granger is significant for ~10-15% of brands but not at the market aggregate, consistent with cars being high-ticket, long-consideration purchases.
+- R² progresses: year-only **0.089** → +brand **0.154** → +config **0.303** (config increment ΔR² = +0.149).
+- Feature importance: config **76.1%** / brand **22.5%** / year **1.4%**.
+- Conclusion: config explains variation **between series** (pricier / larger / electric models sell more); within-series year-over-year swings are driven by non-config factors (generation change, incentives, word-of-mouth).
 
 <p align="center">
-  <img src="figures/stage4_shap_summary.png" alt="Stage 4: SHAP sales attribution" width="700">
+  <img src="figures/stage4_shap_summary.png" alt="Stage 4: config feature importance" width="700">
 </p>
 
 ---
 
-### Stage 5 · Sentiment Fusion Forecasting & Topic Alerts
+### Stage 5 · Sentiment Fusion Forecasting & Topic Alerts (Phase B pending)
 
 **Question**: Does adding dynamic sentiment improve sales forecasting? Which topics need alerts?
 
-**Approach**:
-- Compare "no-sentiment / Top3-sentiment / full-sentiment" versions of XGBoost and Prophet.
-- Extract TF-IDF keywords and run LDA topic clustering on comfort, value, and intelligence.
-- Define an alert rule: overall sentiment < -0.1 and month-over-month drop > 0.05.
+**Approach (planned)**: Redo on the new scope (371 series) — LLM ABSA aspect scoring, dynamic sentiment as exogenous regressor, TF-IDF/LDA topic clustering, rule-based alerts.
 
-**Result**:
-- Dynamic sentiment as an exogenous feature **does not improve** volume-weighted accuracy (XGBoost-baseline 34.79% vs +Top3sent 35.21%).
-- For tail / low-volume series, sentiment reduces per-series WMAPE (327% → 311%).
-- Keywords and LDA topics explain user concerns; the alert rule produces a small high-priority watch list.
+**Result**: To be added once Phase B lands on new data. Legacy-pipeline (669 series) experience: dynamic sentiment did **not** improve volume-weighted accuracy (XGBoost-baseline 34.79% vs +Top3sent 35.21%), but lowered per-series WMAPE for tail / low-volume series (327% → 311%).
 
 ---
 
@@ -137,6 +139,8 @@ The project is organized into six real-world stages, corresponding to the `01_` 
 - Supports Chinese/English switching; brand and series drill-down tabs are cross-linked.
 
 **Result**: Launch locally and interactively explore all analysis conclusions in a browser, without re-running models.
+
+> Note: the dashboard data bridge currently reflects the initial-pipeline snapshot; it will be refreshed to the 371-series new scope once Phase B lands.
 
 ### Dashboard Screenshots
 
@@ -205,7 +209,7 @@ Open the browser at http://localhost:8000/ to preview. (The dashboard is a stati
 ### Live demo
 
 - 🌐 **Live demo**: https://yemyu.github.io/AutoPulse/
-- The dashboard data is already pre-baked into `app/static/data/*.json`, so **no crawling or modeling scripts need to be run to view it**. To refresh the data bridge locally (requires having run the full pipeline, i.e. `data/processed/*.csv` present), run:
+- The dashboard data is already pre-baked into `app/static/data/*.json`, so **no crawling or modeling scripts need to be run to view it**. To refresh the data bridge locally (requires having run the full pipeline, i.e. `data/processed_new/*.csv` present), run:
 
 ```bash
 python app/build_dashboard_data.py
@@ -225,9 +229,9 @@ AutoPulse/
 ├── data/                          # Data directory (CSVs gitignored)
 │   ├── README.md                  # Data docs (Chinese)
 │   ├── README_EN.md               # Data docs (English)
-│   ├── raw/                       # vehicles.csv, sales.csv
+│   ├── raw/                       # monthly_sales.csv, feature.csv
 │   ├── sentiment/                 # review details & aggregates
-│   └── processed/                 # stage artifacts (reproducible)
+│   └── processed_new/             # stage artifacts (new pipeline, reproducible)
 ├── figures/                       # Analysis charts, dashboard screenshots, and interactive demo (committed)
 ├── LICENSE                        # MIT license
 ├── notebook/                      # Bilingual analysis notebooks
@@ -256,7 +260,7 @@ AutoPulse/
 
 ## Data Notes
 
-- All data come from **public automotive platforms** (Autohome, PCauto, etc.; user sentiment from Dongchedi).
+- All data come from **public automotive platforms** (PCauto monthly sales, Autohome/PCauto vehicle specs; user-review sentiment is Phase B, separately from Dongchedi).
 - Raw / intermediate data is large and gitignored; follow the "Quick Start" steps to launch the dashboard directly after cloning.
 - Data copyright belongs to the original platforms. This project is for learning, research, and demonstration only, not commercial use.
 

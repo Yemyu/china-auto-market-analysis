@@ -4,151 +4,43 @@
 
 # 数据文档（Data Documentation）
 
-本文件是 AutoPulse 全部数据集的单一说明来源，涵盖车型配置、月度销量、车系映射与用户舆情四类数据，供建模、分析与看板使用。所有数据均来自公开汽车平台，仅用于学习、研究与展示。
+本文件是 AutoPulse 全部数据集的单一说明来源，涵盖月度销量、车型配置两类核心数据，以及用户舆情（Phase B）数据，供建模、分析与看板使用。所有数据均来自公开汽车平台，仅用于学习、研究与展示。
 
 ## 数据来源
 
 | 数据类别 | 来源平台 | 采集方式 |
 |----------|----------|----------|
-| 车型配置 / 月度销量（原始数据） | 汽车之家、太平洋汽车等公开汽车平台 | 综合采集 |
-| 用户舆情口碑 | 懂车帝公开口碑 | `scripts/01_crawl_reviews.py` 自动化采集 |
+| 月度销量（原始数据） | 太平洋汽车（pcauto） | 综合采集 |
+| 车型配置（原始数据） | 汽车之家、太平洋汽车等公开汽车平台 | 综合采集 |
+| 用户舆情口碑（Phase B） | 懂车帝公开口碑 | `scripts/01_crawl_reviews.py` 自动化采集 |
 
 ## 项目数据全景
 
-三张表通过 `series_id`（车系 ID）关联：
+两张表通过 `series_name`（车系名）直接对齐（新管线无需旧 `series_mapping` 桥接表）：
 
 ```
-vehicles ———— series_id ———— series_mapping ———— series_id ———— sales
-(车型配置特征)                                         (月度销量)
+monthly_sales ──series_name──┐
+                             ├──> 对齐 → 371 个「月度+配置」车系(腿B) + 736 个有年度销量车系(腿A)
+feature       ──series_name──┘
 ```
 
-做 XGBoost 时：`sales` 按车系聚合销量 → 左联 `vehicles`（取首条配置）→ 过滤 `has_sales_data=True` → 得到 1,122 行 × 90+ 列的训练集。
+做腿B 月度预测时：`monthly_sales` 按车系对齐 `feature`（配置按 `(series_name, year)` 关联）→ 过滤为 371 个 in-population 车系（月度销量与配置齐全，2022-01~2026-06 连续覆盖）。
 
 ---
 
-## 一、`vehicles.csv` — 车型配置数据
+## 一、`monthly_sales.csv` — 月度销量数据
 
 ### 数据概况
 
 | 项目 | 数值 |
 |------|------|
-| 记录数 | 4,334 条（1,139 车系 × 多配置版本） |
-| 品牌数 | 153 个 |
-| 特征列 | 92 列（原始 248 列经清洗去冗余） |
-| 时间范围 | 2022–2026 款车型 |
-| 数据来源 | 汽车之家、太平洋汽车等公开汽车平台（综合采集） |
-
-**能源类型分布（按车系去重）：**
-
-| 类型 | 车系数 | 占比 |
-|------|--------|------|
-| 燃油 | 493 | 43.3% |
-| 纯电动 | 344 | 30.2% |
-| 插电混动 | 211 | 18.5% |
-| 增程式 | 76 | 6.7% |
-| 油电混动 | 10 | 0.9% |
-| 插混+纯电 | 4 | 0.4% |
-| 其他（燃料电池） | 1 | 0.1% |
-
-**车型级别分布 TOP5（按车系去重）：** 紧凑型SUV（246）> 中型SUV（170）> 紧凑型车（150）> 中大型SUV（95）> 小型SUV（93）
-
-### 缺失值情况
-
-总缺失 90,042 个，全部是**条件缺失**（合理，不需要填充）：
-
-- 纯电动/增程式车型 → 无发动机参数（26 列 NaN）
-- 燃油车 → 无电机/电池参数（13 列 NaN）
-- 核心字段（价格、尺寸、能源类型、品牌、级别）**100% 完整**
-
-### 重要列详解
-
-#### 基本规格（4 列，全部无缺失）
-
-| 列名 | 说明 | 数值范围 |
-|------|------|---------|
-| `official_price_wan` | 市场指导价（万元） | 2.98 ~ 130，均值 19 |
-| `energy_type` | 能源类型 | 燃油 / 纯电动 / 插电混动 / 增程式 / 油电混动 |
-| `vehicle_class` | 车型级别 | 紧凑型SUV / 中型车 / MPV 等 18 类 |
-| `manufacturer` | 生产厂商 | — |
-
-**价格分布：** 燃油 & 纯电中位价 15.38 万，增程式最贵（中位 20.98 万），最贵车型 130 万（增程式）。
-
-#### 发动机参数（26 列，燃油/插混有值，纯电/增程为 NaN）
-
-| 列名 | 说明 | 典型值 |
-|------|------|--------|
-| `engine_displacement_l` | 排量（L） | 1.2 ~ 3.0 |
-| `engine_max_horsepower_ps` | 最大马力（PS） | 均值 181 |
-| `engine_max_torque_nm` | 最大扭矩（N·m） | 均值 269 |
-| `engine_intake_type` | 进气形式 | 涡轮增压 / 自然吸气 |
-| `fuel_form` | 燃油形式 | 汽油 / 柴油 |
-| `gearbox_type` | 变速箱类型 | 双离合 / AT / CVT / 手动 |
-
-#### 电机参数（9 列，纯电/混动有值，燃油为 NaN）
-
-| 列名 | 说明 | 典型值 |
-|------|------|--------|
-| `motor_total_power_kw` | 电机总功率（kW） | 均值 191，最高 880 |
-| `motor_total_torque_nm` | 电机总扭矩（N·m） | — |
-| `motor_front_power_kw` | 前电机功率（kW） | 前驱车为主 |
-| `motor_rear_power_kw` | 后电机功率（kW） | 四驱/高性能关键字段 |
-
-#### 电池参数（4 列，纯电/混动有部分值，缺失严重）
-
-| 列名 | 说明 | 注意 |
-|------|------|------|
-| `battery_range_km` | 纯电续航（km） | 均值 424，覆盖较好 |
-| `battery_capacity_kwh` | 电池容量（kWh） | ⚠️ 97.4% 缺失，不适合做特征 |
-| `battery_type` | 电池类型 | ⚠️ 96.9% 缺失 |
-| `battery_warranty` | 电池保修 | ⚠️ 92.5% 缺失 |
-
-#### 车身尺寸（13 列，全部无缺失）
-
-| 列名 | 说明 | 均值 |
-|------|------|------|
-| `length_mm` | 车长 | 4,761 mm |
-| `width_mm` | 车宽 | 1,876 mm |
-| `height_mm` | 车高 | 1,656 mm |
-| `wheelbase_mm` | **轴距**（空间核心指标） | 2,831 mm |
-| `curb_weight_kg` | 整备质量 | 1,782 kg |
-| `body_structure` | 车身结构 | 三厢车 / SUV / MPV |
-
-#### 安全配置（3 列，全部无缺失）
-
-| 列名 | 说明 |
-|------|------|
-| `driver_airbag` | 驾驶员气囊 |
-| `side_airbag` | 侧气囊 / 侧气帘 |
-| `knee_airbag` | 膝部气囊（高端配置，非标配） |
-
-#### 舒适与科技配置（13 列，全部无缺失）
-
-| 列名 | 说明 |
-|------|------|
-| `center_screen` | 中控屏幕 |
-| `seat_material` | 座椅材质（仿皮 / 真皮 / 织物） |
-| `sound_brand` | 音响品牌（哈曼卡顿 / BOSE 等） |
-| `speaker_count` | 扬声器数量 |
-| `seat_heating` | 座椅加热 |
-| `seat_massage` | 座椅按摩 |
-| `seat_ventilation` | 座椅通风 |
-| `aircon_control` | 空调控制方式（自动 / 手动） |
-
----
-
-## 二、`sales.csv` — 月度销量数据
-
-### 数据概况
-
-| 项目 | 数值 |
-|------|------|
-| 总记录 | 33,845 条 |
-| 车系数 | 1,122 个 |
-| 品牌数 | 152 个 |
-| 时间范围 | 2022-01 ~ 2026-05 |
-| 总销量 | 约 9,652 万辆 |
-| 数据质量 | 0 条负销量 ✅ 0 条零销量异常 ✅ |
-| 主要来源 | pcauto（98.5%）+ dongchedi_fill 插值（1.5%） |
+| 总记录 | 54,918 条 |
+| 车系数 | 1,017 个 |
+| 品牌数 | 162 个 |
+| 时间范围 | 2022-01 ~ 2026-06 |
+| 总销量 | 约 7,029 万辆 |
+| 数据质量 | 0 条负销量 ✅；70.6% 为零销量（停牌 / 未上市空窗，非异常） |
+| 主要来源 | pcauto（100%） |
 
 ### 列说明
 
@@ -156,164 +48,239 @@ vehicles ———— series_id ———— series_mapping ———— series_
 |------|------|------|
 | `year` | int | 年份（2022~2026） |
 | `month` | int | 月份（1~12） |
-| `series_id` | str | 车系 ID，关联 vehicles.series_id |
-| `series_name` | str | 车系名称 |
+| `period` | str | 年月标签（如 `Jan-22`） |
+| `series_id` | str | 太平洋汽车车系数字 ID |
+| `source_series_id` | str | 源平台车系 ID（如 `sgXXXXX`） |
+| `series_name` | str | 车系名称（跨表对齐键） |
 | `brand` | str | 品牌 |
 | `category` | str | SUV / 轿车 / MPV |
 | `monthly_sales` | int | **当月销量（辆）** |
-| `data_source` | str | pcauto / dongchedi_fill |
+| `数据来源` | str | pcauto |
+
+> 其余列（`零销量类型`、`record_status`、`period_status`、`website_cumulative_sales`、`source_rank`、`source_last_rank`、`source_official_price`、`品牌月总销量`、`品牌车型数`）为平台元信息，建模时不使用。
 
 ### 年销量趋势
 
-| 年份 | 总销量（万辆） | 覆盖车系 | 完整12月车系 |
-|------|-------------|---------|------------|
-| 2022 | 2,030 | 680 | 476（70%） |
-| 2023 | 2,187 | 725 | 526（73%） |
-| 2024 | 2,307 | 748 | 575（77%） |
-| 2025 | 2,404 | 796 | 596（75%） |
-| 2026(1-5月) | 724 | 733 | — |
+| 年份 | 总销量（万辆） | 覆盖车系 |
+|------|-------------|---------|
+| 2022 | 1,506 | 1,017 |
+| 2023 | 1,609 | 1,017 |
+| 2024 | 1,656 | 1,017 |
+| 2025 | 1,675 | 1,017 |
+| 2026(1-6月) | 583 | 1,017 |
 
-**趋势：** SUV 年销量从 2022 年 915 万辆增长到 2025 年 1,196 万辆，2024 年反超轿车成为中国第一大品类。
+**趋势：** 全样本（pcauto 覆盖车系）年销量 2022→2025 稳步增长，2025 年达 1,675 万辆峰值；新能源（纯电动+插混+增程+油混）占比已超过燃油车。
 
-### 月销量分位数分布
+### 月销量分位数分布（非零有效月）
 
 | 百分位 | 月销量 | 解读 |
 |--------|--------|------|
-| **P10** | 12 辆 | 冷门车，一个月卖不出几十台 |
-| P25 | 123 辆 | 小众车型 |
-| **P50（中位数）** | 748 辆 | 一半车型月销不到千辆 |
-| P75 | 3,043 辆 | 热门车型门槛 |
-| **P90** | 8,455 辆 | 月销近万才是前 10% |
-| P95 | 13,055 辆 | 头部 5% 的常青树 |
-| **P99** | 25,707 辆 | 神车级别 |
+| **P10** | 68 辆 | 冷门车，一个月卖不出几十台 |
+| P25 | 360 辆 | 小众车型 |
+| **P50（中位数）** | 1,654 辆 | 一半有效车型月销不到两千辆 |
+| P75 | 5,586 辆 | 热门车型门槛 |
+| **P90** | 12,340 辆 | 月销过万才是前 10% |
+| P95 | 17,123 辆 | 头部 5% 的常青树 |
+| **P99** | 31,377 辆 | 神车级别 |
+
+> 注：`monthly_sales` 含 70.6% 零值（停牌 / 未上市空窗），上表基于非零有效月（16,166 行）。零膨胀已在腿B 预测中通过 `log1p` 目标 / 两阶段（hurdle）方法处理。
 
 ### 品牌格局（2022-2026 累计）
 
 | 排名 | 品牌 | 总销量（万辆） | 看点 |
 |------|------|-------------|------|
-| 1 | **比亚迪** | **1,163** | 断崖式领先，新能源龙头 |
-| 2 | 大众 | 898 | 传统燃油霸主 |
-| 3 | 丰田 | 713 | 稳健 |
-| 4 | 本田 | 426 | |
-| 5 | 吉利汽车 | 413 | 自主品牌第二 |
-| 6 | 五菱 | 345 | 微型车王者 |
-| 7 | 日产 | 283 | |
-| 8 | 长安 | 277 | |
-| 9 | 宝马 | 269 | 豪华品牌第一 |
-| 10 | 奥迪 | 263 | |
-| 11 | 特斯拉 | 251 | 纯电品牌唯一前十 |
-| 12 | 奔驰 | 244 | |
+| 1 | **比亚迪** | **1,165** | 断崖式领先，新能源龙头 |
+| 2 | 大众 | 888 | 传统燃油霸主 |
+| 3 | 丰田 | 666 | 稳健 |
+| 4 | 本田 | 402 | |
+| 5 | 长安 | 291 | 自主品牌头部 |
+| 6 | 日产 | 282 | |
+| 7 | 吉利汽车 | 279 | 自主品牌第二 |
+| 8 | 宝马 | 270 | 豪华品牌第一 |
+| 9 | 奥迪 | 263 | |
+| 10 | 奔驰 | 229 | |
+| 11 | 五菱 | 203 | 微型车王者 |
+| 12 | 奇瑞 | 191 | |
 
 ### 车系累计销量 TOP10
 
 | 车系 | 品牌 | 累计（万辆） |
 |------|------|------------|
-| Model Y | 特斯拉 | 181 |
-| 秦PLUS | 比亚迪 | 166 |
-| 轩逸 | 日产 | 154 |
+| 秦PLUS | 比亚迪 | 168 |
+| 轩逸 | 日产 | 156 |
 | 宋PLUS新能源 | 比亚迪 | 147 |
-| 宏光MINIEV | 五菱 | 140 |
-| 朗逸 | 大众 | 138 |
+| 宏光MINIEV | 五菱 | 142 |
+| 朗逸 | 大众 | 140 |
 | 速腾 | 大众 | 109 |
-| 海鸥 | 比亚迪 | 105 |
-| 长安CS75 PLUS | 长安 | 93 |
+| 海鸥 | 比亚迪 | 106 |
+| 长安CS75 PLUS | 长安 | 97 |
+| 凯美瑞 | 丰田 | 92 |
 | 元PLUS | 比亚迪 | 91 |
 
 ---
 
-## 三、`series_mapping.csv` — 车系 ID 映射表
-
-### 作用
-
-桥梁表。车型配置与月度销量来自不同平台的 ID 体系，这张表将两者对齐，使三张核心表可通过统一 `series_id` 关联。
+## 二、`feature.csv` — 车型配置数据
 
 ### 数据概况
 
 | 项目 | 数值 |
 |------|------|
-| 记录数 | 1,139 条 |
-| 品牌数 | 155 个 |
-| 数据质量 | 100% 完整无缺失 |
+| 记录数 | 2,084 行（766 车系 × 多年款） |
+| 车系数 | 766 个 |
+| 品牌数 | 126 个 |
+| 特征列 | 84 列 |
+| 时间范围 | 年款 2015–2027（年度销量覆盖 2022–2026） |
+| 数据粒度 | **车系 × 年**，`(series_name, year)` 唯一键 |
+| 年度销量 | `annual_sales` 列（760 / 766 系有值，99.2% 覆盖） |
+| 数据来源 | 汽车之家、太平洋汽车等公开汽车平台（综合采集） |
 
-### 列说明
+> **粒度说明：** 与旧管线 `vehicles.csv` 不同，`feature.csv` 每行是「一个车系在某一年款」的配置快照（每车系-年挂 1 个代表车型），而非 trim 级明细。配置随年款更新，可反映换代 / 改款，但不宜做「同车系多 trim 供给组合」类分析。
+
+**能源类型分布（按车系去重）：**
+
+| 类型 | 车系数 | 占比 |
+|------|--------|------|
+| 燃油 | 337 | 44.0% |
+| 纯电动 | 249 | 32.5% |
+| 插电混动 | 127 | 16.6% |
+| 增程式 | 50 | 6.5% |
+| 油电混动 | 3 | 0.4% |
+
+**车型级别分布 TOP5（按车系去重）：** 紧凑型SUV（153）> 中型SUV（119）> 紧凑型车（98）> 中大型SUV（79）> 中型车（73）
+
+**价格分布（官方指导价，按车系去重）：** 中位 15.48 万，均值 18.9 万，区间 3.0 ~ 156.0 万。
+
+### 缺失值情况
+
+核心规格字段（`official_price_wan`、`energy_type`、`vehicle_class`、`manufacturer`、`year`、尺寸类）**100% 完整**。缺失集中在条件字段：
+
+- 纯电动 / 增程式车型 → 无发动机参数（相关列 NaN）
+- 燃油车 → 无电机 / 电池参数（相关列 NaN）
+- 电池类字段缺失偏高：`battery_capacity_kwh` 81.1% / `battery_type` 80.2% / `battery_warranty` 77.4% / `battery_range_km` 49.1%（缺失为条件缺失，建模时按需处理）
+
+### 重要列详解
+
+#### 基本规格（4 列，全部无缺失）
+
+| 列名 | 说明 | 数值范围 |
+|------|------|---------|
+| `official_price_wan` | 市场指导价（万元） | 3.0 ~ 156.0，中位 15.48 |
+| `energy_type` | 能源类型 | 燃油 / 纯电动 / 插电混动 / 增程式 / 油电混动 |
+| `vehicle_class` | 车型级别 | 紧凑型SUV / 中型车 / MPV 等 18 类 |
+| `manufacturer` | 生产厂商 | — |
+
+#### 发动机参数（燃油 / 插混有值，纯电 / 增程为 NaN）
+
+| 列名 | 说明 | 典型值 |
+|------|------|--------|
+| `engine_displacement_l` | 排量（L） | 1.0 ~ 4.0，均值 1.7 |
+| `engine_max_horsepower_ps` | 最大马力（PS） | 均值 173，范围 72 ~ 544 |
+| `engine_max_torque_nm` | 最大扭矩（N·m） | 均值 254，范围 93 ~ 725 |
+| `engine_intake_type` | 进气形式 | 涡轮增压 / 自然吸气 / 双涡轮增压 |
+| `fuel_form` | 燃油形式 | 汽油 / 纯电动 / 插电混动 |
+| `gearbox_type` | 变速箱类型 | 固定齿比 / 湿式双离合 / 手自一体(AT) / 手动 |
+
+#### 电机参数（纯电 / 混动有值，燃油为 NaN）
+
+| 列名 | 说明 | 典型值 |
+|------|------|--------|
+| `motor_total_power_kw` | 电机总功率（kW） | 均值 171，最高 880 |
+| `motor_total_torque_nm` | 电机总扭矩（N·m） | 均值 334，最高 1,520 |
+| `motor_front_power_kw` | 前电机功率（kW） | 前驱车为主 |
+| `motor_rear_power_kw` | 后电机功率（kW） | 四驱 / 高性能关键字段 |
+
+#### 电池参数（纯电 / 混动有部分值，缺失严重）
+
+| 列名 | 说明 | 注意 |
+|------|------|------|
+| `battery_range_km` | 纯电续航（km） | 均值 362，覆盖约 51% |
+| `battery_capacity_kwh` | 电池容量（kWh） | ⚠️ 81.1% 缺失，需谨慎使用 |
+| `battery_type` | 电池类型 | ⚠️ 80.2% 缺失 |
+| `battery_warranty` | 电池保修 | ⚠️ 77.4% 缺失 |
+
+#### 车身尺寸（全部无缺失）
+
+| 列名 | 说明 | 均值 |
+|------|------|------|
+| `length_mm` | 车长 | 4,723 mm |
+| `width_mm` | 车宽 | 1,865 mm |
+| `height_mm` | 车高 | 1,628 mm |
+| `wheelbase_mm` | **轴距**（空间核心指标） | 2,813 mm |
+| `curb_weight_kg` | 整备质量 | 1,735 kg |
+| `body_structure` | 车身结构 | 三厢车 / SUV / MPV |
+| `acceleration_0_100_s` | 0-100km/h 加速（s） | 均值 7.8，范围 3.1 ~ 20.0 |
+
+#### 安全配置（全部无缺失）
 
 | 列名 | 说明 |
 |------|------|
-| `统一后series_id` | **最终统一 ID**，JOIN 时用这个 |
-| `车辆主表series_id` | vehicles 原始 series_id |
-| `销量表原series_id` | sales 原始 series_id |
-| `series_name` | 车系名称 |
-| `brand_name` | 品牌名称 |
-| `核对状态` | 一致（14）/ 已统一（536）/ 系列级补采（589） |
-| `has_sales_data` | 是否有销量数据（1,122 有 / 17 无） |
+| `driver_airbag` | 驾驶员气囊 |
+| `side_airbag` | 侧气囊 / 侧气帘 |
+| `knee_airbag` | 膝部气囊（高端配置，非标配） |
 
-### 核对状态含义
+#### 舒适与科技配置（全部无缺失）
 
-- **一致（14 个）：** 两个源 ID 天然相同，无需处理
-- **已统一（536 个）：** 名称或 ID 有差异（如"型格-Integra"→"型格"），规则对齐
-- **系列级补采（589 个）：** vehicles 的 ID 来自懂车帝补采，pcauto 无对应 ID。**不影响关联**
+| 列名 | 说明 |
+|------|------|
+| `center_screen` | 中控屏幕 |
+| `seat_material` | 座椅材质（仿皮 / 真皮 / 织物） |
+| `sound_brand` | 音响品牌（哈曼卡顿 / BOSE 等） |
+| `seat_heating` | 座椅加热 |
+| `seat_massage` | 座椅按摩 |
+| `seat_ventilation` | 座椅通风 |
+| `aircon_control` | 空调控制方式（自动 / 手动） |
 
----
-
-## 四、缺失销量车系
-
-以下 17 个车系有配置数据但无销量数据（已通过 `has_sales_data=False` 标记）：
-
-| 车系 | 品牌 | 能源类型 | 原因 |
-|------|------|---------|------|
-| 阿维塔 06/07/11/12 | 阿维塔科技 | 增程式 | 新车未收录 |
-| 极狐 贝塔S3/T1/问道V9 | 北汽新能源 | 纯电动/增程式 | 新车未收录 |
-| iCAR超级V23 | 奇瑞新能源 | 纯电动 | 新车 |
-| 星纪元ET | 星途 | 增程式 | 新车 |
-| 瑞虎8L | 奇瑞汽车 | 燃油 | 2024 年上市 |
-| ARIYA 艾睿雅 | 东风日产 | 纯电动 | 源覆盖缺失 |
-| 长安CS35/CS55 PLUS | 长安汽车 | 燃油 | 源覆盖缺失 |
-| 风行S50 EV / 启辰D60/T60 EV | 东风系 | 纯电动 | 源覆盖缺失 |
-| ID. ERA 9X | 上汽大众 | 增程式 | 新车未上市 |
-
-**影响：** 均为数据窗口 < 24 个月的新车，不影响 ARIMA，XGBoost 时过滤即可。
+> 注：`speaker_count` 在源表中为异常填充值，已剔除，不纳入特征。
 
 ---
 
-## 五、数据使用指引
+## 三、对齐与建模子集
 
-### 用于 XGBoost / LightGBM
+按 `series_name` 直接对齐 `monthly_sales`（1,017 系）与 `feature`（766 系）：
 
-1. `sales.csv` 按 `series_id` 聚合（sum 月销量作为标签，或取最新月份）
-2. 左联 `vehicles.csv`，一个车系取一条记录
-3. 过滤 `has_sales_data=True` → 1,122 行训练集
-4. 特征可用：价格、尺寸、能源类型、马力/功率、变速箱类型、安全配置、舒适配置
-5. 条件缺失的 NaN 不用填充，XGBoost 原生处理
+- **371 个 in-population 车系（腿B）**：同时具备月度销量面板与配置，进入腿B 月度预测（2022-01~2026-06 连续覆盖）。
+- **736 个有年度销量车系（腿A）**：`feature.csv` 中含 `annual_sales` 且落在 2022–2026 窗口的车系，进入腿A 配置→销量横截面归因。
+- **646 个仅销量车系**：在 `monthly_sales` 中但无 `feature` 配置，已排除出建模总体（避免主表外车系稀释指标）。
 
-### 用于 ARIMA / Prophet / LSTM
+```
+monthly_sales(1017) ─┐
+                     ├─ 交集 371 ──> 腿B 月度预测
+feature(766) ────────┘
+feature 中有 annual_sales 的 736 系 ──> 腿A 年度归因
+monthly_sales 中无 feature 的 646 系 ──> 排除
+```
 
-1. 筛选 `data_source='pcauto'` 且覆盖 ≥ 36 个月的成熟车系
-2. 按 `year` + `month` 构建日期列
-3. 按 `series_id` 分组建模
-4. 注意 2026 年只有 1-5 月数据
-
-### 特征工程建议
-
-**可直接用的数值特征：**
-`official_price_wan`、`length_mm`、`wheelbase_mm`、`curb_weight_kg`、`engine_max_horsepower_ps`、`engine_max_torque_nm`、`motor_total_power_kw`、`battery_range_km`、`seat_count`、`max_speed_kmh`
-
-**建议编码的类别特征：**
-`energy_type`、`vehicle_class`、`manufacturer`、`gearbox_type`、`engine_intake_type`、`fuel_form`、`body_structure`、`seat_material`、`sound_brand`、`driver_airbag`、`side_airbag`
-
-**不建议使用的列：**
-`battery_type`（96.9% 缺失）、`battery_capacity_kwh`（97.4% 缺失）、`fuel_consumption_l_100km`（85.3% 缺失）、以及所有 ID/URL/爬虫元信息字段
-
-### 用于舆情影响因子回归
-
-1. `sentiment_summary.csv` 按 `series_id` 左联 `sales.csv`（聚合月销量作为标签 Y）
-2. 再左联 `vehicles.csv`（价格 / 级别 / 能源类型等特征 X）
-3. 特征：舆情（正向率 / 均分 / 8 维度）+ 车型（价格 / 级别 / 能源）
-4. 用标准化系数 + Bootstrap 置信区间（样本车系数有限，比 p 值更稳健）
-5. 注意舆情当前仅覆盖部分车系，回归前需与销量表取交集
+**影响**：646 个仅销量系多为长尾 / 停牌车系；排除后腿B 指标从全局 WMAPE ~51% 降至 26.9%（旧口径含孤儿系时偏高），验证「不拿主表外车系充数」的口径正确性。
 
 ---
 
-## 六、舆情口碑数据（sentiment）
+## 四、数据使用指引
+
+### 用于腿B 月度预测（ARIMA / Prophet / XGBoost / LSTM）
+
+1. 读取 `data/processed_new/splits/`（按绝对时间切分：`train` 2022-01~2025-06 / `val` 2025-07~2025-12 / `test` 2026-01~2026-06）。
+2. 在 371 个 in-population 车系上，按 `series_name` 关联 `feature`（配置按 `(series_name, year)` 取 ≤ 行年款，防未来配置泄漏）。
+3. 目标 `monthly_sales` → `log1p` 处理零膨胀；历史销量滞后特征主导预测，配置特征为次要项。
+4. 指标：WMAPE（体积加权 + per-series 中位数双口径）+ 特征消融 + 90% 预测区间。
+
+### 用于腿A 配置归因（XGBoost 横截面）
+
+1. 取 `feature.csv` 中 `annual_sales` 非空的 736 系（车系×年，约 2,007 行）。
+2. 目标 `y = log1p(annual_sales)`；`GroupKFold(5) by series_name`（同车系跨年配置近乎不变，必须按车系分组防泄露）。
+3. 特征 = 配置（价格 / 尺寸 / 能源 / 马力 / 电池…）+ 品牌 + 年。
+4. 注意：配置只解释**车系之间**差异，不能解释同车系跨年涨跌（见阶段四结论）。
+
+### 用于舆情影响因子回归（Phase B 待接入）
+
+1. `sentiment_summary.csv` 按 `series_name` 对齐 `monthly_sales` / `feature`（新管线统一用 `series_name`，不再依赖旧 `series_id` 桥接）。
+2. 舆情先在与 371 / 736 系取交集后，再作为外生变量进入腿B / 腿A 框架。
+3. 注意：旧舆情覆盖 490 个懂车帝车系，与新 pcauto 车系 ID 体系不同，Phase B 需先按 `series_name` 重新对齐。
+
+---
+
+## 五、舆情口碑数据（Phase B 待接入）
+
+> **阶段说明**：以下舆情数据来自项目前期在懂车帝的采集（490 车系，2026-07 完成），属 **Phase B（待接入新数据）** 素材。新管线已切换为「太平洋销量 + 汽车之家/太平洋配置」双源并按 `series_name` 对齐，Phase B 将把舆情按 `series_name` 重新对齐到 371 / 736 车系新口径后接入。本节保留原始采集说明作为 Phase B 参考。
 
 **来源**：懂车帝公开口碑 API（`dongchedi.com/motor/pc/car/series/get_review_list`），纯 `requests` 采集。采集脚本 `scripts/01_crawl_reviews.py`。
 
@@ -323,7 +290,7 @@ vehicles ———— series_id ———— series_mapping ———— series_
 |------|--------|---------|------|
 | `data/sentiment/sentiment_reviews.csv` | 40,054 条（490 车系） | 2019-06 ~ 2026-07 | 口碑评论明细 |
 | `data/sentiment/sentiment_summary.csv` | 490 车系 | — | 车系级情感聚合指标 |
-| `data/README.md` 第八章 | — | — | 覆盖与质量报告（已并入本数据文档） |
+| 本文档第六章 | — | — | 覆盖与质量报告（已并入本数据文档） |
 
 > 重新生成汇总 / 质量报告：`python scripts/03_build_sentiment_summary.py`（读取 `sentiment_reviews.csv`，输出 `sentiment_summary.csv` 与 `data_quality_report.json` / `.md` 至 `data/sentiment/`，可重新生成）。
 
@@ -358,7 +325,7 @@ vehicles ———— series_id ———— series_mapping ———— series_
 | 日产 | 8 | 725 | 4.06 |
 | 宝马 | 9 | 713 | 4.24 |
 
-> 完整 95 品牌明细见本文档第八章「舆情数据质量与覆盖报告」。
+> 完整 95 品牌明细见本文档第六章「舆情数据质量与覆盖报告」。
 
 ### 数据质量
 
@@ -394,7 +361,7 @@ vehicles ———— series_id ———— series_mapping ———— series_
 | `digg_count` / `comment_count` | 点赞 / 评论数 |
 | `car_model` / `buy_location` / `buy_price` / `buy_time` / `fuel_type` / `consumption` | 购车信息 |
 
-> ⚠️ `sentiment_reviews.csv` **不含品牌列**。品牌需通过 `series_id` 关联 `sales.csv`（字段 `brand`）或 `vehicles.csv`（`brand_name`）回补，见 `scripts/03_build_sentiment_summary.py` 的 `attach_brand()`。
+> ⚠️ `sentiment_reviews.csv` **不含品牌列**。品牌需通过 `series_name` 关联 `monthly_sales.csv`（字段 `brand`）或 `feature.csv`（`brand_name`）回补，见 `scripts/03_build_sentiment_summary.py` 的 `attach_brand()`。
 
 ### `sentiment_summary.csv` 列说明
 
@@ -409,34 +376,20 @@ vehicles ———— series_id ———— series_mapping ———— series_
 ### 与另两张表的关联
 
 ```
-vehicles ──series_id──┐
-                      ├──> sentiment_reviews / sentiment_summary
-sales    ──series_id──┘
+feature ──series_name──┐
+                       ├──> sentiment_reviews / sentiment_summary
+monthly_sales ──series_name──┘
 ```
 
 - 舆情 × 车型配置 → 解释"什么样的车口碑好"
-- 舆情 × 月度销量 → 影响因子回归（口碑是否驱动销量）
+- 舆情 × 月度销量 → 影响因子回归（口碑是否驱动销量，Phase B）
 
 ---
 
-## 七、分析就绪表（analysis_input.csv）
-
-由 `scripts/02_clean_and_align.py` 一键生成，是三表对齐后的分析输入：
-
-- **输入**：`sentiment_reviews.csv`（清洗去重）→ 车系级聚合 ＋ `sales.csv`（销量按车系聚合）＋ `vehicles.csv`（车系级配置特征）
-- **输出**：一行一车系，列含
-  - 舆情指标：`review_count` / `avg_rating` / `median_rating` / `positive_ratio` / `negative_ratio` / 8 维度均值（`avg_rating_*`）
-  - 销量标签：`total_sales` / `avg_monthly_sales` / `log_avg_monthly_sales` / `n_months` / `brand` / `category`
-  - 车型特征：`official_price_wan` / `vehicle_class` / `energy_type` / `manufacturer` / `brand_name`
-- **对齐逻辑**：三类 `series_id` 统一转 `str` 后左连接；舆情系优先匹配销量（回归标签 Y），再匹配配置（特征 X）。
-- **当前状态**（全量采集已完成）：490 系 → 489 系命中销量，可直接进回归；重跑 `02_clean_and_align.py` 即可随数据刷新。
-
----
-
-## 八、舆情数据质量与覆盖报告（完整版）
+## 六、舆情数据质量与覆盖报告（完整版，Phase B 待接入）
 
 > 本报告的原始生成逻辑见 `scripts/03_build_sentiment_summary.py`，重新运行会输出
-> `data_quality_report.json` 与 `data_quality_report.md` 至 `data/sentiment/`（可复现）。以下为合并进本数据文档的快照。
+> `data_quality_report.json` 与 `data_quality_report.md` 至 `data/sentiment/`（可复现）。以下为合并进本数据文档的快照（Phase B 参考）。
 
 - 总评论数: **40,054**
 - 覆盖车系: **490**
@@ -556,13 +509,14 @@ sales    ──series_id──┘
 | 灵悉 | 1 | 3 | 3.83 |
 | 东风富康 | 1 | 1 | 3.50 |
 
-## 九、阶段六看板数据桥
+---
+
+## 七、阶段六看板数据桥
 
 阶段六网页看板（`app/`）本身不产生原始数据，而是读取前文介绍的各类 CSV，由 `app/build_dashboard_data.py` 预烘焙成 JSON 数据桥，供前端 ECharts 直接渲染：
 
-- 输入：`data/processed/stage3/`、`data/processed/stage4/`、`data/processed/stage5/` 及 `data/sentiment/` 下的产物。
+- 输入：`data/processed_new/stage3/`、`data/processed_new/stage4/` 及 `data/sentiment/` 下的产物。
 - 输出：`app/static/data/*.json`（overview、forecast、absa、attribution、relation、alerts、drilldown）。
 - 运行：`python app/build_dashboard_data.py` 可重新生成；`python app/app.py` 启动看板。
 
-这些 JSON 文件已预烘焙并随代码提交，因此看板在本地或 GitHub Pages 静态部署时无需重新跑数据流水线。
-
+> 看板数据桥当前基于初始管线快照；Phase B 接入后将刷新为 371 / 736 车系新口径。

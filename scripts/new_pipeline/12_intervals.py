@@ -1,0 +1,222 @@
+#!/usr/bin/env python3
+"""
+12_intervals.py — 预测区间与覆盖度（无舆情基线 · 腿B）
+
+数据来源（统一）：06_make_splits.py 的 train / test。
+  * 每个模型在 train 上拟合，在 **test (2026-01..06, 6 个月)** 上评估区间覆盖度；
+  * 区间方法：
+      ARIMA   : get_forecast 的解析 conf_int(alpha=0.10)
+      Prophet : interval_width=0.9 的 yhat_lower / yhat_upper
+      XGBoost : 3 个分位数回归 (alpha 0.05 / 0.50 / 0.95)，递归多步（median 回填 lag）
+
+指标：PICP（覆盖率，目标≈0.90）/ MPIW（平均区间宽度）/ WMAPE（点预测误差）。
+
+输出：
+  data/processed_new/stage3/interval_results.csv
+  figures_new/intervals_coverage.png + intervals_example.png
+
+Run:
+  python scripts/new_pipeline/12_intervals.py
+"""
+import os
+os.environ["OMP_NUM_THREADS"] = "1"
+import warnings
+import logging
+warnings.filterwarnings("ignore")
+logging.getLogger("cmdstanpy").setLevel(logging.WARNING)
+logging.getLogger("prophet").setLevel(logging.WARNING)
+
+import numpy as np
+import pandas as pd
+import matplotlib
+matplotlib.use("Agg")
+import matplotlib.pyplot as plt
+import _font_setup
+from statsmodels.tsa.arima.model import ARIMA
+from xgboost import XGBRegressor
+from prophet import Prophet
+
+import _model_utils as mu
+import _subset
+
+BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+FIG = os.path.join(BASE, "figures_new")
+PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+os.makedirs(PROC, exist_ok=True)
+os.makedirs(FIG, exist_ok=True)
+
+NOMINAL = 0.90
+Z = 1.6448536269514722
+SEED = 42
+
+
+def picp_mpiw(actual, lower, upper):
+    actual = np.asarray(actual, float)
+    lower = np.asarray(lower, float)
+    upper = np.asarray(upper, float)
+    inside = np.mean((actual >= lower) & (actual <= upper))
+    width = np.mean(upper - lower)
+    width_pct = width / actual.mean() * 100 if actual.mean() != 0 else np.nan
+    return inside, width, width_pct
+
+
+def auto_order(train):
+    best_aic, best = np.inf, (1, 1, 1)
+    for p in range(3):
+        for d in range(2):
+            for q in range(3):
+                try:
+                    fit = ARIMA(train, order=(p, d, q)).fit()
+                    if np.isfinite(fit.aic) and fit.aic < best_aic:
+                        best_aic, best = fit.aic, (p, d, q)
+                except Exception:
+                    continue
+    return best
+
+
+def arima_pi(subset, tr):
+    aa, ap, al, au = [], [], [], []
+    for name in subset:
+        s = (tr[tr["series_name"].astype(str) == name]
+             .sort_values("date")["monthly_sales"].astype(float).values)
+        if len(s) <= 12:
+            continue
+        train_on, test_on = s[:-6], s[-6:]
+        try:
+            order = auto_order(train_on)
+            fc = ARIMA(train_on, order=order).fit().get_forecast(6)
+            mean = np.asarray(fc.predicted_mean).clip(min=0)
+            ci = np.asarray(fc.conf_int(alpha=1 - NOMINAL))
+            aa.extend(test_on); ap.extend(mean)
+            al.extend(ci[:, 0].clip(min=0))
+            au.extend(ci[:, 1].clip(min=0))
+        except Exception:
+            continue
+    return np.array(aa), np.array(ap), np.array(al), np.array(au)
+
+
+def prophet_pi(subset, tr):
+    aa, ap, al, au = [], [], [], []
+    for name in subset:
+        s = (tr[tr["series_name"].astype(str) == name]
+             .sort_values("date")["monthly_sales"].astype(float).values)
+        if len(s) <= 12:
+            continue
+        train_on, test_on = s[:-6], s[-6:]
+        try:
+            df = pd.DataFrame({"ds": pd.date_range("2018-01-01", periods=len(train_on), freq="MS"),
+                               "y": train_on.astype(float)})
+            m = Prophet(interval_width=NOMINAL, yearly_seasonality=True,
+                        weekly_seasonality=False, daily_seasonality=False)
+            m.fit(df)
+            future = m.make_future_dataframe(periods=6, freq="MS")
+            fc = m.predict(future).iloc[-6:]
+            aa.extend(test_on); ap.extend(fc["yhat"].clip(min=0).values)
+            al.extend(fc["yhat_lower"].clip(min=0).values)
+            au.extend(fc["yhat_upper"].clip(min=0).values)
+        except Exception:
+            continue
+    return np.array(aa), np.array(ap), np.array(al), np.array(au)
+
+
+def xgb_pi(subset, panel):
+    from _feature_join import CFG_COLS
+    tr, va, _ = mu.load_splits()
+    models = {}
+    for a in (0.05, 0.50, 0.95):
+        m = XGBRegressor(n_estimators=1000, max_depth=6, learning_rate=0.05, subsample=0.8,
+                         colsample_bytree=0.8, random_state=SEED, n_jobs=1,
+                         objective="reg:quantileerror", quantile_alpha=a, early_stopping_rounds=50)
+        m.fit(tr[mu.FEAT_COLS], np.log1p(tr[mu.TARGET]),
+              eval_set=[(va[mu.FEAT_COLS], np.log1p(va[mu.TARGET]))], verbose=False)
+        models[a] = m
+
+    aa, ap, al, au = [], [], [], []
+    for name, g in panel.groupby("series_name"):
+        g = g.sort_values("date").reset_index(drop=True)
+        cfg = {d: {c: r[c] for c in CFG_COLS} for d, r in g.set_index("date").iterrows()}
+        train_part = g[g["split"] == "train"]
+        if len(train_part) == 0:
+            continue
+        history = train_part[mu.TARGET].astype(float).tolist()
+        lo, pt, hi = [], [], []
+        for _, r in g[g["split"] != "train"].iterrows():
+            d = r["date"]
+            h = np.asarray(history, float)
+            row = {
+                "lag_1": h[-1] if len(h) >= 1 else 0.0, "lag_2": h[-2] if len(h) >= 2 else 0.0,
+                "lag_3": h[-3] if len(h) >= 3 else 0.0,
+                "roll_mean_3": float(np.mean(h[-3:])) if len(h) >= 1 else 0.0,
+                "roll_mean_6": float(np.mean(h[-6:])) if len(h) >= 1 else 0.0,
+                "month_sin": np.sin(2 * np.pi * d.month / 12),
+                "month_cos": np.cos(2 * np.pi * d.month / 12), "year": d.year,
+            }
+            for c in CFG_COLS:
+                row[c] = cfg[d][c]
+            X = pd.DataFrame([row], columns=mu.FEAT_COLS)
+            p05 = max(float(np.expm1(models[0.05].predict(X)[0])), 0.0)
+            p50 = max(float(np.expm1(models[0.50].predict(X)[0])), 0.0)
+            p95 = max(float(np.expm1(models[0.95].predict(X)[0])), 0.0)
+            lo.append(p05); pt.append(p50); hi.append(p95)
+            history.append(p50)   # 用 median 回填 lag
+        test_g = g[g["split"] == "test"]
+        aa.extend(test_g[mu.TARGET].astype(float).values)
+        ap.extend(pt); al.extend(lo); au.extend(hi)
+    return np.array(aa), np.array(ap), np.array(al), np.array(au)
+
+
+def summarize(name, aa, ap, al, au):
+    picp, width, width_pct = picp_mpiw(aa, al, au)
+    wmape = mu.wmape_vol(aa, ap)
+    return {"model": name, "PICP": round(float(picp), 3), "MPIW": round(float(width), 1),
+            "MPIW_pct": round(float(width_pct), 1), "WMAPE": round(float(wmape), 1),
+            "n_points": len(aa)}
+
+
+def main():
+    tr, va, te = mu.load_splits()
+    subset = _subset.load_subset()
+    panel = mu.load_panel_for_subset(subset)
+    print(f"[PI] 评估子集 {len(subset)} 系 | 区间在 test (6 月) 上评估, 名义水平 {NOMINAL}")
+
+    print("[PI] ARIMA ..."); a = arima_pi(subset, tr)
+    print("[PI] Prophet ..."); p = prophet_pi(subset, tr)
+    print("[PI] XGBoost (quantile) ..."); x = xgb_pi(subset, panel)
+
+    rows = [summarize("ARIMA", *a), summarize("Prophet", *p), summarize("XGBoost", *x)]
+    res = pd.DataFrame(rows)
+    res.to_csv(os.path.join(PROC, "interval_results.csv"), index=False)
+    print("\n===== Prediction-interval coverage (90% nominal, temporal TEST) =====")
+    print(res.to_string(index=False))
+
+    fig, ax = plt.subplots(figsize=(7, 4), constrained_layout=True)
+    colors = ["#4C78A8", "#F58518", "#54A24B"]
+    ax.bar(res["model"], res["PICP"], color=colors)
+    ax.axhline(NOMINAL, color="red", ls="--", lw=1.2, label=f"target {NOMINAL:.0%}")
+    for i, v in enumerate(res["PICP"]):
+        ax.text(i, v + 0.01, f"{v:.0%}", ha="center", fontsize=10)
+    ax.set_ylim(0, 1.1); ax.set_ylabel("PICP (coverage)")
+    ax.set_title("Prediction-interval coverage (higher≈target)")
+    ax.legend(); ax.grid(alpha=0.3)
+    fig.savefig(os.path.join(FIG, "intervals_coverage.png"), dpi=130)
+
+    # 示例：XGBoost 区间
+    fig, ax = plt.subplots(figsize=(7, 4), constrained_layout=True)
+    name = subset[0]
+    g = panel[panel["series_name"] == name].sort_values("date")
+    trg = g[g["split"] == "train"]; teg = g[g["split"] == "test"]
+    ax.plot(trg["date"], trg[mu.TARGET], color="#4C78A8", lw=1.3, label="train")
+    ax.plot(teg["date"], teg[mu.TARGET], color="#F58518", lw=1.8, marker="o", ms=4, label="actual")
+    idx0 = list(subset).index(name) * 6
+    xs = x[1][idx0:idx0 + 6]; xl = x[2][idx0:idx0 + 6]; xu = x[3][idx0:idx0 + 6]
+    ax.plot(teg["date"], xs, color="#54A24B", lw=1.6, marker="s", ms=3, label="XGBoost point")
+    ax.fill_between(teg["date"], xl, xu, color="#54A24B", alpha=0.2, label="XGBoost 90% PI")
+    ax.set_title(f"Prediction interval example: {name}")
+    ax.legend(fontsize=8); ax.tick_params(labelsize=8)
+    fig.savefig(os.path.join(FIG, "intervals_example.png"), dpi=130)
+    print("[PI] figures saved -> figures_new/intervals_coverage.png, intervals_example.png")
+    print("[PI] done.")
+
+
+if __name__ == "__main__":
+    main()
