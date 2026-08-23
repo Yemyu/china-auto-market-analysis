@@ -55,6 +55,16 @@ def _load_dongchedi_ids():
         df = pd.read_csv(ai)
         if {"series_name", "series_id"} <= set(df.columns):
             frames.append(df[["series_name", "series_id"]].astype(str))
+    # New-data ID resolution register.  This is deliberately a small,
+    # auditable supplement: every inferred match must retain its source URL
+    # and verification status instead of being silently hard-coded elsewhere.
+    resolved = os.path.join(ROOT, "data", "processed_new", "phase_b", "dongchedi_id_resolutions.csv")
+    if os.path.exists(resolved):
+        df = pd.read_csv(resolved)
+        required = {"series_name", "dongchedi_series_id", "resolution_status"}
+        if required <= set(df.columns):
+            df = df[df["resolution_status"].astype(str).str.lower().eq("verified")]
+            frames.append(df.rename(columns={"dongchedi_series_id": "series_id"})[["series_name", "series_id"]].astype(str))
     if not frames:
         return pd.DataFrame(columns=["series_name", "dongchedi_series_id"])
     out = pd.concat(frames, ignore_index=True)

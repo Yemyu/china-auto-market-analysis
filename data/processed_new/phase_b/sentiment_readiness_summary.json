@@ -1,0 +1,13 @@
+{
+  "new_population_series": 371,
+  "reusable_review_series": 261,
+  "reusable_absa_series": 259,
+  "crawl_gap_series": 110,
+  "crawl_gap_with_dongchedi_id": 13,
+  "crawl_gap_id_resolution_required": 97,
+  "review_sales_window": [
+    "2022-01-01",
+    "2026-06-30"
+  ],
+  "note": "Old coverage is reusable seed data only; refresh/re-crawl is still required for a new Phase-B corpus."
+}

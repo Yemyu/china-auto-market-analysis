@@ -2,12 +2,13 @@
 """
 13_model_prophet_exog.py — Prophet + 外生变量（无舆情基线 · 腿B）
 
-数据来源（统一）：06_make_splits.py 的 train / test。
+数据来源（统一）：06_make_splits.py 的 train / val / test。
   * 每车系在 train (2022-01..2025-06) 上拟合，外生变量：
       - add_country_holidays("CN")  春节 / 国庆月效应
       - add_regressor("price_wan")   官方指导价（价格弹性水平）
       - add_regressor("promo")       大促月指示（6·18 / 双11 / 年末清库）
-  * 在 **test (2026-01..06, 6 个月)** 上评估（外生变量随未来日期前推）。
+  * 验证期结束后，以 train+val 重拟合，在 **test (2026-01..06, 6 个月)**
+    上评估（外生变量随真实未来日期前推）。
 
 输出：
   data/processed_new/stage3/prophet_exog_results.csv / prophet_exog_preds.csv
@@ -44,7 +45,7 @@ PROMO_MONTHS = {6, 11, 12}
 
 
 def main():
-    tr, _, te = mu.load_splits()
+    tr, va, te = mu.load_splits()
     feat = pd.read_csv(os.path.join(BASE, "data", "raw", "feature.csv"), low_memory=False)
     feat["series_name"] = feat["series_name"].astype(str)
     feat["official_price_wan"] = pd.to_numeric(feat["official_price_wan"], errors="coerce")
@@ -54,28 +55,27 @@ def main():
     subset = _subset.load_subset()
     print(f"[Prophet-exog] 评估子集 {len(subset)} 系 | 拟合 train, 评估 test (6 月)")
 
-    # 每车系 train/test 序列
-    tr_by = {n: (tr[tr["series_name"].astype(str) == n].sort_values("date")["monthly_sales"]
-                 .astype(float).values) for n in subset}
-    te_by = {n: (te[te["series_name"].astype(str) == n].sort_values("date")["monthly_sales"]
-                 .astype(float).values) for n in subset}
-
     rows, preds_rows, examples = [], [], []
     for name in subset:
-        s = tr_by[name]
+        trg = tr[tr["series_name"].astype(str) == name].sort_values("date")
+        vg = va[va["series_name"].astype(str) == name].sort_values("date")
+        tg = te[te["series_name"].astype(str) == name].sort_values("date")
+        s = trg["monthly_sales"].astype(float).values
         if len(s) <= 12:
             rows.append({"series_name": name, "status": "too_short"})
             continue
-        tgt = te_by.get(name, np.array([]))
-        if len(tgt) == 0:
-            rows.append({"series_name": name, "status": "no_test"})
+        tgt = tg["monthly_sales"].astype(float).values
+        if len(vg) != 6 or len(tgt) != 6:
+            rows.append({"series_name": name, "status": "incomplete_window"})
             continue
         price = float(price_map.get(name, price_median))
+        fit_dates = pd.concat([trg["date"], vg["date"]], ignore_index=True)
+        fit_sales = pd.concat([trg["monthly_sales"], vg["monthly_sales"]], ignore_index=True).astype(float)
         df = pd.DataFrame({
-            "ds": pd.date_range("2018-01-01", periods=len(s), freq="MS"),
-            "y": s.astype(float),
+            "ds": pd.to_datetime(fit_dates),
+            "y": fit_sales,
             "price_wan": price,
-            "promo": [1 if d.month in PROMO_MONTHS else 0 for d in pd.date_range("2018-01-01", periods=len(s), freq="MS")],
+            "promo": [1 if d.month in PROMO_MONTHS else 0 for d in pd.to_datetime(fit_dates)],
         })
         try:
             m = Prophet(weekly_seasonality=False, daily_seasonality=False,
@@ -84,20 +84,20 @@ def main():
             m.add_regressor("price_wan")
             m.add_regressor("promo")
             m.fit(df)
-            future = m.make_future_dataframe(periods=len(tgt), freq="MS")
+            future = pd.DataFrame({"ds": pd.to_datetime(tg["date"])})
             future["price_wan"] = price
             future["promo"] = [1 if d.month in PROMO_MONTHS else 0 for d in future["ds"]]
             fc = m.predict(future).iloc[-len(tgt):]["yhat"].clip(lower=0).values
             met = mu.metrics(tgt, fc)
             met.update({"series_name": name, "status": "ok"})
             rows.append(met)
-            tdates = te[te["series_name"].astype(str) == name].sort_values("date")["date"].values
+            tdates = tg["date"].values
             for j, d in enumerate(tdates):
                 preds_rows.append({"series_name": name,
                                    "date": pd.Timestamp(d).strftime("%Y-%m-%d"),
                                    "actual": float(tgt[j]), "pred": float(fc[j])})
             if len(examples) < 9:
-                examples.append((name, pd.Series(s), pd.Series(tgt), pd.Series(fc)))
+                examples.append((name, pd.Series(fit_sales), pd.Series(tgt), pd.Series(fc)))
         except Exception as e:
             rows.append({"series_name": name, "status": f"error: {type(e).__name__}"})
 

@@ -74,12 +74,18 @@ def wmape_per_series(y_true, y_pred, series):
     return g
 
 
-def recursive_forecast_tree(model, series_df, feat_cols=None):
-    """用训练好的树模型在 val+test 上做递归多步预测。
+def recursive_forecast_tree(model, series_df, feat_cols=None,
+                            history_splits=("train",), forecast_splits=("val", "test")):
+    """用训练好的树模型在指定时期上做递归多步预测。
+
+    ``history_splits`` contains periods whose realised sales are legitimately
+    known when the forecast starts; ``forecast_splits`` are forecast
+    recursively.  For example, validation uses ``train -> val`` while the
+    final test forecast uses ``train+val -> test`` after model selection.
 
     机制（无泄漏）：
-      * seed history = 该车系 train 阶段的真实 monthly_sales（含 2025-06 及以前）。
-      * 对每一个非 train 月份（先 val 后 test）：
+      * seed history = ``history_splits`` 中、预测起点之前的真实 monthly_sales。
+      * 对每一个 forecast 月份：
           - 用「当前 running history」构造 lag_1..3 / roll_mean_3/6（只引用过去），
           - 配置列取该月自身在 splits 中已 join 好的因果配置（year<=行年），
           - predict -> expm1 -> clip(>=0) -> 记为该月预测，并 append 进 history。
@@ -93,12 +99,14 @@ def recursive_forecast_tree(model, series_df, feat_cols=None):
     series_df = series_df.sort_values("date").reset_index(drop=True)
     cfg = {d: {c: r[c] for c in CFG_COLS}
            for d, r in series_df.set_index("date").iterrows()}
-    train_part = series_df[series_df["split"] == "train"]
-    if len(train_part) == 0:
+    history_part = series_df[series_df["split"].isin(history_splits)]
+    if len(history_part) == 0:
         return {}
-    history = train_part[TARGET].astype(float).tolist()
+    history = history_part[TARGET].astype(float).tolist()
     preds = {}
-    for _, r in series_df[series_df["split"] != "train"].iterrows():
+    for _, r in series_df.iterrows():
+        if r["split"] not in forecast_splits:
+            continue
         d = r["date"]
         h = np.asarray(history, dtype=float)
         row = {

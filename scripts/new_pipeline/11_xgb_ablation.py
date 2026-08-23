@@ -45,12 +45,20 @@ VERSIONS = {
 
 
 def fit_version(cols, tr, va):
+    """Select tree count on validation, then refit on train+validation."""
     m = XGBRegressor(n_estimators=1000, max_depth=6, learning_rate=0.05,
                      subsample=0.8, colsample_bytree=0.8, random_state=42,
                      objective="reg:squarederror", n_jobs=1, early_stopping_rounds=50)
     m.fit(tr[cols], np.log1p(tr[mu.TARGET]),
           eval_set=[(va[cols], np.log1p(va[mu.TARGET]))], verbose=False)
-    return m
+    best_raw = getattr(m, "best_iteration", None)
+    n_estimators = (int(best_raw) + 1) if best_raw is not None else 1000
+    final = XGBRegressor(n_estimators=n_estimators, max_depth=6, learning_rate=0.05,
+                         subsample=0.8, colsample_bytree=0.8, random_state=42,
+                         objective="reg:squarederror", n_jobs=1)
+    trva = pd.concat([tr, va], ignore_index=True)
+    final.fit(trva[cols], np.log1p(trva[mu.TARGET]), verbose=False)
+    return final
 
 
 def main():
@@ -72,7 +80,10 @@ def main():
             test_g = g[g["split"] == "test"]
             if len(test_g) == 0:
                 continue
-            preds = mu.recursive_forecast_tree(model, g, feat_cols=cols)
+            preds = mu.recursive_forecast_tree(
+                model, g, feat_cols=cols,
+                history_splits=("train", "val"), forecast_splits=("test",)
+            )
             actual = test_g[mu.TARGET].astype(float).values
             pred = np.array([preds.get(d, np.nan) for d in test_g["date"].values], dtype=float)
             if np.isnan(pred).any():
@@ -82,7 +93,8 @@ def main():
             abs_err[vname] += np.abs(actual - pred).sum()
             act_sum[vname] += np.abs(actual).sum()
             if vname == "FULL" and example_full is None:
-                example_full = (name, g[g["split"] == "train"].set_index("date")[mu.TARGET],
+                example_full = (name, g[g["split"].isin(["train", "val"])]
+                                .set_index("date")[mu.TARGET],
                                 test_g.set_index("date")[mu.TARGET],
                                 pd.Series(pred, index=test_g["date"]))
 

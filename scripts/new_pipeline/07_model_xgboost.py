@@ -49,25 +49,51 @@ def main():
     print(f"[XGBoost] 评估子集: {len(subset)} 系 | "
           f"train={len(tr)} val={len(va)} test={len(te)} 行")
 
-    # --- 训练（train），early-stop on val ---
-    model = XGBRegressor(
+    # --- Model selection on validation; the test set remains untouched. ---
+    select_model = XGBRegressor(
         n_estimators=1000, max_depth=6, learning_rate=0.05,
         subsample=0.8, colsample_bytree=0.8, random_state=42,
         objective="reg:squarederror", n_jobs=1, early_stopping_rounds=50,
     )
-    model.fit(
+    select_model.fit(
         tr[mu.FEAT_COLS], np.log1p(tr[mu.TARGET]),
         eval_set=[(va[mu.FEAT_COLS], np.log1p(va[mu.TARGET]))],
         verbose=False,
     )
-    print(f"[XGBoost] best_iteration={getattr(model, 'best_iteration', 'n/a')}")
+    best_raw = getattr(select_model, "best_iteration", None)
+    best_iteration = (int(best_raw) + 1) if best_raw is not None else 1000
+    print(f"[XGBoost] validation-selected n_estimators={best_iteration}")
 
-    # --- 递归多步预测（val+test），逐车系 ---
+    # Refit once on every observation available before the test window.
+    # This is the standard train/val/test protocol: validation selects the
+    # capacity; its realised sales may then seed the Jan-2026 forecast.
+    final_model = XGBRegressor(
+        n_estimators=best_iteration, max_depth=6, learning_rate=0.05,
+        subsample=0.8, colsample_bytree=0.8, random_state=42,
+        objective="reg:squarederror", n_jobs=1,
+    )
+    trva = pd.concat([tr, va], ignore_index=True)
+    final_model.fit(trva[mu.FEAT_COLS], np.log1p(trva[mu.TARGET]), verbose=False)
+
+    # --- Validation predictions are saved for leakage-free fusion selection. ---
     panel = mu.load_panel_for_subset(subset)
-    rows, preds_rows, examples = [], [], []
+    val_preds_rows, rows, preds_rows, examples = [], [], [], []
     for name, g in panel.groupby("series_name"):
         g = g.sort_values("date")
-        preds = mu.recursive_forecast_tree(model, g)
+        val_preds = mu.recursive_forecast_tree(
+            select_model, g, history_splits=("train",), forecast_splits=("val",)
+        )
+        val_g = g[g["split"] == "val"]
+        for d, a in zip(val_g["date"].values, val_g[mu.TARGET].astype(float).values):
+            p = val_preds.get(d, np.nan)
+            if np.isfinite(p):
+                val_preds_rows.append({"series_name": name,
+                                       "date": pd.Timestamp(d).strftime("%Y-%m-%d"),
+                                       "actual": float(a), "pred": float(p)})
+
+        preds = mu.recursive_forecast_tree(
+            final_model, g, history_splits=("train", "val"), forecast_splits=("test",)
+        )
         if not preds:
             rows.append({"series_name": name, "status": "no_train"})
             continue
@@ -88,13 +114,15 @@ def main():
                                "date": pd.Timestamp(d).strftime("%Y-%m-%d"),
                                "actual": float(a), "pred": float(p)})
         if len(examples) < 9:
-            trg = g[g["split"] == "train"]
+            trg = g[g["split"].isin(["train", "val"])]
             examples.append((name, trg.set_index("date")[mu.TARGET],
                              test_g.set_index("date")[mu.TARGET],
                              pd.Series(pred, index=test_g["date"])))
 
     res = pd.DataFrame(rows)
     res.to_csv(os.path.join(PROC, "xgboost_results.csv"), index=False)
+    if val_preds_rows:
+        pd.DataFrame(val_preds_rows).to_csv(os.path.join(PROC, "xgboost_val_preds.csv"), index=False)
     if preds_rows:
         pd.DataFrame(preds_rows).to_csv(os.path.join(PROC, "xgboost_preds.csv"), index=False)
 
@@ -110,10 +138,10 @@ def main():
               f"MAE={ok['MAE'].mean():.1f}")
 
     # --- 特征重要性 + 示例图 ---
-    imp = pd.Series(model.feature_importances_, index=mu.FEAT_COLS).sort_values()
+    imp = pd.Series(final_model.feature_importances_, index=mu.FEAT_COLS).sort_values()
     fig, axes = plt.subplots(1, 2, figsize=(13, 5), constrained_layout=True)
     axes[1].barh(imp.index, imp.values, color="#4C78A8")
-    axes[1].set_title("XGBoost feature importance (test-trained)", fontsize=10)
+    axes[1].set_title("XGBoost feature importance (train+val fitted)", fontsize=10)
     axes[1].tick_params(labelsize=8)
     if examples:
         name, tr_s, te_s, fc_s = examples[0]

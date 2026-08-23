@@ -2,8 +2,9 @@
 """
 12_intervals.py — 预测区间与覆盖度（无舆情基线 · 腿B）
 
-数据来源（统一）：06_make_splits.py 的 train / test。
-  * 每个模型在 train 上拟合，在 **test (2026-01..06, 6 个月)** 上评估区间覆盖度；
+数据来源（统一）：06_make_splits.py 的 train / val / test。
+  * 在验证期选择树的迭代轮数后，模型以 train+val 重拟合，在
+    **test (2026-01..06, 6 个月)** 上评估区间覆盖度；
   * 区间方法：
       ARIMA   : get_forecast 的解析 conf_int(alpha=0.10)
       Prophet : interval_width=0.9 的 yhat_lower / yhat_upper
@@ -74,14 +75,16 @@ def auto_order(train):
     return best
 
 
-def arima_pi(subset, tr):
+def arima_pi(subset, tr, va, te):
     aa, ap, al, au = [], [], [], []
     for name in subset:
-        s = (tr[tr["series_name"].astype(str) == name]
-             .sort_values("date")["monthly_sales"].astype(float).values)
-        if len(s) <= 12:
+        train_on = pd.concat([
+            tr[tr["series_name"].astype(str) == name],
+            va[va["series_name"].astype(str) == name],
+        ]).sort_values("date")["monthly_sales"].astype(float).values
+        test_on = te[te["series_name"].astype(str) == name].sort_values("date")["monthly_sales"].astype(float).values
+        if len(train_on) <= 12 or len(test_on) != 6:
             continue
-        train_on, test_on = s[:-6], s[-6:]
         try:
             order = auto_order(train_on)
             fc = ARIMA(train_on, order=order).fit().get_forecast(6)
@@ -95,25 +98,29 @@ def arima_pi(subset, tr):
     return np.array(aa), np.array(ap), np.array(al), np.array(au)
 
 
-def prophet_pi(subset, tr):
+def prophet_pi(subset, tr, va, te):
     aa, ap, al, au = [], [], [], []
     for name in subset:
-        s = (tr[tr["series_name"].astype(str) == name]
-             .sort_values("date")["monthly_sales"].astype(float).values)
-        if len(s) <= 12:
+        fit = pd.concat([
+            tr[tr["series_name"].astype(str) == name],
+            va[va["series_name"].astype(str) == name],
+        ]).sort_values("date")
+        test = te[te["series_name"].astype(str) == name].sort_values("date")
+        if len(fit) <= 12 or len(test) != 6:
             continue
-        train_on, test_on = s[:-6], s[-6:]
         try:
-            df = pd.DataFrame({"ds": pd.date_range("2018-01-01", periods=len(train_on), freq="MS"),
-                               "y": train_on.astype(float)})
+            df = pd.DataFrame({"ds": pd.to_datetime(fit["date"]),
+                               "y": fit["monthly_sales"].astype(float)})
             m = Prophet(interval_width=NOMINAL, yearly_seasonality=True,
                         weekly_seasonality=False, daily_seasonality=False)
             m.fit(df)
-            future = m.make_future_dataframe(periods=6, freq="MS")
+            future = pd.DataFrame({"ds": pd.to_datetime(test["date"])})
             fc = m.predict(future).iloc[-6:]
-            aa.extend(test_on); ap.extend(fc["yhat"].clip(min=0).values)
-            al.extend(fc["yhat_lower"].clip(min=0).values)
-            au.extend(fc["yhat_upper"].clip(min=0).values)
+            point = fc["yhat"].clip(lower=0).values
+            lower = fc["yhat_lower"].clip(lower=0).values
+            upper = fc["yhat_upper"].clip(lower=0).values
+            aa.extend(test["monthly_sales"].astype(float).values)
+            ap.extend(point); al.extend(lower); au.extend(upper)
         except Exception:
             continue
     return np.array(aa), np.array(ap), np.array(al), np.array(au)
@@ -123,24 +130,31 @@ def xgb_pi(subset, panel):
     from _feature_join import CFG_COLS
     tr, va, _ = mu.load_splits()
     models = {}
+    trva = pd.concat([tr, va], ignore_index=True)
     for a in (0.05, 0.50, 0.95):
-        m = XGBRegressor(n_estimators=1000, max_depth=6, learning_rate=0.05, subsample=0.8,
-                         colsample_bytree=0.8, random_state=SEED, n_jobs=1,
-                         objective="reg:quantileerror", quantile_alpha=a, early_stopping_rounds=50)
-        m.fit(tr[mu.FEAT_COLS], np.log1p(tr[mu.TARGET]),
-              eval_set=[(va[mu.FEAT_COLS], np.log1p(va[mu.TARGET]))], verbose=False)
-        models[a] = m
+        selector = XGBRegressor(n_estimators=1000, max_depth=6, learning_rate=0.05, subsample=0.8,
+                                colsample_bytree=0.8, random_state=SEED, n_jobs=1,
+                                objective="reg:quantileerror", quantile_alpha=a, early_stopping_rounds=50)
+        selector.fit(tr[mu.FEAT_COLS], np.log1p(tr[mu.TARGET]),
+                     eval_set=[(va[mu.FEAT_COLS], np.log1p(va[mu.TARGET]))], verbose=False)
+        best = getattr(selector, "best_iteration", None)
+        final = XGBRegressor(n_estimators=(int(best) + 1) if best is not None else 1000,
+                             max_depth=6, learning_rate=0.05, subsample=0.8,
+                             colsample_bytree=0.8, random_state=SEED, n_jobs=1,
+                             objective="reg:quantileerror", quantile_alpha=a)
+        final.fit(trva[mu.FEAT_COLS], np.log1p(trva[mu.TARGET]), verbose=False)
+        models[a] = final
 
     aa, ap, al, au = [], [], [], []
     for name, g in panel.groupby("series_name"):
         g = g.sort_values("date").reset_index(drop=True)
         cfg = {d: {c: r[c] for c in CFG_COLS} for d, r in g.set_index("date").iterrows()}
-        train_part = g[g["split"] == "train"]
+        train_part = g[g["split"].isin(["train", "val"])]
         if len(train_part) == 0:
             continue
         history = train_part[mu.TARGET].astype(float).tolist()
         lo, pt, hi = [], [], []
-        for _, r in g[g["split"] != "train"].iterrows():
+        for _, r in g[g["split"] == "test"].iterrows():
             d = r["date"]
             h = np.asarray(history, float)
             row = {
@@ -160,8 +174,9 @@ def xgb_pi(subset, panel):
             lo.append(p05); pt.append(p50); hi.append(p95)
             history.append(p50)   # 用 median 回填 lag
         test_g = g[g["split"] == "test"]
-        aa.extend(test_g[mu.TARGET].astype(float).values)
-        ap.extend(pt); al.extend(lo); au.extend(hi)
+        if len(test_g) == 6 and len(pt) == 6:
+            aa.extend(test_g[mu.TARGET].astype(float).values)
+            ap.extend(pt); al.extend(lo); au.extend(hi)
     return np.array(aa), np.array(ap), np.array(al), np.array(au)
 
 
@@ -179,8 +194,8 @@ def main():
     panel = mu.load_panel_for_subset(subset)
     print(f"[PI] 评估子集 {len(subset)} 系 | 区间在 test (6 月) 上评估, 名义水平 {NOMINAL}")
 
-    print("[PI] ARIMA ..."); a = arima_pi(subset, tr)
-    print("[PI] Prophet ..."); p = prophet_pi(subset, tr)
+    print("[PI] ARIMA ..."); a = arima_pi(subset, tr, va, te)
+    print("[PI] Prophet ..."); p = prophet_pi(subset, tr, va, te)
     print("[PI] XGBoost (quantile) ..."); x = xgb_pi(subset, panel)
 
     rows = [summarize("ARIMA", *a), summarize("Prophet", *p), summarize("XGBoost", *x)]

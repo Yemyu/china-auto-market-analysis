@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
-"""
-fusion + Step 11 comparison
-- Fusion: Prophet + XGBoost inverse-WMAPE weighted average (heuristic; more
-  weight to the more accurate model on the test set).
-- Comparison: aggregate per-series metrics (mean WMAPE/MAPE/RMSE/MAE) for
-  ARIMA / Prophet / XGBoost / LSTM / Fusion on the same 30-series, 3-month test.
+"""Leakage-free fusion and Stage-3 model comparison.
 
-Run:
-  python scripts/09_fusion_and_compare.py
+Fusion weights are selected using *validation* predictions only, then frozen
+before the final test forecast.  Every model must use the time-eligible
+stratified cohort built by ``_subset.py``; comparison therefore never mixes
+different series counts.
 """
 import os
 import warnings
@@ -53,9 +50,10 @@ PREDS = {
 }
 
 
-def agg_results(path, model):
+def agg_results(path, model, cohort):
     r = pd.read_csv(path)
     ok = r[r["status"] == "ok"] if "status" in r.columns else r
+    ok = ok[ok["series_name"].astype(str).isin(cohort)]
     row = {
         "model": model,
         "WMAPE_mean": ok["WMAPE"].mean(),     # mean of per-series WMAPE (outlier-sensitive)
@@ -69,6 +67,7 @@ def agg_results(path, model):
     pp = os.path.join(PROC, PREDS.get(model, ""))
     if os.path.exists(pp):
         p = pd.read_csv(pp)
+        p = p[p["series_name"].astype(str).isin(cohort)]
         a = p["actual"].values.astype(float)
         pr = p["pred"].values.astype(float)
         row["WMAPE_vol"] = np.sum(np.abs(a - pr)) / np.sum(np.abs(a)) * 100 if np.sum(np.abs(a)) > 0 else np.nan
@@ -76,18 +75,45 @@ def agg_results(path, model):
 
 
 def main():
-# fusion
+    # Select fusion weights on validation, never on the test actuals.
+    vp = pd.read_csv(os.path.join(PROC, "prophet_val_preds.csv"))
+    vx = pd.read_csv(os.path.join(PROC, "xgboost_val_preds.csv"))
+    vm = vp.merge(vx, on=["series_name", "date"], suffixes=("_prophet", "_xgboost"))
+    if vm.empty:
+        raise RuntimeError("No overlapping validation predictions for fusion.")
+    vactual = vm["actual_prophet"].values
+    vwp = overall_wmape(vactual, vm["pred_prophet"].values)
+    vwx = overall_wmape(vactual, vm["pred_xgboost"].values)
+    w_p = (1.0 / vwp) / ((1.0 / vwp) + (1.0 / vwx))
+    w_x = 1.0 - w_p
+
+    # Apply the frozen weights once on the held-out test predictions.
     pp = pd.read_csv(os.path.join(PROC, "prophet_preds.csv"))
     xp = pd.read_csv(os.path.join(PROC, "xgboost_preds.csv"))
     m = pp.merge(xp, on=["series_name", "date"], suffixes=("_prophet", "_xgboost"))
+    if m.empty:
+        raise RuntimeError("No overlapping test predictions for fusion.")
     m["actual"] = m["actual_prophet"]
-    wp = overall_wmape(m["actual"].values, m["pred_prophet"].values)
-    wx = overall_wmape(m["actual"].values, m["pred_xgboost"].values)
-    w_p = (1.0 / wp) / ((1.0 / wp) + (1.0 / wx))
-    w_x = 1.0 - w_p
-    print(f"[Fusion] weights  Prophet={w_p:.3f}  XGBoost={w_x:.3f}  "
-          f"(Prophet WMAPE={wp:.1f}%  XGBoost WMAPE={wx:.1f}%)")
+    print(f"[Fusion] validation-selected weights: Prophet={w_p:.3f}, XGBoost={w_x:.3f} "
+          f"(val WMAPE: Prophet={vwp:.1f}%, XGBoost={vwx:.1f}%)")
     m["pred_fusion"] = w_p * m["pred_prophet"] + w_x * m["pred_xgboost"]
+
+    # A comparison is meaningful only on the exact same series.  Preserve a
+    # machine-readable audit of that intersection instead of comparing each
+    # model's partially successful rows.
+    pred_sets = {}
+    for model, filename in PREDS.items():
+        d = pd.read_csv(os.path.join(PROC, filename))
+        pred_sets[model] = set(d["series_name"].astype(str))
+    common_cohort = set.intersection(*pred_sets.values())
+    if not common_cohort:
+        raise RuntimeError("Model predictions have no common test cohort.")
+    pd.DataFrame({"series_name": sorted(common_cohort)}).to_csv(
+        os.path.join(PROC, "comparison_cohort.csv"), index=False
+    )
+    print(f"[Compare] common test cohort: {len(common_cohort)} series "
+          f"(saved to comparison_cohort.csv)")
+    m = m[m["series_name"].astype(str).isin(common_cohort)].copy()
 
     frows = []
     for name, g in m.groupby("series_name"):
@@ -104,11 +130,11 @@ def main():
     fa, fpv = fp["actual"].values.astype(float), fp["pred_fusion"].values.astype(float)
     fusion_vol = np.sum(np.abs(fa - fpv)) / np.sum(np.abs(fa)) * 100 if np.sum(np.abs(fa)) > 0 else np.nan
     rows = [
-        agg_results(os.path.join(PROC, "arima_results.csv"), "ARIMA"),
-        agg_results(os.path.join(PROC, "prophet_results.csv"), "Prophet"),
-        agg_results(os.path.join(PROC, "prophet_exog_results.csv"), "Prophet+exog"),
-        agg_results(os.path.join(PROC, "xgboost_results.csv"), "XGBoost"),
-        agg_results(os.path.join(PROC, "lstm_results.csv"), "LSTM"),
+        agg_results(os.path.join(PROC, "arima_results.csv"), "ARIMA", common_cohort),
+        agg_results(os.path.join(PROC, "prophet_results.csv"), "Prophet", common_cohort),
+        agg_results(os.path.join(PROC, "prophet_exog_results.csv"), "Prophet+exog", common_cohort),
+        agg_results(os.path.join(PROC, "xgboost_results.csv"), "XGBoost", common_cohort),
+        agg_results(os.path.join(PROC, "lstm_results.csv"), "LSTM", common_cohort),
         {
             "model": "Prophet+XGBoost",
             "WMAPE_mean": fusion_res["WMAPE"].mean(),
@@ -122,7 +148,7 @@ def main():
     ]
     comp = pd.DataFrame(rows).sort_values("WMAPE_vol")
     comp.to_csv(os.path.join(PROC, "model_comparison.csv"), index=False)
-    print("\n===== Stage 3 multi-model comparison (mean per-series, horizon=3) =====")
+    print("\n===== Stage 3 multi-model comparison (common cohort, 6-month test) =====")
     print(comp.to_string(index=False))
 
 # bar chart
@@ -144,7 +170,7 @@ def main():
     for i, v in enumerate(c2["MAE"].values):
         axes[1].text(i, v + 80, f"{v:.0f}", ha="center", fontsize=8)
 
-    fig.suptitle("Stage 3 — multi-model comparison (150-series stratified subset, 3-month forecast)", fontsize=12)
+    fig.suptitle("Stage 3 — model comparison (common time-eligible cohort, 6-month test)", fontsize=12)
     fig.savefig(os.path.join(FIG, "model_comparison.png"), dpi=130)
     print("\n[Compare] figure saved -> figures_new/model_comparison.png")
     print("[Compare] table saved -> data/processed_new/stage3/model_comparison.csv")

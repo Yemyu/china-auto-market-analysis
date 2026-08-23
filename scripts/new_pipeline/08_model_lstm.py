@@ -2,9 +2,10 @@
 """
 08_model_lstm.py — 全局 LSTM + 车系 embedding 月度预测（无舆情基线 · 腿B）
 
-数据来源（统一）：06_make_splits.py 的 train / test。
-  * 训练窗口全部来自 train (2022-01..2025-06)，embedding 跨全部 in-pop 车系；
-  * 在 **test (2026-01..06, 6 个月)** 上做递归多步预测评估（绝不偷看 test 训练）。
+数据来源（统一）：06_make_splits.py 的 train / val / test。
+  * 模型权重只在 train (2022-01..2025-06) 上学习；
+  * 测试预测以已观测的 val (2025-07..12) 作为历史，预测 test
+    (2026-01..06)，绝不读取 test 真实销量。
 
 Run:
   python scripts/new_pipeline/08_model_lstm.py
@@ -72,7 +73,7 @@ def main():
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     print(f"[LSTM] device: {device}")
 
-    tr, _, te = mu.load_splits()
+    tr, va, te = mu.load_splits()
     subset = _subset.load_subset()
     print(f"[LSTM] 评估子集 {len(subset)} 系 | 训练用 train ({len(tr)} 行)")
 
@@ -80,12 +81,14 @@ def main():
     names = sorted(tr["series_name"].astype(str).unique())
     name2idx = {n: i for i, n in enumerate(names)}
 
-    # 每车系 train 归一化序列（log1p + 用 train 自身标准化）
+    # 每车系 train 序列及其真实日历月份。不能把每个车系的第一行
+    # 都当作一月：train.csv 为了 lag 完整性会从不同月份开始。
     tr_by_name = {}
+    tr_dates_by_name = {}
     for name in names:
-        s = (tr[tr["series_name"].astype(str) == name]
-             .sort_values("date")["monthly_sales"].astype(float).values)
-        tr_by_name[name] = s
+        g = tr[tr["series_name"].astype(str) == name].sort_values("date")
+        tr_by_name[name] = g["monthly_sales"].astype(float).values
+        tr_dates_by_name[name] = pd.to_datetime(g["date"]).values
     norm = {}
     for name in names:
         vals = np.log1p(tr_by_name[name])
@@ -97,7 +100,7 @@ def main():
     for name in names:
         mu_, sd_, vn = norm[name]
         T = len(vn)
-        months = np.arange(T) % 12 + 1
+        months = pd.DatetimeIndex(tr_dates_by_name[name]).month.to_numpy()
         for i in range(WIN, T):
             seq = np.stack([vn[i - WIN:i], msin(months[i - WIN:i]), mcos(months[i - WIN:i])], axis=1)
             Xseq.append(seq)
@@ -129,12 +132,18 @@ def main():
         if ep % 10 == 0:
             print(f"[LSTM] epoch {ep:02d}  loss {tot / N:.4f}")
 
-    # test 实际值（2026-01..06）
+    # The realised validation period is available at the test origin and is
+    # therefore valid history.  Test actuals are used only for scoring.
+    va_by_name, va_dates_by_name = {}, {}
     te_by_name = {}
+    te_dates_by_name = {}
     for name in subset:
-        s = (te[te["series_name"].astype(str) == name]
-             .sort_values("date")["monthly_sales"].astype(float).values)
-        te_by_name[name] = s
+        vg = va[va["series_name"].astype(str) == name].sort_values("date")
+        tg = te[te["series_name"].astype(str) == name].sort_values("date")
+        va_by_name[name] = vg["monthly_sales"].astype(float).values
+        va_dates_by_name[name] = pd.to_datetime(vg["date"]).values
+        te_by_name[name] = tg["monthly_sales"].astype(float).values
+        te_dates_by_name[name] = pd.to_datetime(tg["date"]).values
 
     model.eval()
     rows, preds_rows, examples = [], [], []
@@ -144,30 +153,31 @@ def main():
                 rows.append({"series_name": name, "status": "no_train"})
                 continue
             mu_, sd_, vn = norm[name]
-            months = np.arange(len(vn) + TEST_STEPS) % 12 + 1
-            if len(vn) <= WIN:
+            val_actuals = va_by_name.get(name, np.array([]))
+            actuals = te_by_name.get(name, np.array([]))
+            test_dates = te_dates_by_name.get(name, np.array([]))
+            if len(vn) <= WIN or len(val_actuals) != TEST_STEPS or len(actuals) != TEST_STEPS:
                 rows.append({"series_name": name, "status": "too_short"})
                 continue
             vn_min, vn_max = float(np.min(vn)), float(np.max(vn))
-            hist = list(vn)
+            hist = list(vn) + list(np.log1p(val_actuals))
+            hist_months = list(pd.DatetimeIndex(tr_dates_by_name[name]).month) + \
+                          list(pd.DatetimeIndex(va_dates_by_name[name]).month)
             preds = []
             for step in range(TEST_STEPS):
-                i = len(hist)
-                wm = months[i - WIN:i]
+                target_month = int(pd.Timestamp(test_dates[step]).month)
+                wm = np.asarray(hist_months[-WIN:])
                 seq = torch.tensor(np.stack([np.array(hist[-WIN:], dtype=float),
                                              msin(wm), mcos(wm)], axis=1),
                                    dtype=torch.float32, device=device).unsqueeze(0)
-                meta = torch.tensor([[msin(months[i]), mcos(months[i])]],
+                meta = torch.tensor([[msin(target_month), mcos(target_month)]],
                                     dtype=torch.float32, device=device)
                 si = torch.tensor([name2idx[name]], dtype=torch.long, device=device)
                 pn = float(model(seq, si, meta)[0].cpu())
                 pn = min(max(pn, vn_min - 0.5), vn_max + 0.5)  # 防递归发散(log1p 空间裁剪)
                 hist.append(pn)
+                hist_months.append(target_month)
                 preds.append(max(float(np.expm1(pn)), 0.0))  # pn 已是 log1p 空间
-            actuals = te_by_name.get(name, np.array([]))
-            if len(actuals) != TEST_STEPS:
-                rows.append({"series_name": name, "status": "no_test"})
-                continue
             met = mu.metrics(actuals, np.array(preds))
             met.update({"series_name": name, "status": "ok"})
             rows.append(met)
@@ -178,7 +188,7 @@ def main():
                                    .strftime("%Y-%m-%d"),
                                    "actual": float(actuals[j]), "pred": float(preds[j])})
             if len(examples) < 9:
-                examples.append((name, pd.Series(tr_by_name[name]),
+                examples.append((name, pd.Series(np.r_[tr_by_name[name], val_actuals]),
                                  pd.Series(actuals), pd.Series(preds)))
 
     res = pd.DataFrame(rows)
