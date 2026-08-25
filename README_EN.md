@@ -16,7 +16,7 @@
   <a href="./data/README_EN.md">Data documentation</a>
 </p>
 
-<video src="./assets/demo/dashboard-demo.mp4" width="100%" controls></video>
+<video src="https://github.com/user-attachments/assets/06416183-a6bb-415e-98ad-f96c836382d2" width="100%" controls></video>
 
 ---
 
