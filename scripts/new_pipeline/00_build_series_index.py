@@ -9,7 +9,7 @@
 
   canonical_id          本项目自建的稳定车系主键 (S0001, S0002, ...)
   series_name           车系名 (通用键, 全表唯一)
-  dongchedi_series_id   懂车帝数字 id  (来自 vehicles.csv / feature.xlsx / analysis_input.csv)
+  dongchedi_series_id   懂车帝数字 id  (来自 feature.csv / 历史舆情资源)
   pcauto_series_id      太平洋数字 id  (来自 monthly_sales.csv 的 series_id 列)
   pcauto_source_series_id  太平洋 sgXXXX id (来自 all_sales 的 source_series_id 列)
   n_platforms          该系在几个源里出现 (用于覆盖率诊断)
@@ -37,22 +37,17 @@ RAW = os.path.join(ROOT, "data", "raw")
 def _load_dongchedi_ids():
     """从懂车帝体系文件收集 series_name -> 懂车帝数字 id"""
     frames = []
-    # vehicles.csv
-    v = os.path.join(RAW, "vehicles.csv")
-    if os.path.exists(v):
-        df = pd.read_csv(v, encoding="utf-8-sig", low_memory=False)
+    # Canonical configuration table.  feature.xlsx was a byte-heavier export
+    # of the same 2,084 rows and is intentionally no longer required.
+    feature = os.path.join(RAW, "feature.csv")
+    if os.path.exists(feature):
+        df = pd.read_csv(feature, encoding="utf-8-sig", low_memory=False)
         if {"series_name", "series_id"} <= set(df.columns):
             frames.append(df[["series_name", "series_id"]].astype(str))
-    # feature.xlsx
-    fx = os.path.join(RAW, "feature.xlsx")
-    if os.path.exists(fx):
-        df = pd.read_excel(fx, sheet_name="power_features_with_sales_v2")
-        if {"series_name", "series_id"} <= set(df.columns):
-            frames.append(df[["series_name", "series_id"]].astype(str))
-    # analysis_input.csv (舆情宇宙, 自带懂车帝 id)
-    ai = os.path.join(ROOT, "data", "sentiment", "analysis_input.csv")
-    if os.path.exists(ai):
-        df = pd.read_csv(ai)
+    # Curated legacy review resource (舆情宇宙, 自带懂车帝 id)
+    legacy = os.path.join(ROOT, "data", "resources", "legacy_sentiment", "review_absa_reference.csv.gz")
+    if os.path.exists(legacy):
+        df = pd.read_csv(legacy, usecols=["series_name", "series_id"])
         if {"series_name", "series_id"} <= set(df.columns):
             frames.append(df[["series_name", "series_id"]].astype(str))
     # New-data ID resolution register.  This is deliberately a small,

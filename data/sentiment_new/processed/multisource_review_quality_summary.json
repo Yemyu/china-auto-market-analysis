@@ -1,0 +1,14 @@
+{
+  "corpus_rows": 24284,
+  "target_series_with_any_review": 348,
+  "rows_with_valid_platform_review_id": 24284,
+  "rows_with_valid_time_and_content": 24278,
+  "pre_test_end_rows": 23690,
+  "post_test_end_rows": 594,
+  "list_summary_rows": 103,
+  "detail_full_html_rows": 1000,
+  "possibly_abbreviated_rows": 93,
+  "test_end": "2026-06-30 23:59:59",
+  "rule": "For a forecast at any origin, filter reviews to publish_time strictly earlier than that origin; this audit's test-end count is only a coarse leakage check.",
+  "source_note": "Autohome list summaries remain preserved in the raw staging table; only successfully parsed detail pages are promoted to full text in the integrated corpus."
+}

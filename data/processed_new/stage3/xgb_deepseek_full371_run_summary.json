@@ -1,0 +1,35 @@
+{
+  "schema_version": "v1",
+  "evaluation_series": 371,
+  "validation_protocol": "recursive six-month fixed-origin forecast; select n_estimators by global volume-weighted WMAPE",
+  "test_protocol": "refit on point-in-time train+validation rows; recursive fixed-origin 2026-01..06 forecast",
+  "primary_versions": [
+    "DEEPSEEK_RICH_FIXED",
+    "PLATFORM_RATING_FIXED",
+    "DEEPSEEK_CORE_FIXED",
+    "LOCAL_LEXICON_FIXED",
+    "ALL_SENTIMENT_FIXED",
+    "BASE"
+  ],
+  "best_primary_version": "DEEPSEEK_RICH_FIXED",
+  "best_primary_global_volume_weighted_WMAPE": 38.70519249287119,
+  "baseline_global_volume_weighted_WMAPE": 40.44001904314165,
+  "rolling_scenario_is_supplemental": true,
+  "tree_grid": [
+    50,
+    100,
+    200,
+    400,
+    700
+  ],
+  "model_params": {
+    "max_depth": 6,
+    "learning_rate": 0.05,
+    "subsample": 0.8,
+    "colsample_bytree": 0.8,
+    "random_state": 42,
+    "objective": "reg:squarederror",
+    "n_jobs": 1
+  },
+  "external_api_calls": 0
+}

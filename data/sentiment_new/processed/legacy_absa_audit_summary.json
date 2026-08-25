@@ -1,0 +1,8 @@
+{
+  "eligible_pre_test_reviews": 23612,
+  "legacy_absa_matched_reviews": 16538,
+  "legacy_absa_coverage": 0.7004,
+  "target_series_with_legacy_absa": 259,
+  "qa_sample_size": 200,
+  "legacy_label_warning": "A legacy value of 0 is ambiguous: it may mean neutral sentiment or no aspect mention. New labels must separate mention from polarity."
+}

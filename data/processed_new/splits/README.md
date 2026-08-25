@@ -1,72 +1,54 @@
-# 数据切分 (train / val / test) — 无舆情月度预测基线
+# 月度销量预测时间切分
 
-本目录由 `scripts/new_pipeline/06_make_splits.py` 生成，是月度预测腿（腿B）的
-**唯一权威数据切分来源**。所有模型应直接读取这里的 `train.csv / val.csv / test.csv`，
-而不是各自重新定义 holdout，以保证「同一拨训练/验证/测试」下的横向可比。
+本目录由 `scripts/new_pipeline/06_make_splits.py` 生成。所有月度预测模型读取同一组 train、validation 和 test 文件，避免各模型自行定义测试区间。
 
-## 布局（GitHub / Cookiecutter Data Science 风格）
+## 文件
 
-```
-data/processed_new/splits/
-├── train.csv        # 特征齐全，可直接喂 XGBoost / LSTM / 等；仅含可用样本(lag 齐全)
-├── val.csv          # 验证集（模型选择 / 早停），特征齐全
-├── test.csv         # 测试集（最终诚实评估），特征齐全
-├── split_index.csv  # 纯切分分配: series_name, date, split（最小可复现单元）
-├── manifest.json    # 切点 / 行数 / 特征列 / 来源 / 生成时间 / 版本
-└── README.md        # 本文件
-```
+| 文件 | 内容 |
+|---|---|
+| `train.csv` | 滞后特征齐全的训练行 |
+| `val.csv` | 参数与方案选择 |
+| `test.csv` | 最终评价 |
+| `split_index.csv` | `series_name, date, split` 的最小切分索引 |
+| `manifest.json` | 时间边界、行数、特征列、来源和防泄漏约束 |
 
-> 这些文件均为派生数据，可用 `python scripts/new_pipeline/06_make_splits.py`
-> 从 `data/processed_new/sales_filtered_24m.csv` + `data/raw/feature.csv` 完整复现，
-> 不依赖任何手工中间产物。
+## 时间边界
 
-## 时间切点（全局统一，所有车系共用）
+| 数据段 | 目标月份 | 用途 |
+|---|---|---|
+| Train | 截至 2025-06 | 模型训练 |
+| Validation | 2025-07—12 | 参数与方案选择 |
+| Test | 2026-01—06 | 最终评价 |
 
-| 集 | 目标月份区间 | 月数 | 用途 |
-|----|--------------|------|------|
-| train | 2025-06 及以前 → 至 2022-01 | 42 | 模型训练 |
-| val   | 2025-07 → 2025-12 | 6 | 模型选择 / 早停 |
-| test  | 2026-01 → 2026-06 | 6 | 最终评估 |
+切分按全局自然月完成，不随机打乱。一个车系可以出现在三份文件中，但同一个月份只属于一个数据段。
 
-- 切分按**目标月份的绝对时间**，不是随机、也不是按车系打乱。
-- 一个车系会同时出现在三份文件的不同月份中（时序切分的正确形态：series 跨集、月份不交叉）。
+## 当前规模
 
-## 行数（当前生成）
+- 目标车系：371；
+- Train：12,036 个候选车系月，其中 9,468 行具备完整滞后特征；
+- Validation：2,172 行；
+- Test：2,226 行。
 
-- train: 总 12036 行 / 可用 9468 行（首月无历史被剔除）
-- val:   2172 行
-- test:  2226 行
-- 车系数（in-population，有配置）: 371
+## 防泄漏约束
 
-## 特征列（FEAT_COLS，见 manifest.json）
+1. 销量滞后和滚动均值由车系内 `shift` 计算，只引用目标月以前的销量。
+2. 配置按时间因果回退：缺少当年配置时，只使用不晚于该年份的最近配置。
+3. Validation 用于选择参数和方案；Test 只报告最终结果。
+4. 固定起点测试从 2026-01 开始递归六个月。第二个月起需要的销量滞后来自此前预测，不能读取测试期真实销量。
+5. 用户评论特征在主实验中统一冻结于 2026-01-01 之前；每个预测月的可用范围另由评论时间特征脚本生成并审计。
 
-`lag_1, lag_2, lag_3, roll_mean_3, roll_mean_6, month_sin, month_cos, year, official_price_wan, engine_max_power_kw, engine_max_torque_nm, battery_capacity_kwh, battery_range_km, length_mm, width_mm, height_mm, wheelbase_mm, curb_weight_kg, seat_count, door_count, trunk_volume_l, acceleration_0_100_s, fuel_consumption_l_100km, energy_type_enc, vehicle_class_enc, brand_name_enc, body_structure_enc, gearbox_type_enc, seat_material_enc`
-
-目标列: `monthly_sales`。
-
-## 防泄漏保证（时间维度）
-
-1. 切分按绝对时间（全局切点），非随机 / 非按车系打乱。
-2. `lag_1..3` / `roll_mean_3/6` 由 `groupby(series).shift` 在完整排序面板上计算，
-   物理上只引用该月之前的**真实销量**（autoregressive 用真实历史，推理时同理）。
-3. 配置特征来自 `feature.csv`，经 `_feature_join.join_cfg` 的**因果回退**：
-   某(车系,年)无配置时只用 ≤ 当前行年份的最新配置，**绝不借用未来年份规格**。
-4. 训练仅用 `train.csv`；`val.csv` / `test.csv` 仅供评估，不参与训练。
-
-## 模型如何消费
+## 读取示例
 
 ```python
+import json
 import pandas as pd
-TR = pd.read_csv("data/processed_new/splits/train.csv")
-VA = pd.read_csv("data/processed_new/splits/val.csv")
-TE = pd.read_csv("data/processed_new/splits/test.csv")
-feat = [...]  # = manifest.json 的 feature_columns
-model.fit(TR[feat], np.log1p(TR["monthly_sales"]))
-# 验证: 在 VA 上选超参 / 早停; 测试: 仅在 TE 上报告最终指标
+
+train = pd.read_csv("data/processed_new/splits/train.csv")
+val = pd.read_csv("data/processed_new/splits/val.csv")
+test = pd.read_csv("data/processed_new/splits/test.csv")
+
+with open("data/processed_new/splits/manifest.json", encoding="utf-8") as handle:
+    features = json.load(handle)["feature_columns"]
 ```
 
-## 与腿A（年度配置归因）的关系
-
-腿A 是「车系×年」横截面回归（解释什么配置的车卖得好），用
-`GroupKFold(5) by series_name` 防同一车系跨折泄漏——那是一套**不同的切分**，
-与本目录的时序切分互不替代。详见 `20_config_attribution.py`。
+年度产品配置分析不使用这组时间切分。它在车系年数据上执行 `GroupKFold(5)`，并按车系分组。

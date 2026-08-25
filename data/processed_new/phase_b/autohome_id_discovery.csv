@@ -1,0 +1,81 @@
+﻿series_name,candidate_autohome_series_id,candidate_source_name,decision,decision_reason,series_suggestions,checked_at
+宋Pro新能源,5279.0,宋Pro新能源,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""宋Pro新能源"", ""id"": 5279}]",2026-08-24T00:50:11
+宝马1系,4171.0,宝马1系,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""宝马1系"", ""id"": 4171}, {""name"": ""宝马1系(进口)"", ""id"": 373}, {""name"": ""宝马1系M"", ""id"": 2725}]",2026-08-24T00:50:12
+宝马X2,5309.0,宝马X2,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""宝马X2"", ""id"": 5309}, {""name"": ""宝马X2(进口)"", ""id"": 3386}, {""name"": ""宝马X2 M35i"", ""id"": 7952}]",2026-08-24T00:50:12
+宝马iX3,5758.0,宝马iX3,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""宝马iX3"", ""id"": 5758}, {""name"": ""宝马iX3(海外)"", ""id"": 4838}]",2026-08-24T00:50:12
+宝骏KiWi EV,6155.0,宝骏KiWi EV,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""宝骏KiWi EV"", ""id"": 6155}]",2026-08-24T00:50:12
+小鹏G3,4489.0,小鹏G3,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""小鹏G3"", ""id"": 4489}]",2026-08-24T00:50:13
+小鹏MONA M03,6998.0,小鹏MONA M03,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""小鹏MONA M03"", ""id"": 6998}, {""name"": ""小鹏MONA M03旅行车"", ""id"": 8738}]",2026-08-24T00:50:13
+小鹏P5,6095.0,小鹏P5,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""小鹏P5"", ""id"": 6095}]",2026-08-24T00:50:13
+小鹏P7,5213.0,小鹏P7,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""小鹏P7"", ""id"": 5213}, {""name"": ""小鹏P7+"", ""id"": 7554}]",2026-08-24T00:50:13
+小鹏P7+,7554.0,小鹏P7+,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""小鹏P7+"", ""id"": 7554}, {""name"": ""小鹏P7"", ""id"": 5213}]",2026-08-24T00:50:13
+小鹏X9,7067.0,小鹏X9,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""小鹏X9"", ""id"": 7067}]",2026-08-24T00:50:14
+岚图梦想家,6459.0,岚图梦想家,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""岚图梦想家"", ""id"": 6459}, {""name"": ""岚图梦想家9"", ""id"": 8535}]",2026-08-24T00:50:14
+岚图追光L,8259.0,岚图追光 L,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""岚图追光 L"", ""id"": 8259}]",2026-08-24T00:50:14
+帕萨特新能源,,,not_found,no official series suggestion returned,[],2026-08-24T00:50:14
+护卫舰07,6671.0,护卫舰07,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""护卫舰07"", ""id"": 6671}]",2026-08-24T00:50:14
+捷豹XEL,4462.0,捷豹XEL,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""捷豹XEL"", ""id"": 4462}]",2026-08-24T00:50:15
+摩卡,,,manual_or_missing,no exact name match; do not auto-accept alias,"[{""name"": ""魏牌 摩卡新能源"", ""id"": 6011}]",2026-08-24T00:50:15
+新帝豪,,,not_found,no official series suggestion returned,[],2026-08-24T00:50:15
+昊铂GT,7084.0,昊铂GT,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""昊铂GT"", ""id"": 7084}]",2026-08-24T00:50:15
+星海T5,8457.0,星海T5,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""星海T5"", ""id"": 8457}]",2026-08-24T00:50:16
+星瑞L,,,manual_or_missing,no exact name match; do not auto-accept alias,"[{""name"": ""星瑞L PLUS"", ""id"": 7437}]",2026-08-24T01:35:19
+星越L 智擎,7496.0,星越L智擎,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""星越L智擎"", ""id"": 7496}]",2026-08-24T01:35:19
+极氪001,6091.0,极氪001,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""极氪001"", ""id"": 6091}, {""name"": ""极氪001 FR"", ""id"": 7698}]",2026-08-24T01:35:20
+极氪009,6846.0,极氪009,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""极氪009"", ""id"": 6846}]",2026-08-24T01:35:20
+极狐考拉,7120.0,极狐 考拉,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""极狐 考拉S"", ""id"": 7797}, {""name"": ""极狐 考拉"", ""id"": 7120}]",2026-08-24T01:35:20
+标致508,2299.0,标致508,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""标致508"", ""id"": 2299}, {""name"": ""标致508(进口)"", ""id"": 2191}]",2026-08-24T01:35:20
+比亚迪M9,8184.0,比亚迪M9,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""比亚迪M9"", ""id"": 8184}]",2026-08-24T01:35:20
+汉,5499.0,汉,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""汉"", ""id"": 5499}, {""name"": ""汉兰达"", ""id"": 771}, {""name"": ""汉L"", ""id"": 7859}]",2026-08-24T01:35:21
+江淮A5 PLUS,7251.0,江淮A5 PLUS,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""江淮A5 PLUS"", ""id"": 7251}]",2026-08-24T01:35:21
+江淮QX PHEV,7217.0,江淮QX PHEV,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""江淮QX PHEV"", ""id"": 7217}]",2026-08-24T01:35:21
+沃兰多,4882.0,沃兰多,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""沃兰多"", ""id"": 4882}]",2026-08-24T01:35:21
+沃尔沃C40,6049.0,沃尔沃C40,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""沃尔沃C40"", ""id"": 6049}]",2026-08-24T01:35:22
+沃尔沃ES90,8050.0,沃尔沃ES90,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""沃尔沃ES90"", ""id"": 8050}, {""name"": ""沃尔沃ES90(海外)"", ""id"": 8032}]",2026-08-24T01:35:22
+沃尔沃S90新能源,,,manual_or_missing,no exact name match; do not auto-accept alias,"[{""name"": ""沃尔沃S90新能源(进口)"", ""id"": 5647}]",2026-08-24T01:35:22
+海豹06DM-i,,,manual_or_missing,no exact name match; do not auto-accept alias,"[{""name"": ""海豹06 DM-i旅行版"", ""id"": 8201}]",2026-08-24T01:35:22
+海豹07DM-i,7822.0,海豹07 DM-i,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""海豹07 DM-i"", ""id"": 7822}]",2026-08-24T01:35:22
+海马8S,4770.0,海马8S,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""海马8S"", ""id"": 4770}]",2026-08-24T01:35:23
+海马INJOY,7867.0,海马INJOY,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""海马INJOY"", ""id"": 7867}]",2026-08-24T01:35:23
+瑞风E3,6506.0,瑞风E3,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""瑞风E3"", ""id"": 6506}]",2026-08-24T01:35:23
+瑞风RF8新能源,,,not_found,no official series suggestion returned,[],2026-08-24T01:35:23
+皓影新能源,5994.0,皓影新能源,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""皓影新能源"", ""id"": 5994}]",2026-08-24T01:52:41
+福瑞迪,813.0,福瑞迪,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""福瑞迪"", ""id"": 813}]",2026-08-24T01:52:42
+秦L,7578.0,秦L,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""秦L"", ""id"": 7578}]",2026-08-24T01:52:42
+秦PLUS,5964.0,秦PLUS,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""秦PLUS"", ""id"": 5964}]",2026-08-24T01:52:42
+秦新能源,2761.0,秦新能源,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""秦新能源"", ""id"": 2761}]",2026-08-24T01:52:42
+红旗国耀,,,not_found,no official series suggestion returned,[],2026-08-24T01:52:42
+纳米01,7364.0,纳米01,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""纳米01"", ""id"": 7364}]",2026-08-24T01:52:43
+腾势D9,6669.0,腾势D9,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""腾势D9"", ""id"": 6669}]",2026-08-24T01:52:43
+荣威D7,7301.0,荣威D7,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""荣威D7"", ""id"": 7301}]",2026-08-24T01:52:43
+荣威RX3,4473.0,荣威RX3,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""荣威RX3"", ""id"": 4473}]",2026-08-24T01:52:43
+荣威i6 MAX新能源,5801.0,荣威i6 MAX新能源,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""荣威i6 MAX新能源"", ""id"": 5801}]",2026-08-24T01:52:43
+荣威iMAX8新能源,6641.0,荣威iMAX8新能源,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""荣威iMAX8新能源"", ""id"": 6641}]",2026-08-24T01:52:44
+赛那SIENNA,6272.0,赛那SIENNA,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""赛那SIENNA"", ""id"": 6272}]",2026-08-24T01:52:44
+起亚K5凯酷,,,not_found,no official series suggestion returned,[],2026-08-24T01:52:44
+起亚KX3傲跑,3664.0,起亚KX3傲跑,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""起亚KX3傲跑"", ""id"": 3664}]",2026-08-24T01:52:44
+轩度EV,6844.0,轩度EV,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""轩度EV"", ""id"": 6844}]",2026-08-24T01:52:45
+迈锐宝XL,4031.0,迈锐宝XL,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""迈锐宝XL"", ""id"": 4031}]",2026-08-24T01:52:45
+途安,333.0,途安,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""途安"", ""id"": 333}]",2026-08-24T01:52:45
+途胜L,,,not_found,no official series suggestion returned,[],2026-08-24T01:52:45
+途观L新能源,,,not_found,no official series suggestion returned,[],2026-08-24T01:52:45
+锐界L,,,not_found,no official series suggestion returned,[],2026-08-24T11:13:02
+长安UNI-Z新能源,7512.0,长安UNI-Z新能源,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""长安UNI-Z新能源"", ""id"": 7512}]",2026-08-24T11:13:02
+长安启源Q05经典,7351.0,长安启源Q05经典,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""长安启源Q05经典"", ""id"": 7351}]",2026-08-24T11:13:02
+长安欧尚520,7895.0,长安欧尚520,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""长安欧尚520"", ""id"": 7895}]",2026-08-24T11:13:03
+领克07,,,manual_or_missing,no exact name match; do not auto-accept alias,"[{""name"": ""领克07GT"", ""id"": 8562}, {""name"": ""领克07 EM-P"", ""id"": 5576}]",2026-08-24T11:13:03
+风光330,3829.0,风光330,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""风光330"", ""id"": 3829}]",2026-08-24T11:13:03
+风光380,6581.0,风光380,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""风光380"", ""id"": 6581}]",2026-08-24T11:13:03
+风光E380,6391.0,风光E380,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""风光E380"", ""id"": 6391}]",2026-08-24T11:13:04
+骐达,,,manual_or_missing,no exact name match; do not auto-accept alias,"[{""name"": ""骐达TIIDA"", ""id"": 425}]",2026-08-24T11:13:04
+魏牌 高山,8766.0,魏牌 高山,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""魏牌 高山"", ""id"": 8766}, {""name"": ""魏牌 高山新能源"", ""id"": 7076}]",2026-08-24T11:13:04
+奥迪A6L e-tron,8105.0,奥迪A6L e-tron,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""奥迪A6L e-tron"", ""id"": 8105}]",2026-08-24T11:39:14
+海豹07EV,8462.0,海豹07 EV,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""海豹07 EV"", ""id"": 8462}]",2026-08-24T11:39:21
+铂智7,7724.0,铂智7,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""铂智7"", ""id"": 7724}]",2026-08-24T11:39:27
+银河V900,8436.0,银河V900,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""银河V900"", ""id"": 8436}]",2026-08-24T11:39:27
+银河星耀7,8313.0,银河星耀7,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""银河星耀7"", ""id"": 8313}]",2026-08-24T11:39:28
+领克10,8176.0,领克10,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""领克10"", ""id"": 8176}]",2026-08-24T11:39:29
+凯威德,8471,凯威德,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""凯威德"", ""id"": 8471}]",2026-08-24T11:41:54
+博越REV,,,error,"CalledProcessError: Command '['curl', '--fail', '--silent', '--show-error', '--http1.1', '--tlsv1.2', '--connect-timeout', '15', '--max-time', '30', '-A', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', 'https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&uid=&q=%E5%8D%9A%E8%B6%8AREV']' returned non-zero exit status 35.",[],2026-08-24T11:41:59
+日产NX8,,,error,"CalledProcessError: Command '['curl', '--fail', '--silent', '--show-error', '--http1.1', '--tlsv1.2', '--connect-timeout', '15', '--max-time', '30', '-A', 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36', 'https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&uid=&q=%E6%97%A5%E4%BA%A7NX8']' returned non-zero exit status 35.",[],2026-08-24T11:42:04
+爱跑,7573,爱跑,ready_for_endpoint_verification,unique official suggestion name match,"[{""name"": ""爱跑"", ""id"": 7573}, {""name"": ""爱跑S"", ""id"": 6439}]",2026-08-24T11:42:05

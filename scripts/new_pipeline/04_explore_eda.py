@@ -3,23 +3,17 @@
 Stage 2: Data Filtering & Exploratory Visualization
 
 Inputs (prepared in Stage 1):
-  data/raw/sales.csv                         - (legacy) monthly sales (33,845 rows / 1,122 series)
-  data/raw/vehicles.csv                      - vehicle specs (1,139 series x 92 cols)
-  data/raw/monthly_sales.csv      - NEW monthly sales (54,918 rows / 1,017 series,
-                                               2022-2026, 太平洋汽车)
-  data/sentiment/analysis_input.csv          - sentiment universe (490 series); used as the
-                                               series_name -> legacy series_id bridge so the new
-                                               sales can join stage-4/5 (which key on legacy id).
+  data/raw/monthly_sales.csv                 - monthly sales (1,017 series, 2022-2026)
+  data/raw/feature.csv                       - canonical annual configuration table
 
 NOTE: monthly sales are sourced from monthly_sales.csv (FULL 1,017 series, 2022-2026).
-We keep every series with >=24 consecutive months (all 1,017 qualify) - NO restriction to the
-sentiment universe, so the baseline models see the COMPLETE new sales. The native pacific
-series_id is the primary key; legacy_series_id is carried where mappable (for Phase B sentiment
-joins on the 261 overlapping series). See docs/车辆配置与销量对应方案.md.
+We keep every series with >=24 consecutive months (all 1,017 qualify) and do not restrict
+the baseline data to review coverage. Configuration joins and sentiment joins both use the
+audited canonical series name rather than a legacy platform ID.
 
 Outputs:
   data/processed_new/sales_filtered_24m.csv   - series with >=24 consecutive months
-  data/processed_new/timeseries_summary.csv   - full 1,122-series time-series summary
+  data/processed_new/timeseries_summary.csv   - full 1,017-series time-series summary
   figures_new/sales_trend.png                 - monthly sales trend
   figures_new/category_distribution.png       - category & vehicle class distribution
   figures_new/hardware_features.png           - hardware feature distributions
@@ -81,21 +75,18 @@ COLORS = {
 # monthly_sales.csv is the complete new monthly sales (1,017 series, 2022-2026).
 # We keep ALL series with >=24 consecutive months (every series qualifies) and do NOT
 # restrict to the sentiment universe, so baseline models see the full new sales.
-# Native pacific series_id is the primary key; legacy_series_id carried where mappable.
-vehicles_path = os.path.join(RAW, 'vehicles.csv')
-if not os.path.exists(vehicles_path):
-    vehicles_path = os.path.join(RAW, 'version1', 'vehicles.csv')
-vehicles = pd.read_csv(vehicles_path)
+# Use one representative (latest available) configuration row per series for
+# descriptive plots.  The predictive configuration join remains year-aware.
+features = pd.read_csv(os.path.join(RAW, 'feature.csv'), low_memory=False)
+features['year'] = pd.to_numeric(features['year'], errors='coerce')
+vehicles = (features.sort_values(['series_name', 'year'])
+            .drop_duplicates('series_name', keep='last')
+            .copy())
 
 new_sales = pd.read_csv(os.path.join(RAW, 'monthly_sales.csv'))
 new_sales['series_name'] = new_sales['series_name'].astype(str)
-sent_universe = pd.read_csv(os.path.join(BASE, 'data', 'sentiment', 'analysis_input.csv'))
-bridge = (sent_universe.drop_duplicates('series_name')
-          .set_index('series_name')['series_id'].astype(str))
 sales = new_sales.copy()
-sales['legacy_series_id'] = sales['series_name'].map(bridge)  # NaN for the 756 new series
-print(f'[04] FULL all_sales kept: {sales["series_id"].nunique()} series '
-      f'(legacy id mappable for {sales["legacy_series_id"].notna().sum()})')
+print(f'[04] FULL all_sales kept: {sales["series_id"].nunique()} series')
 
 sales['period'] = sales['year'] * 12 + (sales['month'] - 1)
 sales['date'] = pd.to_datetime(dict(year=sales.year, month=sales.month, day=1))
@@ -168,13 +159,13 @@ print(f'          Total series: {len(summary)}; written to timeseries_summary.cs
 qualified = summary[summary['longest_run_months'] >= MIN_RUN]['series_id'].tolist()
 print(f'Series with >= {MIN_RUN} consecutive months: {len(qualified)}')
 filt = sales[sales['series_id'].isin(qualified)].copy()
-filt = filt[['year', 'month', 'series_id', 'legacy_series_id', 'series_name', 'brand', 'category',
+filt = filt[['year', 'month', 'series_id', 'series_name', 'brand', 'category',
              'monthly_sales', 'data_source', 'period', 'date', 'category_en']]
 filt.to_csv(os.path.join(PROC, 'sales_filtered_24m.csv'), index=False, encoding='utf-8-sig')
 print(f'          Filtered dataset: {len(filt)} rows; written to sales_filtered_24m.csv')
 
-legacy_ids = sales.dropna(subset=['legacy_series_id'])['legacy_series_id'].astype(int).unique()
-veh_filt = vehicles[vehicles['series_id'].isin(legacy_ids)].drop_duplicates('series_id')
+qualified_names = set(filt['series_name'])
+veh_filt = vehicles[vehicles['series_name'].isin(qualified_names)].copy()
 
 # Sales trend chart
 print('Sales trend chart ...')

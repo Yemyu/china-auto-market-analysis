@@ -1,0 +1,7 @@
+{
+  "targets_this_run": 4,
+  "ready_for_endpoint_verification": 2,
+  "manual_or_missing": 0,
+  "errors": 2,
+  "rule": "Only a unique exact normalised-name suggestion advances automatically; all candidates still require official review-endpoint verification."
+}

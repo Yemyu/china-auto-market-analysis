@@ -1,0 +1,70 @@
+﻿identity,series_name,publish_time,corpus_source,content,qa_action,override_labels,qa_reason,reviewer,reviewed_at
+dongchedi::7649687673392615448,AION RT,2026-06-10 16:55:00,old_v1,总的来说还是可以吧，都在在预期范围内。没有想象中的那么差。。,accept_all_unmentioned,{},Generic overall assessment without a named product aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7671308337161441305,MG4,2026-08-07 23:14:43,dongchedi_incremental,"【购车经历】
+不是很愉快，客户经理服务态度极差，非常不满意 投诉达10天以上",accept_all_unmentioned,{},Customer-manager service complaint only.,codex_sol_manual_qa,2026-08-24
+dongchedi::6862969208519528461,别克GL8,2020-08-20 15:45:00,old_v1,别克GL8是目前市场上最热门的商务MPV，其设计非常符合国内市场的需求，品牌也符合商务定位，其缺点是安全性较差，在中保研的碰撞测试中，25%小面积重叠碰撞测试出现A柱断裂的情况，方向盘位移，获得Poor差评，安全性也是GL8急需加强的地方。,accept_all_unmentioned,{},Crash safety is explicit but is outside the fixed ten-aspect definitions; it is not forced into control or configuration.,codex_sol_manual_qa,2026-08-24
+dongchedi::7656862118448222232,奔驰C级,2026-06-30 01:00:00,old_v1,一直在外出差，还没亲自开过。等回家后补充信息吧，目前看媳妇挺满意。,accept_all_unmentioned,{},Reviewer has not driven the car; only generic second-hand satisfaction is stated.,codex_sol_manual_qa,2026-08-24
+dongchedi::7659653420369842201,威兰达,2026-07-07 13:31:00,old_v1,还在摸索，目前没发现纠结的点，不过确实是我的心头好，就这样吧,accept_all_unmentioned,{},Generic affection without a named product aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7650126612616204312,宝来,2026-06-23 13:15:00,old_v1,好车，对于这个车各个方面都比较满意，这个车真的是辆比较不错的车型。,accept_all_unmentioned,{},Generic satisfaction without a named aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7650805082312691737,小米SU7,2026-06-13 17:11:00,old_v1,小米汽车啥都好，就是去买车的时候水都没有给我拿一瓶喝哈哈哈哈,accept_all_unmentioned,{},"Dealer hospitality complaint, not a vehicle-product aspect.",codex_sol_manual_qa,2026-08-24
+dongchedi::7658144702440411161,小米SU7,2026-07-03 11:52:00,old_v1,用车体验非常良好。完全没有后悔的可能性，只要体验过，就离不开了,accept_all_unmentioned,{},Generic positive ownership experience without a named aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7654554428120240152,探岳X,2026-06-23 19:40:00,old_v1,这是我的第一辆爱车，它陪伴我5年了、非常喜欢，也带我去了好几个城市。,accept_all_unmentioned,{},Generic long-term affection without a named aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7649673418782035993,揽巡,2026-06-10 15:59:00,old_v1,"【购车经历】
+购车经历是很好的，懂车帝官方直营店也全程跟踪和帮我跟进流程，很满意的经历",accept_all_unmentioned,{},Purchase-process service only.,codex_sol_manual_qa,2026-08-24
+dongchedi::7658562299443040281,昂科威,2026-07-04 15:00:00,old_v1,第一辆车是哈弗H2s，9年了，有点肉，这是第二辆车，也没开过什么别的车，只能说个人比较喜欢,accept_all_unmentioned,{},Target-series preference is generic; the power complaint describes the previous car.,codex_sol_manual_qa,2026-08-24
+dongchedi::7651888487817285656,朗逸,2026-06-16 15:15:00,old_v1,很不错提车一个月了车子很好，就是销售一点都不负责任，再也不会推荐朋友去他家买车了,accept_all_unmentioned,{},Vehicle praise is generic and the explicit complaint concerns the salesperson.,codex_sol_manual_qa,2026-08-24
+dongchedi::7659592429716115481,比亚迪e7,2026-07-07 09:41:00,old_v1,基本上还行吧，因为我才买回家来，好好还没开过呢，等把证办好了才能跑的,accept_all_unmentioned,{},Reviewer has not driven the car and states no product aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7651673407582392345,海狮06EV,2026-06-16 01:23:00,old_v1,从电车换到油车，感官爽度提升很大。但是有一说一，海狮06只是个水桶车，各方面都不怎么突出,accept_all_unmentioned,{},Generic comparison and undifferentiated 'not outstanding' statement without a fixed aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7653992419213463577,海狮06EV,2026-06-22 07:19:00,old_v1,还可以，刚开始开，还在试用期间还没发现问题，正在进一步了解，进一步观察。,accept_all_unmentioned,{},Generic early-use assessment without a named aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7651943836914028569,深蓝L06,2026-06-16 18:50:00,old_v1,今天提车后就开了七十公里 体验还行 顺义提车工作人员态度挺好 就是太远了懒得下楼拍了拍一下自带的照片,accept_all_unmentioned,{},Generic experience and staff service only.,codex_sol_manual_qa,2026-08-24
+dongchedi::7638618574998753305,荣威i5,2026-05-31 22:52:00,old_v1,我的第一台车 在我心里就是最好的 1万公里了没有把我扔到路上过,accept_all_unmentioned,{},Generic reliability praise; reliability is not one of the fixed ten aspects.,codex_sol_manual_qa,2026-08-24
+dongchedi::7654418708017713176,蒙迪欧,2026-06-23 10:55:00,old_v1,目前 总体还行 毕竟也是昨天提的车 也没怎么跑 真要说具体的 得开一段时间才知道,accept_all_unmentioned,{},Reviewer has just collected the car and states no concrete aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7647092485499408408,蔚来ET5T,2026-06-03 17:12:00,old_v1,蔚来的销售是没有培训吗，给打电话询问价格，后来就买了别的，回访电话问我什么有时间过来试驾，我说已经买了不好意思，然后问我多少钱买的，我说二十左右，最后来了句这个钱你连我们的租电版本的展车都买不起，？？？，你家销售要是说价格不怎么合适我都认了，来了句买不起？真牛，培训连个委婉用词都不会用？不买你家车就该挨嘲讽吗？,accept_all_unmentioned,{},Salesperson conduct and price conversation only; no vehicle-product attitude is expressed.,codex_sol_manual_qa,2026-08-24
+dongchedi::7648449969627598873,迈腾,2026-06-07 08:52:00,old_v1,我喜欢迈腾，因为迈出家门，腾出位置，哈哈哈当然开玩笑的。因为就像喜欢一个人，即使分开了，再看一眼依然会爱上的。,accept_all_unmentioned,{},Generic affection without a named aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7654954250438447166,迈腾,2026-06-24 21:32:00,old_v1,油车还行。就是不知道以后怎样。毕竟新车都还可以的。就看十年以后怎样了。,accept_all_unmentioned,{},Generic new-car and longevity uncertainty without a fixed aspect claim.,codex_sol_manual_qa,2026-08-24
+dongchedi::7649996364025171992,速腾,2026-06-11 12:57:00,old_v1,总体还是不错的，直接奔大众去的，都没看别的品牌，相信大众这品牌吧。,accept_all_unmentioned,{},Brand trust and generic assessment without a named aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7651850684207206424,长安X5 PLUS,2026-06-16 12:48:00,old_v1,挺好的，没什么问题，只是离家远，来回100公里，不得不换个电车,accept_all_unmentioned,{},"Generic assessment and travel-distance context, not a target-series aspect claim.",codex_sol_manual_qa,2026-08-24
+dongchedi::7656754410084634686,领克10,2026-06-29 17:57:00,old_v1,"【购车经历】
+非常好，这家店的服务态度不错，
+【购车经历】
+销售态度也很好",accept_all_unmentioned,{},Dealer and salesperson service only.,codex_sol_manual_qa,2026-08-24
+dongchedi::7660423188483936280,领克10,2026-07-09 15:14:00,old_v1,非常不错的购车，领克03置换的，再次购买，还是不错的，后面等我开开感受下的,accept_all_unmentioned,{},Purchase and replacement context; no target product aspect is evaluated.,codex_sol_manual_qa,2026-08-24
+dongchedi::7657172948565905432,高尔夫,2026-06-30 21:01:00,old_v1,心心念念的高尔夫，18年就看了，一直在等1.5T，19年买了别的车，2026年6月18终于又等到你，送给自己37岁的生日礼物🎁,accept_all_unmentioned,{},Purchase history and affection without a named aspect.,codex_sol_manual_qa,2026-08-24
+dongchedi::7667170964358058046,MG4,2026-07-27 19:39:10,dongchedi_incremental,这个车子一开始路上看到过，后来身边的朋友也买了，我就试了试她这个车子，发现还真挺好，我就让朋友带我到4s店看看其他的颜色和配置了，当天就下单了。不过我选的颜色和内饰店里没现车，就等了大概半个月，但也是顺利提车！,override_false_negative,"{""appearance"": 0, ""configuration"": 0, ""interior"": 0}","Explicitly mentions selecting exterior color, interior, and configuration without aspect-specific polarity.",codex_sol_manual_qa,2026-08-24
+dongchedi::7668691733886029848,MG4,2026-07-31 22:00:32,dongchedi_incremental,总体还可以，中规中矩的小车，售后确实非常非常一般！就是大家尽量选个好清洗的颜色吧,override_false_negative,"{""appearance"": 0}",Explicit neutral advice about choosing an easy-to-clean exterior color.,codex_sol_manual_qa,2026-08-24
+dongchedi::7004750813750890532,Model 3,2021-09-06 17:30:00,old_v1,"准车主，10月份要去提车。
+关注电车已经有将近一年时间。去年比亚迪的刀片电池出来开始深入了解市场上有关比亚迪汉EV，小鹏，特斯拉等等。
+现在的市场还有极狐等等。关注的轿车比较多，理想，蔚来等车就没有很关注。
+我只是一个门外汉，对我来说，关注和研究喜欢的电车是上班之余的事情。
+上周去试驾了小鹏，比亚迪，特斯拉。这三款车是热门的电车，我为什么最终选择特斯拉，我会说明。
+这三款车没有说谁好谁差。三款都有各自的优缺点。试驾完，我和朋友都感叹，怎么没有全优的车呢？就像人无完人吧。
+小鹏是第一辆试驾车，小鹏的辅助驾驶很牛。P7达到自己的目标，选配下来，估计得28万。小鹏的辅助驾驶开起来很舒服。这是最大的优点。但是，缺点很明显。开起来地盘不够扎实。这个感觉开始并没有，后来试驾了汉EV才有深深的感觉。这个地盘开起来，怎么说呢？就是有点虚的感觉。还有刹车的时候，无论是怎么慢刹车，都有点头，一顿的感觉。开起来很不舒服。
+汉EV是第二款试驾车，汉EV开完。我和朋友都觉得很牛，甚至在开的时候都展示出无比的佩服。这车真多很牛很牛很牛。要是形容的话，稳的像坦克。车速随便上100码。车内不开音乐，还是很安静。车开起来无比丝滑。小鹏是顺滑，汉EV是丝滑，没有一点点的不舒服和顿挫。我和朋友都觉得这是老板座驾！坐在里面的老板椅子等等，都是豪华的设计。我不是专业车品人，好坏都是一眼判断。你们真的可以去试试看，试驾中就可以看出。小鹏的试驾都不能上100，汉随便上，随便开。也是从驾驶感受来看，汉EV，在我们这些“小白”感受都很明显的觉得。这个地盘真牛。刹车也是随便刹车，不会点头，不会晕车。开的太爽了。下车后，我朋友因为加速过快，有晕车感。他一脚下去130码开起来。那么，我为什么最后定车特斯拉呢。这样说，你可能会理解。开着路上，朋友们指着车说。你看，比亚迪。同样的情景，朋友们指着车说。你看，特斯拉。我真的觉得比亚迪的电车很牛。无论账面数据还是平时接触到的开了好几年电车的车主。可是，我现在是年轻人，在乎这方面的感受。如果我的年纪上50➕ 我真的会选比亚迪汉EV，为什么？因为开着就感觉很安全，很放心把命交给这车。并不是说其他车不好。而是形容这样的一个安全的状态。
+两架车试驾完，我们就讨论，要是有个综合起来的就会选，希望特斯拉不要太垃圾……
+第三架车是特斯拉，一看到这车内饰。我不知道为什么会有奥迪的感觉。（大家不要喷我，小白纯属个人感受）开着也不错，UI也很好，是个综合产品。车也能接受。是一个合格的电子产品。试驾完就很想定车。还是要考虑一下，后面转到奥迪。开了下Q2le-tron。这一言难尽……
+根据这样的考虑，最终选了特斯拉。看网上的信息真的不要太过于相信，比亚迪的服务挺好的。我后来都不忍心拒绝。
+建议，如果是一家三口，想给家人一个舒适的乘车环境，自己又要有操控，我建议你去试驾汉EV，绝对有体验感。就算不买，你也可以看到国产的实力。真的很牛。
+如果是自己开，小鹏和特斯拉都可以。我是因为预算问题，没有选小鹏。",override_false_negative,"{""control"": 1, ""intelligence"": 1, ""interior"": 1, ""value"": 1}","For the target Model 3, explicitly likes the interior impression, driving, UI/electronic-product integration, and budget fit; competitor statements are excluded.",codex_sol_manual_qa,2026-08-24
+dongchedi::7646272939871981630,元PLUS,2026-06-01 12:04:00,old_v1,"【最满意】
+是充电速度快，能节省不少时间，再也不用担心亏电问题了。",override_false_negative,"{""fuel_consumption"": 1}",Explicitly praises charging speed and reduced range anxiety.,codex_sol_manual_qa,2026-08-24
+dongchedi::7657865198321029182,奔驰C级,2026-07-02 17:48:00,old_v1,哥哥姐姐们，你们的c260经典款保险多少？看看我的是不是正常的,override_false_negative,"{""value"": 0}","Explicit neutral question about insurance cost, which falls under ownership cost/value.",codex_sol_manual_qa,2026-08-24
+dongchedi::7660836630806138905,奕跑,2026-07-10 17:59:00,old_v1,"我就想知道奕跑的真实油箱量是多少？官方说是43升，但我车油剩一小格加满才加了31升油，按官方说的话43—31=12？一小格油量是12升？    
+求大神分解…",override_false_negative,"{""configuration"": 0}",Explicit neutral question about fuel-tank capacity/specification.,codex_sol_manual_qa,2026-08-24
+dongchedi::7657115883780706329,探岳X,2026-06-30 17:20:00,old_v1,挺好的，就是后悔没买4驱了，别的没啥了，现在有点换车的想法，但是没目标,override_false_negative,"{""configuration"": -1}",Explicit regret about not buying the four-wheel-drive configuration.,codex_sol_manual_qa,2026-08-24
+dongchedi::7655191155545493529,极狐 阿尔法S5,2026-06-25 12:51:00,old_v1,红米汽车，懂得都懂，我只能说比较均衡，只有那个红外理疗仪有点侮辱我的智商酱紫。,override_false_negative,"{""configuration"": -1}",Explicitly mocks the infrared therapy feature.,codex_sol_manual_qa,2026-08-24
+dongchedi::6993965034292383785,标致4008,2021-08-08 15:56:00,old_v1,"4008钢筋铁骨果然名不虚传
+早上一如既往的开的4008上班，走在高架上一看时间今天走的还挺早，到单位了还可以吃个早饭，高架上的车一如既往，自从高架修好了以后，几年来路上的车越来越多，需要的时间也越来越来长，侧面反映了我们的生活水平也在逐步提高，人民的认同感也在不断增强。
+回想当时的购车经历，4008一直都在我的购车首选范围之内，当时也重点考虑了昂科威，但是对比下来有发现只能上28T的，28T但是只能加95的油，再一个20T是可以加92的油但是是干式双离合(这一点不能接受)，28T的价格相比4008又高了好几万，综合下来最后还是选择了4008，早就听说4008的扎实，我对它最满意的也是安全性方面不含糊，号称公路坦克，虽然之前没有实际体验过，但在网上也看过4008怒怼凯迪拉克和醉酒轿车加速努撞4008奈何4008岿然不动的视频，所以对4008的安全性一直非常有信心。
+言归正传，正在高架上行驶，突然前方车的刹车灯亮了起来伴随着砰的一声，我下意识的猛踩刹车，后排座椅上放的物品都飞到前排来了，我心想完了，奈何刹车反应的距离太短，我的4008还是很无奈的亲上了前车的屁股，伴随着碰的一声，下了车才发现原来是四车追尾，我是最后一个。
+后来交警来了，指挥我们先下高速再定责，这时我听说前方的车主说要叫拖车，才发现他的车前面水箱之类的都破了已经不能开了，这时我还是比较庆幸我的4008的硬度果真还可以，从外面看不出来有大的伤。
+之后我们三个车先开下高架等着，第三台车叫了拖车托下了高架，下来后我仔细看了一下发现被4008亲过的前车屁股，中间凹进去一块，左侧保险杠的安装卡扣已经脱出，我自己的车在引擎盖那有一条缝，其余不明显。
+最终交警判定前车追尾最前方两台车负责他的车头和最前方两台车，我的4008追尾第三台车，负责他的车尾和我自己的车头。
+经此一撞，虽有4008安全保障，但还是要提醒所有车主朋友们，开车一定要注意安全，安全最终是掌握在自己手里的，开车是保持注意力集中，与前车一定要留有一定的安全距离，不要怕被别人加塞，安全才是自己的。",override_false_negative,"{""control"": 1, ""value"": 1}",Explicitly praises braking/structural robustness and says the target was substantially cheaper than the alternative.,codex_sol_manual_qa,2026-08-24
+dongchedi::7654688668044496958,比亚迪e7,2026-06-24 04:21:00,old_v1,就有一点，车尾看着有一点别扭，顶配车型主驾驶座椅居然是手动的,override_false_negative,"{""appearance"": -1, ""configuration"": -1}",Explicitly dislikes the rear styling and criticizes the manual driver's seat on the top trim.,codex_sol_manual_qa,2026-08-24
+dongchedi::7654252346439897150,艾瑞泽8,2026-06-23 00:12:00,old_v1,"【最不满意】
+取消有些东西然后去换成其他的东西了，升底盘看了涂料防生锈效果增加不多，天窗排水口排了水一直会流在门口坎留下痕迹",override_false_negative,"{""configuration"": -1}","Explicitly criticizes removed/replaced equipment, weak anti-rust coating, and sunroof drainage design.",codex_sol_manual_qa,2026-08-24
+dongchedi::7659072535216001086,蒙迪欧,2026-07-05 23:53:00,old_v1,不满意的地方：正时是皮带的，欣慰的是 不是浸油的湿式皮带，需要10年16万强制更换。保养手册写的的火花塞 刹车油 换的比较快。,override_false_negative,"{""configuration"": -1, ""value"": -1}",Explicitly criticizes timing-belt specification and frequent maintenance replacements/cost burden.,codex_sol_manual_qa,2026-08-24
+dongchedi::7654849939196891198,起亚K3,2026-06-24 14:51:00,old_v1,挺好满意，昨天提车已经上牌儿了，看起来感觉挺好，买车的第一天有点儿小剐蹭心疼死了,override_false_negative,"{""appearance"": 1}",Explicitly says the car looks good.,codex_sol_manual_qa,2026-08-24
+dongchedi::7653108490273034264,迈腾,2026-06-19 22:09:00,old_v1,刚开十天，感觉啥毛病没有，就是倒车应急感应太灵敏了，有时候会吓一跳,override_false_negative,"{""intelligence"": -1}",Explicitly criticizes overly sensitive reverse emergency intervention.,codex_sol_manual_qa,2026-08-24
+dongchedi::7649526091803004953,速腾,2026-06-10 06:38:00,old_v1,各位方面都不错 均衡 唯一重要问题 空调喷铝粉 厂家及官方给予重视,override_false_negative,"{""configuration"": -1}",Explicitly criticizes the air conditioner for emitting aluminum powder.,codex_sol_manual_qa,2026-08-24
+dongchedi::7648090352343060542,高尔夫GTI,2026-06-06 09:37:00,old_v1,完美的一代gti车型解决了之前几代的全部问题，同时还没有颗粒捕捉器。升级空间巨大,override_false_negative,"{""configuration"": 1}",Explicitly praises the absence of a particulate filter and large modification potential.,codex_sol_manual_qa,2026-08-24

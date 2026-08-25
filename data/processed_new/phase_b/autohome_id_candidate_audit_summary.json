@@ -1,0 +1,11 @@
+{
+  "candidate_pairs_in_this_run": 6,
+  "candidate_pairs_in_persisted_audit": 95,
+  "verified_exact": 6,
+  "manual_review": 0,
+  "rejected": 0,
+  "errors": 0,
+  "zero_coverage_target_series": 41,
+  "potential_review_total_for_verified_exact": 342,
+  "rule": "Only exact target/source name matches are auto-verified. Aliases, renames and one-ID-to-many-target conflicts require explicit review."
+}

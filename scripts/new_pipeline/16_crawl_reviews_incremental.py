@@ -73,7 +73,7 @@ def _unpack_payload(raw: dict) -> tuple[list[dict], int, bool]:
             bool(payload.get("has_more", False)))
 
 
-def _curl_page(series_id: int, page: int) -> tuple[list[dict] | None, int, bool, str]:
+def _curl_page(series_id: int, page: int, attempts: int = 3) -> tuple[list[dict] | None, int, bool, str]:
     """TLS fallback for hosts where Python/OpenSSL is rejected by the source.
 
     This remains a normal public GET request.  ``subprocess`` receives an
@@ -83,18 +83,29 @@ def _curl_page(series_id: int, page: int) -> tuple[list[dict] | None, int, bool,
     """
     url = (f"{API_URL}?series_id={int(series_id)}&page={int(page)}&size=15"
            "&city_name=&sort_by=default")
-    try:
-        result = subprocess.run([
-            "curl", "--http1.1", "--tlsv1.2", "--fail", "--silent", "--show-error",
-            "-A", HEADERS["User-Agent"], "-e", HEADERS["Referer"], url,
-        ], check=True, capture_output=True, text=True, timeout=30)
-        reviews, total, has_more = _unpack_payload(json.loads(result.stdout))
-        return reviews, total, has_more, ""
-    except Exception as exc:
-        return None, 0, False, f"curl fallback {type(exc).__name__}: {exc}"
+    last_error = ""
+    for attempt in range(1, attempts + 1):
+        try:
+            result = subprocess.run([
+                "curl", "--http1.1", "--tlsv1.2", "--fail", "--silent", "--show-error",
+                "-A", HEADERS["User-Agent"], "-e", HEADERS["Referer"], url,
+            ], check=True, capture_output=True, text=True, timeout=30)
+            reviews, total, has_more = _unpack_payload(json.loads(result.stdout))
+            return reviews, total, has_more, ""
+        except Exception as exc:
+            last_error = f"curl attempt {attempt}/{attempts} {type(exc).__name__}: {exc}"
+            if attempt < attempts:
+                time.sleep(4 * attempt + random.uniform(0, 1))
+    return None, 0, False, last_error
 
 
 def fetch_page(session: requests.Session, series_id: int, page: int) -> tuple[list[dict] | None, int, bool, str]:
+    # The target source currently accepts the system curl TLS profile but
+    # closes the Python/OpenSSL handshake.  Try the working transport first;
+    # retain requests as a portable fallback for other environments.
+    reviews, total, has_more, curl_error = _curl_page(series_id, page)
+    if reviews is not None:
+        return reviews, total, has_more, ""
     try:
         resp = session.get(API_URL, headers=HEADERS, params={
             "series_id": series_id, "page": page, "size": 15,
@@ -104,10 +115,7 @@ def fetch_page(session: requests.Session, series_id: int, page: int) -> tuple[li
         reviews, total, has_more = _unpack_payload(resp.json())
         return reviews, total, has_more, ""
     except Exception as exc:  # network failures are recorded in the manifest
-        reviews, total, has_more, fallback_error = _curl_page(series_id, page)
-        if reviews is not None:
-            return reviews, total, has_more, ""
-        return None, 0, False, f"requests {type(exc).__name__}: {exc}; {fallback_error}"
+        return None, 0, False, f"curl first: {curl_error}; requests {type(exc).__name__}: {exc}"
 
 
 def parse_review(review: dict, series_id: int, series_name: str) -> dict:
@@ -167,6 +175,11 @@ def main() -> None:
 
     session = requests.Session()
     records, manifest_rows = [], []
+    existing_ids: dict[int, set[str]] = {}
+    if REVIEWS_OUT.exists():
+        existing = pd.read_csv(REVIEWS_OUT, usecols=["series_id", "review_id"], low_memory=False)
+        for sid, group in existing.groupby("series_id"):
+            existing_ids[int(sid)] = set(group["review_id"].astype(str))
     for i, row in pending.reset_index(drop=True).iterrows():
         sid, name = int(row.series_id), str(row.series_name)
         print(f"[{i + 1}/{len(pending)}] {name} ({sid})", flush=True)
@@ -183,12 +196,18 @@ def main() -> None:
             time.sleep(random.uniform(args.delay_min, args.delay_max))
         if not collected and status == "ok":
             status = "empty"
-        records.extend(collected)
+        # Retrying a partial series starts from page 1.  Keep the raw corpus
+        # idempotent by writing only unseen review IDs, while the manifest
+        # reports the cumulative per-series count.
+        known = existing_ids.setdefault(sid, set())
+        new_records = [record for record in collected if str(record["review_id"]) not in known]
+        known.update(str(record["review_id"]) for record in new_records)
+        records.extend(new_records)
         manifest_rows.append({"series_id": sid, "series_name": name, "brand_name": row.brand_name,
-                              "status": status, "review_count": len(collected), "api_total": total,
+                              "status": status, "review_count": len(known), "api_total": total,
                               "checked_at": datetime.now().isoformat(timespec="seconds"), "error": error})
-        if collected:
-            pd.DataFrame(collected).to_csv(REVIEWS_OUT, mode="a", header=not REVIEWS_OUT.exists(), index=False, encoding="utf-8-sig")
+        if new_records:
+            pd.DataFrame(new_records).to_csv(REVIEWS_OUT, mode="a", header=not REVIEWS_OUT.exists(), index=False, encoding="utf-8-sig")
         manifest = pd.concat([manifest, pd.DataFrame(manifest_rows)], ignore_index=True)
         manifest = manifest.drop_duplicates("series_id", keep="last")
         manifest.to_csv(MANIFEST_OUT, index=False, encoding="utf-8-sig")

@@ -1,0 +1,100 @@
+series_name,autohome_series_id,resolution_status,source_url,verified_at,note
+ID.6 CROZZ,6055,verified,https://k.autohome.com.cn/6055/,2026-08-23,Official Autohome mouth-review page path and returned series name agree
+MG7,531,verified,https://k.autohome.com.cn/531/,2026-08-23,Official Autohome mouth-review page path and returned series name agree
+T-ROC探歌,4674,verified,https://k.autohome.com.cn/4674/,2026-08-23,Official Autohome mouth-review page path and returned series name agree
+五菱宏光,2139,verified,https://k.autohome.com.cn/2139/,2026-08-23,Official Autohome mouth-review page path and returned series name agree
+享域,5031,verified,https://k.autohome.com.cn/5031/,2026-08-23,Official Autohome mouth-review page path and returned series name agree
+EVOS,6143,verified,https://k.autohome.com.cn/6143/,2026-08-23,Official review endpoint returned the exact target series name
+PATHFINDER探陆,7396,verified,https://k.autohome.com.cn/7396/,2026-08-23,Manual alias review accepted: target retains PATHFINDER prefix while Autohome displays 探陆
+iCAR 03,7069,verified,https://k.autohome.com.cn/7069/,2026-08-23,Official review endpoint returned the exact target series name
+五菱星光,7349,verified,https://k.autohome.com.cn/7349/,2026-08-23,Official review endpoint returned the exact target series name
+亚洲狮,5960,verified,https://k.autohome.com.cn/5960/,2026-08-23,Official review endpoint returned the exact target series name
+传祺E8新能源,7329,verified,https://k.autohome.com.cn/7329/,2026-08-23,Manual rename review accepted: official display changed from 传祺E8新能源 to 传祺E8 PHEV
+别克E4,7122,verified,https://k.autohome.com.cn/7122/,2026-08-23,Official review endpoint returned the exact target series name
+北京EU5,5058,verified,https://k.autohome.com.cn/5058/,2026-08-23,Official review endpoint returned the exact target series name
+宋PLUS新能源,5761,verified,https://k.autohome.com.cn/5761/,2026-08-23,Official review endpoint returned the exact target series name
+唐新能源,3430,verified,https://k.autohome.com.cn/3430/,2026-08-23,Official review endpoint returned the exact target series name
+宏光MINIEV,5714,verified,https://k.autohome.com.cn/5714/,2026-08-23,Official review endpoint returned the exact target series name
+五菱佳辰,6650,verified,https://k.autohome.com.cn/6650/,2026-08-23,Official review endpoint returned the exact target series name
+五菱征程,6039,verified,https://k.autohome.com.cn/6039/,2026-08-23,Official review endpoint returned the exact target series name
+五菱星云,7272,verified,https://k.autohome.com.cn/7272/,2026-08-23,Official review endpoint returned the exact target series name
+五菱星驰,6777,verified,https://k.autohome.com.cn/6777/,2026-08-23,Official review endpoint returned the exact target series name
+传祺GA8,3782,verified,https://k.autohome.com.cn/3782/,2026-08-23,Official review endpoint returned the exact target series name
+凌尚,5963,verified,https://k.autohome.com.cn/5963/,2026-08-23,Official review endpoint returned the exact target series name
+凌放HARRIER,6077,verified,https://k.autohome.com.cn/6077/,2026-08-23,Official review endpoint returned the exact target series name
+凯翼拾月,6845,verified,https://k.autohome.com.cn/6845/,2026-08-23,Official review endpoint returned the exact target series name
+别克GL6,4487,verified,https://k.autohome.com.cn/4487/,2026-08-23,Official review endpoint returned the exact target series name
+别克GL8新能源,7658,verified,https://k.autohome.com.cn/7658/,2026-08-23,Official review endpoint returned the exact target series name
+勇士,622,verified,https://k.autohome.com.cn/622/,2026-08-23,Official review endpoint returned the exact target series name
+北京现代ix35,1007,verified,https://k.autohome.com.cn/1007/,2026-08-23,Official review endpoint returned the exact target series name
+卡罗拉双擎E+,4832,verified,https://k.autohome.com.cn/4832/,2026-08-23,Official review endpoint returned the exact target series name
+合创A06,6502,verified,https://k.autohome.com.cn/6502/,2026-08-23,Official review endpoint returned the exact target series name
+吉利熊猫,6924,verified,https://k.autohome.com.cn/6924/,2026-08-23,Manual alias review accepted: target includes manufacturer prefix while official display is 熊猫 under 吉利汽车
+启辰T60,4887,verified,https://k.autohome.com.cn/4887/,2026-08-23,Official review endpoint returned the exact target series name
+大家7,7211,verified,https://k.autohome.com.cn/7211/,2026-08-23,Official review endpoint returned the exact target series name
+大家9,6148,verified,https://k.autohome.com.cn/6148/,2026-08-23,Official review endpoint returned the exact target series name
+奔奔E-Star,7279,verified,https://k.autohome.com.cn/7279/,2026-08-23,Official review endpoint returned the exact target series name
+宋Pro新能源,5279,verified,https://k.autohome.com.cn/5279/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+宝马1系,4171,verified,https://k.autohome.com.cn/4171/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+宝马X2,5309,verified,https://k.autohome.com.cn/5309/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+宝马iX3,5758,verified,https://k.autohome.com.cn/5758/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+宝骏KiWi EV,6155,verified,https://k.autohome.com.cn/6155/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+小鹏G3,4489,verified,https://k.autohome.com.cn/4489/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+小鹏MONA M03,6998,verified,https://k.autohome.com.cn/6998/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+小鹏P5,6095,verified,https://k.autohome.com.cn/6095/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+小鹏P7,5213,verified,https://k.autohome.com.cn/5213/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+小鹏P7+,7554,verified,https://k.autohome.com.cn/7554/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+小鹏X9,7067,verified,https://k.autohome.com.cn/7067/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+岚图梦想家,6459,verified,https://k.autohome.com.cn/6459/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+岚图追光L,8259,verified,https://k.autohome.com.cn/8259/,2026-08-24,Official suggestion and review endpoints returned the exact target series name after whitespace normalization
+护卫舰07,6671,verified,https://k.autohome.com.cn/6671/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+捷豹XEL,4462,verified,https://k.autohome.com.cn/4462/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+昊铂GT,7084,verified,https://k.autohome.com.cn/7084/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+星海T5,8457,verified,https://k.autohome.com.cn/8457/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+星越L 智擎,7496,verified,https://k.autohome.com.cn/7496/,2026-08-24,Official suggestion and review endpoints returned the exact target series name after whitespace normalization
+极氪001,6091,verified,https://k.autohome.com.cn/6091/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+极氪009,6846,verified,https://k.autohome.com.cn/6846/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+极狐考拉,7120,verified,https://k.autohome.com.cn/7120/,2026-08-24,Official suggestion and review endpoints returned the exact target series name after whitespace normalization
+标致508,2299,verified,https://k.autohome.com.cn/2299/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+比亚迪M9,8184,verified,https://k.autohome.com.cn/8184/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+汉,5499,verified,https://k.autohome.com.cn/5499/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+江淮A5 PLUS,7251,verified,https://k.autohome.com.cn/7251/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+江淮QX PHEV,7217,verified,https://k.autohome.com.cn/7217/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+沃兰多,4882,verified,https://k.autohome.com.cn/4882/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+沃尔沃C40,6049,verified,https://k.autohome.com.cn/6049/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+沃尔沃ES90,8050,verified,https://k.autohome.com.cn/8050/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+海豹07DM-i,7822,verified,https://k.autohome.com.cn/7822/,2026-08-24,Official suggestion and review endpoints returned the exact target series name after whitespace normalization
+海马8S,4770,verified,https://k.autohome.com.cn/4770/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+海马INJOY,7867,verified,https://k.autohome.com.cn/7867/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+瑞风E3,6506,verified,https://k.autohome.com.cn/6506/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+皓影新能源,5994,verified,https://k.autohome.com.cn/5994/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+福瑞迪,813,verified,https://k.autohome.com.cn/813/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+秦L,7578,verified,https://k.autohome.com.cn/7578/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+秦PLUS,5964,verified,https://k.autohome.com.cn/5964/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+秦新能源,2761,verified,https://k.autohome.com.cn/2761/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+纳米01,7364,verified,https://k.autohome.com.cn/7364/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+腾势D9,6669,verified,https://k.autohome.com.cn/6669/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+荣威D7,7301,verified,https://k.autohome.com.cn/7301/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+荣威RX3,4473,verified,https://k.autohome.com.cn/4473/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+荣威i6 MAX新能源,5801,verified,https://k.autohome.com.cn/5801/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+荣威iMAX8新能源,6641,verified,https://k.autohome.com.cn/6641/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+赛那SIENNA,6272,verified,https://k.autohome.com.cn/6272/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+起亚KX3傲跑,3664,verified,https://k.autohome.com.cn/3664/,2026-08-24,Manual alias review accepted: target retains the 起亚 brand prefix while Autohome displays KX3傲跑; no ID collision
+轩度EV,6844,verified,https://k.autohome.com.cn/6844/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+迈锐宝XL,4031,verified,https://k.autohome.com.cn/4031/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+途安,333,verified,https://k.autohome.com.cn/333/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+长安UNI-Z新能源,7512,verified,https://k.autohome.com.cn/7512/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+长安启源Q05经典,7351,verified,https://k.autohome.com.cn/7351/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+长安欧尚520,7895,verified,https://k.autohome.com.cn/7895/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+风光330,3829,verified,https://k.autohome.com.cn/3829/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+风光380,6581,verified,https://k.autohome.com.cn/6581/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+风光E380,6391,verified,https://k.autohome.com.cn/6391/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+魏牌 高山,8766,verified,https://k.autohome.com.cn/8766/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+奥迪A6L e-tron,8105,verified,https://k.autohome.com.cn/8105/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+海豹07EV,8462,verified,https://k.autohome.com.cn/8462/,2026-08-24,Official suggestion and review endpoints returned the exact target series name after whitespace normalization
+铂智7,7724,verified,https://k.autohome.com.cn/7724/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+银河V900,8436,verified,https://k.autohome.com.cn/8436/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+银河星耀7,8313,verified,https://k.autohome.com.cn/8313/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+领克10,8176,verified,https://k.autohome.com.cn/8176/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+凯威德,8471,verified,https://k.autohome.com.cn/8471/,2026-08-24,Official suggestion and review endpoints returned the exact target series name
+爱跑,7573,verified,https://k.autohome.com.cn/7573/,2026-08-24,Official suggestion and review endpoints returned the exact target series name

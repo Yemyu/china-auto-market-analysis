@@ -1,5 +1,6 @@
 // China Auto Market Analysis shared shell and chart helpers.
 var __dataCache = {};
+var APP_DATA_VERSION = '20260825-3';
 
 function showAppError(message) {
   var main = document.querySelector('.content');
@@ -12,7 +13,7 @@ function showAppError(message) {
 
 function loadJSON(name) {
   if (!__dataCache[name]) {
-    __dataCache[name] = fetch('static/data/' + name + '.json').then(function (r) {
+    __dataCache[name] = fetch('static/data/' + name + '.json?v=' + APP_DATA_VERSION).then(function (r) {
       if (!r.ok) throw new Error(name + '.json: HTTP ' + r.status);
       return r.json();
     }).catch(function (err) {
@@ -76,7 +77,7 @@ function currentPage() {
   return ({
     'index.html': 'overview', 'forecast.html': 'forecast', 'absa.html': 'absa',
     'attribution.html': 'attribution', 'alerts.html': 'alerts',
-    'drilldown.html': 'drilldown', 'relation.html': 'forecast'
+    'drilldown.html': 'drilldown'
   })[file] || 'overview';
 }
 function shellLabel(key, fallback) { return window.I18N ? window.I18N.get(key) : fallback; }

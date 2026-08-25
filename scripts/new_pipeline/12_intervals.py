@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-12_intervals.py — 预测区间与覆盖度（无舆情基线 · 腿B）
+12_intervals.py — 预测区间与覆盖度（无舆情基线）
 
 数据来源（统一）：06_make_splits.py 的 train / val / test。
   * 在验证期选择树的迭代轮数后，模型以 train+val 重拟合，在

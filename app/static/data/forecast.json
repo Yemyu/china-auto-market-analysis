@@ -1,11 +1,11 @@
 {
   "models": [
     {
-      "name": "DeepSeek丰富",
-      "name_zh": "DeepSeek丰富",
-      "name_en": "DeepSeek rich",
-      "wmape_vol": 38.705,
-      "wmape_med": 48.826,
+      "name": "用户口碑增强",
+      "name_zh": "用户口碑增强",
+      "name_en": "User-review enhanced",
+      "wmape_vol": 38.7052,
+      "wmape_med": 48.8261,
       "mae": null,
       "color": "#2c7be5",
       "scenario": "fixed_origin_primary"
@@ -13,29 +13,29 @@
     {
       "name": "平台评分",
       "name_zh": "平台评分",
-      "name_en": "Platform rating",
-      "wmape_vol": 38.819,
-      "wmape_med": 49.542,
+      "name_en": "Platform ratings",
+      "wmape_vol": 38.8186,
+      "wmape_med": 49.5423,
       "mae": null,
       "color": "#00a9ae",
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "DeepSeek滚动补充",
-      "name_zh": "DeepSeek滚动补充",
-      "name_en": "DeepSeek rolling (supplement)",
-      "wmape_vol": 39.073,
-      "wmape_med": 51.559,
+      "name": "滚动口碑特征",
+      "name_zh": "滚动口碑特征",
+      "name_en": "Rolling review signals",
+      "wmape_vol": 39.0735,
+      "wmape_med": 51.5588,
       "mae": null,
       "color": "#34c38f",
       "scenario": "rolling_origin_supplement"
     },
     {
-      "name": "DeepSeek核心",
-      "name_zh": "DeepSeek核心",
-      "name_en": "DeepSeek core",
-      "wmape_vol": 39.225,
-      "wmape_med": 49.714,
+      "name": "文本情感特征",
+      "name_zh": "文本情感特征",
+      "name_en": "Text sentiment",
+      "wmape_vol": 39.2252,
+      "wmape_med": 49.7137,
       "mae": null,
       "color": "#f6c343",
       "scenario": "fixed_origin_primary"
@@ -44,38 +44,38 @@
       "name": "本地词典",
       "name_zh": "本地词典",
       "name_en": "Local lexicon",
-      "wmape_vol": 39.537,
-      "wmape_med": 48.434,
+      "wmape_vol": 39.5368,
+      "wmape_med": 48.4343,
       "mae": null,
       "color": "#ee5b5b",
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "全部舆情",
-      "name_zh": "全部舆情",
-      "name_en": "All sentiment",
-      "wmape_vol": 40.045,
-      "wmape_med": 50.358,
+      "name": "全部口碑特征",
+      "name_zh": "全部口碑特征",
+      "name_en": "Combined review features",
+      "wmape_vol": 40.0449,
+      "wmape_med": 50.3579,
       "mae": null,
       "color": "#a55eea",
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "无舆情基线",
-      "name_zh": "无舆情基线",
-      "name_en": "No-sentiment baseline",
+      "name": "销量基线",
+      "name_zh": "销量基线",
+      "name_en": "Sales baseline",
       "wmape_vol": 40.44,
-      "wmape_med": 49.984,
+      "wmape_med": 49.9837,
       "mae": null,
       "color": "#7783f5",
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "DeepSeek丰富+冷启动",
-      "name_zh": "DeepSeek丰富+冷启动",
-      "name_en": "DeepSeek rich + cold-start",
-      "wmape_vol": 38.64,
-      "wmape_med": 48.316,
+      "name": "口碑增强＋冷启动",
+      "name_zh": "口碑增强＋冷启动",
+      "name_en": "Review enhanced + cold-start",
+      "wmape_vol": 38.6405,
+      "wmape_med": 48.3157,
       "mae": null,
       "color": "#34c38f",
       "scenario": "fixed_origin_primary_cold_hybrid"
@@ -7916,108 +7916,108 @@
   ],
   "features": [
     {
-      "name": "lag_1",
+      "name": "上月销量",
       "name_zh": "上月销量",
       "name_en": "Sales lag 1",
-      "desc_zh": "特征族：sales_lag_roll",
-      "desc_en": "Feature family: sales_lag_roll",
+      "desc_zh": "特征组：历史销量",
+      "desc_en": "Feature group: Sales history",
       "importance": 1.515
     },
     {
-      "name": "lag_2",
+      "name": "前2月销量",
       "name_zh": "前2月销量",
       "name_en": "Sales lag 2",
-      "desc_zh": "特征族：sales_lag_roll",
-      "desc_en": "Feature family: sales_lag_roll",
+      "desc_zh": "特征组：历史销量",
+      "desc_en": "Feature group: Sales history",
       "importance": 0.3293
     },
     {
-      "name": "lag_3",
+      "name": "前3月销量",
       "name_zh": "前3月销量",
       "name_en": "Sales lag 3",
-      "desc_zh": "特征族：sales_lag_roll",
-      "desc_en": "Feature family: sales_lag_roll",
+      "desc_zh": "特征组：历史销量",
+      "desc_en": "Feature group: Sales history",
       "importance": 0.0918
     },
     {
-      "name": "month_sin",
+      "name": "月份季节性（正弦）",
       "name_zh": "月份季节性（正弦）",
       "name_en": "Month seasonality (sin)",
-      "desc_zh": "特征族：calendar",
-      "desc_en": "Feature family: calendar",
+      "desc_zh": "特征组：日历",
+      "desc_en": "Feature group: Calendar",
       "importance": 0.0787
     },
     {
-      "name": "month_cos",
+      "name": "月份季节性（余弦）",
       "name_zh": "月份季节性（余弦）",
       "name_en": "Month seasonality (cos)",
-      "desc_zh": "特征族：calendar",
-      "desc_en": "Feature family: calendar",
+      "desc_zh": "特征组：日历",
+      "desc_en": "Feature group: Calendar",
       "importance": 0.0649
     },
     {
-      "name": "deepseek_review_count_prior_all",
+      "name": "历史评论数量",
       "name_zh": "历史评论数量",
       "name_en": "Prior review count",
-      "desc_zh": "特征族：deepseek_observation_context",
-      "desc_en": "Feature family: deepseek_observation_context",
+      "desc_zh": "特征组：评论覆盖",
+      "desc_en": "Feature group: Review coverage",
       "importance": 0.0238
     },
     {
-      "name": "deepseek_value_score_prior_mean",
+      "name": "性价比长期情感",
       "name_zh": "性价比长期情感",
       "name_en": "Value expanding sentiment",
-      "desc_zh": "特征族：deepseek_expanding_score",
-      "desc_en": "Feature family: deepseek_expanding_score",
+      "desc_zh": "特征组：历史评价",
+      "desc_en": "Feature group: Historical review score",
       "importance": 0.0178
     },
     {
-      "name": "year",
+      "name": "年份",
       "name_zh": "年份",
       "name_en": "Year",
-      "desc_zh": "特征族：calendar",
-      "desc_en": "Feature family: calendar",
+      "desc_zh": "特征组：日历",
+      "desc_en": "Feature group: Calendar",
       "importance": 0.0166
     },
     {
-      "name": "height_mm",
+      "name": "车高",
       "name_zh": "车高",
       "name_en": "Height",
-      "desc_zh": "特征族：configuration",
-      "desc_en": "Feature family: configuration",
+      "desc_zh": "特征组：产品配置",
+      "desc_en": "Feature group: Product configuration",
       "importance": 0.0166
     },
     {
-      "name": "roll_mean_6",
+      "name": "近6月销量均值",
       "name_zh": "近6月销量均值",
       "name_en": "6-month sales mean",
-      "desc_zh": "特征族：sales_lag_roll",
-      "desc_en": "Feature family: sales_lag_roll",
+      "desc_zh": "特征组：历史销量",
+      "desc_en": "Feature group: Sales history",
       "importance": 0.0164
     },
     {
-      "name": "roll_mean_3",
+      "name": "近3月销量均值",
       "name_zh": "近3月销量均值",
       "name_en": "3-month sales mean",
-      "desc_zh": "特征族：sales_lag_roll",
-      "desc_en": "Feature family: sales_lag_roll",
+      "desc_zh": "特征组：历史销量",
+      "desc_en": "Feature group: Sales history",
       "importance": 0.016
     },
     {
-      "name": "deepseek_review_count_180d",
+      "name": "近180天评论数量",
       "name_zh": "近180天评论数量",
       "name_en": "180-day review count",
-      "desc_zh": "特征族：deepseek_observation_context",
-      "desc_en": "Feature family: deepseek_observation_context",
+      "desc_zh": "特征组：评论覆盖",
+      "desc_en": "Feature group: Review coverage",
       "importance": 0.0127
     }
   ],
   "conclusion": {
-    "zh": "371车系固定起点六个月递归测试中，DeepSeek丰富特征将全局WMAPE从40.44%降至38.71%；冷启动兜底后为38.64%。平台评分与DeepSeek丰富特征仅相差0.113个百分点。",
-    "en": "In the fixed-origin six-month test over 371 series, DeepSeek-rich lowers global WMAPE from 40.44% to 38.71%; the cold-start fallback reaches 38.64%. Platform ratings differ from DeepSeek-rich by only 0.113 pp."
+    "zh": "371车系固定起点六个月递归测试中，用户口碑增强将全局WMAPE从40.44%降至38.71%；冷启动兜底后为38.64%。平台评分与用户口碑增强仅相差0.113个百分点。",
+    "en": "In the fixed-origin six-month test over 371 series, user-review features lower global WMAPE from 40.44% to 38.71%; the cold-start fallback reaches 38.64%. Platform ratings differ from the user-review model by only 0.113 pp."
   },
   "feature_insight": {
-    "zh": "销量滞后与滚动均值占SHAP绝对重要性的80.17%；DeepSeek特征合计约9.03%，主要提供补充信息而非替代历史销量。",
-    "en": "Sales lags and rolling means contribute 80.17% of absolute SHAP importance; DeepSeek features contribute about 9.03% and supplement rather than replace sales history."
+    "zh": "销量滞后与滚动均值占SHAP绝对重要性的80.17%；评论特征合计约9.03%，主要提供补充信息而非替代历史销量。",
+    "en": "Sales lags and rolling means contribute 80.17% of absolute SHAP importance; review features contribute about 9.03% and supplement rather than replace sales history."
   }
 }

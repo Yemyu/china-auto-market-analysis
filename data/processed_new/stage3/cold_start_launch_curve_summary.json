@@ -1,0 +1,22 @@
+{
+  "schema_version": "v1",
+  "selection_protocol": "rolling launch-cohort backtest: 2024 and 2025 launches, earlier launch years only",
+  "selection_metric": "global volume-weighted WMAPE",
+  "test_targets_used_for_method_selection": false,
+  "validation_selected_method": "HORIZON_MEDIAN",
+  "selected_validation_global_WMAPE": 98.1247736600676,
+  "selected_validation_median_per_series_WMAPE": 93.61451520272135,
+  "selected_method": "HORIZON_MEDIAN",
+  "cold_start_series": 9,
+  "cold_start_rows": 54,
+  "cold_start_actual_volume": 35797.0,
+  "original_cold_start_WMAPE": 98.7631775020644,
+  "selected_method_cold_start_WMAPE": 89.62343213118417,
+  "cold_start_improvement_pp": 9.13974537088022,
+  "original_full371_global_WMAPE": 38.70519249287119,
+  "hybrid_full371_global_WMAPE": 38.64046104366211,
+  "full371_improvement_pp": 0.06473144920908425,
+  "original_full371_median_per_series_WMAPE": 48.826080263527714,
+  "hybrid_full371_median_per_series_WMAPE": 48.31565841309082,
+  "external_api_calls": 0
+}

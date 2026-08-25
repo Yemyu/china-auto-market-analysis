@@ -1,0 +1,12 @@
+{
+  "target_series": 371,
+  "source_rows_matched_to_target": 24284,
+  "deduplicated_corpus_rows": 24284,
+  "cross_source_duplicate_rows_removed": 0,
+  "temporally_eligible_reviews": 24175,
+  "autohome_list_summary_rows_excluded_from_temporal_model": 103,
+  "target_series_with_any_review": 345,
+  "target_series_with_pre_test_review": 341,
+  "test_end": "2026-06-30 23:59:59",
+  "rule": "For every forecast origin, downstream features must additionally use only reviews published before that origin."
+}

@@ -1,291 +1,182 @@
 <p align="center">
-  <a href="./README.md">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="./README_EN.md">🌐 English</a>
+  <a href="./README.md">中文</a> · <a href="./README_EN.md">English</a>
 </p>
 
 <h1 align="center">China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs</h1>
 
 <p align="center">
-  Multi-source automotive data + user word-of-mouth sentiment + sales forecasting & attribution →
-  an end-to-end analytics pipeline and interactive web dashboard.
+  An automotive market study using public monthly sales, vehicle specifications, and 24,175 owner reviews
 </p>
-<video src="https://github.com/user-attachments/assets/977dd7cc-c016-4697-8468-beba9ce47ff1" width="900" controls></video>
+
+<p align="center">
+  <a href="https://yemyu.github.io/china-auto-market-analysis/"><b>Live research dashboard</b></a>
+  ·
+  <a href="./notebook/China_Auto_Market_Analysis_EN.ipynb">Analysis notebook</a>
+  ·
+  <a href="./data/README_EN.md">Data documentation</a>
+</p>
+
+<video src="./assets/demo/dashboard-demo.mp4" width="100%" controls></video>
 
 ---
 
-## Project Overview
+## Overview
 
-**China Automotive Market Analysis** is an automotive data-insights project that connects two public data sources — **PCauto monthly sales** and **vehicle specification parameters** (Autohome/PCauto) — to deliver a **no-sentiment baseline** (sales forecasting + config attribution) first, then onboard user-review sentiment (**Phase B**). It answers three core questions:
+The project contains three analyses that share a data foundation but use different samples and validation protocols.
 
-1. **How many cars will we sell next month?** — Sales forecasting with ARIMA / Prophet / XGBoost / LSTM / ensemble models.
-2. **Does user sentiment really affect sales?** — Deep ABSA (Aspect-Based Sentiment Analysis) with a large language model, plus SHAP / Granger causality to quantify the impact.
-3. **How do we monitor it continuously?** — Package all previous findings into a pure-static HTML + ECharts interactive web dashboard with brand → series drill-down, sentiment alerts, and attribution visualizations.
+| Module | Sample | Scope | Validation |
+|---|---:|---|---|
+| Six-month sales forecast | 371 series | Measure the contribution of sales history, product attributes, and owner feedback | Fixed-origin recursive forecast with chronological train, validation, and test periods |
+| Product-specification analysis | 736 series; 2,007 series-year records | Estimate the incremental explanatory power of year, brand, and product specifications | Five-fold `GroupKFold` by series |
+| User needs and risk | 24,175 reviews across 345 series | Identify ten product needs, negative concentration, and emerging review issues | Schema checks, manual sampling, and adjacent 180-day monitoring windows |
 
-> This is a portfolio-grade data-analysis & development project: from raw data collection, cleaning, modeling, attribution, and finally to an interactive dashboard.
+Sales forecasting requires continuous monthly history and usable specifications. Product analysis only requires aligned annual sales and specifications. User-needs analysis retains complete, traceable review text.
 
----
+## Main findings
 
-## Online Dashboard
+### Sales forecasting
 
-- 🌐 **Live demo**: https://yemyu.github.io/china-auto-market-analysis/
-- Local preview: `cd app && python -m http.server 8000`, then open http://localhost:8000/ in your browser.
+The final test covers January–June 2026: 2,226 series-month observations across 371 series. Global volume-weighted WMAPE is the primary metric, with median per-series WMAPE reported alongside it.
 
-> Full setup, local run, and data refresh are in **Quick Start** below.
+| Model | Global WMAPE ↓ | Median per-series WMAPE ↓ | vs. sales baseline |
+|---|---:|---:|---:|
+| Sales baseline | 40.44% | 49.98% | — |
+| Owner-feedback enhanced | 38.71% | 48.83% | −1.73 pp |
+| Cold-start supplement | **38.64%** | **48.32%** | −1.80 pp |
 
----
+Owner feedback provides a modest improvement signal but does not displace sales history. A series-cluster bootstrap gives a 95% interval of −0.78 to 5.02 percentage points, which still crosses zero. The cold-start method mainly helps nine series with insufficient history and changes the full-sample score by a further 0.06 percentage points.
 
-## Six-Stage Workflow
+### Product specifications
 
-The project is organized into six real-world stages, corresponding to the `06_` ~ `20_` pipeline scripts in `scripts/new_pipeline/` and the `notebook/China_Auto_Market_Analysis_EN.ipynb`.
+Year, brand, and specifications are added sequentially on the same 736-series sample.
 
-> The **no-sentiment baseline** is complete: Stages 1–4 (data / filtering / monthly forecasting + config attribution). The sentiment-related Stages 5–6 belong to **Phase B (pending, new-data)**; the methodology is ready and will be redone on the new 371-series scope.
+| Feature set | Grouped CV R² | WMAPE |
+|---|---:|---:|
+| Year | 0.089 | 87.67% |
+| Year + brand | 0.154 | 83.77% |
+| Year + brand + specifications | **0.303** | **75.38%** |
 
-### Stage 1 · Data Preparation
+Specifications add `0.149` to cross-validated R². This is an explanatory association within the study sample, not a causal estimate.
 
-**Question**: How do we align two public sources — PCauto monthly sales and vehicle specifications (Autohome/PCauto)?
+### User needs and risk
 
-**Approach**:
-- Collect `monthly_sales.csv` (1,017 series / 54,918 monthly records, 2022-01~2026-06, from pcauto).
-- Collect `feature.csv` (766 series / 2,084 rows / 84 columns; grain = **series × year**, `(series_name, year)` unique key, with `annual_sales` yearly-sum; from Autohome/PCauto).
-- Align the two datasets directly by `series_name` (the new pipeline needs no legacy `series_mapping` bridge):
+Reviews are represented across ten dimensions: space, power, handling, comfort, energy consumption, equipment, intelligence, value, exterior, and interior. The pipeline stores mention status, polarity, and time availability separately. July 2026 is the latest complete monitoring month; 123 series meet the sample threshold and one current alert is queued for manual review.
 
+## Study design
+
+### Temporal split and leakage controls
+
+| Split | Period | Purpose |
+|---|---|---|
+| Train | through 2025-06 | Model fitting |
+| Validation | 2025-07—12 | Hyperparameter and design selection |
+| Test | 2026-01—06 | Final evaluation |
+
+The primary six-month test is a fixed-origin recursive forecast starting in January 2026. Review features are frozen at that origin: no review published on or after 1 January 2026 enters the main result. Rolling-origin results are retained only as supplementary analysis.
+
+### Review corpus
+
+The strict corpus keeps reviews with complete text, publication time, and an auditable source. Another 103 list-page summaries could not be resolved to full review text; they remain in crawl audit files but are excluded from modeling. The resulting corpus contains 24,175 reviews across 345 target series. At the test origin, 330 series have prior review evidence.
+
+Platform ratings and text-based evidence remain separate. Monthly modeling features include historical review volume, dimension scores, positive and negative shares, and mention rates under one consistent detector. Missing review evidence stays missing and receives explicit availability flags rather than being imputed as neutral.
+
+### Metrics
+
+Global WMAPE is:
+
+```text
+Σ |actual sales − forecast sales| / Σ actual sales
 ```
-monthly_sales ──series_name──┐
-                             ├──> align → 371 series with monthly+config (Leg B) + 736 series with yearly sales (Leg A)
-feature       ──series_name──┘
-```
 
-**Result**: Alignment yields 371 in-population series (Leg B monthly forecast) and 736 series with yearly sales (Leg A config attribution); 646 sales-only series without config are excluded.
+It weights error by observed volume and is therefore suited to the market-level forecast. Median per-series WMAPE supplements the long-tail view. The annual specification analysis additionally reports grouped cross-validated R².
 
-<p align="center">
-  <img src="figures/sentiment_vs_sales.png" alt="Stage 1: config coverage and sales" width="700">
-</p>
+## Dashboard
 
----
+The bilingual dashboard uses vanilla HTML, CSS, JavaScript, and ECharts. Data is pre-baked into `app/static/data/`, so no backend is required. Six pages cover the project overview, sales forecast, user needs, product specifications, risk monitoring, and brand/series detail.
 
-### Stage 2 · Data Filtering & Exploratory Visualization
+<details open>
+  <summary><b>Dashboard gallery</b></summary>
 
-**Question**: Which series are suitable for forecasting, and what does the overall market look like?
+<br>
 
-**Approach**:
-- Filter the monthly panel by continuous coverage; final modeling uses 371 in-population series (monthly sales + config complete).
-- Visualize market sales trend, segment / energy-type distribution, and price & hardware features.
-
-**Result**:
-- 371 series enter Leg B monthly modeling; 736 series enter Leg A yearly attribution.
-- Macro features such as EV share, segment distribution, and head concentration are identified.
-
-<p align="center">
-  <img src="figures/sales_trend.png" alt="Stage 2: total monthly sales trend" width="700">
-</p>
-
----
-
-### Stage 3 · Sales Forecasting Modeling (Leg B, no sentiment)
-
-**Question**: Among time-series models, which forecasts monthly sales most robustly? Are config / external regressors useful?
-
-**Approach**:
-- On 371 in-population series, split by **absolute time**: `train` 2022-01~2025-06 / `val` 2025-07~2025-12 / `test` 2026-01~2026-06 (see `data/processed_new/splits/`).
-- Compare ARIMA / Prophet / Prophet+exogenous / XGBoost / LSTM; XGBoost does recursive multi-step (6-month) forecasting with early-stopping on val.
-- Metrics: WMAPE (volume-weighted + per-series median, both reported, robust to long-tail) + feature ablation + 90% prediction intervals.
-
-**Result**:
-- **XGBoost** is the monthly-forecast baseline: test volume-weighted WMAPE **63.2%** (per-series median 59.4%).
-- Ablation shows **historical sales lag features dominate**: dropping lag → 73.2%; config features give **no positive contribution** in monthly forecasting (NO-CONFIG 48.8% is actually lower — the old "config +16%" was a future-config leakage artifact, now fixed).
-- Error grows with forecast horizon, as expected.
-
-<p align="center">
-  <img src="figures/model_comparison.png" alt="Stage 3: multi-model comparison" width="700">
-</p>
-
----
-
-### Stage 4 · Config → Sales Attribution (Leg A, no sentiment)
-
-**Question**: What kind of configuration sells well? How much can configuration explain sales variation?
-
-**Approach**:
-- **Series × year cross-sectional regression**: target `y = log1p(annual_sales)`; `GroupKFold(5) by series_name` (prevents same-series leakage across folds, since a series' config is nearly constant year over year).
-- Features = config (price/size/energy/power/battery…) + brand + year; explain each dimension's contribution with XGBoost importance.
-
-**Result**:
-- R² progresses: year-only **0.089** → +brand **0.154** → +config **0.303** (config increment ΔR² = +0.149).
-- Feature importance: config **76.1%** / brand **22.5%** / year **1.4%**.
-- Conclusion: config explains variation **between series** (pricier / larger / electric models sell more); within-series year-over-year swings are driven by non-config factors (generation change, incentives, word-of-mouth).
-
-<p align="center">
-  <img src="figures/stage4_shap_summary.png" alt="Stage 4: config feature importance" width="700">
-</p>
-
----
-
-### Stage 5 · Sentiment Fusion Forecasting & Topic Alerts (Phase B pending)
-
-**Question**: Does adding dynamic sentiment improve sales forecasting? Which topics need alerts?
-
-**Approach (planned)**: Redo on the new scope (371 series) — LLM ABSA aspect scoring, dynamic sentiment as exogenous regressor, TF-IDF/LDA topic clustering, rule-based alerts.
-
-**Result**: To be added once Phase B lands on new data. Legacy-pipeline (669 series) experience: dynamic sentiment did **not** improve volume-weighted accuracy (XGBoost-baseline 34.79% vs +Top3sent 35.21%), but lowered per-series WMAPE for tail / low-volume series (327% → 311%).
-
----
-
-### Stage 6 · Interactive Web Dashboard
-
-**Question**: How can non-technical stakeholders browse all findings in a "problem → evidence → conclusion" narrative?
-
-**Approach**:
-- Build a **HTML + ECharts** 7-screen pure-static dashboard: Overview, Sales Forecasting, Sentiment ABSA, Attribution, Sentiment↔Sales Relation, Alerts, and Brand/Series Drill-down.
-- Data is pre-baked into `app/static/data/*.json` by `app/build_dashboard_data.py`; the frontend fetches it directly — no backend service needed.
-- Supports Chinese/English switching; brand and series drill-down tabs are cross-linked.
-
-**Result**: Launch locally and interactively explore all analysis conclusions in a browser, without re-running models.
-
-> Note: the dashboard data bridge currently reflects the initial-pipeline snapshot; it will be refreshed to the 371-series new scope once Phase B lands.
-
-### Dashboard Screenshots
-
-<details>
-  <summary><b>Full dashboard screenshots (click to expand)</b></summary>
-
-<p align="center">
-  Click any image to view it at full resolution.
-</p>
-
-<table align="center">
+<table>
   <tr>
-    <td align="center" width="50%"><img src="figures/dashboard_full_en_overview.png" width="400" alt="Overview"/></td>
-    <td align="center" width="50%"><img src="figures/dashboard_full_en_forecast.png" width="400" alt="Sales Forecast"/></td>
+    <td width="50%"><a href="./assets/dashboard/en/01-overview.png"><img src="./assets/dashboard/en/01-overview.png" alt="Project overview"></a></td>
+    <td width="50%"><a href="./assets/dashboard/en/02-sales-forecast.png"><img src="./assets/dashboard/en/02-sales-forecast.png" alt="Sales forecast"></a></td>
   </tr>
+  <tr><td align="center">Project overview</td><td align="center">Sales forecast</td></tr>
   <tr>
-    <td align="center">Overview</td>
-    <td align="center">Sales Forecast</td>
+    <td><a href="./assets/dashboard/en/03-user-needs.png"><img src="./assets/dashboard/en/03-user-needs.png" alt="User needs"></a></td>
+    <td><a href="./assets/dashboard/en/04-product-config.png"><img src="./assets/dashboard/en/04-product-config.png" alt="Product specifications"></a></td>
   </tr>
+  <tr><td align="center">User needs</td><td align="center">Product specifications</td></tr>
   <tr>
-    <td align="center" width="50%"><img src="figures/dashboard_full_en_absa.png" width="400" alt="Sentiment ABSA"/></td>
-    <td align="center" width="50%"><img src="figures/dashboard_full_en_attribution.png" width="400" alt="Attribution"/></td>
+    <td><a href="./assets/dashboard/en/05-risk-monitor.png"><img src="./assets/dashboard/en/05-risk-monitor.png" alt="Risk monitor"></a></td>
+    <td><a href="./assets/dashboard/en/06-brand-series.png"><img src="./assets/dashboard/en/06-brand-series.png" alt="Brand and series"></a></td>
   </tr>
-  <tr>
-    <td align="center">Sentiment ABSA</td>
-    <td align="center">Attribution</td>
-  </tr>
-  <tr>
-    <td align="center" width="50%"><img src="figures/dashboard_full_en_relation.png" width="400" alt="Sentiment↔Sales Relation"/></td>
-    <td align="center" width="50%"><img src="figures/dashboard_full_en_alerts.png" width="400" alt="Alerts"/></td>
-  </tr>
-  <tr>
-    <td align="center">Sentiment↔Sales Relation</td>
-    <td align="center">Alerts</td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2"><img src="figures/dashboard_full_en_drilldown.png" width="400" alt="Brand/Series Drill-down"/></td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2">Brand/Series Drill-down</td>
-  </tr>
+  <tr><td align="center">Risk monitor</td><td align="center">Brand and series (BYD example)</td></tr>
 </table>
 
 </details>
 
----
+## Quick start
 
-## Quick Start
-
-### Environment
-
-This project uses the `nlp-sentiment` Conda environment exclusively; do not use system Python or a global pip environment. Dependencies are listed in `requirements.txt`:
-
-```bash
-conda activate nlp-sentiment
-python -m pip install -r requirements.txt
-```
-
-For the initial environment creation or a synchronized update, use the repository's `environment.yml`:
+The project uses the `nlp-sentiment` Conda environment exclusively and does not rely on system Python.
 
 ```bash
 conda env update -n nlp-sentiment -f environment.yml --prune
 ```
 
-Every project command can also target the environment explicitly:
+Launch the dashboard:
 
 ```bash
-conda run -n nlp-sentiment python scripts/new_pipeline/18_build_target_review_corpus.py
+conda run -n nlp-sentiment python -m http.server 8000 --directory app
 ```
 
-### Launch the web dashboard (local)
+Open <http://127.0.0.1:8000/>. Dashboard data is already bundled; crawling and modeling are not required for viewing.
 
-```bash
-cd app && conda run -n nlp-sentiment python -m http.server 8000
-```
-
-Open the browser at http://localhost:8000/ to preview. (The dashboard is a static site and needs no backend server.)
-
-### Live demo
-
-- 🌐 **Live demo**: https://yemyu.github.io/china-auto-market-analysis/
-- The dashboard data is already pre-baked into `app/static/data/*.json`, so **no crawling or modeling scripts need to be run to view it**. To refresh the data bridge locally (requires having run the full pipeline, i.e. `data/processed_new/*.csv` present), run:
+Rebuild dashboard data:
 
 ```bash
 conda run -n nlp-sentiment python app/build_dashboard_data.py
 ```
 
----
+The reproducible pipeline lives in `scripts/new_pipeline/`:
 
-## Directory Structure
-
+```text
+00–15  series index, temporal splits, baseline models, and data audits
+16–28  review collection, corpus validation, local baseline, and leakage-safe features
+29–35  review-feature ablation, fixed-origin forecasting, and robustness analysis
+36–39  user needs, monitoring, cold-start handling, resource curation, and report notebooks
 ```
+
+Run every Python script through the project environment:
+
+```bash
+conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
+```
+
+## Repository layout
+
+```text
 china-auto-market-analysis/
-├── app/                           # Stage 6 · pure-static web dashboard (HTML + ECharts, GitHub Pages)
-│   ├── index.html / forecast.html / …  # 7 static pages
-│   ├── build_dashboard_data.py    # Pre-bake JSON data bridge
-│   ├── .nojekyll                  # disable GitHub Pages' Jekyll
-│   └── static/                    # CSS/JS/JSON data
-├── data/                          # Data directory (CSVs gitignored)
-│   ├── README.md                  # Data docs (Chinese)
-│   ├── README_EN.md               # Data docs (English)
-│   ├── raw/                       # monthly_sales.csv, feature.csv
-│   ├── sentiment/                 # review details & aggregates
-│   └── processed_new/             # stage artifacts (new pipeline, reproducible)
-├── figures/                       # Analysis charts, dashboard screenshots, and interactive demo (committed)
-├── LICENSE                        # MIT license
-├── notebook/                      # Bilingual analysis notebooks
-│   ├── China_Auto_Market_Analysis.ipynb
-│   └── China_Auto_Market_Analysis_EN.ipynb
-├── scripts/                       # 01_~20_ pipeline scripts
-├── config/                        # Config & .env template
-├── requirements.txt               # Python dependencies
-├── README.md                      # This file (Chinese)
-└── README_EN.md                   # English version
+├── app/                    static dashboard and pre-baked JSON
+├── assets/                 analysis figures, dashboard captures, and demo video
+├── data/
+│   ├── raw/                monthly sales and vehicle specifications
+│   ├── sentiment_new/      review corpus, labels, and temporal features
+│   ├── processed_new/      splits, model outputs, and audit artifacts
+│   └── resources/          curated historical data resources
+├── notebook/               Chinese and English analysis notebooks
+├── scripts/new_pipeline/   reproducible current pipeline
+├── environment.yml
+├── requirements.txt
+├── README.md
+└── README_EN.md
 ```
 
----
+## Data and license
 
-## Tech Stack
+Monthly sales, vehicle specifications, and owner reviews come from public automotive platforms. Source-platform data remains subject to the respective owners' rights and is included only for learning, research, and project demonstration. Project code and documentation are released under the MIT License.
 
-- **Data collection**: Python `requests` + `BeautifulSoup` / Dongchedi review API
-- **Data processing**: Pandas, NumPy, ETL pipelines
-- **NLP**: jieba, Hugging Face Transformers, DeepSeek API (ABSA)
-- **Machine learning / time-series**: scikit-learn, XGBoost, Prophet, statsmodels, PyTorch (LSTM)
-- **Visualization**: Matplotlib, ECharts (web dashboard)
-- **Web dashboard**: vanilla HTML/CSS/JS, ECharts 5 (pure static, GitHub Pages hosted)
-- **Dependency management**: `requirements.txt`
-
----
-
-## Data Notes
-
-- All data come from **public automotive platforms** (PCauto monthly sales, Autohome/PCauto vehicle specs; user-review sentiment is Phase B, separately from Dongchedi).
-- Raw / intermediate data is large and gitignored; follow the "Quick Start" steps to launch the dashboard directly after cloning.
-- Data copyright belongs to the original platforms. This project is for learning, research, and demonstration only, not commercial use.
-
-Detailed data dictionary, missing-value notes, and quality report are in `data/README.md` (with English version `data/README_EN.md`).
-
----
-
-## Acknowledgments
-
-- Data are sourced from **Dongchedi** (user reviews, vehicle specifications) and **PCauto** (monthly sales). Thanks to these platforms for the public data that supports this project's research and demonstration.
-- Data copyright belongs to the original platforms; this project is for learning, research, and demonstration only, in compliance with their terms of use.
-
----
-
-*License: MIT (applies to project code and documentation only; data copyright belongs to the original platforms, please comply with their terms of use).*
+See [data/README_EN.md](./data/README_EN.md) for schemas, sample selection, temporal availability, and the curated resource archive.

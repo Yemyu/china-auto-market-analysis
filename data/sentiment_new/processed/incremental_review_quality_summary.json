@@ -1,0 +1,9 @@
+{
+  "raw_rows": 430,
+  "deduplicated_rows": 411,
+  "duplicate_rows_removed": 19,
+  "series_collected": 4,
+  "series_with_pre_test_cutoff_review": 4,
+  "forecast_test_end": "2026-06-30 23:59:59",
+  "note": "Only reviews dated no later than forecast_test_end may be used for the 2026-01 to 2026-06 test evaluation."
+}

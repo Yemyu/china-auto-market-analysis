@@ -1,0 +1,9 @@
+{
+  "panel_rows": 13866,
+  "series": 371,
+  "forecast_months": 51,
+  "lookback_days": 180,
+  "test_availability_cross_check": "passed",
+  "rule": "Every score and count for forecast month t uses only reviews published strictly before the first day of t.",
+  "missingness_rule": "Score columns remain null when no relevant recent review/rating exists; availability and count fields are explicit numeric features."
+}

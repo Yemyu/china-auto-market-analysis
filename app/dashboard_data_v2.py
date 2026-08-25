@@ -30,14 +30,27 @@ ASPECT_EN = {
 }
 PALETTE = ["#2c7be5", "#00a9ae", "#34c38f", "#f6c343", "#ee5b5b", "#a55eea", "#7783f5"]
 MODEL_LABELS = {
-    "BASE": ("无舆情基线", "No-sentiment baseline"),
-    "PLATFORM_RATING_FIXED": ("平台评分", "Platform rating"),
+    "BASE": ("销量基线", "Sales baseline"),
+    "PLATFORM_RATING_FIXED": ("平台评分", "Platform ratings"),
     "LOCAL_LEXICON_FIXED": ("本地词典", "Local lexicon"),
-    "DEEPSEEK_CORE_FIXED": ("DeepSeek核心", "DeepSeek core"),
-    "DEEPSEEK_RICH_FIXED": ("DeepSeek丰富", "DeepSeek rich"),
-    "ALL_SENTIMENT_FIXED": ("全部舆情", "All sentiment"),
-    "DEEPSEEK_CORE_ROLLING": ("DeepSeek滚动补充", "DeepSeek rolling (supplement)"),
-    "DEEPSEEK_RICH_FIXED_COLD_HYBRID": ("DeepSeek丰富+冷启动", "DeepSeek rich + cold-start"),
+    "DEEPSEEK_CORE_FIXED": ("文本情感特征", "Text sentiment"),
+    "DEEPSEEK_RICH_FIXED": ("用户口碑增强", "User-review enhanced"),
+    "ALL_SENTIMENT_FIXED": ("全部口碑特征", "Combined review features"),
+    "DEEPSEEK_CORE_ROLLING": ("滚动口碑特征", "Rolling review signals"),
+    "DEEPSEEK_RICH_FIXED_COLD_HYBRID": ("口碑增强＋冷启动", "Review enhanced + cold-start"),
+}
+FEATURE_FAMILY_LABELS = {
+    "sales_lag_roll": ("历史销量", "Sales history"),
+    "calendar": ("日历", "Calendar"),
+    "configuration": ("产品配置", "Product configuration"),
+    "deepseek_observation_context": ("评论覆盖", "Review coverage"),
+    "deepseek_expanding_score": ("历史评价", "Historical review score"),
+    "deepseek_recent_score": ("近期评价", "Recent review score"),
+    "deepseek_positive_rate": ("正面比例", "Positive share"),
+    "deepseek_negative_rate": ("负面比例", "Negative share"),
+    "deepseek_mention_count": ("需求提及量", "Need mentions"),
+    "deepseek_mention_rate": ("需求提及率", "Mention share"),
+    "deepseek_overall": ("评论特征", "Review features"),
 }
 CONFIG_LABELS = {
     "official_price_wan": ("官方价格", "Official price"),
@@ -206,7 +219,7 @@ class DashboardV2:
             ],
             "findings": [
                 {"zh": "371车系六个月递归预测：冷启动混合模型全局WMAPE为38.64%", "en": "371-series six-month recursive forecast: cold-start hybrid global WMAPE is 38.64%"},
-                {"zh": "DeepSeek丰富特征相对无舆情基线改善1.735个百分点，但Bootstrap区间跨0", "en": "DeepSeek-rich improves 1.735 pp over baseline, but the bootstrap interval crosses zero"},
+                {"zh": "用户口碑增强相对销量基线改善1.735个百分点，但Bootstrap区间跨0", "en": "User-review features improve 1.735 pp over the sales baseline, but the bootstrap interval crosses zero"},
                 {"zh": "736车系年度归因中，配置将交叉验证R²从0.154提升到0.303", "en": "Across 736 series, configuration raises annual-attribution CV R² from 0.154 to 0.303"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
                 {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前有效预警{needs['latest_active_alerts']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} active alert is detected"},
@@ -223,24 +236,27 @@ class DashboardV2:
             zh, en = MODEL_LABELS.get(row["version"], (row["version"], row["version"]))
             models.append({
                 "name": zh, "name_zh": zh, "name_en": en,
-                "wmape_vol": round(float(row["global_volume_weighted_WMAPE"]), 3),
-                "wmape_med": round(float(row["median_per_series_WMAPE"]), 3),
+                "wmape_vol": round(float(row["global_volume_weighted_WMAPE"]), 4),
+                "wmape_med": round(float(row["median_per_series_WMAPE"]), 4),
                 "mae": None, "color": PALETTE[len(models) % len(PALETTE)],
                 "scenario": str(row["scenario"]),
             })
         zh, en = MODEL_LABELS["DEEPSEEK_RICH_FIXED_COLD_HYBRID"]
         models.append({
             "name": zh, "name_zh": zh, "name_en": en,
-            "wmape_vol": round(float(cold["hybrid_full371_global_WMAPE"]), 3),
-            "wmape_med": round(float(cold["hybrid_full371_median_per_series_WMAPE"]), 3),
+            "wmape_vol": round(float(cold["hybrid_full371_global_WMAPE"]), 4),
+            "wmape_med": round(float(cold["hybrid_full371_median_per_series_WMAPE"]), 4),
             "mae": None, "color": "#34c38f", "scenario": "fixed_origin_primary_cold_hybrid",
         })
         features = []
         for _, row in shap.sort_values("rank").head(12).iterrows():
             zh, en = _feature_label(str(row["feature"]))
+            family_zh, family_en = FEATURE_FAMILY_LABELS.get(
+                str(row["feature_family"]), ("其他", "Other")
+            )
             features.append({
-                "name": str(row["feature"]), "name_zh": zh, "name_en": en,
-                "desc_zh": f"特征族：{row['feature_family']}", "desc_en": f"Feature family: {row['feature_family']}",
+                "name": zh, "name_zh": zh, "name_en": en,
+                "desc_zh": f"特征组：{family_zh}", "desc_en": f"Feature group: {family_en}",
                 "importance": round(float(row["mean_abs_shap_log_sales"]), 4),
             })
         valid = hybrid.loc[hybrid["actual"].gt(0) & hybrid["pred"].notna()].copy()
@@ -271,12 +287,12 @@ class DashboardV2:
             "scatter": [[round(float(a), 1), round(float(p), 1)] for a, p in zip(valid["actual"], valid["pred"])],
             "features": features,
             "conclusion": {
-                "zh": "371车系固定起点六个月递归测试中，DeepSeek丰富特征将全局WMAPE从40.44%降至38.71%；冷启动兜底后为38.64%。平台评分与DeepSeek丰富特征仅相差0.113个百分点。",
-                "en": "In the fixed-origin six-month test over 371 series, DeepSeek-rich lowers global WMAPE from 40.44% to 38.71%; the cold-start fallback reaches 38.64%. Platform ratings differ from DeepSeek-rich by only 0.113 pp.",
+                "zh": "371车系固定起点六个月递归测试中，用户口碑增强将全局WMAPE从40.44%降至38.71%；冷启动兜底后为38.64%。平台评分与用户口碑增强仅相差0.113个百分点。",
+                "en": "In the fixed-origin six-month test over 371 series, user-review features lower global WMAPE from 40.44% to 38.71%; the cold-start fallback reaches 38.64%. Platform ratings differ from the user-review model by only 0.113 pp.",
             },
             "feature_insight": {
-                "zh": "销量滞后与滚动均值占SHAP绝对重要性的80.17%；DeepSeek特征合计约9.03%，主要提供补充信息而非替代历史销量。",
-                "en": "Sales lags and rolling means contribute 80.17% of absolute SHAP importance; DeepSeek features contribute about 9.03% and supplement rather than replace sales history.",
+                "zh": "销量滞后与滚动均值占SHAP绝对重要性的80.17%；评论特征合计约9.03%，主要提供补充信息而非替代历史销量。",
+                "en": "Sales lags and rolling means contribute 80.17% of absolute SHAP importance; review features contribute about 9.03% and supplement rather than replace sales history.",
             },
         }
 
@@ -368,7 +384,7 @@ class DashboardV2:
             },
         }
 
-    def relation(self) -> dict[str, Any]:
+    def forecast_evidence(self) -> dict[str, Any]:
         aligned = self.aligned()
         bootstrap = _read(self.new / "stage3" / "xgb_deepseek_full371_bootstrap.csv")
         comparison = bootstrap.loc[
@@ -413,8 +429,8 @@ class DashboardV2:
                 "sentiment": [round(row["sentiment"], 3) if pd.notna(row["sentiment"]) else None for row in market_rows],
             },
             "conclusion": {
-                "zh": "DeepSeek丰富特征相对无舆情基线改善1.735个百分点，在5,000次车系聚类Bootstrap中胜出概率89.84%，但95%区间跨0；平台评分与DeepSeek丰富特征基本无法区分。",
-                "en": "DeepSeek-rich improves 1.735 pp over the no-sentiment baseline and wins in 89.84% of 5,000 series-cluster bootstrap samples, but its 95% interval crosses zero; platform ratings and DeepSeek-rich are effectively indistinguishable.",
+                "zh": "用户口碑增强相对销量基线改善1.735个百分点，在5,000次车系聚类Bootstrap中胜出概率89.84%，但95%区间跨0；平台评分与用户口碑增强基本无法区分。",
+                "en": "User-review features improve 1.735 pp over the sales baseline and win in 89.84% of 5,000 series-cluster bootstrap samples, but the 95% interval crosses zero; platform ratings and the user-review model are effectively indistinguishable.",
             },
         }
 
@@ -535,7 +551,7 @@ class DashboardV2:
             "forecast.json": self.forecast(),
             "absa.json": self.absa(),
             "attribution.json": self.attribution(),
-            "relation.json": self.relation(),
+            "forecast_evidence.json": self.forecast_evidence(),
             "alerts.json": self.alerts(),
             "drilldown.json": self.drilldown(),
             "brand_drilldown.json": self.brand_drilldown(),

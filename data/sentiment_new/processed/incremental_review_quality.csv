@@ -1,0 +1,5 @@
+﻿series_id,series_name,usable_reviews,earliest_review,latest_review,undated_reviews,pre_test_cutoff_reviews,post_test_cutoff_reviews,raw_rows,duplicate_rows_removed,time_safe_for_2026_test
+32,MG6,199,2020-10-25 11:35:14,2026-08-13 20:15:13,0,194,5,200,1,True
+5828,MG4,182,2025-09-02 02:50:42,2026-08-21 13:14:38,0,142,40,200,18,True
+5257,QQ冰淇淋,15,2022-01-10 10:58:56,2026-06-20 09:43:14,0,15,0,15,0,True
+9349,eπ007,15,2024-04-12 00:24:27,2026-08-11 09:25:55,0,6,9,15,0,True

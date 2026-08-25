@@ -29,6 +29,13 @@ data/raw/*.csv
 data/sentiment/*.csv
 # 阶段四 ABSA 结果(由 scripts/14 生成, 可复现):
 data/sentiment/absa/
+# 完整评论与历史全文归档仅保存在本地；公开仓库提交去标识标签和聚合特征
+data/sentiment_new/raw/*.csv
+!data/sentiment_new/raw/*manifest.csv
+data/sentiment_new/processed/target_371_review_corpus.csv
+data/sentiment_new/processed/dongchedi_incremental_reviews_dedup.csv
+data/sentiment_new/processed/deepseek_provider_billing_checkpoints.csv
+data/resources/legacy_sentiment/review_absa_reference.csv.gz
 # 阶段二/阶段三派生数据(由 scripts/04_explore_eda.py 及 05-13 建模脚本生成, 含 stage3/ 子目录, 均可复现):
 data/processed/
 
@@ -43,16 +50,8 @@ logs/
 # Jupyter
 .ipynb_checkpoints/
 
-# Reference (third-party code)
-reference/
-
 # docs/ 不入库（部署/规划文档为本地参考，不进仓库）
 docs/
-
-# 本地验证/调试截图, 不提交
-figures/verify_*.png
-figures/test_*.png
-figures/present_*.png
 
 # 临时脚本与静态导出产物
 /_*.py

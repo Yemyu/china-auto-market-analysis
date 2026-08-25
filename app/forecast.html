@@ -125,12 +125,12 @@
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js"></script>
+  <script src="static/js/common.js?v=20260825-3"></script>
   <script src="static/js/i18n.js"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
-    var forecastData = null, relationData = null;
+    var forecastData = null, evidenceData = null;
     var chartModels, chartFeatures, chartScatter, chartClass, chartBootstrap, chartFusion;
 
     function fcSetText(id, value) {
@@ -141,34 +141,15 @@
     function fcPct(value) { return Number(value).toFixed(2) + '%'; }
 
     function publicModelName(model) {
-      var key = model.name_en || model.version_en || model.name_zh || model.version;
-      var names = {
-        'No-sentiment baseline': ['销量基线', 'Sales baseline'],
-        'Platform rating': ['平台评分', 'Platform ratings'],
-        'Local lexicon': ['本地词典', 'Local lexicon'],
-        'DeepSeek core': ['文本情感特征', 'Text sentiment'],
-        'DeepSeek rolling (supplement)': ['滚动口碑特征', 'Rolling review signals'],
-        'DeepSeek rich': ['用户口碑增强', 'User-review enhanced'],
-        'All sentiment': ['全部口碑特征', 'Combined review features'],
-        'DeepSeek rich + cold-start': ['口碑增强＋冷启动', 'Review enhanced + cold-start']
-      };
-      var mapped = names[key];
-      if (mapped) return window.CHINA_AUTO_MARKET.lang === 'en' ? mapped[1] : mapped[0];
-      return window.CHINA_AUTO_MARKET.lang === 'en' ? (model.name_en || model.version_en || key) : (model.name_zh || model.version || key);
+      return window.CHINA_AUTO_MARKET.lang === 'en'
+        ? (model.name_en || model.version_en || model.name_zh || model.version)
+        : (model.name_zh || model.version || model.name_en || model.version_en);
     }
 
     function publicReviewName(item) {
-      var key = item.en || item.version_en || item.zh || item.version;
-      var names = {
-        'Platform rating': ['平台评分', 'Platform ratings'],
-        'DeepSeek rich': ['用户口碑增强', 'User-review enhanced'],
-        'Local lexicon': ['本地词典', 'Local lexicon'],
-        'DeepSeek core': ['文本情感特征', 'Text sentiment'],
-        'No-sentiment baseline': ['销量基线', 'Sales baseline']
-      };
-      var mapped = names[key];
-      if (mapped) return window.CHINA_AUTO_MARKET.lang === 'en' ? mapped[1] : mapped[0];
-      return window.CHINA_AUTO_MARKET.lang === 'en' ? (item.en || item.version_en || key) : (item.zh || item.version || key);
+      return window.CHINA_AUTO_MARKET.lang === 'en'
+        ? (item.en || item.version_en || item.zh || item.version)
+        : (item.zh || item.version || item.en || item.version_en);
     }
 
     function className(value) {
@@ -178,10 +159,10 @@
     }
 
     function renderForecast() {
-      if (!forecastData || !relationData) return;
-      var d = forecastData, r = relationData, T = window.CHINA_AUTO_MARKET;
-      var base = d.models.find(function (m) { return m.name_en === 'No-sentiment baseline'; });
-      var review = d.models.find(function (m) { return m.name_en === 'DeepSeek rich'; });
+      if (!forecastData || !evidenceData) return;
+      var d = forecastData, r = evidenceData, T = window.CHINA_AUTO_MARKET;
+      var base = d.models.find(function (m) { return m.name_en === 'Sales baseline'; });
+      var review = d.models.find(function (m) { return m.name_en === 'User-review enhanced'; });
       var cold = d.models.find(function (m) { return m.scenario === 'fixed_origin_primary_cold_hybrid'; });
       fcSetText('fc-score-base-global', fcPct(base.wmape_vol));
       fcSetText('fc-score-base-median', fcPct(base.wmape_med));
@@ -257,7 +238,7 @@
       }, true);
     }
 
-    Promise.all([loadJSON('forecast'), loadJSON('relation')]).then(function (all) { forecastData = all[0]; relationData = all[1]; renderForecast(); });
+    Promise.all([loadJSON('forecast'), loadJSON('forecast_evidence')]).then(function (all) { forecastData = all[0]; evidenceData = all[1]; renderForecast(); });
     window.__renderers.renderForecast = renderForecast;
   </script>
 </body>

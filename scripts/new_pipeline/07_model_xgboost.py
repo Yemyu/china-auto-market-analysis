@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-07_model_xgboost.py — XGBoost 月度销量预测（无舆情基线 · 腿B）
+07_model_xgboost.py — XGBoost 月度销量预测（无舆情基线）
 
 数据来源（统一）：由 06_make_splits.py 生成的
   data/processed_new/splits/train.csv  (2022-01..2025-06)  -> 训练

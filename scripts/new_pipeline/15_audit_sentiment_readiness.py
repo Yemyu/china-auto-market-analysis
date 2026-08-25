@@ -29,7 +29,7 @@ import pandas as pd
 
 BASE = Path(__file__).resolve().parents[2]
 SPLITS = BASE / "data" / "processed_new" / "splits"
-SENTIMENT = BASE / "data" / "sentiment"
+LEGACY_RESOURCE = BASE / "data" / "resources" / "legacy_sentiment" / "review_absa_reference.csv.gz"
 SERIES_INDEX = BASE / "data" / "raw" / "series_index.csv"
 OUT = BASE / "data" / "processed_new" / "phase_b"
 SALES_START = pd.Timestamp("2022-01-01")
@@ -72,8 +72,8 @@ def main() -> None:
     population = population.drop_duplicates().copy()
     population["series_key"] = population["series_name"].map(norm_name)
 
-    reviews = pd.read_csv(SENTIMENT / "sentiment_reviews.csv", low_memory=False)
-    absa = pd.read_csv(SENTIMENT / "absa" / "absa_results.csv", low_memory=False)
+    reviews = pd.read_csv(LEGACY_RESOURCE, low_memory=False)
+    absa = reviews.loc[reviews["legacy_deepseek_available"].astype(str).str.lower().eq("true")].copy()
     audit = population.merge(_review_stats(reviews), on="series_key", how="left")
     audit = audit.merge(_absa_stats(absa), on="series_key", how="left")
     if not SERIES_INDEX.exists():

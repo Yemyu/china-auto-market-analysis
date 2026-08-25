@@ -188,7 +188,7 @@
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js"></script>
+  <script src="static/js/common.js?v=20260825-3"></script>
   <script src="static/js/i18n.js"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
@@ -222,8 +222,8 @@
       setText('model-cold-gain', '−' + k.wmape_gain_pp.toFixed(2) + ' pp');
 
       if (forecastData) {
-        var base = forecastData.models.find(function (x) { return x.name_en === 'No-sentiment baseline'; });
-        var core = forecastData.models.find(function (x) { return x.name_en === 'DeepSeek rich'; });
+        var base = forecastData.models.find(function (x) { return x.name_en === 'Sales baseline'; });
+        var core = forecastData.models.find(function (x) { return x.name_en === 'User-review enhanced'; });
         var cold = forecastData.models.find(function (x) { return x.scenario === 'fixed_origin_primary_cold_hybrid'; });
         if (base) setText('model-base-median', pct(base.wmape_med));
         if (core) setText('model-core-median', pct(core.wmape_med));

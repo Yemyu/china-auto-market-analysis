@@ -1,0 +1,11 @@
+﻿aspect,legacy_nonzero_reviews,local_mentioned_reviews,polarity_comparable_reviews,same_polarity_reviews,sign_agreement
+appearance,10860,9696,7329,5789,0.7899
+interior,8105,7602,5743,4150,0.7226
+space,10759,10466,7997,5693,0.7119
+power,10105,9614,7261,4794,0.6602
+control,9969,7825,6050,4157,0.6871
+comfort,10429,9046,7683,5583,0.7267
+fuel_consumption,10186,9914,7014,4213,0.6007
+configuration,10528,8195,6188,4184,0.6761
+intelligence,8144,6940,5287,3694,0.6987
+value,8697,7412,5575,3727,0.6685

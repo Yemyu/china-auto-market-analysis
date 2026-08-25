@@ -1,0 +1,11 @@
+﻿feature_family,feature_count,total_mean_abs_shap,max_feature_mean_abs_shap,share_of_total_abs_shap
+sales_lag_roll,5,1.9685276,1.515029,0.8017095
+calendar,3,0.16028522,0.078737475,0.06527832
+configuration,21,0.104695305,0.016617287,0.042638578
+deepseek_expanding_score,10,0.07985927,0.01779839,0.03252377
+deepseek_observation_context,4,0.03644387,0.023765976,0.014842259
+deepseek_mention_count,10,0.033904165,0.010034758,0.01380793
+deepseek_negative_rate,11,0.019769456,0.003946927,0.008051379
+deepseek_recent_score,11,0.019608838,0.005180908,0.007985964
+deepseek_mention_rate,10,0.018970381,0.003043087,0.0077259443
+deepseek_positive_rate,11,0.01334836,0.004142574,0.0054363

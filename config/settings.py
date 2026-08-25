@@ -49,6 +49,7 @@ _load_env_file(_ENV_FILE)
 # DeepSeek API
 DEEPSEEK_API_KEY: str = os.environ.get("DEEPSEEK_API_KEY", "")
 DEEPSEEK_MODEL: str = os.environ.get("DEEPSEEK_MODEL", "deepseek-chat")
+DEEPSEEK_ABSA_MODEL: str = os.environ.get("DEEPSEEK_ABSA_MODEL", "deepseek-v4-flash")
 DEEPSEEK_BASE_URL: str = os.environ.get("DEEPSEEK_BASE_URL", "https://api.deepseek.com")
 
 # LLM call behaviour

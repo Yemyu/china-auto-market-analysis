@@ -1,0 +1,25 @@
+{
+  "schema_version": "v1",
+  "review_rows": 24175,
+  "review_series": 345,
+  "review_publish_time_min": "2014-04-24T00:00:00",
+  "review_publish_time_max": "2026-08-23T00:00:00",
+  "aspects": 10,
+  "keyword_rows": 600,
+  "topic_rows": 40,
+  "monitoring_window_days": 180,
+  "minimum_reviews_each_window": 5,
+  "alert_rule": {
+    "current_overall_score_lte": -0.1,
+    "score_change_lte": -0.15,
+    "current_negative_review_rate_gte": 0.35
+  },
+  "latest_completed_monitoring_month": "2026-07-31",
+  "latest_eligible_series": 123,
+  "latest_active_alerts": 1,
+  "historical_alert_events": 60,
+  "historical_alert_series": 26,
+  "topic_method": "aspect-filtered LDA with TF-IDF polarity keywords",
+  "current_incomplete_month_excluded_from_alerts": true,
+  "external_api_calls": 0
+}

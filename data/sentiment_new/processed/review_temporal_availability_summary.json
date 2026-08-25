@@ -1,0 +1,41 @@
+{
+  "forecast_months": [
+    {
+      "forecast_month": "2026-01",
+      "information_cutoff_exclusive": "2026-01-01 00:00:00",
+      "series_with_any_available_review": 330,
+      "available_review_rows": 19905
+    },
+    {
+      "forecast_month": "2026-02",
+      "information_cutoff_exclusive": "2026-02-01 00:00:00",
+      "series_with_any_available_review": 331,
+      "available_review_rows": 20538
+    },
+    {
+      "forecast_month": "2026-03",
+      "information_cutoff_exclusive": "2026-03-01 00:00:00",
+      "series_with_any_available_review": 332,
+      "available_review_rows": 21011
+    },
+    {
+      "forecast_month": "2026-04",
+      "information_cutoff_exclusive": "2026-04-01 00:00:00",
+      "series_with_any_available_review": 333,
+      "available_review_rows": 21556
+    },
+    {
+      "forecast_month": "2026-05",
+      "information_cutoff_exclusive": "2026-05-01 00:00:00",
+      "series_with_any_available_review": 336,
+      "available_review_rows": 22094
+    },
+    {
+      "forecast_month": "2026-06",
+      "information_cutoff_exclusive": "2026-06-01 00:00:00",
+      "series_with_any_available_review": 339,
+      "available_review_rows": 22690
+    }
+  ],
+  "rule": "For forecast month t, the count includes only reviews with publish_time strictly before the first day of t. Feature engineering may impose a stricter lag, but may never use a later timestamp."
+}

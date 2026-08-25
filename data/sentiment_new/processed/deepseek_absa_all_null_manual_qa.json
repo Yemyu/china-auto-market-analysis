@@ -1,0 +1,101 @@
+{
+  "schema_version": "v1",
+  "reviewed_at": "2026-08-24",
+  "reviewer": "codex_sol_manual_qa",
+  "scope": "All 42 compact DeepSeek reviews whose ten aspect mention flags were false.",
+  "policy": "Only explicit attitudes toward the target series and the fixed ten ABSA aspects are labeled. Dealer service and undifferentiated overall sentiment remain outside the aspect schema.",
+  "accepted_all_unmentioned": {
+    "dongchedi::7649687673392615448": "Generic overall assessment without a named product aspect.",
+    "dongchedi::7650805082312691737": "Dealer hospitality complaint, not a vehicle-product aspect.",
+    "dongchedi::7659653420369842201": "Generic affection without a named product aspect.",
+    "dongchedi::7638618574998753305": "Generic reliability praise; reliability is not one of the fixed ten aspects.",
+    "dongchedi::7651850684207206424": "Generic assessment and travel-distance context, not a target-series aspect claim.",
+    "dongchedi::7658144702440411161": "Generic positive ownership experience without a named aspect.",
+    "dongchedi::7649996364025171992": "Brand trust and generic assessment without a named aspect.",
+    "dongchedi::7650126612616204312": "Generic satisfaction without a named aspect.",
+    "dongchedi::7656862118448222232": "Reviewer has not driven the car; only generic second-hand satisfaction is stated.",
+    "dongchedi::7654554428120240152": "Generic long-term affection without a named aspect.",
+    "dongchedi::7659592429716115481": "Reviewer has not driven the car and states no product aspect.",
+    "dongchedi::7654954250438447166": "Generic new-car and longevity uncertainty without a fixed aspect claim.",
+    "dongchedi::7653992419213463577": "Generic early-use assessment without a named aspect.",
+    "dongchedi::7656754410084634686": "Dealer and salesperson service only.",
+    "dongchedi::7660423188483936280": "Purchase and replacement context; no target product aspect is evaluated.",
+    "dongchedi::7671308337161441305": "Customer-manager service complaint only.",
+    "dongchedi::7651888487817285656": "Vehicle praise is generic and the explicit complaint concerns the salesperson.",
+    "dongchedi::7654418708017713176": "Reviewer has just collected the car and states no concrete aspect.",
+    "dongchedi::7649673418782035993": "Purchase-process service only.",
+    "dongchedi::7651673407582392345": "Generic comparison and undifferentiated 'not outstanding' statement without a fixed aspect.",
+    "dongchedi::7658562299443040281": "Target-series preference is generic; the power complaint describes the previous car.",
+    "dongchedi::7651943836914028569": "Generic experience and staff service only.",
+    "dongchedi::7648449969627598873": "Generic affection without a named aspect.",
+    "dongchedi::7657172948565905432": "Purchase history and affection without a named aspect.",
+    "dongchedi::6862969208519528461": "Crash safety is explicit but is outside the fixed ten-aspect definitions; it is not forced into control or configuration.",
+    "dongchedi::7647092485499408408": "Salesperson conduct and price conversation only; no vehicle-product attitude is expressed."
+  },
+  "overrides": {
+    "dongchedi::7654688668044496958": {
+      "labels": {"appearance": -1, "configuration": -1},
+      "reason": "Explicitly dislikes the rear styling and criticizes the manual driver's seat on the top trim."
+    },
+    "dongchedi::7657865198321029182": {
+      "labels": {"value": 0},
+      "reason": "Explicit neutral question about insurance cost, which falls under ownership cost/value."
+    },
+    "dongchedi::7646272939871981630": {
+      "labels": {"fuel_consumption": 1},
+      "reason": "Explicitly praises charging speed and reduced range anxiety."
+    },
+    "dongchedi::7649526091803004953": {
+      "labels": {"configuration": -1},
+      "reason": "Explicitly criticizes the air conditioner for emitting aluminum powder."
+    },
+    "dongchedi::7653108490273034264": {
+      "labels": {"intelligence": -1},
+      "reason": "Explicitly criticizes overly sensitive reverse emergency intervention."
+    },
+    "dongchedi::7657115883780706329": {
+      "labels": {"configuration": -1},
+      "reason": "Explicit regret about not buying the four-wheel-drive configuration."
+    },
+    "dongchedi::7655191155545493529": {
+      "labels": {"configuration": -1},
+      "reason": "Explicitly mocks the infrared therapy feature."
+    },
+    "dongchedi::7648090352343060542": {
+      "labels": {"configuration": 1},
+      "reason": "Explicitly praises the absence of a particulate filter and large modification potential."
+    },
+    "dongchedi::7654849939196891198": {
+      "labels": {"appearance": 1},
+      "reason": "Explicitly says the car looks good."
+    },
+    "dongchedi::7668691733886029848": {
+      "labels": {"appearance": 0},
+      "reason": "Explicit neutral advice about choosing an easy-to-clean exterior color."
+    },
+    "dongchedi::7654252346439897150": {
+      "labels": {"configuration": -1},
+      "reason": "Explicitly criticizes removed/replaced equipment, weak anti-rust coating, and sunroof drainage design."
+    },
+    "dongchedi::7659072535216001086": {
+      "labels": {"configuration": -1, "value": -1},
+      "reason": "Explicitly criticizes timing-belt specification and frequent maintenance replacements/cost burden."
+    },
+    "dongchedi::7660836630806138905": {
+      "labels": {"configuration": 0},
+      "reason": "Explicit neutral question about fuel-tank capacity/specification."
+    },
+    "dongchedi::7667170964358058046": {
+      "labels": {"appearance": 0, "interior": 0, "configuration": 0},
+      "reason": "Explicitly mentions selecting exterior color, interior, and configuration without aspect-specific polarity."
+    },
+    "dongchedi::6993965034292383785": {
+      "labels": {"control": 1, "value": 1},
+      "reason": "Explicitly praises braking/structural robustness and says the target was substantially cheaper than the alternative."
+    },
+    "dongchedi::7004750813750890532": {
+      "labels": {"interior": 1, "control": 1, "intelligence": 1, "value": 1},
+      "reason": "For the target Model 3, explicitly likes the interior impression, driving, UI/electronic-product integration, and budget fit; competitor statements are excluded."
+    }
+  }
+}

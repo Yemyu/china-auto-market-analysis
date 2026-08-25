@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-14_arima_prophet.py — ARIMA & 普通 Prophet（无舆情基线 · 腿B）
+14_arima_prophet.py — ARIMA & 普通 Prophet（无舆情基线）
 
 数据来源（统一）：06_make_splits.py 的 train / test。全部从新数据(processed_new)来，
 在 **test (2026-01..06, 6 个月)** 上评估，与 07/08/13 同一拨切分，便于 09 横向对比。

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-13_model_prophet_exog.py — Prophet + 外生变量（无舆情基线 · 腿B）
+13_model_prophet_exog.py — Prophet + 外生变量（无舆情基线）
 
 数据来源（统一）：06_make_splits.py 的 train / val / test。
   * 每车系在 train (2022-01..2025-06) 上拟合，外生变量：

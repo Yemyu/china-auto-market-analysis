@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-08_model_lstm.py — 全局 LSTM + 车系 embedding 月度预测（无舆情基线 · 腿B）
+08_model_lstm.py — 全局 LSTM + 车系 embedding 月度预测（无舆情基线）
 
 数据来源（统一）：06_make_splits.py 的 train / val / test。
   * 模型权重只在 train (2022-01..2025-06) 上学习；

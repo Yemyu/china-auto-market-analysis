@@ -1,292 +1,182 @@
 <p align="center">
-  <a href="./README.md">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="./README_EN.md">🌐 English</a>
+  <a href="./README.md">中文</a> · <a href="./README_EN.md">English</a>
 </p>
 
 <h1 align="center">中国汽车市场分析：销量预测、产品配置与用户需求</h1>
 
 <p align="center">
-  多源汽车数据 + 用户口碑舆情 + 销量预测与归因 → 一套端到端分析流水线与交互式网页看板
+  基于公开月销量、车型配置与 24,175 条车主评论的汽车市场研究项目
 </p>
 
-<video src="https://github.com/user-attachments/assets/6072ccda-0d16-4865-8937-c1c3b73eeaa5" width="900" controls></video>
+<p align="center">
+  <a href="https://yemyu.github.io/china-auto-market-analysis/"><b>在线研究看板</b></a>
+  ·
+  <a href="./notebook/China_Auto_Market_Analysis.ipynb">分析 Notebook</a>
+  ·
+  <a href="./data/README.md">数据文档</a>
+</p>
 
-
----
-
-## 项目简介
-
-**中国汽车市场分析**是一套面向汽车行业的数据洞察项目，把「太平洋汽车月度销量」与「车型配置参数（汽车之家/太平洋）」两类公开数据打通，先做**无舆情基线**（销量预测 + 配置归因），再接入用户口碑舆情（**Phase B**）。回答三个核心问题：
-
-1. **下个月能卖多少？** —— 用 ARIMA / Prophet / XGBoost / LSTM / 融合模型做销量预测。
-2. **用户舆情真的影响销量吗？** —— 用大模型做 ABSA（Aspect-Based Sentiment Analysis）逐维度情感分析，再用 SHAP / Granger 因果量化影响。
-3. **如何持续监控？** —— 把前五阶段结论封装成纯静态 HTML + ECharts 交互式网页看板，实现品牌→车系下钻、情感预警、归因可视化。
-
-> 这是一个数据分析&开发项目：从原始数据采集、清洗、建模、归因到最终交互看板。
+<video src="./assets/demo/dashboard-demo.mp4" width="100%" controls></video>
 
 ---
 
-## 在线看板
+## 项目概览
 
-- 🌐 **在线演示**：https://yemyu.github.io/china-auto-market-analysis/
-- 本地预览：`cd app && python -m http.server 8000`，浏览器打开 http://localhost:8000/
+项目包含三项相互独立、又共享数据底座的分析：
 
-> 完整环境安装、本地运行与数据更新见下方「快速开始」。
+| 模块 | 样本 | 研究内容 | 验证方式 |
+|---|---:|---|---|
+| 六个月销量预测 | 371 个车系 | 比较销量历史、产品属性和用户评价对预测的贡献 | 固定起点递归预测；按时间划分训练、验证、测试 |
+| 产品配置分析 | 736 个车系，2,007 条车系年记录 | 估计年份、品牌与产品配置对年度销量差异的增量解释力 | `GroupKFold(5)` 按车系分组 |
+| 用户需求与风险 | 24,175 条评论，覆盖 345 个车系 | 识别十类产品需求、负面集中度和口碑异常 | 结构校验、抽样审计、相邻 180 天窗口监测 |
 
----
+三项分析采用不同筛选条件。销量预测要求连续的月度历史和可用配置；产品配置分析只要求车系年销量与配置能够对齐；用户需求分析以可核验的完整评论为准。
 
-## 六阶段工作流
+## 主要结果
 
-项目按真实工作流拆成 6 个阶段，对应 `scripts/new_pipeline/` 下 `06_` ~ `20_` 流水线脚本与 `notebook/China_Auto_Market_Analysis.ipynb`。
+### 销量预测
 
-> 当前已完成「无舆情基线」：阶段一~四（数据/筛选/月度预测 + 配置归因）。舆情相关的阶段五~六属于 **Phase B（待接入新数据）**，方法论已就绪，将在新口径（371 车系）下重做。
+最终测试区间为 2026 年 1—6 月，371 个车系共 2,226 个车系月观测。主指标采用全局 volume-weighted WMAPE，同时保留逐车系中位数 WMAPE。
 
-### 阶段一 · 数据准备
+| 方案 | 全局 WMAPE ↓ | 逐车系中位数 WMAPE ↓ | 相对销量基线 |
+|---|---:|---:|---:|
+| 销量基线模型 | 40.44% | 49.98% | — |
+| 用户口碑增强模型 | 38.71% | 48.83% | −1.73 pp |
+| 冷启动补充方案 | **38.64%** | **48.32%** | −1.80 pp |
 
-**问题**：如何把太平洋汽车月度销量与车型配置（汽车之家/太平洋）两套公开数据对齐？
+用户评价带来小幅改善信号，但并未取代历史销量：按车系重采样的 95% 区间为 −0.78 至 5.02 个百分点，仍跨过零。冷启动补充主要改善 9 个历史不足车系，对整体指标的进一步提升为 0.06 个百分点。
 
-**方法**：
-- 采集 `monthly_sales.csv`（1,017 车系 / 54,918 条月度销量，2022-01~2026-06，来源 pcauto）。
-- 采集 `feature.csv`（766 车系 / 2,084 行 / 84 列；粒度=**车系×年**，`(series_name, year)` 唯一键，含 `annual_sales` 年度销量汇总；来源汽车之家/太平洋等）。
-- 按 `series_name` 直接对齐两套数据（新管线无需旧 `series_mapping` 桥接）：
+### 产品配置
 
+在同一组 736 个车系上逐步加入年份、品牌和配置：
+
+| 特征组合 | 分组交叉验证 R² | WMAPE |
+|---|---:|---:|
+| 年份 | 0.089 | 87.67% |
+| 年份 + 品牌 | 0.154 | 83.77% |
+| 年份 + 品牌 + 配置 | **0.303** | **75.38%** |
+
+产品配置带来 `+0.149` 的 R² 增量，说明它能够解释一部分车系间年度销量差异。这里衡量的是样本内解释关联，不作因果推断。
+
+### 用户需求与风险
+
+评论被拆分为空间、动力、操控、舒适、能耗、配置、智能化、性价比、外观和内饰十个维度，并分别记录是否提及、正负倾向与时间窗口。最近一个完整监测月为 2026 年 7 月；123 个车系达到监测样本门槛，当前有 1 条规则预警进入人工复核。
+
+## 研究设计
+
+### 时间切分与防泄漏
+
+| 数据段 | 时间 | 用途 |
+|---|---|---|
+| Train | 截至 2025-06 | 模型训练 |
+| Validation | 2025-07—12 | 参数与方案选择 |
+| Test | 2026-01—06 | 最终评价 |
+
+六个月测试采用 2026 年 1 月固定起点递归预测。用于测试的评论特征冻结在预测起点：任何 2026 年 1 月 1 日之后发布的评论都不会进入这组主结果。滚动起点结果仅作为补充分析。
+
+### 用户评论处理
+
+严格语料只保留有完整正文、发布时间和可审计来源的评论；103 条只有列表摘要、无法取得详情正文的记录被保留在采集审计中，但不进入模型。最终语料为 24,175 条，覆盖 345 个目标车系，其中 330 个车系在测试起点前已有可用评论。
+
+评论标签按十个产品维度保存，平台评分与文本评价分开处理。用于建模的月度特征包含历史评论量、维度得分、正负比例和统一口径的提及率；缺失评论保持为缺失及可用性标记，不填成中性。
+
+### 指标口径
+
+全局 WMAPE 定义为：
+
+```text
+Σ |实际销量 − 预测销量| / Σ 实际销量
 ```
-monthly_sales ──series_name──┐
-                             ├──> 对齐 → 371 个「月度+配置」车系(腿B) + 736 个有年度销量车系(腿A)
-feature       ──series_name──┘
-```
 
-**结果**：对齐得到 371 个 in-population 车系（腿B 月度预测）与 736 个有年度销量的车系（腿A 配置归因）；646 个仅销量无配置的车系已排除。
+该指标按真实销量加权，适合观察整体市场误差。逐车系中位数 WMAPE 用于补充长尾车系表现；年度配置分析另报告分组交叉验证 R²。
 
-<p align="center">
-  <img src="figures/sentiment_vs_sales.png" alt="阶段一：配置覆盖与销量" width="700">
-</p>
+## 看板
 
----
+看板由原生 HTML、CSS、JavaScript 与 ECharts 构建，数据预先写入 `app/static/data/`，不依赖后端服务。中文与英文共用同一套数据，包含项目概览、销量预测、用户需求、产品配置、风险监测以及品牌与车系明细六页。
 
-### 阶段二 · 数据筛选与探索性可视化
+<details open>
+  <summary><b>功能截图</b></summary>
 
-**问题**：哪些车系适合进入预测模型？整体市场长什么样？
+<br>
 
-**方法**：
-- 月度面板按连续覆盖筛选；最终建模采用 371 个 in-population 车系（月度销量与配置齐全）。
-- 绘制全市场销量趋势、车型级别/能源类型分布、价格与硬件特征分布。
-
-**结果**：
-- 371 个车系进入腿B 月度建模；736 个车系进入腿A 年度归因。
-- 识别出新能源占比、级别分布、头部集中度等宏观特征。
-
-<p align="center">
-  <img src="figures/sales_trend.png" alt="阶段二：全市场月度销量趋势" width="700">
-</p>
-
----
-
-### 阶段三 · 销量预测建模（腿B，无舆情）
-
-**问题**：多种时序模型中，谁能更稳健地预测月销量？配置/外生变量有用吗？
-
-**方法**：
-- 在 371 个 in-population 车系上，按**绝对时间**切分：`train` 2022-01~2025-06 / `val` 2025-07~2025-12 / `test` 2026-01~2026-06（见 `data/processed_new/splits/`）。
-- 横向对比 ARIMA / Prophet / Prophet+外生 / XGBoost / LSTM；XGBoost 做递归多步（6 月）预测，val 上早停。
-- 指标：WMAPE（体积加权 + per-series 中位数双口径，抗长尾）+ 特征消融 + 90% 预测区间。
-
-**结果**：
-- **XGBoost** 为月度预测基线：test 体积加权 WMAPE **63.2%**（per-series 中位数 59.4%）。
-- 消融证明 **历史销量滞后特征主导预测**：去掉 lag → 73.2%；配置特征在月度预测中**无正贡献**（NO-CONFIG 48.8% 反而更低，旧「配置 +16%」实为未来配置泄漏伪影，已修复）。
-- 误差随预测步长增长而扩大，符合直觉。
-
-<p align="center">
-  <img src="figures/model_comparison.png" alt="阶段三：多模型对比" width="700">
-</p>
-
----
-
-### 阶段四 · 配置→销量归因（腿A，无舆情）
-
-**问题**：什么样的配置卖得好？配置能在多大程度解释销量差异？
-
-**方法**：
-- **车系×年横截面回归**：目标 `y = log1p(annual_sales)`；`GroupKFold(5) by series_name`（防止同一车系跨折泄漏，因为同车系跨年配置近乎不变）。
-- 特征 = 配置（价格/尺寸/能源/马力/电池…）+ 品牌 + 年；用 XGBoost 重要性解释各维度贡献。
-
-**结果**：
-- R² 递进：仅年 **0.089** → +品牌 **0.154** → +配置 **0.303**（配置增量 ΔR² = +0.149）。
-- 特征重要性：配置 **76.1%** / 品牌 **22.5%** / 年 **1.4%**。
-- 结论：配置解释**车系之间**的销量差异（更贵/更大/电动的车型更卖座）；同车系跨年涨跌由非配置因素（换代、权益、口碑）驱动。
-
-<p align="center">
-  <img src="figures/stage4_shap_summary.png" alt="阶段四：配置特征重要性" width="700">
-</p>
-
----
-
-### 阶段五 · 舆情融合预测与话题预警（Phase B 待接入）
-
-**问题**：把舆情动态加入销量预测模型，能不能提升精度？哪些话题需要预警？
-
-**方法（计划）**：在新口径（371 车系）上重做——大模型 ABSA 逐维度打分、动态情感作为外生变量、TF-IDF/LDA 主题聚类、规则化预警。
-
-**结果**：Phase B 待接入新数据后补充。旧管线（669 系）经验：动态情感未提升 volume-weighted 精度（XGBoost-baseline 34.79% vs +Top3sent 35.21%），但对尾部小销量车系可降低 per-series WMAPE（327% → 311%）。
-
----
-
-### 阶段六 · 交互式网页看板
-
-**问题**：如何让非技术决策者也能按“问题 → 证据 → 结论”浏览全部成果？
-
-**方法**：
-- 用 **HTML + ECharts** 搭建 7 屏纯静态交互式看板：项目概览、销量预测、舆情 ABSA、销量归因、舆情↔销量关系、舆情预警、品牌/车型钻取。
-- 数据由 `app/build_dashboard_data.py` 预烘焙为 `app/static/data/*.json`，前端直接 `fetch` 读取，无需任何后端服务。
-- 支持中英双语切换；品牌/车型钻取支持 Tab 联动下钻。
-
-**结果**：本地启动即可在浏览器中交互式查看全部分析结论，无需重新跑模型。
-
-> 注：看板数据桥当前基于初始管线快照；Phase B 接入后将刷新为 371 车系新口径。
-
-### 看板截图
-
-<details>
-  <summary><b>看板完整截图（点击展开）</b></summary>
-
-<p align="center">
-  点击任意图片可查看完整分辨率。
-</p>
-
-<table align="center">
+<table>
   <tr>
-    <td align="center" width="50%"><img src="figures/dashboard_full_overview.png" width="400" alt="项目概览"/></td>
-    <td align="center" width="50%"><img src="figures/dashboard_full_forecast.png" width="400" alt="销量预测"/></td>
+    <td width="50%"><a href="./assets/dashboard/zh/01-overview.png"><img src="./assets/dashboard/zh/01-overview.png" alt="项目概览"></a></td>
+    <td width="50%"><a href="./assets/dashboard/zh/02-sales-forecast.png"><img src="./assets/dashboard/zh/02-sales-forecast.png" alt="销量预测"></a></td>
   </tr>
+  <tr><td align="center">项目概览</td><td align="center">销量预测</td></tr>
   <tr>
-    <td align="center">项目概览</td>
-    <td align="center">销量预测</td>
+    <td><a href="./assets/dashboard/zh/03-user-needs.png"><img src="./assets/dashboard/zh/03-user-needs.png" alt="用户需求"></a></td>
+    <td><a href="./assets/dashboard/zh/04-product-config.png"><img src="./assets/dashboard/zh/04-product-config.png" alt="产品配置"></a></td>
   </tr>
+  <tr><td align="center">用户需求</td><td align="center">产品配置</td></tr>
   <tr>
-    <td align="center" width="50%"><img src="figures/dashboard_full_absa.png" width="400" alt="舆情 ABSA"/></td>
-    <td align="center" width="50%"><img src="figures/dashboard_full_attribution.png" width="400" alt="销量归因"/></td>
+    <td><a href="./assets/dashboard/zh/05-risk-monitor.png"><img src="./assets/dashboard/zh/05-risk-monitor.png" alt="风险监测"></a></td>
+    <td><a href="./assets/dashboard/zh/06-brand-series.png"><img src="./assets/dashboard/zh/06-brand-series.png" alt="品牌与车系"></a></td>
   </tr>
-  <tr>
-    <td align="center">舆情 ABSA</td>
-    <td align="center">销量归因</td>
-  </tr>
-  <tr>
-    <td align="center" width="50%"><img src="figures/dashboard_full_relation.png" width="400" alt="舆情↔销量关系"/></td>
-    <td align="center" width="50%"><img src="figures/dashboard_full_alerts.png" width="400" alt="舆情预警"/></td>
-  </tr>
-  <tr>
-    <td align="center">舆情↔销量关系</td>
-    <td align="center">舆情预警</td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2"><img src="figures/dashboard_full_drilldown.png" width="400" alt="品牌/车型钻取"/></td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2">品牌/车型钻取</td>
-  </tr>
+  <tr><td align="center">风险监测</td><td align="center">品牌与车系（比亚迪示例）</td></tr>
 </table>
 
 </details>
 
----
-
 ## 快速开始
 
-### 环境
-
-项目统一使用 Conda 环境 `nlp-sentiment`，不使用系统 Python 或全局 pip 环境。依赖已整理在 `requirements.txt`：
-
-```bash
-conda activate nlp-sentiment
-python -m pip install -r requirements.txt
-```
-
-首次创建或同步环境时，使用仓库内的 `environment.yml`：
+项目只使用 Conda 环境 `nlp-sentiment`，不依赖系统 Python。
 
 ```bash
 conda env update -n nlp-sentiment -f environment.yml --prune
 ```
 
-不希望激活环境时，所有脚本也可以显式执行：
+直接预览看板：
 
 ```bash
-conda run -n nlp-sentiment python scripts/new_pipeline/18_build_target_review_corpus.py
+conda run -n nlp-sentiment python -m http.server 8000 --directory app
 ```
 
-### 启动网页看板（本地）
+打开 <http://127.0.0.1:8000/>。看板数据已经预烘焙，无需先运行采集或建模脚本。
 
-```bash
-cd app && conda run -n nlp-sentiment python -m http.server 8000
-```
-
-打开浏览器访问 http://localhost:8000/ 即可预览。（看板是纯静态站点，不依赖任何后端服务。）
-
-### 在线看板
-
-- 🌐 **在线演示**：https://yemyu.github.io/china-auto-market-analysis/
-- 看板所需数据已预烘焙在 `app/static/data/*.json`，**无需重跑任何采集或建模脚本即可直接查看**。如需在本地更新数据桥（需已跑过完整管线、本地存在 `data/processed_new/*.csv`），运行：
+重新生成看板数据：
 
 ```bash
 conda run -n nlp-sentiment python app/build_dashboard_data.py
 ```
 
----
+流水线脚本位于 `scripts/new_pipeline/`。关键阶段包括：
 
-## 目录结构
-
+```text
+00—15  数据索引、时间切分、基础模型与数据审计
+16—28  评论补采、语料核验、标签基线与防泄漏月度特征
+29—35  用户评价特征消融、固定起点预测与稳健性分析
+36—39  用户需求、风险监测、冷启动、资源整理与报告 Notebook
 ```
+
+所有 Python 脚本均按以下方式执行：
+
+```bash
+conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
+```
+
+## 目录
+
+```text
 china-auto-market-analysis/
-├── app/                           # 阶段六 · 纯静态网页看板（HTML + ECharts，GitHub Pages 部署）
-│   ├── index.html / forecast.html / …  # 7 屏静态页面
-│   ├── build_dashboard_data.py    # 预烘焙 JSON 数据桥
-│   ├── .nojekyll                  # 禁用 GitHub Pages 的 Jekyll 处理
-│   └── static/                    # CSS/JS/JSON 数据
-├── data/                          # 数据目录（CSV 已 gitignore）
-│   ├── README.md                  # 数据说明（中文）
-│   ├── README_EN.md               # 数据说明（英文）
-│   ├── raw/                       # monthly_sales.csv, feature.csv
-│   ├── sentiment/                 # 口碑明细与汇总
-│   └── processed_new/             # 阶段产物（新管线，可复现）
-├── figures/                       # 分析结果图、看板截图与交互演示（入库）
-├── LICENSE                        # MIT 许可证
-├── notebook/                      # 中英双语数据分析笔记本
-│   ├── China_Auto_Market_Analysis.ipynb
-│   └── China_Auto_Market_Analysis_EN.ipynb
-├── scripts/                       # 01_~20_ 流水线脚本
-├── config/                        # 配置与 .env 模板
-├── requirements.txt               # Python 依赖
-├── README.md                      # 本文件（中文）
-└── README_EN.md                   # 英文版
+├── app/                    静态研究看板与预烘焙 JSON
+├── assets/                 分析图、看板截图与演示视频
+├── data/
+│   ├── raw/                月销量与车型配置原始表
+│   ├── sentiment_new/      新版评论语料、标签与时间特征
+│   ├── processed_new/      时间切分、模型结果与审计产物
+│   └── resources/          值得长期保留的历史数据资源
+├── notebook/               中英文分析 Notebook
+├── scripts/new_pipeline/   新版可复现流水线
+├── environment.yml
+├── requirements.txt
+├── README.md
+└── README_EN.md
 ```
 
----
+## 数据与许可
 
-## 技术栈
+月销量、车型配置和车主评论来自公开汽车平台。原始平台数据版权归相应来源方；仓库中的数据仅用于学习、研究与项目展示，不用于商业用途。代码与项目文档采用 MIT License。
 
-- **数据采集**：Python `requests` + `BeautifulSoup` / 懂车帝口碑 API
-- **数据处理**：Pandas、NumPy、ETL Pipeline
-- **NLP**：jieba、Hugging Face Transformers、DeepSeek API（ABSA）
-- **机器学习 / 时序**：scikit-learn、XGBoost、 Prophet、statsmodels、PyTorch（LSTM）
-- **可视化**：Matplotlib、ECharts（网页看板）
-- **Web 看板**：原生 HTML/CSS/JS、ECharts 5（纯静态，GitHub Pages 托管）
-- **依赖管理**：`requirements.txt`
-
----
-
-## 数据说明
-
-- 所有数据来自**公开汽车平台**（太平洋汽车月度销量、汽车之家/太平洋车型配置；用户舆情口碑为 Phase B，另采集自懂车帝）。
-- 原始 / 中间数据体积较大，已加入 `.gitignore`，克隆后按「快速开始」步骤即可直接启动看板。
-- 数据版权归属原平台，本项目仅用于学习、研究与展示，不作商业用途。
-
-详细数据字典、缺失值说明、质量报告见 `data/README.md`（含英文版 `data/README_EN.md`）。
-
----
-
-## 致谢
-
-- 数据来源于**懂车帝**（用户口碑、车型配置参数）与**太平洋汽车**（月度销量），感谢其公开数据支撑本项目的研究与展示。
-- 数据版权归原平台所有，本项目仅用于学习、研究与展示，遵守其使用规范。
-
----
-
-*License：MIT（仅对项目代码与文档；数据版权归原作者所有，请遵守原平台使用规范）。*
+更完整的表结构、样本筛选、时间可用性和资源归档说明见 [data/README.md](./data/README.md)。

@@ -1,0 +1,96 @@
+series_name,candidate_autohome_series_id,expected_source_name,evidence_url,evidence_source,note
+EVOS,6143,EVOS,https://k.autohome.com.cn/6143/,official_search_result,Official Autohome result names the target series
+PATHFINDER探陆,7396,探陆,https://www.autohome.com.cn/7396/,official_search_result,Target roster retains the English prefix while Autohome uses the Chinese short name
+iCAR 03,7069,iCAR 03,https://car.autohome.com.cn/diandongche/series-7069-0-0-0-0-0-0-1.html,official_search_result,Official Autohome result names the target series
+五菱宏光S,2139,五菱宏光S,https://k.autohome.com.cn/2139/,candidate_collision_check,Known risk: Autohome may merge this into the 五菱宏光 series
+五菱星光,7349,五菱星光,https://car.autohome.com.cn/price/series-7349.html,official_search_result,Official Autohome result names the target series
+亚洲狮,5960,亚洲狮,https://www.autohome.com.cn/5960/,official_search_result,Official Autohome result names the target series
+传祺E8新能源,7329,传祺E8 PHEV,https://www.autohome.com.cn/7329/,official_search_result,Autohome renamed the series display from 传祺E8新能源 to 传祺E8 PHEV
+别克E4,7122,别克E4,https://www.autohome.com.cn/7122/,official_search_result,Official Autohome result names the target series
+北京EU5,5058,北京EU5,https://www.autohome.com.cn/5058/,official_search_result,Official Autohome result names the target series
+宋PLUS新能源,5761,宋PLUS新能源,https://www.autohome.com.cn/5761/,official_search_result,Official Autohome result names the target series
+唐新能源,3430,唐新能源,https://www.autohome.com.cn/3430/,official_search_result,Official Autohome result names the target series
+宏光MINIEV,5714,宏光MINIEV,https://www.autohome.com.cn/5714/,official_search_result,Official Autohome result names the target series
+五菱佳辰,6650,五菱佳辰,https://car.autohome.com.cn/price/series-6650.html,official_search_result,Official Autohome result names the target series
+五菱征程,6039,五菱征程,https://www.autohome.com.cn/6039/,official_search_result,Official Autohome result names the target series
+五菱星云,7272,五菱星云,https://www.autohome.com.cn/7272/,official_search_result,Official Autohome result names the target series
+五菱星驰,6777,五菱星驰,https://www.autohome.com.cn/6777/,official_search_result,Official Autohome result names the target series
+传祺GA8,3782,传祺GA8,https://www.autohome.com.cn/3782/,official_search_result,Official Autohome result names the target series
+凌尚,5963,凌尚,https://www.autohome.com.cn/5963/,official_search_result,Official Autohome result names the target series
+凌放HARRIER,6077,凌放HARRIER,https://www.autohome.com.cn/6077/,official_search_result,Official Autohome result names the target series
+凯翼拾月,6845,凯翼拾月,https://www.autohome.com.cn/6845/,official_search_result,Official Autohome result names the target series
+别克GL6,4487,别克GL6,https://car.autohome.com.cn/price/series-4487.html,official_search_result,Official Autohome result names the target series
+别克GL8新能源,7658,别克GL8新能源,https://www.autohome.com.cn/7658/,official_search_result,Official Autohome result names the target series
+勇士,622,勇士,https://www.autohome.com.cn/622/,official_search_result,Official Autohome result names the target series
+北京现代ix35,1007,北京现代ix35,https://car.autohome.com.cn/price/series-1007.html,official_search_result,Official Autohome result names the target series
+卡罗拉双擎E+,4832,卡罗拉双擎E+,https://car.autohome.com.cn/price/series-4832.html,official_search_result,Official Autohome result names the target series
+合创A06,6502,合创A06,https://www.autohome.com.cn/6502/,official_search_result,Official Autohome result names the target series
+吉利熊猫,6924,熊猫,https://car.autohome.com.cn/diandongche/series-6924.html,official_search_result,Target roster retains the manufacturer prefix while Autohome displays 熊猫
+启辰T60,4887,启辰T60,https://car.autohome.com.cn/price/series-4887.html,official_search_result,Official Autohome result names the target series
+大家7,7211,大家7,https://www.autohome.com.cn/7211/,official_search_result,Official Autohome result names the target series
+大家9,6148,大家9,https://car.autohome.com.cn/video/series-6148.html,official_search_result,Official Autohome result names the target series
+奔奔E-Star,7279,奔奔E-Star,https://car.autohome.com.cn/diandongche/series-7279.html,official_search_result,Official Autohome result names the target series
+宋Pro新能源,5279,宋Pro新能源,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%AE%8BPro%E6%96%B0%E8%83%BD%E6%BA%90,official_suggestion_api,Unique exact official suggestion match
+宝马1系,4171,宝马1系,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%AE%9D%E9%A9%AC1%E7%B3%BB,official_suggestion_api,Unique exact official suggestion match
+宝马X2,5309,宝马X2,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%AE%9D%E9%A9%ACX2,official_suggestion_api,Unique exact official suggestion match
+宝马iX3,5758,宝马iX3,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%AE%9D%E9%A9%ACiX3,official_suggestion_api,Unique exact official suggestion match
+宝骏KiWi EV,6155,宝骏KiWi EV,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%AE%9D%E9%AA%8FKiWi%20EV,official_suggestion_api,Unique exact official suggestion match
+小鹏G3,4489,小鹏G3,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B0%8F%E9%B9%8FG3,official_suggestion_api,Unique exact official suggestion match
+小鹏MONA M03,6998,小鹏MONA M03,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B0%8F%E9%B9%8FMONA%20M03,official_suggestion_api,Unique exact official suggestion match
+小鹏P5,6095,小鹏P5,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B0%8F%E9%B9%8FP5,official_suggestion_api,Unique exact official suggestion match
+小鹏P7,5213,小鹏P7,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B0%8F%E9%B9%8FP7,official_suggestion_api,Unique exact official suggestion match
+小鹏P7+,7554,小鹏P7+,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B0%8F%E9%B9%8FP7%2B,official_suggestion_api,Unique exact official suggestion match
+小鹏X9,7067,小鹏X9,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B0%8F%E9%B9%8FX9,official_suggestion_api,Unique exact official suggestion match
+岚图梦想家,6459,岚图梦想家,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B2%9A%E5%9B%BE%E6%A2%A6%E6%83%B3%E5%AE%B6,official_suggestion_api,Unique exact official suggestion match
+岚图追光L,8259,岚图追光 L,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%B2%9A%E5%9B%BE%E8%BF%BD%E5%85%89L,official_suggestion_api,Unique exact normalised-name official suggestion match
+护卫舰07,6671,护卫舰07,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%8A%A4%E5%8D%AB%E8%88%B007,official_suggestion_api,Unique exact official suggestion match
+捷豹XEL,4462,捷豹XEL,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%8D%B7%E8%B1%B9XEL,official_suggestion_api,Unique exact official suggestion match
+昊铂GT,7084,昊铂GT,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%98%8A%E9%93%82GT,official_suggestion_api,Unique exact official suggestion match
+星海T5,8457,星海T5,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%98%9F%E6%B5%B7T5,official_suggestion_api,Unique exact official suggestion match
+星越L 智擎,7496,星越L智擎,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%98%9F%E8%B6%8AL%20%E6%99%BA%E6%93%8E,official_suggestion_api,Unique exact normalised-name official suggestion match
+极氪001,6091,极氪001,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%9E%81%E6%B0%AA001,official_suggestion_api,Unique exact official suggestion match
+极氪009,6846,极氪009,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%9E%81%E6%B0%AA009,official_suggestion_api,Unique exact official suggestion match
+极狐考拉,7120,极狐 考拉,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%9E%81%E7%8B%90%E8%80%83%E6%8B%89,official_suggestion_api,Unique exact normalised-name official suggestion match
+标致508,2299,标致508,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%A0%87%E8%87%B4508,official_suggestion_api,Unique exact official suggestion match
+比亚迪M9,8184,比亚迪M9,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%AF%94%E4%BA%9A%E8%BF%AAM9,official_suggestion_api,Unique exact official suggestion match
+汉,5499,汉,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B1%89,official_suggestion_api,Unique exact official suggestion match
+江淮A5 PLUS,7251,江淮A5 PLUS,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B1%9F%E6%B7%AEA5%20PLUS,official_suggestion_api,Unique exact official suggestion match
+江淮QX PHEV,7217,江淮QX PHEV,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B1%9F%E6%B7%AEQX%20PHEV,official_suggestion_api,Unique exact official suggestion match
+沃兰多,4882,沃兰多,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B2%83%E5%85%B0%E5%A4%9A,official_suggestion_api,Unique exact official suggestion match
+沃尔沃C40,6049,沃尔沃C40,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B2%83%E5%B0%94%E6%B2%83C40,official_suggestion_api,Unique exact official suggestion match
+沃尔沃ES90,8050,沃尔沃ES90,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B2%83%E5%B0%94%E6%B2%83ES90,official_suggestion_api,Unique exact official suggestion match
+海豹07DM-i,7822,海豹07 DM-i,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B5%B7%E8%B1%B907DM-i,official_suggestion_api,Unique exact normalised-name official suggestion match
+海马8S,4770,海马8S,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B5%B7%E9%A9%AC8S,official_suggestion_api,Unique exact official suggestion match
+海马INJOY,7867,海马INJOY,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B5%B7%E9%A9%ACINJOY,official_suggestion_api,Unique exact official suggestion match
+瑞风E3,6506,瑞风E3,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%91%9E%E9%A3%8EE3,official_suggestion_api,Unique exact official suggestion match
+皓影新能源,5994,皓影新能源,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%9A%93%E5%BD%B1%E6%96%B0%E8%83%BD%E6%BA%90,official_suggestion_api,Unique exact official suggestion match
+福瑞迪,813,福瑞迪,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%A6%8F%E7%91%9E%E8%BF%AA,official_suggestion_api,Unique exact official suggestion match
+秦L,7578,秦L,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%A7%A6L,official_suggestion_api,Unique exact official suggestion match
+秦PLUS,5964,秦PLUS,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%A7%A6PLUS,official_suggestion_api,Unique exact official suggestion match
+秦新能源,2761,秦新能源,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%A7%A6%E6%96%B0%E8%83%BD%E6%BA%90,official_suggestion_api,Unique exact official suggestion match
+纳米01,7364,纳米01,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%BA%B3%E7%B1%B301,official_suggestion_api,Unique exact official suggestion match
+腾势D9,6669,腾势D9,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%85%BE%E5%8A%BFD9,official_suggestion_api,Unique exact official suggestion match
+荣威D7,7301,荣威D7,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%8D%A3%E5%A8%81D7,official_suggestion_api,Unique exact official suggestion match
+荣威RX3,4473,荣威RX3,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%8D%A3%E5%A8%81RX3,official_suggestion_api,Unique exact official suggestion match
+荣威i6 MAX新能源,5801,荣威i6 MAX新能源,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%8D%A3%E5%A8%81i6%20MAX%E6%96%B0%E8%83%BD%E6%BA%90,official_suggestion_api,Unique exact official suggestion match
+荣威iMAX8新能源,6641,荣威iMAX8新能源,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%8D%A3%E5%A8%81iMAX8%E6%96%B0%E8%83%BD%E6%BA%90,official_suggestion_api,Unique exact official suggestion match
+赛那SIENNA,6272,赛那SIENNA,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%B5%9B%E9%82%A3SIENNA,official_suggestion_api,Unique exact official suggestion match
+起亚KX3傲跑,3664,起亚KX3傲跑,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%B5%B7%E4%BA%9AKX3%E5%82%B2%E8%B7%91,official_suggestion_api,Unique exact official suggestion match
+轩度EV,6844,轩度EV,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%BD%A9%E5%BA%A6EV,official_suggestion_api,Unique exact official suggestion match
+迈锐宝XL,4031,迈锐宝XL,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E8%BF%88%E9%94%90%E5%AE%9DXL,official_suggestion_api,Unique exact official suggestion match
+途安,333,途安,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%80%94%E5%AE%89,official_suggestion_api,Unique exact official suggestion match
+长安UNI-Z新能源,7512,长安UNI-Z新能源,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%95%BF%E5%AE%89UNI-Z%E6%96%B0%E8%83%BD%E6%BA%90,official_suggestion_api,Unique exact official suggestion match
+长安启源Q05经典,7351,长安启源Q05经典,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%95%BF%E5%AE%89%E5%90%AF%E6%BA%90Q05%E7%BB%8F%E5%85%B8,official_suggestion_api,Unique exact official suggestion match
+长安欧尚520,7895,长安欧尚520,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%95%BF%E5%AE%89%E6%AC%A7%E5%B0%9A520,official_suggestion_api,Unique exact official suggestion match
+风光330,3829,风光330,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%A3%8E%E5%85%89330,official_suggestion_api,Unique exact official suggestion match
+风光380,6581,风光380,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%A3%8E%E5%85%89380,official_suggestion_api,Unique exact official suggestion match
+风光E380,6391,风光E380,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%A3%8E%E5%85%89E380,official_suggestion_api,Unique exact official suggestion match
+魏牌 高山,8766,魏牌 高山,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%AD%8F%E7%89%8C%20%E9%AB%98%E5%B1%B1,official_suggestion_api,Unique exact official suggestion match
+奥迪A6L e-tron,8105,奥迪A6L e-tron,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%A5%A5%E8%BF%AAA6L%20e-tron,official_suggestion_api,Unique exact official suggestion match
+海豹07EV,8462,海豹07 EV,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E6%B5%B7%E8%B1%B907EV,official_suggestion_api,Unique exact normalised-name official suggestion match
+铂智7,7724,铂智7,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%93%82%E6%99%BA7,official_suggestion_api,Unique exact official suggestion match
+银河V900,8436,银河V900,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%93%B6%E6%B2%B3V900,official_suggestion_api,Unique exact official suggestion match
+银河星耀7,8313,银河星耀7,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%93%B6%E6%B2%B3%E6%98%9F%E8%80%807,official_suggestion_api,Unique exact official suggestion match
+领克10,8176,领克10,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E9%A2%86%E5%85%8B10,official_suggestion_api,Unique exact official suggestion match
+凯威德,8471,凯威德,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E5%87%AF%E5%A8%81%E5%BE%B7,official_suggestion_api,Unique exact official suggestion match
+爱跑,7573,爱跑,https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&q=%E7%88%B1%E8%B7%91,official_suggestion_api,Unique exact official suggestion match

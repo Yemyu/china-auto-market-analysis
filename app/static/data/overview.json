@@ -267,8 +267,8 @@
       "en": "371-series six-month recursive forecast: cold-start hybrid global WMAPE is 38.64%"
     },
     {
-      "zh": "DeepSeek丰富特征相对无舆情基线改善1.735个百分点，但Bootstrap区间跨0",
-      "en": "DeepSeek-rich improves 1.735 pp over baseline, but the bootstrap interval crosses zero"
+      "zh": "用户口碑增强相对销量基线改善1.735个百分点，但Bootstrap区间跨0",
+      "en": "User-review features improve 1.735 pp over the sales baseline, but the bootstrap interval crosses zero"
     },
     {
       "zh": "736车系年度归因中，配置将交叉验证R²从0.154提升到0.303",
