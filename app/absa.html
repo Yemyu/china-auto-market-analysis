@@ -3,81 +3,84 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AutoPulse · 舆情 ABSA</title>
-  <link rel="stylesheet" href="static/css/style.css">
-  <!-- 防 FOUC：在 i18n.js 下载/执行前，浏览器可能先把服务端渲染的中文默认文案画出来，
-     视频录制会抓到“中文一闪”。先把带 data-i18n 的元素隐藏，FOUC 应用完语言后再显示。 -->
+  <title>中国车市分析 · 用户需求</title>
+  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body>
+<body class="analysis-page needs-page">
   <header class="topbar">
-    <div class="brand">AutoPulse</div>
-    <div class="brand-sub" data-i18n="brand_sub">汽车销量预测与用户舆情分析</div>
-    <div class="top-actions">
-      <button id="langSwitch" class="lang-switch" data-i18n="lang_btn">English</button>
-    </div>
+    <div class="brand">中国车市分析</div>
+    <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
+    <div class="top-actions"><button id="langSwitch" class="lang-switch">English</button></div>
   </header>
-
   <div class="layout">
-    <nav class="sidebar">
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_analysis">分析</div>
-        <a href="index.html" data-i18n="nav_overview">项目概览</a>
-        <a href="forecast.html" data-i18n="nav_forecast">销量预测</a>
-        <a href="absa.html" class="active" data-i18n="nav_absa">舆情 ABSA</a>
-        <a href="attribution.html" data-i18n="nav_attribution">销量归因</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_relation">关系</div>
-        <a href="relation.html" data-i18n="nav_relation">舆情↔销量</a>
-        <a href="alerts.html" data-i18n="nav_alerts">舆情预警</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_drilldown">钻取</div>
-        <a href="drilldown.html" data-i18n="nav_drilldown">钻取分析</a>
-      </div>
-    </nav>
+    <nav class="sidebar" aria-label="Primary navigation"></nav>
+    <main class="content analysis-content">
+      <header class="analysis-header">
+        <div class="analysis-header-copy">
+          <p class="analysis-breadcrumb" data-i18n="ab_breadcrumb">评论文本分析 / 用户需求</p>
+          <h1 data-i18n="ab_title_full">车主评论中的十类需求</h1>
+          <p data-i18n="ab_lead_public">将车主评论拆分为十个产品维度，分别观察被讨论的频率、评价方向与负面集中度。</p>
+        </div>
+        <dl class="analysis-protocol">
+          <div><dt data-i18n="ab_protocol_reviews">有效评论</dt><dd><strong id="ab-review-count">24,175</strong><span data-i18n="ov_unit_review">条</span></dd></div>
+          <div><dt data-i18n="ab_protocol_series">覆盖车系</dt><dd><strong id="ab-series-count">345</strong><span data-i18n="home_series_unit">个车系</span></dd></div>
+          <div><dt data-i18n="ab_protocol_aspects">需求维度</dt><dd><strong id="ab-aspect-count">10</strong><span data-i18n="ab_dimension_unit">个维度</span></dd></div>
+        </dl>
+      </header>
 
-    <main class="content">
-      <div class="page-head">
-        <h1 data-i18n="ab_title">舆情 ABSA</h1>
-        
-<p class="lead-text" data-i18n="ab_lead">10 维度细粒度情感分析（外观、内饰、空间、动力、操控、舒适、油耗、配置、智能化、性价比），分数范围 −1~1。</p>
+      <section class="analysis-section" aria-labelledby="ab-priority-title">
+        <header class="analysis-section-head">
+          <span>01</span>
+          <div><h2 id="ab-priority-title" data-i18n="ab_priority_title">优先改进方向</h2><p data-i18n="ab_priority_lead">提及率衡量用户是否经常谈到，负面占比衡量提及后有多少评价为负；两者不能混为一个指标。</p></div>
+        </header>
+        <div class="needs-priority-grid">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="ab_attention">需求关注矩阵</h3><p data-i18n="ab_attention_note">越靠右代表讨论越多，越靠上代表负面越集中；右上区域应优先复核。</p></div></div>
+            <div id="chartAttention" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+          <aside class="needs-findings">
+            <div><span data-i18n="ab_top_discussed">讨论最集中</span><strong id="ab-top-mentioned">—</strong><p id="ab-top-mentioned-detail">—</p></div>
+            <div class="needs-finding-negative"><span data-i18n="ab_top_complaint">负面最集中</span><strong id="ab-top-negative">—</strong><p id="ab-top-negative-detail">—</p></div>
+            <p class="needs-conclusion" id="ab-concl"></p>
+          </aside>
+        </div>
+      </section>
 
-      </div>
-      
-  <p class="conclusion" id="ab-concl"></p>
+      <section class="analysis-section" aria-labelledby="ab-evaluation-title">
+        <header class="analysis-section-head">
+          <span>02</span>
+          <div><h2 id="ab-evaluation-title" data-i18n="ab_evaluation_title">各需求维度的评价</h2><p data-i18n="ab_evaluation_lead">平均分用于比较总体方向，正、中、负占比用于判断评价结构；未提及某个维度不计为中性。</p></div>
+        </header>
+        <div class="analysis-grid-2">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="ab_bar">平均评价分</h3><p data-i18n="ab_bar_insight">分值范围为−1至+1，高于0表示正面评价更多，低于0表示负面评价更多。</p></div></div>
+            <div id="chartAverage" class="analysis-chart"></div>
+          </article>
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="ab_dist">正、中、负评价占比</h3><p data-i18n="ab_dist_insight">占比只在明确提及该维度且取得有效标签的评论中计算。</p></div></div>
+            <div id="chartDist" class="analysis-chart"></div>
+          </article>
+        </div>
+      </section>
 
-  <div class="grid-2">
-    <div class="card">
-      <h3 data-i18n="ab_trend">十维度月度情感走势</h3>
-      <p class="insight" data-i18n="ab_trend_insight">折线展示各维度情感分随时间的变化，可观察哪些维度的口碑在改善、哪些在恶化。</p>
-      <div id="chartTrend" class="chart"></div>
-      <p class="source" data-i18n="ab_source_trend"></p>
-    </div>
-    <div class="card">
-      <h3 data-i18n="ab_bar">各维度平均情感分</h3>
-      <p class="insight" data-i18n="ab_bar_insight">平均分是 0~1 的"水温计"，高于 0 代表整体正面，低于 0 代表车主集中吐槽。</p>
-      <div id="chartBar" class="chart"></div>
-      <p class="source" data-i18n="ab_source"></p>
-    </div>
-  </div>
-
-  <div class="grid-2">
-    <div class="card">
-      <h3 data-i18n="ab_dist">情感正负分布（正/中/负）</h3>
-      <p class="insight" data-i18n="ab_dist_insight">堆叠图展示每个维度下正面、中性、负面评论占比，看出情绪“两极分化”程度。</p>
-      <div id="chartDist" class="chart tall"></div>
-      <p class="source" data-i18n="ab_source">数据来源：data/processed/stage4/sentiment_sales_monthly.csv</p>
-    </div>
-    <div class="card">
-      <h3 data-i18n="ab_variance">各维度情感波动（标准差）</h3>
-      <p class="insight" data-i18n="ab_var_insight">波动越大，说明车主在该维度上分歧越大：有人夸爆、有人骂惨。</p>
-      <div id="chartVar" class="chart tall"></div>
-      <p class="source" data-i18n="ab_source">数据来源：data/processed/stage4/sentiment_sales_monthly.csv</p>
-    </div>
-  </div>
-
+      <section class="analysis-section" aria-labelledby="ab-change-title">
+        <header class="analysis-section-head">
+          <span>03</span>
+          <div><h2 id="ab-change-title" data-i18n="ab_change_title">评价如何随时间变化</h2><p data-i18n="ab_change_lead">月度走势用于观察评价方向的持续变化，标准差用于识别分歧更大的需求维度。</p></div>
+        </header>
+        <div class="needs-change-grid">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="ab_trend">十维度月度评价走势</h3><p data-i18n="ab_trend_insight">智能化与舒适性使用较深线条突出，其余维度作为参照。</p></div></div>
+            <div id="chartTrend" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="ab_variance">评价分歧</h3><p data-i18n="ab_var_insight">标准差越大，说明用户对该维度的评价越不一致。</p></div></div>
+            <div id="chartVariance" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+        </div>
+        <details class="analysis-method-note"><summary data-i18n="ab_method_summary">指标定义</summary><p data-i18n="ab_method_definition">提及率＝提及该维度的评论数÷全部评论数；负面占比＝该维度负面标签数÷该维度有效标签数。未提及与标签缺失均保留为缺失，不填成中性。</p></details>
+      </section>
     </main>
   </div>
 
@@ -85,93 +88,90 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js"></script>
   <script src="static/js/i18n.js"></script>
-  <!-- 在首屏绘制前同步应用语言，避免服务端渲染的中文默认文案先闪现再被 JS 替换（FOUC）。
-     中文版 zh→zh 为恒等式，无任何视觉变化；英文版绘制前即为英文，切换无卡顿。
-     应用完成后再显示 [data-i18n] 元素，彻底消除加载阶段的中文闪烁。 -->
   <script>
-    try { window.I18N && window.I18N.apply(); } catch (e) {}
-    document.querySelectorAll("[data-i18n]").forEach(function (el) { el.style.visibility = "visible"; });
-  </script>
-  
-<script>
-var T = window.AUTOPULSE;
-var chartTrend, chartBar, chartDist, chartVar;
+    try { window.I18N.apply(); } catch (e) {}
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
+    var absaData = null;
+    var chartAttention, chartAverage, chartDist, chartTrend, chartVariance;
 
-function renderABSA() {
-  loadJSON('absa').then(function (d) {
-    document.getElementById('ab-concl').textContent = d.conclusion[window.AUTOPULSE.lang] || d.conclusion.zh;
+    function renderABSA() {
+      if (!absaData) return;
+      var d = absaData, T = window.CHINA_AUTO_MARKET;
+      document.getElementById('ab-concl').textContent = d.conclusion[window.CHINA_AUTO_MARKET.lang] || d.conclusion.zh;
+      document.getElementById('ab-review-count').textContent = formatNumber(d.meta.review_rows);
+      document.getElementById('ab-series-count').textContent = formatNumber(d.meta.review_series);
+      document.getElementById('ab-aspect-count').textContent = formatNumber(d.meta.aspects);
+      var distByKey = {};
+      d.distribution.forEach(function (x) { distByKey[x.key] = x; });
+      var topMention = d.aspects.slice().sort(function (a, b) { return b.mention_rate - a.mention_rate; })[0];
+      var topNegative = d.distribution.slice().sort(function (a, b) { return b.negative - a.negative; })[0];
+      document.getElementById('ab-top-mentioned').textContent = nameFromAspect(topMention);
+      document.getElementById('ab-top-mentioned-detail').textContent = (topMention.mention_rate * 100).toFixed(1) + '% ' + (window.CHINA_AUTO_MARKET.lang === 'en' ? 'of all reviews mention this need.' : '的全部评论提及这一需求。');
+      document.getElementById('ab-top-negative').textContent = nameFromAspect(topNegative);
+      document.getElementById('ab-top-negative-detail').textContent = (topNegative.negative * 100).toFixed(1) + '% ' + (window.CHINA_AUTO_MARKET.lang === 'en' ? 'of scored mentions are negative.' : '的有效提及被判定为负面。');
 
-    var aspects = d.aspects;
-    var labels = aspects.map(function (a) { return nameFromAspect(a); });
-    var vals = aspects.map(function (a) { return a.avg; });
+      var attention = d.aspects.map(function (a) {
+        var negative = distByKey[a.key].negative;
+        return { name: nameFromAspect(a), value: [a.mention_rate, negative, 16], itemStyle: { color: negative >= .35 ? T.sentimentNeg : '#2a65b7' } };
+      });
+      if (!chartAttention) chartAttention = initChart('chartAttention');
+      chartAttention.setOption({
+        tooltip: { trigger: 'item', backgroundColor: 'rgba(15,28,47,.96)', borderWidth: 0, textStyle: { color: '#fff' }, formatter: function (p) { return '<b>' + p.name + '</b><br>' + (window.CHINA_AUTO_MARKET.lang === 'en' ? 'Mention rate: ' : '提及率：') + (p.value[0] * 100).toFixed(1) + '%<br>' + (window.CHINA_AUTO_MARKET.lang === 'en' ? 'Negative share: ' : '负面占比：') + (p.value[1] * 100).toFixed(1) + '%'; } },
+        grid: baseGrid({ top: 32, left: 52, right: 38, bottom: 56 }),
+        xAxis: Object.assign({ type: 'value', min: .4, max: .76, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } }, name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'Mention rate' : '评论提及率', nameLocation: 'middle', nameGap: 32 }, axisStyle()),
+        yAxis: Object.assign({ type: 'value', min: 0, max: .55, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } }, name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'Negative share' : '负面占比' }, axisStyle()),
+        series: [{ type: 'scatter', data: attention, symbolSize: 17, label: { show: true, position: 'top', color: T.text, fontSize: 10, formatter: '{b}' }, markLine: { silent: true, symbol: 'none', lineStyle: { type: 'dashed', color: '#aeb8c3' }, data: [{ xAxis: .65 }, { yAxis: .3 }] } }]
+      }, true);
 
-    // 月度维度走势折线图
-    if (d.monthly_trends && d.monthly_trends.months && d.monthly_trends.months.length) {
-      if (!chartTrend) chartTrend = initChart('chartTrend');
+      var averages = d.aspects.slice().sort(function (a, b) { return a.avg - b.avg; });
+      if (!chartAverage) chartAverage = initChart('chartAverage');
+      chartAverage.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: function (v) { return Number(v).toFixed(3); } }, tooltipStyle()),
+        grid: baseGrid({ left: 82, top: 18, right: 52, bottom: 42 }),
+        xAxis: Object.assign({ type: 'value', min: -.2, max: 1, name: window.I18N.get('ab_axis_sentiment'), nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: averages.map(nameFromAspect) }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 14, data: averages.map(function (x) { return { value: x.avg, itemStyle: { color: x.avg < 0 ? T.sentimentNeg : '#2a65b7', borderRadius: x.avg < 0 ? [4,0,0,4] : [0,4,4,0] } }; }), label: { show: true, position: 'right', color: T.muted, fontSize: 10, formatter: function (p) { return p.value.toFixed(3); } }, markLine: { silent: true, symbol: 'none', data: [{ xAxis: 0 }], lineStyle: { color: '#6e7b88', width: 1 } } }]
+      }, true);
+
+      var rows = d.distribution.slice().sort(function (a, b) { return b.negative - a.negative; });
+      if (!chartDist) chartDist = initChart('chartDist');
+      chartDist.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: function (v) { return (v * 100).toFixed(1) + '%'; } }, tooltipStyle()),
+        legend: { data: [window.I18N.get('ab_pos'), window.I18N.get('ab_neu'), window.I18N.get('ab_neg')], top: 0, textStyle: { color: T.muted, fontSize: 10 } },
+        grid: baseGrid({ left: 82, top: 38, right: 22, bottom: 36 }),
+        xAxis: Object.assign({ type: 'value', max: 1, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } } }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: rows.map(nameFromAspect) }, axisStyle()),
+        series: [
+          { name: window.I18N.get('ab_pos'), type: 'bar', stack: 'total', barMaxWidth: 15, data: rows.map(function (x) { return x.positive; }), itemStyle: { color: T.sentimentPos } },
+          { name: window.I18N.get('ab_neu'), type: 'bar', stack: 'total', barMaxWidth: 15, data: rows.map(function (x) { return x.neutral; }), itemStyle: { color: T.sentimentNeu } },
+          { name: window.I18N.get('ab_neg'), type: 'bar', stack: 'total', barMaxWidth: 15, data: rows.map(function (x) { return x.negative; }), itemStyle: { color: T.sentimentNeg } }
+        ]
+      }, true);
+
       var mt = d.monthly_trends;
+      if (!chartTrend) chartTrend = initChart('chartTrend');
       chartTrend.setOption({
-        tooltip: Object.assign({ trigger: 'axis' }, tooltipStyle()),
-        legend: { data: mt.series.map(function(s){ return window.AUTOPULSE.lang==='en' ? s.name_en : s.name_zh; }), top: 10, textStyle: { color: T.muted, fontSize: 10 } },
-        grid: baseGrid({ top: 48, bottom: 40 }),
-        xAxis: Object.assign({ type: 'category', data: mt.months, axisLabel: { interval: Math.floor(mt.months.length/8) } }, axisStyle()),
-        yAxis: Object.assign({ type: 'value', min: -1, max: 1 }, axisStyle()),
-        series: mt.series.map(function(s, i) {
-          return {
-            name: window.AUTOPULSE.lang==='en' ? s.name_en : s.name_zh,
-            type: 'line', data: s.data, smooth: true,
-            symbol: 'none',
-            lineStyle: { width: 1.5 },
-            itemStyle: { color: T.palette[i % T.palette.length] }
-          };
-        })
+        tooltip: tooltipStyle(),
+        legend: { type: 'scroll', data: mt.series.map(function (s) { return window.CHINA_AUTO_MARKET.lang === 'en' ? s.name_en : s.name_zh; }), top: 0, textStyle: { color: T.muted, fontSize: 10 } },
+        grid: baseGrid({ top: 48, bottom: 42, left: 50, right: 24 }),
+        xAxis: Object.assign({ type: 'category', data: mt.months, axisLabel: { interval: Math.max(0, Math.floor(mt.months.length / 8)) } }, axisStyle()),
+        yAxis: Object.assign({ type: 'value', min: -.5, max: 1, name: window.I18N.get('ab_axis_sentiment') }, axisStyle()),
+        series: mt.series.map(function (s, i) { var focus = s.key === 'comfort' || s.key === 'intelligence'; return { name: window.CHINA_AUTO_MARKET.lang === 'en' ? s.name_en : s.name_zh, type: 'line', data: s.data, showSymbol: false, connectNulls: false, smooth: .12, lineStyle: { width: focus ? 2.4 : 1.1, opacity: focus ? 1 : .36 }, itemStyle: { color: focus ? (s.key === 'intelligence' ? T.sentimentNeg : '#9152a6') : T.palette[i % T.palette.length] }, z: focus ? 4 : 1 }; })
+      }, true);
+
+      var variance = d.variance.slice().sort(function (a, b) { return a.std - b.std; });
+      if (!chartVariance) chartVariance = initChart('chartVariance');
+      chartVariance.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: function (v) { return Number(v).toFixed(3); } }, tooltipStyle()),
+        grid: baseGrid({ left: 88, top: 18, right: 50, bottom: 42 }),
+        xAxis: Object.assign({ type: 'value', min: .35, max: 1, name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'Standard deviation' : '标准差', nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: variance.map(nameFromAspect) }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 14, data: variance.map(function (x) { return { value: x.std, itemStyle: { color: x.std >= .9 ? T.sentimentNeg : '#778a9e', borderRadius: [0,4,4,0] } }; }), label: { show: true, position: 'right', color: T.muted, fontSize: 10, formatter: function (p) { return p.value.toFixed(3); } } }]
       }, true);
     }
 
-    if (!chartBar) chartBar = initChart('chartBar');
-    chartBar.setOption({
-      tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-      grid: baseGrid({ top: 40, bottom: 86 }),
-      xAxis: Object.assign({ type: 'category', data: labels, axisLabel: { rotate: 30, interval: 0 } }, axisStyle()),
-      yAxis: Object.assign({ type: 'value', name: window.I18N.get('ab_axis_sentiment'), min: -1, max: 1 }, axisStyle()),
-      series: [{
-        type: 'bar',
-        data: vals.map(function (v, i) { return { value: v, itemStyle: { color: v >= 0 ? T.sentimentPos : T.sentimentNeg, borderRadius: v >= 0 ? [4, 4, 0, 0] : [0, 0, 4, 4] } }; })
-      }]
-    }, true);
-
-    if (!chartDist) chartDist = initChart('chartDist');
-    chartDist.setOption({
-      tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-      legend: { data: [window.I18N.get('ab_pos'), window.I18N.get('ab_neu'), window.I18N.get('ab_neg')], top: 10, textStyle: { color: T.muted } },
-      grid: baseGrid({ top: 48, bottom: 86 }),
-      xAxis: Object.assign({ type: 'category', data: labels, axisLabel: { rotate: 30, interval: 0 } }, axisStyle()),
-      yAxis: Object.assign({ type: 'value', name: 'ratio', max: 1 }, axisStyle()),
-      series: [
-        { name: window.I18N.get('ab_pos'), type: 'bar', stack: 'total', data: d.distribution.map(function (x) { return x.positive; }), itemStyle: { color: T.sentimentPos } },
-        { name: window.I18N.get('ab_neu'), type: 'bar', stack: 'total', data: d.distribution.map(function (x) { return x.neutral; }), itemStyle: { color: T.sentimentNeu } },
-        { name: window.I18N.get('ab_neg'), type: 'bar', stack: 'total', data: d.distribution.map(function (x) { return x.negative; }), itemStyle: { color: T.sentimentNeg } }
-      ]
-    }, true);
-
-    if (!chartVar) chartVar = initChart('chartVar');
-    chartVar.setOption({
-      tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-      grid: baseGrid({ top: 24, bottom: 86 }),
-      xAxis: Object.assign({ type: 'category', data: labels, axisLabel: { rotate: 30, interval: 0 } }, axisStyle()),
-      yAxis: Object.assign({ type: 'value', name: 'std' }, axisStyle()),
-      series: [{
-        type: 'line',
-        data: d.variance.map(function (x) { return x.std; }),
-        smooth: true,
-        itemStyle: { color: T.accent },
-        areaStyle: { color: 'rgba(0,169,174,.12)' }
-      }]
-    }, true);
-  });
-}
-renderABSA();
-window.__renderers.renderABSA = renderABSA;
-</script>
-
+    loadJSON('absa').then(function (d) { absaData = d; renderABSA(); });
+    window.__renderers.renderABSA = renderABSA;
+  </script>
 </body>
 </html>

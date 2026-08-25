@@ -2,7 +2,7 @@
   <a href="./README.md">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="./README_EN.md">🌐 English</a>
 </p>
 
-<h1 align="center">AutoPulse: Automotive Sales Forecasting & User Sentiment Analysis</h1>
+<h1 align="center">China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs</h1>
 
 <p align="center">
   Multi-source automotive data + user word-of-mouth sentiment + sales forecasting & attribution →
@@ -14,7 +14,7 @@
 
 ## Project Overview
 
-**AutoPulse** is an automotive data-insights project that connects two public data sources — **PCauto monthly sales** and **vehicle specification parameters** (Autohome/PCauto) — to deliver a **no-sentiment baseline** (sales forecasting + config attribution) first, then onboard user-review sentiment (**Phase B**). It answers three core questions:
+**China Automotive Market Analysis** is an automotive data-insights project that connects two public data sources — **PCauto monthly sales** and **vehicle specification parameters** (Autohome/PCauto) — to deliver a **no-sentiment baseline** (sales forecasting + config attribution) first, then onboard user-review sentiment (**Phase B**). It answers three core questions:
 
 1. **How many cars will we sell next month?** — Sales forecasting with ARIMA / Prophet / XGBoost / LSTM / ensemble models.
 2. **Does user sentiment really affect sales?** — Deep ABSA (Aspect-Based Sentiment Analysis) with a large language model, plus SHAP / Granger causality to quantify the impact.
@@ -26,7 +26,7 @@
 
 ## Online Dashboard
 
-- 🌐 **Live demo**: https://yemyu.github.io/AutoPulse/
+- 🌐 **Live demo**: https://yemyu.github.io/china-auto-market-analysis/
 - Local preview: `cd app && python -m http.server 8000`, then open http://localhost:8000/ in your browser.
 
 > Full setup, local run, and data refresh are in **Quick Start** below.
@@ -35,7 +35,7 @@
 
 ## Six-Stage Workflow
 
-The project is organized into six real-world stages, corresponding to the `06_` ~ `20_` pipeline scripts in `scripts/new_pipeline/` and the `notebook/AutoPulse_Analysis_EN.ipynb`.
+The project is organized into six real-world stages, corresponding to the `06_` ~ `20_` pipeline scripts in `scripts/new_pipeline/` and the `notebook/China_Auto_Market_Analysis_EN.ipynb`.
 
 > The **no-sentiment baseline** is complete: Stages 1–4 (data / filtering / monthly forecasting + config attribution). The sentiment-related Stages 5–6 belong to **Phase B (pending, new-data)**; the methodology is ready and will be redone on the new 371-series scope.
 
@@ -192,27 +192,40 @@ feature       ──series_name──┘
 
 ### Environment
 
-Dependencies are listed in `requirements.txt`. Install them in any Python environment you prefer (venv, conda, or system-wide):
+This project uses the `nlp-sentiment` Conda environment exclusively; do not use system Python or a global pip environment. Dependencies are listed in `requirements.txt`:
 
 ```bash
-pip install -r requirements.txt
+conda activate nlp-sentiment
+python -m pip install -r requirements.txt
+```
+
+For the initial environment creation or a synchronized update, use the repository's `environment.yml`:
+
+```bash
+conda env update -n nlp-sentiment -f environment.yml --prune
+```
+
+Every project command can also target the environment explicitly:
+
+```bash
+conda run -n nlp-sentiment python scripts/new_pipeline/18_build_target_review_corpus.py
 ```
 
 ### Launch the web dashboard (local)
 
 ```bash
-cd app && python -m http.server 8000
+cd app && conda run -n nlp-sentiment python -m http.server 8000
 ```
 
 Open the browser at http://localhost:8000/ to preview. (The dashboard is a static site and needs no backend server.)
 
 ### Live demo
 
-- 🌐 **Live demo**: https://yemyu.github.io/AutoPulse/
+- 🌐 **Live demo**: https://yemyu.github.io/china-auto-market-analysis/
 - The dashboard data is already pre-baked into `app/static/data/*.json`, so **no crawling or modeling scripts need to be run to view it**. To refresh the data bridge locally (requires having run the full pipeline, i.e. `data/processed_new/*.csv` present), run:
 
 ```bash
-python app/build_dashboard_data.py
+conda run -n nlp-sentiment python app/build_dashboard_data.py
 ```
 
 ---
@@ -220,7 +233,7 @@ python app/build_dashboard_data.py
 ## Directory Structure
 
 ```
-AutoPulse/
+china-auto-market-analysis/
 ├── app/                           # Stage 6 · pure-static web dashboard (HTML + ECharts, GitHub Pages)
 │   ├── index.html / forecast.html / …  # 7 static pages
 │   ├── build_dashboard_data.py    # Pre-bake JSON data bridge
@@ -235,8 +248,8 @@ AutoPulse/
 ├── figures/                       # Analysis charts, dashboard screenshots, and interactive demo (committed)
 ├── LICENSE                        # MIT license
 ├── notebook/                      # Bilingual analysis notebooks
-│   ├── AutoPulse_Analysis.ipynb
-│   └── AutoPulse_Analysis_EN.ipynb
+│   ├── China_Auto_Market_Analysis.ipynb
+│   └── China_Auto_Market_Analysis_EN.ipynb
 ├── scripts/                       # 01_~20_ pipeline scripts
 ├── config/                        # Config & .env template
 ├── requirements.txt               # Python dependencies

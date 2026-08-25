@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-AutoPulse 看板数据桥 (data bridge)
+中国汽车市场分析看板数据桥 (data bridge)
 把 stage3-5 的 CSV 预聚合为数组化 JSON，落到 app/static/data/。
 看板只认这些 JSON 的字段名；上游(阶段三/四/五)任何"换数字/换模型/加维度"
 的改动，只要列名结构不变，重跑本脚本即可，前端代码零改动。
@@ -20,6 +20,8 @@ import numpy as np
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 PROC = os.path.join(ROOT, "data", "processed")
+PROC_NEW = os.path.join(ROOT, "data", "processed_new")
+SENTIMENT_NEW = os.path.join(ROOT, "data", "sentiment_new", "processed")
 OUT = os.path.join(ROOT, "app", "static", "data")
 
 # 销量预测特征名的业务映射（中英 + 一句话解释）
@@ -264,6 +266,29 @@ def load(name):
         print(f"  [skip] 缺少 {p}")
         return None
     return pd.read_csv(p)
+
+
+def load_new(name, **kwargs):
+    p = os.path.join(PROC_NEW, name)
+    if not os.path.exists(p):
+        print(f"  [skip] 缺少 {p}")
+        return None
+    return pd.read_csv(p, **kwargs)
+
+
+def load_sentiment(name, **kwargs):
+    p = os.path.join(SENTIMENT_NEW, name)
+    if not os.path.exists(p):
+        print(f"  [skip] 缺少 {p}")
+        return None
+    return pd.read_csv(p, **kwargs)
+
+
+def read_json(path):
+    if not os.path.exists(path):
+        return {}
+    with open(path, "r", encoding="utf-8") as handle:
+        return json.load(handle)
 
 
 def dump(obj, fname, compact=False):
@@ -735,16 +760,15 @@ def build_brand_drilldown():
 
 
 def main():
-    print("== AutoPulse 看板数据桥 ==")
+    print("== 中国汽车市场分析看板数据桥 ==")
     os.makedirs(OUT, exist_ok=True)
-    dump(build_overview(), "overview.json")
-    dump(build_forecast(), "forecast.json")
-    dump(build_absa(), "absa.json")
-    dump(build_attribution(), "attribution.json")
-    dump(build_relation(), "relation.json")
-    dump(build_alerts(), "alerts.json")
-    dump(build_drilldown(), "drilldown.json", compact=True)
-    dump(build_brand_drilldown(), "brand_drilldown.json", compact=True)
+    # Keep the existing static app and JSON contracts, but source all payloads
+    # from the audited 371/736-series pipeline.  Legacy builder functions above
+    # remain temporarily readable as a migration reference and are not invoked.
+    from dashboard_data_v2 import DashboardV2
+    payloads = DashboardV2(ROOT, brand_en, series_en).payloads()
+    for filename, payload in payloads.items():
+        dump(payload, filename, compact=filename in {"drilldown.json", "brand_drilldown.json"})
     print("== 完成 ==")
 
 

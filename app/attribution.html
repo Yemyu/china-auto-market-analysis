@@ -3,73 +3,85 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AutoPulse · 销量归因</title>
-  <link rel="stylesheet" href="static/css/style.css">
-  <!-- 防 FOUC：在 i18n.js 下载/执行前，浏览器可能先把服务端渲染的中文默认文案画出来，
-     视频录制会抓到“中文一闪”。先把带 data-i18n 的元素隐藏，FOUC 应用完语言后再显示。 -->
+  <title>中国车市分析 · 产品配置</title>
+  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body>
+<body class="analysis-page product-page">
   <header class="topbar">
-    <div class="brand">AutoPulse</div>
-    <div class="brand-sub" data-i18n="brand_sub">汽车销量预测与用户舆情分析</div>
-    <div class="top-actions">
-      <button id="langSwitch" class="lang-switch" data-i18n="lang_btn">English</button>
-    </div>
+    <div class="brand">中国车市分析</div>
+    <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
+    <div class="top-actions"><button id="langSwitch" class="lang-switch">English</button></div>
   </header>
-
   <div class="layout">
-    <nav class="sidebar">
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_analysis">分析</div>
-        <a href="index.html" data-i18n="nav_overview">项目概览</a>
-        <a href="forecast.html" data-i18n="nav_forecast">销量预测</a>
-        <a href="absa.html" data-i18n="nav_absa">舆情 ABSA</a>
-        <a href="attribution.html" class="active" data-i18n="nav_attribution">销量归因</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_relation">关系</div>
-        <a href="relation.html" data-i18n="nav_relation">舆情↔销量</a>
-        <a href="alerts.html" data-i18n="nav_alerts">舆情预警</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_drilldown">钻取</div>
-        <a href="drilldown.html" data-i18n="nav_drilldown">钻取分析</a>
-      </div>
-    </nav>
+    <nav class="sidebar" aria-label="Primary navigation"></nav>
+    <main class="content analysis-content">
+      <header class="analysis-header">
+        <div class="analysis-header-copy">
+          <p class="analysis-breadcrumb" data-i18n="at_breadcrumb">年度截面分析 / 产品配置</p>
+          <h1 data-i18n="at_title_full">产品配置与年度销量差异</h1>
+          <p data-i18n="at_lead_public">比较年份、品牌与配置三类信息对车系年度销量差异的解释力，并按车系分组完成交叉验证。</p>
+        </div>
+        <dl class="analysis-protocol">
+          <div><dt data-i18n="at_protocol_series">分析车系</dt><dd><strong id="at-series">736</strong><span data-i18n="home_series_unit">个车系</span></dd></div>
+          <div><dt data-i18n="at_protocol_rows">车系年记录</dt><dd><strong id="at-rows">2,007</strong><span data-i18n="at_row_unit">条记录</span></dd></div>
+          <div><dt data-i18n="at_protocol_validation">验证方式</dt><dd><strong id="at-folds">5</strong><span data-i18n="at_fold_unit">折分组验证</span></dd></div>
+        </dl>
+      </header>
 
-    <main class="content">
-      <div class="page-head">
-        <h1 data-i18n="at_title">销量归因</h1>
-        
-<p class="lead-text" data-i18n="at_lead">用车系级 XGBoost+SHAP 回答「哪些舆情维度真正影响销量」。</p>
+      <section class="analysis-section" aria-labelledby="at-explain-title">
+        <header class="analysis-section-head">
+          <span>01</span>
+          <div><h2 id="at-explain-title" data-i18n="at_explain_title">配置增加了多少解释力？</h2><p data-i18n="at_explain_lead">在相同样本上逐步加入年份、品牌与配置，观察分组交叉验证 R² 的变化。</p></div>
+        </header>
+        <div class="product-evidence-strip">
+          <div><span data-i18n="at_best_r2">完整模型 R²</span><strong id="at-r2">—</strong></div>
+          <div><span data-i18n="at_config_lift">加入配置后的增量</span><strong id="at-lift">—</strong></div>
+          <div><span data-i18n="at_best_wmape">完整模型 WMAPE</span><strong id="at-wmape">—</strong><small>%</small></div>
+          <p id="at-concl"></p>
+        </div>
+        <div class="product-performance-grid">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="at_cmp_title">年份、品牌与配置的消融比较</h3><p data-i18n="at_cmp_insight">同一736车系样本上逐步增加信息；误差线为五折结果的标准差。</p></div></div>
+            <div id="chartAblation" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+          <aside class="analysis-reading">
+            <h3 data-i18n="at_reading_title">结果解读</h3>
+            <dl>
+              <div><dt>R²</dt><dd data-i18n="at_r2_explain">衡量模型在未见过的车系上解释年度销量差异的能力；越高越好，0表示不优于均值基准。</dd></div>
+              <div><dt>GroupKFold</dt><dd data-i18n="at_group_explain">同一车系的不同年份始终落在同一折，避免模型通过车系身份记忆测试样本。</dd></div>
+              <div><dt data-i18n="at_lift_label">配置增量</dt><dd data-i18n="at_lift_explain">完整模型比“年份＋品牌”模型高0.149，说明配置提供额外的区分信息。</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </section>
 
-      </div>
-      
-  <p class="conclusion" id="at-concl"></p>
+      <section class="analysis-section" aria-labelledby="at-feature-title">
+        <header class="analysis-section-head">
+          <span>02</span>
+          <div><h2 id="at-feature-title" data-i18n="at_feature_title">模型最依赖哪些配置？</h2><p data-i18n="at_feature_lead">特征重要性用于描述模型依赖程度，不表示某项配置会让销量上升或下降。</p></div>
+        </header>
+        <div class="product-feature-grid">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="at_shap">前15项配置特征重要性</h3><p data-i18n="at_shap_insight">数值越高，说明该特征越常被模型用于区分不同车系；它不提供影响方向。</p></div></div>
+            <div id="chartShap" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="at_example">三类信息的整体重要性</h3><p data-i18n="at_example_insight">将全部特征的重要性按配置、品牌和年份汇总，观察模型的信息来源。</p></div></div>
+            <div id="chartBlocks" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+        </div>
+      </section>
 
-  <div class="grid-2">
-    <div class="card">
-      <h3 data-i18n="at_shap">舆情维度对销量的 SHAP 重要性</h3>
-      <p class="insight" data-i18n="at_shap_insight">SHAP 值回答“某个维度让预测变准还是变不准”。条越长，该维度对销量解释力越强。</p>
-      <div id="chartShap" class="chart"></div>
-      <p class="source" data-i18n="at_source_shap">数据来源：data/processed/stage4/aspect_shap_ranking.csv</p>
-    </div>
-    <div class="card">
-      <h3 data-i18n="at_cmp_title">加入舆情特征后的归因提升</h3>
-      <p class="insight" data-i18n="at_cmp_insight">对比“含舆情”和“不含舆情”两套模型的 R²/MAPE，量化舆情对销量归因的真实贡献。</p>
-      <div id="cmpRow"></div>
-      <p class="source" data-i18n="at_source_metr">数据来源：data/processed/stage4/attribution_metrics.csv</p>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3><span data-i18n="at_example">归因示例：预测误差最小的车系</span><span id="exName"></span></h3>
-    <p class="insight" data-i18n="at_example_insight">展示模型拟合最好的车系，蓝色线为实际销量，橙色线为预测，红色柱为绝对误差。</p>
-    <div id="chartExample" class="chart wide"></div>
-    <p class="source" data-i18n="fc_source_preds">数据来源：data/processed/stage3/xgboost_preds.csv</p>
-  </div>
-
+      <section class="analysis-section" aria-labelledby="at-boundary-title">
+        <header class="analysis-section-head"><span>03</span><div><h2 id="at-boundary-title" data-i18n="at_boundary_title">结果的适用边界</h2><p data-i18n="at_boundary_lead">这是一项年度截面解释分析，不能直接替代因果实验或短期销量预测。</p></div></header>
+        <div class="product-boundaries">
+          <div><span>01</span><strong data-i18n="at_boundary_between">适合比较车系之间的差异</strong><p data-i18n="at_boundary_between_note">问题是“为什么不同车系的年度销量水平不同”，而不是“某车系下个月会涨还是会跌”。</p></div>
+          <div><span>02</span><strong data-i18n="at_boundary_assoc">重要性不是因果效应</strong><p data-i18n="at_boundary_assoc_note">配置可能与价格、品牌定位和目标人群共同出现，不能把模型重要性解释成单项配置的销量增量。</p></div>
+          <div><span>03</span><strong data-i18n="at_boundary_missing">缺失项也可能被模型利用</strong><p data-i18n="at_boundary_missing_note">部分高排名特征代表配置字段缺失，提示数据完整度本身包含市场分层信息。</p></div>
+        </div>
+        <details class="analysis-method-note"><summary data-i18n="at_method_summary">查看模型与数据来源</summary><p data-i18n="at_method_note">目标为年度销量的 log1p 变换；模型使用 XGBoost，按车系进行五折 GroupKFold。特征重要性采用 XGBoost gain，而不是 SHAP 值。</p><p data-i18n="at_source_metr"></p><p data-i18n="at_source_shap"></p></details>
+      </section>
     </main>
   </div>
 
@@ -77,75 +89,67 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js"></script>
   <script src="static/js/i18n.js"></script>
-  <!-- 在首屏绘制前同步应用语言，避免服务端渲染的中文默认文案先闪现再被 JS 替换（FOUC）。
-     中文版 zh→zh 为恒等式，无任何视觉变化；英文版绘制前即为英文，切换无卡顿。
-     应用完成后再显示 [data-i18n] 元素，彻底消除加载阶段的中文闪烁。 -->
   <script>
-    try { window.I18N && window.I18N.apply(); } catch (e) {}
-    document.querySelectorAll("[data-i18n]").forEach(function (el) { el.style.visibility = "visible"; });
-  </script>
-  
-<script>
-var T = window.AUTOPULSE;
-var chartShap, chartExample;
+    try { window.I18N.apply(); } catch (e) {}
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
+    var attributionData = null, chartAblation, chartBlocks, chartShap;
 
-function renderAttribution() {
-  loadJSON('attribution').then(function (d) {
-    document.getElementById('at-concl').textContent = d.conclusion[window.AUTOPULSE.lang] || d.conclusion.zh;
+    function renderAttribution() {
+      if (!attributionData) return;
+      var d = attributionData, T = window.CHINA_AUTO_MARKET;
+      document.getElementById('at-concl').textContent = d.conclusion[window.CHINA_AUTO_MARKET.lang] || d.conclusion.zh;
+      document.getElementById('at-series').textContent = formatNumber(d.meta.series);
+      document.getElementById('at-rows').textContent = formatNumber(d.meta.series_year_rows);
+      document.getElementById('at-folds').textContent = formatNumber(d.meta.cv_folds);
+      var brand = d.models.filter(function (m) { return m.variant === '+BRAND'; })[0];
+      var config = d.models.filter(function (m) { return m.variant === '+CONFIG'; })[0];
+      document.getElementById('at-r2').textContent = config.r2.toFixed(3);
+      document.getElementById('at-lift').textContent = '+' + (config.r2 - brand.r2).toFixed(3);
+      document.getElementById('at-wmape').textContent = config.wmape.toFixed(2);
 
-    var shap = d.shap.slice().sort(function (a, b) { return a.importance - b.importance; });
-    if (!chartShap) chartShap = initChart('chartShap');
-    chartShap.setOption({
-      tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-      grid: baseGrid({ left: 64, top: 24 }),
-      xAxis: Object.assign({ type: 'value', name: window.I18N.get('at_axis_shap') }, axisStyle()),
-      yAxis: Object.assign({ type: 'category', data: shap.map(function (s) { return nameFromAspect(s); }) }, axisStyle()),
-      series: [{
-        type: 'bar',
-        data: shap.map(function (s) { return { value: s.importance, itemStyle: { color: s.color, borderRadius: [0, 4, 4, 0] } }; }),
-        label: { show: true, position: 'right', color: T.text }
-      }]
-    }, true);
+      function variantName(value) {
+        var labels = {
+          'YEAR-ONLY': ['仅年份', 'Year only'],
+          '+BRAND': ['年份＋品牌', 'Year + brand'],
+          '+CONFIG': ['年份＋品牌＋配置', 'Year + brand + specs'],
+          'CONFIG-ONLY': ['仅配置', 'Specs only']
+        };
+        var pair = labels[value] || [value, value];
+        return window.CHINA_AUTO_MARKET.lang === 'en' ? pair[1] : pair[0];
+      }
 
-    var w = d.comparison.with, wo = d.comparison.without;
-    var rows = [
-      [window.I18N.get('at_label_r2'), wo ? wo.r2 : 0, w ? w.r2 : 0, true],
-      [window.I18N.get('at_label_mape'), wo ? wo.mape : 0, w ? w.mape : 0, false]
-    ];
-    var html = '<div class="metric-row">';
-    rows.forEach(function (r) {
-      var better = r[3] ? (r[2] > r[1]) : (r[2] < r[1]);
-      var color = better ? T.sentimentPos : T.sentimentNeg;
-      html += '<div class="metric-box">' +
-              '<div class="label">' + r[0] + '</div>' +
-              '<div class="value-row">' + window.I18N.get('at_label_without') + ' <b>' + r[1].toFixed(3) + '</b> &nbsp;→&nbsp; ' + window.I18N.get('at_label_with') + ' <b style="color:' + color + '">' + r[2].toFixed(3) + '</b></div>' +
-              '<div class="note">' + (better ? window.I18N.get('at_better') : window.I18N.get('at_worse')) + '</div>' +
-              '</div>';
-    });
-    html += '</div>';
-    document.getElementById('cmpRow').innerHTML = html;
+      if (!chartAblation) chartAblation = initChart('chartAblation');
+      chartAblation.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' }, formatter: function (items) { var p = items[0], m = d.models[p.dataIndex]; return '<b>' + variantName(m.variant) + '</b><br>R²: ' + m.r2.toFixed(3) + ' ± ' + m.r2_std.toFixed(3) + '<br>WMAPE: ' + m.wmape.toFixed(2) + '%<br>' + (window.CHINA_AUTO_MARKET.lang === 'en' ? 'Features: ' : '特征数：') + m.n_features; } }, tooltipStyle()),
+        grid: baseGrid({ top: 34, left: 48, right: 28, bottom: 72 }),
+        xAxis: Object.assign({ type: 'category', data: d.models.map(function (m) { return variantName(m.variant); }), axisLabel: { interval: 0, rotate: window.CHINA_AUTO_MARKET.lang === 'en' ? 15 : 0 } }, axisStyle()),
+        yAxis: Object.assign({ type: 'value', min: 0, max: .35, name: 'Grouped-CV R²' }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 38, data: d.models.map(function (m) { return { value: m.r2, itemStyle: { color: m.variant === '+CONFIG' ? '#2a65b7' : '#94a4b5', borderRadius: [4,4,0,0] } }; }), label: { show: true, position: 'top', color: T.text, formatter: function (p) { return p.value.toFixed(3); } } }]
+      }, true);
 
-    if (d.top_example) {
-      document.getElementById('exName').textContent = ' — ' + d.top_example.series;
-      if (!chartExample) chartExample = initChart('chartExample');
-      chartExample.setOption({
-        tooltip: tooltipStyle(),
-        legend: { data: [window.I18N.get('at_legend_actual'), window.I18N.get('at_legend_pred'), window.I18N.get('at_legend_error')], top: 10, textStyle: { color: T.muted } },
-        grid: baseGrid({ top: 48 }),
-        xAxis: Object.assign({ type: 'category', data: d.top_example.dates }, axisStyle()),
-        yAxis: Object.assign({ type: 'value', name: window.I18N.get('fc_axis_sales') }, axisStyle()),
-        series: [
-          { name: window.I18N.get('at_legend_actual'), type: 'line', data: d.top_example.actual, itemStyle: { color: T.sentimentPos }, smooth: true },
-          { name: window.I18N.get('at_legend_pred'), type: 'line', data: d.top_example.pred, itemStyle: { color: T.primary }, smooth: true, lineStyle: { type: 'dashed' } },
-          { name: window.I18N.get('at_legend_error'), type: 'bar', data: d.top_example.error, itemStyle: { color: 'rgba(238,91,91,.35)' } }
-        ]
+      var blocks = d.blocks.slice().sort(function (a, b) { return a.share - b.share; });
+      if (!chartBlocks) chartBlocks = initChart('chartBlocks');
+      chartBlocks.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' }, valueFormatter: function (v) { return (v * 100).toFixed(1) + '%'; } }, tooltipStyle()),
+        grid: baseGrid({ left: 88, top: 30, right: 58, bottom: 48 }),
+        xAxis: Object.assign({ type: 'value', min: 0, max: .82, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } }, name: window.I18N.get('at_importance_share'), nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: blocks.map(function (b) { return window.CHINA_AUTO_MARKET.lang === 'en' ? b.name_en : b.name_zh; }) }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 24, data: blocks.map(function (b, i) { return { value: b.share, itemStyle: { color: b.block === 'config' ? '#2a65b7' : '#8799ab', borderRadius: [0,4,4,0] } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 11, formatter: function (p) { return (p.value * 100).toFixed(1) + '%'; } } }]
+      }, true);
+
+      var shap = d.shap.slice().sort(function (a, b) { return a.importance - b.importance; });
+      if (!chartShap) chartShap = initChart('chartShap');
+      chartShap.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
+        grid: baseGrid({ left: 174, top: 18, right: 60, bottom: 42 }),
+        xAxis: Object.assign({ type: 'value', name: window.I18N.get('at_axis_importance'), nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: shap.map(nameFromAspect) }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 13, data: shap.map(function (s, i) { return { value: s.importance, itemStyle: { color: i > 10 ? '#2a65b7' : '#8fa5ba', borderRadius: [0,4,4,0] } }; }), label: { show: true, position: 'right', color: T.muted, fontSize: 10, formatter: function (p) { return p.value.toFixed(4); } } }]
       }, true);
     }
-  });
-}
-renderAttribution();
-window.__renderers.renderAttribution = renderAttribution;
-</script>
 
+    loadJSON('attribution').then(function (d) { attributionData = d; renderAttribution(); });
+    window.__renderers.renderAttribution = renderAttribution;
+  </script>
 </body>
 </html>

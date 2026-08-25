@@ -1,5 +1,5 @@
 """
-01b_crawl_series_sales.py  -  AutoPulse 新工程：补齐 feature 主表缺失车系的月度销量
+01b_crawl_series_sales.py  -  新版工程：补齐 feature 主表缺失车系的月度销量
 
 背景
 ----

@@ -3,117 +3,105 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AutoPulse · 钻取分析</title>
-  <link rel="stylesheet" href="static/css/style.css">
+  <title>中国车市分析 · 品牌与车系</title>
+  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
   <!-- 防 FOUC：在 i18n.js 下载/执行前，浏览器可能先把服务端渲染的中文默认文案画出来，
      视频录制会抓到“中文一闪”。先把带 data-i18n 的元素隐藏，FOUC 应用完语言后再显示。 -->
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body>
+<body class="analysis-page explorer-page">
   <header class="topbar">
-    <div class="brand">AutoPulse</div>
-    <div class="brand-sub" data-i18n="brand_sub">汽车销量预测与用户舆情分析</div>
+    <div class="brand">中国车市分析</div>
+    <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
     <div class="top-actions">
       <button id="langSwitch" class="lang-switch" data-i18n="lang_btn">English</button>
     </div>
   </header>
 
   <div class="layout">
-    <nav class="sidebar">
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_analysis">分析</div>
-        <a href="index.html" data-i18n="nav_overview">项目概览</a>
-        <a href="forecast.html" data-i18n="nav_forecast">销量预测</a>
-        <a href="absa.html" data-i18n="nav_absa">舆情 ABSA</a>
-        <a href="attribution.html" data-i18n="nav_attribution">销量归因</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_relation">关系</div>
-        <a href="relation.html" data-i18n="nav_relation">舆情↔销量</a>
-        <a href="alerts.html" data-i18n="nav_alerts">舆情预警</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_drilldown">钻取</div>
-        <a href="drilldown.html" class="active" data-i18n="nav_drilldown">钻取分析</a>
-      </div>
-    </nav>
+    <nav class="sidebar" aria-label="Primary navigation"></nav>
 
-    <main class="content">
-      <div class="page-head">
-        <h1 data-i18n="dd_title">钻取分析</h1>
-        
-<p class="lead-text" data-i18n="dd_lead">从宏观到微观两层钻取：品牌钻取展示品牌级销量/口碑走势与维度画像；车型钻取下探到单个车系的十维度口碑热力图。点击品牌排名中的车系可直接跳转至车型钻取。</p>
+    <main class="content analysis-content">
+      <header class="analysis-header">
+        <div class="analysis-header-copy">
+          <p class="analysis-breadcrumb" data-i18n="dd_breadcrumb">交互分析 / 品牌与车系</p>
+          <h1 data-i18n="dd_title_full">品牌与车系明细</h1>
+          <p data-i18n="dd_lead_public">在品牌和单一车系两个层级查看月度销量、综合评价与十维需求画像，并保留评论缺失月份。</p>
+        </div>
+        <dl class="analysis-protocol">
+          <div><dt data-i18n="dd_protocol_brands">品牌视图</dt><dd><strong>82</strong><span data-i18n="ov_unit_brand">个</span></dd></div>
+          <div><dt data-i18n="dd_protocol_series">车系视图</dt><dd><strong>330</strong><span data-i18n="home_series_unit">个车系</span></dd></div>
+          <div><dt data-i18n="dd_protocol_window">评论窗口</dt><dd><strong>180</strong><span data-i18n="dd_day_unit">天滚动</span></dd></div>
+        </dl>
+      </header>
 
+      <div class="explorer-tabs" role="tablist" aria-label="Analysis level">
+        <button class="tab-btn active" data-tab="brand" role="tab" aria-selected="true" data-i18n="dd_tab_brand">品牌视图</button>
+        <button class="tab-btn" data-tab="series" role="tab" aria-selected="false" data-i18n="dd_tab_series">车系视图</button>
       </div>
-      
-  <div class="tab-bar">
-    <button class="tab-btn active" data-tab="brand" data-i18n="dd_tab_brand">品牌钻取</button>
-    <button class="tab-btn" data-tab="series" data-i18n="dd_tab_series">车型钻取</button>
-  </div>
 
-  <!-- ===== Brand tab ===== -->
-  <div id="tab-brand" class="tab-content active">
-    <div class="card">
-      <p class="insight" data-i18n="bd_insight">选择一个品牌，查看其月度销量与综合口碑走势、十维度口碑画像，以及旗下主力车系的销量与口碑排名。</p>
-      <div class="controls">
-        <label for="brandSel" data-i18n="bd_select_brand">选择品牌：</label>
-        <select id="brandSel"></select>
-        <span class="meta" id="brandMeta"></span>
-      </div>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3 data-i18n="bd_sales_sentiment">品牌月度销量 vs 综合口碑</h3>
-        <p class="insight" data-i18n="bd_sales_insight">左轴为销量，右轴为综合口碑（十维度均值）。品牌级样本更多，时序基本连续；若销量与口碑背离，说明品牌当期表现由非舆情因素驱动。</p>
-        <div id="chartBrandTs" class="chart tall"></div>
-        <p class="source" data-i18n="bd_source_brand"></p>
-      </div>
-      <div class="card">
-        <h3 data-i18n="bd_radar">品牌维度画像 vs 市场平均</h3>
-        <p class="insight" data-i18n="bd_radar_insight">雷达图展示该品牌十维度平均口碑，灰色虚线为全市场品牌均值。外扩维度是品牌口碑优势，内缩维度是短板。</p>
-        <div id="chartRadar" class="chart tall"></div>
-        <p class="source" data-i18n="bd_source_model"></p>
-      </div>
-    </div>
-    <div class="card">
-      <h3 data-i18n="bd_rank">旗下主力车系排名（按平均月销量）</h3>
-      <p class="insight" data-i18n="bd_rank_insight">按平均月销量排序的 Top 15 车系，柱高为平均月销量，标签为该车系平均综合口碑。可识别品牌的销量支柱与口碑洼地。</p>
-      <p class="source" style="margin-top:0;margin-bottom:8px;border-top:none;padding-top:0;" data-i18n="dd_click_hint">提示：点击柱子可跳转到该车型的钻取详情</p>
-      <div id="chartRank" class="chart tall"></div>
-      <p class="source" data-i18n="bd_source_model"></p>
-    </div>
-  </div>
+      <!-- ===== Brand tab ===== -->
+      <div id="tab-brand" class="tab-content active">
+        <section class="analysis-section explorer-filter-section" aria-labelledby="bd-filter-title">
+          <header class="analysis-section-head"><span>01</span><div><h2 id="bd-filter-title" data-i18n="bd_filter_title">选择品牌</h2><p data-i18n="bd_insight">查看品牌销量与评价走势、十维评价相对市场的位置，以及旗下主力车系。</p></div></header>
+          <div class="explorer-filter-panel">
+            <label for="brandSel" data-i18n="bd_select_brand">品牌</label>
+            <select id="brandSel"></select>
+            <span class="explorer-filter-meta" id="brandMeta"></span>
+          </div>
+        </section>
 
-  <!-- ===== Series tab ===== -->
-  <div id="tab-series" class="tab-content">
-    <div class="card">
-      <p class="insight" data-i18n="dd_insight">选择一个品牌与车系，查看该车系 2022-2026 年逐月销量与十维度口碑走势，用于观察销量波动前各维度口碑的先行变化。</p>
-      <p class="source" style="margin-top:6px;" data-i18n="dd_sparsity_note">注：热力图中空白格表示当月无足够口碑样本，不代表系统异常。</p>
-      <p class="source" style="margin-top:6px;" data-i18n="dd_filtered">已筛选：仅保留销量与口碑数据均完整的车系</p>
-      <div class="controls">
-        <label for="seriesBrandSel" data-i18n="dd_select_brand">品牌筛选：</label>
-        <select id="seriesBrandSel"></select>
-        <label for="seriesSel" data-i18n="dd_select_series">选择车系：</label>
-        <select id="seriesSel"></select>
-        <input type="text" id="searchInp" data-i18n-placeholder="dd_search" placeholder="搜索车系...">
-        <span class="meta" id="seriesMeta"></span>
+        <section class="analysis-section" aria-labelledby="bd-overview-title">
+          <header class="analysis-section-head"><span>02</span><div><h2 id="bd-overview-title" data-i18n="bd_overview_title">品牌销量与用户评价</h2><p data-i18n="bd_overview_lead">时间走势用于对照同期变化，维度比较用于识别品牌相对市场平均的长项与短板。</p></div></header>
+          <div class="analysis-grid-2">
+            <article class="analysis-panel">
+              <div class="analysis-panel-head"><div><h3 data-i18n="bd_sales_sentiment">品牌月度销量与综合评价</h3><p data-i18n="bd_sales_insight">左轴为销量，右轴为十个需求维度的平均评价；两条序列只用于同期对照，不直接说明因果关系。</p></div></div>
+              <div id="chartBrandTs" class="analysis-chart analysis-chart-tall"></div>
+            </article>
+            <article class="analysis-panel">
+              <div class="analysis-panel-head"><div><h3 data-i18n="bd_radar">十维评价与市场平均</h3><p data-i18n="bd_radar_insight">逐项比较该品牌与全市场品牌均值，条形差距比雷达面积更适合精确阅读。</p></div></div>
+              <div id="chartRadar" class="analysis-chart analysis-chart-tall"></div>
+            </article>
+          </div>
+        </section>
+
+        <section class="analysis-section" aria-labelledby="bd-rank-title">
+          <header class="analysis-section-head"><span>03</span><div><h2 id="bd-rank-title" data-i18n="bd_rank">旗下主力车系</h2><p data-i18n="bd_rank_insight">按平均月销量展示前15个车系；柱顶数字为平均综合评价。</p></div></header>
+          <article class="analysis-panel">
+            <div class="explorer-click-hint" data-i18n="dd_click_hint">点击柱子可直接打开该车系的明细</div>
+            <div id="chartRank" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+        </section>
       </div>
-    </div>
-    <div class="grid-2">
-      <div class="card">
-        <h3 data-i18n="dd_sales_sentiment">月度销量 vs 综合口碑</h3>
-        <p class="insight" data-i18n="dd_sales_insight">左轴为销量，右轴为综合口碑。两者同步变动说明口碑是销量的同期指标；若销量下滑而口碑平稳，则销量另有驱动因素。</p>
-        <div id="chartDrill" class="chart tall"></div>
-        <p class="source" data-i18n="dd_source"></p>
+
+      <!-- ===== Series tab ===== -->
+      <div id="tab-series" class="tab-content">
+        <section class="analysis-section explorer-filter-section" aria-labelledby="dd-filter-title">
+          <header class="analysis-section-head"><span>01</span><div><h2 id="dd-filter-title" data-i18n="dd_filter_title">选择车系</h2><p data-i18n="dd_insight">按品牌筛选或直接搜索车系，查看月度销量、综合评价与十维评价的时间对齐结果。</p></div></header>
+          <div class="explorer-filter-panel explorer-series-filter">
+            <div><label for="seriesBrandSel" data-i18n="dd_select_brand">品牌</label><select id="seriesBrandSel"></select></div>
+            <div><label for="seriesSel" data-i18n="dd_select_series">车系</label><select id="seriesSel"></select></div>
+            <div><label for="searchInp" data-i18n="dd_search_label">搜索</label><input type="text" id="searchInp" data-i18n-placeholder="dd_search" placeholder="输入品牌或车系"></div>
+            <span class="explorer-filter-meta" id="seriesMeta"></span>
+          </div>
+          <div class="explorer-data-notes"><span data-i18n="dd_filtered">保留至少3个月具有可用滚动评论特征的车系</span><span data-i18n="dd_sparsity_note">热力图空白表示当月评论样本不足，不代表中性评价。</span></div>
+        </section>
+
+        <section class="analysis-section" aria-labelledby="dd-series-title">
+          <header class="analysis-section-head"><span>02</span><div><h2 id="dd-series-title" data-i18n="dd_series_title">单一车系的时间变化</h2><p data-i18n="dd_series_lead">销量与评论数据按自然月对齐，便于观察同一时期的变化，但不把同步变化直接解释为因果。</p></div></header>
+          <div class="analysis-grid-2">
+            <article class="analysis-panel">
+              <div class="analysis-panel-head"><div><h3 data-i18n="dd_sales_sentiment">月度销量与综合评价</h3><p data-i18n="dd_sales_insight">左轴为销量，右轴为综合评价；评论样本不足的月份保留为空值。</p></div></div>
+              <div id="chartDrill" class="analysis-chart analysis-chart-tall"></div>
+            </article>
+            <article class="analysis-panel">
+              <div class="analysis-panel-head"><div><h3 data-i18n="dd_aspects">十维评价热力图</h3><p data-i18n="dd_aspects_insight">红色表示负面、绿色表示正面；空白格表示没有足够样本。</p></div></div>
+              <div id="chartAspects" class="analysis-chart analysis-chart-tall"></div>
+            </article>
+          </div>
+          <details class="analysis-method-note"><summary data-i18n="dd_method_summary">数据口径</summary><p data-i18n="dd_method_note">综合评价为十个需求维度有效标签的平均值；每个月使用此前180天内发布的评论。未提及与评论不足均保留为缺失。</p></details>
+        </section>
       </div>
-      <div class="card">
-        <h3 data-i18n="dd_aspects">十维度情感走势</h3>
-        <p class="insight" data-i18n="dd_aspects_insight">热力图颜色越红代表该维度越负面，越绿代表越正面。用于识别销量波动前口碑率先转负的维度。</p>
-        <div id="chartAspects" class="chart tall"></div>
-        <p class="source" data-i18n="dd_source"></p>
-      </div>
-    </div>
-  </div>
 
     </main>
   </div>
@@ -131,7 +119,7 @@
   </script>
   
 <script>
-var T = window.AUTOPULSE;
+var T = window.CHINA_AUTO_MARKET;
 
 /* ===== shared helpers ===== */
 function aspectName(key) {
@@ -147,7 +135,7 @@ function aspectName(key) {
     intelligence: { zh: '智能化', en: 'Intelligence' },
     value: { zh: '性价比', en: 'Value' }
   };
-  return (map[key] && map[key][window.AUTOPULSE.lang]) || key;
+  return (map[key] && map[key][window.CHINA_AUTO_MARKET.lang]) || key;
 }
 
 /* ===== tab switching ===== */
@@ -156,6 +144,7 @@ function switchTab(name) {
   activeTab = name;
   document.querySelectorAll('.tab-btn').forEach(function (b) {
     b.classList.toggle('active', b.dataset.tab === name);
+    b.setAttribute('aria-selected', b.dataset.tab === name ? 'true' : 'false');
   });
   document.querySelectorAll('.tab-content').forEach(function (c) {
     c.classList.toggle('active', c.id === 'tab-' + name);
@@ -181,7 +170,7 @@ var BRAND_DATA = null;
 var currentBrand = null;
 
 function bBrandLabel(b) {
-  if (window.AUTOPULSE.lang === 'en' && BRAND_DATA && BRAND_DATA.brand_en && BRAND_DATA.brand_en[b]) {
+  if (window.CHINA_AUTO_MARKET.lang === 'en' && BRAND_DATA && BRAND_DATA.brand_en && BRAND_DATA.brand_en[b]) {
     return BRAND_DATA.brand_en[b];
   }
   return b;
@@ -202,7 +191,7 @@ function renderBrandTs(b) {
       Object.assign({ type: 'value', min: -1, max: 1, position: 'right' }, axisStyle())
     ],
     series: [
-      { name: window.I18N.get('bd_legend_sales'), type: 'bar', yAxisIndex: 0, data: v.sales, itemStyle: { color: 'rgba(44,123,229,.35)' } },
+      { name: window.I18N.get('bd_legend_sales'), type: 'bar', yAxisIndex: 0, data: v.sales, itemStyle: { color: 'rgba(40,120,255,.30)' } },
       { name: window.I18N.get('bd_legend_sentiment'), type: 'line', yAxisIndex: 1, data: v.sentiment, itemStyle: { color: T.primary }, smooth: true }
     ]
   }, true);
@@ -213,26 +202,18 @@ function renderRadar(b) {
   if (!v) return;
   if (!bChartRadar) bChartRadar = initChart('chartRadar');
   var keys = ["appearance","interior","space","power","control","comfort","fuel_consumption","configuration","intelligence","value"];
-  var indicators = keys.map(function (k) { return { name: aspectName(k), max: 1, min: -1 }; });
   var brandVals = keys.map(function (k) { return v.radar[k]; });
   var marketVals = keys.map(function (k) { return BRAND_DATA.market_radar[k]; });
   bChartRadar.setOption({
-    tooltip: tooltipStyle(),
-    legend: { data: [window.I18N.get('bd_radar_brand'), window.I18N.get('bd_radar_market')], top: 10, textStyle: { color: T.muted } },
-    radar: {
-      indicator: indicators, center: ['50%', '56%'], radius: '62%',
-      axisName: { color: T.text },
-      splitLine: { lineStyle: { color: 'rgba(0,0,0,.08)' } },
-      splitArea: { areaStyle: { color: ['rgba(0,0,0,.02)', 'rgba(0,0,0,.04)'] } },
-      axisLine: { lineStyle: { color: 'rgba(0,0,0,.1)' } }
-    },
-    series: [{
-      type: 'radar',
-      data: [
-        { name: window.I18N.get('bd_radar_brand'), value: brandVals, itemStyle: { color: T.primary }, areaStyle: { color: 'rgba(44,123,229,.18)' } },
-        { name: window.I18N.get('bd_radar_market'), value: marketVals, itemStyle: { color: T.muted }, lineStyle: { type: 'dashed' } }
-      ]
-    }]
+    tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
+    legend: { data: [window.I18N.get('bd_radar_brand'), window.I18N.get('bd_radar_market')], top: 0, textStyle: { color: T.muted, fontSize: 10 } },
+    grid: baseGrid({ left: 84, top: 42, right: 28, bottom: 38 }),
+    xAxis: Object.assign({ type: 'value', min: -1, max: 1, name: window.I18N.get('dd_axis_sentiment'), nameLocation: 'middle', nameGap: 26 }, axisStyle()),
+    yAxis: Object.assign({ type: 'category', data: keys.map(aspectName) }, axisStyle()),
+    series: [
+      { name: window.I18N.get('bd_radar_brand'), type: 'bar', barMaxWidth: 9, data: brandVals, itemStyle: { color: '#2a65b7' } },
+      { name: window.I18N.get('bd_radar_market'), type: 'bar', barMaxWidth: 9, data: marketVals, itemStyle: { color: '#a5b0bc' } }
+    ]
   }, true);
 }
 
@@ -243,7 +224,7 @@ function renderRank(b) {
   var rank = v.series_rank || [];
   if (!rank.length) { bChartRank.clear(); return; }
   var labels = rank.map(function (s) {
-    if (window.AUTOPULSE.lang === 'en' && s.series_en && s.series_en !== s.name) return s.series_en;
+    if (window.CHINA_AUTO_MARKET.lang === 'en' && s.series_en && s.series_en !== s.name) return s.series_en;
     return s.name;
   });
   var sales = rank.map(function (s) { return s.avg_monthly; });
@@ -262,7 +243,7 @@ function renderRank(b) {
     yAxis: Object.assign({ type: 'value', name: window.I18N.get('bd_rank_axis_sales') }, axisStyle()),
     series: [{
       type: 'bar', data: sales,
-      itemStyle: { color: 'rgba(44,123,229,.55)', borderRadius: [4, 4, 0, 0] },
+      itemStyle: { color: 'rgba(40,120,255,.55)', borderRadius: [4, 4, 0, 0] },
       label: { show: true, position: 'top', rotate: 35, distance: 6, color: T.text,
                formatter: function (p) { return sent[p.dataIndex].toFixed(2); } }
     }]
@@ -293,7 +274,7 @@ var DRILLDOWN_DATA = null;
 var seriesInited = false;
 
 function seriesLabel(s) {
-  if (window.AUTOPULSE.lang === 'en') {
+  if (window.CHINA_AUTO_MARKET.lang === 'en') {
     var b = s.brand_en || s.brand;
     var nm = (s.series_en && s.series_en !== s.name) ? s.series_en : s.name;
     return nm + ' (' + b + ')';
@@ -336,7 +317,7 @@ function renderDrill(id) {
       Object.assign({ type: 'value', min: -1, max: 1, position: 'right' }, axisStyle())
     ],
     series: [
-      { name: window.I18N.get('dd_legend_sales'), type: 'bar', yAxisIndex: 0, data: v.sales, itemStyle: { color: 'rgba(44,123,229,.35)' } },
+      { name: window.I18N.get('dd_legend_sales'), type: 'bar', yAxisIndex: 0, data: v.sales, itemStyle: { color: 'rgba(40,120,255,.30)' } },
       { name: window.I18N.get('dd_legend_sentiment'), type: 'line', yAxisIndex: 1, data: v.sentiment, itemStyle: { color: T.primary }, smooth: true }
     ]
   }, true);
@@ -347,7 +328,9 @@ function renderDrill(id) {
   var heatmapData = [];
   keys.forEach(function (k, dimIdx) {
     var arr = v.aspects[k] || [];
-    arr.forEach(function (val, monthIdx) { heatmapData.push([monthIdx, dimIdx, val]); });
+    arr.forEach(function (val, monthIdx) {
+      if (val !== null && val !== undefined && !Number.isNaN(Number(val))) heatmapData.push([monthIdx, dimIdx, Number(val)]);
+    });
   });
   sChartAspects.setOption({
     tooltip: { trigger: 'item', formatter: function (p) { return v.months[p.data[0]] + '<br><b>' + yLabels[p.data[1]] + '</b>: ' + p.data[2].toFixed(2); } },
@@ -355,7 +338,7 @@ function renderDrill(id) {
     xAxis: Object.assign({ type: 'category', data: v.months, axisLabel: { interval: Math.floor(v.months.length / 8) } }, axisStyle()),
     yAxis: Object.assign({ type: 'category', data: yLabels, axisLabel: { color: T.text } }, axisStyle()),
     visualMap: { min: -1, max: 1, calculable: true, orient: 'horizontal', left: 'center', bottom: 10,
-                 inRange: { color: ['#ee5b5b', '#ffffff', '#34c38f'] },
+                 inRange: { color: ['#df5b63', '#ffffff', '#36a269'] },
                  text: [window.I18N.get('dd_heatmap_positive'), window.I18N.get('dd_heatmap_negative')],
                  textStyle: { color: T.text } },
     series: [{ type: 'heatmap', data: heatmapData, label: { show: false },
@@ -369,7 +352,7 @@ function refreshSeriesLabels() {
   var brandSel = document.getElementById('seriesBrandSel');
   Array.from(brandSel.options).forEach(function (opt) {
     if (!opt.value) { opt.textContent = window.I18N.get('dd_all_brands'); return; }
-    opt.textContent = (window.AUTOPULSE.lang === 'en' && d.brand_en && d.brand_en[opt.value]) ? d.brand_en[opt.value] : opt.value;
+    opt.textContent = (window.CHINA_AUTO_MARKET.lang === 'en' && d.brand_en && d.brand_en[opt.value]) ? d.brand_en[opt.value] : opt.value;
   });
   var seriesSel = document.getElementById('seriesSel');
   var selectedId = seriesSel.value;
@@ -392,7 +375,7 @@ function initSeriesTab() {
     d.brands.forEach(function (b) {
       var opt = document.createElement('option');
       opt.value = b;
-      opt.textContent = (window.AUTOPULSE.lang === 'en' && d.brand_en && d.brand_en[b]) ? d.brand_en[b] : b;
+      opt.textContent = (window.CHINA_AUTO_MARKET.lang === 'en' && d.brand_en && d.brand_en[b]) ? d.brand_en[b] : b;
       brandSel.appendChild(opt);
     });
     var filtered = populateSeries(d.series, '');

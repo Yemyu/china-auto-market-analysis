@@ -2,83 +2,117 @@
   "granger": {
     "aspects": [
       {
-        "zh": "空间",
-        "en": "Space"
+        "zh": "平台评分",
+        "en": "Platform rating"
       },
       {
-        "zh": "内饰",
-        "en": "Interior"
+        "zh": "DeepSeek丰富",
+        "en": "DeepSeek rich"
       },
       {
-        "zh": "配置",
-        "en": "Config"
+        "zh": "本地词典",
+        "en": "Local lexicon"
       },
       {
-        "zh": "油耗",
-        "en": "Fuel"
-      },
-      {
-        "zh": "性价比",
-        "en": "Value"
-      },
-      {
-        "zh": "外观",
-        "en": "Appearance"
-      },
-      {
-        "zh": "动力",
-        "en": "Power"
-      },
-      {
-        "zh": "智能化",
-        "en": "Intelligence"
-      },
-      {
-        "zh": "操控",
-        "en": "Control"
-      },
-      {
-        "zh": "舒适",
-        "en": "Comfort"
+        "zh": "DeepSeek核心",
+        "en": "DeepSeek core"
       }
     ],
     "sig_rates": [
-      0.146,
-      0.125,
-      0.125,
-      0.104,
-      0.104,
-      0.083,
-      0.083,
-      0.083,
-      0.042,
-      0.042
+      0.9692,
+      0.8984,
+      0.8836,
+      0.7956
     ]
   },
   "fusion": [
     {
-      "version": "XGBoost-baseline",
-      "version_en": "XGBoost-baseline",
-      "wmape_vol": 34.79
+      "version": "无舆情基线",
+      "version_en": "No-sentiment baseline",
+      "wmape_vol": 40.44
     },
     {
-      "version": "XGBoost+Top3sent",
-      "version_en": "XGBoost+Top3sent",
-      "wmape_vol": 35.21
+      "version": "平台评分",
+      "version_en": "Platform rating",
+      "wmape_vol": 38.819
     },
     {
-      "version": "XGBoost+Fullsent",
-      "version_en": "XGBoost+Fullsent",
-      "wmape_vol": 35.71
+      "version": "DeepSeek核心",
+      "version_en": "DeepSeek core",
+      "wmape_vol": 39.225
+    },
+    {
+      "version": "DeepSeek丰富",
+      "version_en": "DeepSeek rich",
+      "wmape_vol": 38.705
+    }
+  ],
+  "correlation": [
+    {
+      "key": "appearance",
+      "name_zh": "外观",
+      "name_en": "Appearance",
+      "corr": 0.046
+    },
+    {
+      "key": "interior",
+      "name_zh": "内饰",
+      "name_en": "Interior",
+      "corr": -0.085
+    },
+    {
+      "key": "space",
+      "name_zh": "空间",
+      "name_en": "Space",
+      "corr": 0.055
+    },
+    {
+      "key": "power",
+      "name_zh": "动力",
+      "name_en": "Power",
+      "corr": 0.062
+    },
+    {
+      "key": "control",
+      "name_zh": "操控",
+      "name_en": "Control",
+      "corr": 0.0
+    },
+    {
+      "key": "comfort",
+      "name_zh": "舒适",
+      "name_en": "Comfort",
+      "corr": -0.072
+    },
+    {
+      "key": "fuel_consumption",
+      "name_zh": "能耗/油耗",
+      "name_en": "Energy/Fuel",
+      "corr": 0.113
+    },
+    {
+      "key": "configuration",
+      "name_zh": "配置",
+      "name_en": "Configuration",
+      "corr": -0.0
+    },
+    {
+      "key": "intelligence",
+      "name_zh": "智能化",
+      "name_en": "Intelligence",
+      "corr": 0.021
+    },
+    {
+      "key": "value",
+      "name_zh": "性价比",
+      "name_en": "Value",
+      "corr": 0.082
     }
   ],
   "timeseries": {
     "brand": "全市场",
     "brand_en": "Market",
     "months": [
-      "2022-01",
-      "2022-02",
-      "2022-03",
       "2022-04",
       "2022-05",
       "2022-06",
@@ -128,183 +162,118 @@
       "2026-02",
       "2026-03",
       "2026-04",
-      "2026-05"
+      "2026-05",
+      "2026-06"
     ],
     "sales": [
-      286058.8,
-      170364.2,
-      193286.0,
-      104587.6,
-      148407.5,
-      258158.8,
-      213068.2,
-      268568.1,
-      128957.2,
-      163926.0,
-      131701.6,
-      137135.8,
-      82393.8,
-      88212.1,
-      119003.0,
-      94299.8,
-      71952.4,
-      88895.6,
-      77537.2,
-      106803.5,
-      76783.7,
-      59512.2,
-      83700.2,
-      102755.1,
-      114777.2,
-      48550.0,
-      65120.1,
-      63457.0,
-      62174.9,
-      50418.3,
-      46328.5,
-      42866.9,
-      39674.5,
-      130145.0,
-      131085.0,
-      125975.2,
-      6160.5,
-      23633.0,
-      57837.3,
-      69342.4,
-      125676.3,
-      128688.8,
-      133109.8,
-      98372.6,
-      113856.3,
-      233999.0,
-      237839.9,
-      189570.7,
-      131719.2,
-      99540.7,
-      164610.7,
-      151784.3,
-      148655.7
+      626128.0,
+      807116.0,
+      1067168.0,
+      1031117.0,
+      1226290.0,
+      1234979.0,
+      1143189.0,
+      1043201.0,
+      1258033.0,
+      831918.0,
+      812052.0,
+      1061340.0,
+      1025329.0,
+      1179692.0,
+      1221092.0,
+      966529.0,
+      1175295.0,
+      1181047.0,
+      1319345.0,
+      1152905.0,
+      1552618.0,
+      1287862.0,
+      680475.0,
+      1018727.0,
+      866674.0,
+      1062573.0,
+      972368.0,
+      1035117.0,
+      1221509.0,
+      1259598.0,
+      1212852.0,
+      1418034.0,
+      1418404.0,
+      1085645.0,
+      890211.0,
+      1214883.0,
+      987878.0,
+      844687.0,
+      1188552.0,
+      1200092.0,
+      1283568.0,
+      1415512.0,
+      1382521.0,
+      1311455.0,
+      1323066.0,
+      966913.0,
+      619944.0,
+      1001629.0,
+      788058.0,
+      821225.0,
+      856582.0
     ],
     "sentiment": [
-      0.331,
-      0.329,
-      0.354,
-      0.361,
-      0.375,
-      0.312,
-      0.356,
-      0.414,
-      0.368,
-      0.421,
-      0.381,
-      0.41,
+      0.338,
       0.337,
+      0.336,
+      0.331,
+      0.338,
+      0.333,
+      0.342,
+      0.351,
+      0.363,
+      0.368,
+      0.353,
+      0.375,
+      0.382,
+      0.359,
+      0.347,
       0.339,
-      0.304,
-      0.339,
-      0.34,
-      0.349,
-      0.365,
-      0.296,
-      0.365,
-      0.285,
-      0.275,
-      0.172,
-      0.222,
-      0.299,
-      0.21,
-      0.306,
-      0.296,
-      0.275,
-      0.284,
-      0.257,
-      0.267,
-      0.28,
-      0.275,
-      0.28,
-      0.335,
-      0.324,
-      0.283,
+      0.334,
+      0.33,
+      0.325,
+      0.334,
+      0.33,
+      0.291,
+      0.281,
+      0.272,
+      0.256,
       0.258,
-      0.231,
-      0.18,
+      0.234,
       0.249,
-      0.229,
-      0.204,
+      0.286,
+      0.271,
+      0.28,
+      0.278,
+      0.294,
+      0.292,
+      0.283,
+      0.298,
+      0.315,
+      0.325,
+      0.314,
+      0.316,
+      0.309,
+      0.289,
+      0.265,
+      0.269,
       0.263,
-      0.229,
-      0.175,
-      0.191,
-      0.169,
-      0.164,
-      0.224,
-      0.217
+      0.257,
+      0.241,
+      0.234,
+      0.225,
+      0.211,
+      0.2
     ]
   },
-  "correlation": [
-    {
-      "key": "appearance",
-      "name_zh": "外观",
-      "name_en": "Appearance",
-      "corr": 0.043
-    },
-    {
-      "key": "interior",
-      "name_zh": "内饰",
-      "name_en": "Interior",
-      "corr": -0.091
-    },
-    {
-      "key": "space",
-      "name_zh": "空间",
-      "name_en": "Space",
-      "corr": 0.086
-    },
-    {
-      "key": "power",
-      "name_zh": "动力",
-      "name_en": "Power",
-      "corr": 0.004
-    },
-    {
-      "key": "control",
-      "name_zh": "操控",
-      "name_en": "Control",
-      "corr": -0.01
-    },
-    {
-      "key": "comfort",
-      "name_zh": "舒适",
-      "name_en": "Comfort",
-      "corr": -0.144
-    },
-    {
-      "key": "fuel_consumption",
-      "name_zh": "油耗",
-      "name_en": "Fuel",
-      "corr": 0.141
-    },
-    {
-      "key": "configuration",
-      "name_zh": "配置",
-      "name_en": "Config",
-      "corr": 0.007
-    },
-    {
-      "key": "intelligence",
-      "name_zh": "智能化",
-      "name_en": "Intelligence",
-      "corr": 0.08
-    },
-    {
-      "key": "value",
-      "name_zh": "性价比",
-      "name_en": "Value",
-      "corr": 0.102
-    }
-  ],
   "conclusion": {
-    "zh": "品牌级 Granger 仅 4%~15% 车系显著；把月度情感塞回销量模型后体积加权误差反而略升——舆情是销量的「同期/滞后指标」而非「先行指标」，故不能作预测特征。",
-    "en": "Brand-level Granger is significant for only 4-15% of series; adding monthly sentiment to the sales model slightly raises volume-weighted error — sentiment is a coincident/lagging indicator, not a leading one, so it cannot be used as a predictive feature."
+    "zh": "DeepSeek丰富特征相对无舆情基线改善1.735个百分点，在5,000次车系聚类Bootstrap中胜出概率89.84%，但95%区间跨0；平台评分与DeepSeek丰富特征基本无法区分。",
+    "en": "DeepSeek-rich improves 1.735 pp over the no-sentiment baseline and wins in 89.84% of 5,000 series-cluster bootstrap samples, but its 95% interval crosses zero; platform ratings and DeepSeek-rich are effectively indistinguishable."
   }
 }

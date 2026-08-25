@@ -4,7 +4,7 @@
 
 # Data Documentation
 
-This file is the single source of truth for all AutoPulse datasets, covering two core tables — monthly sales and vehicle configurations — plus user sentiment data (Phase B), for modeling, analysis, and the dashboard. All data come from public automotive platforms and are used for learning, research, and demonstration only.
+This file is the single source of truth for all China Automotive Market Analysis datasets, covering two core tables — monthly sales and vehicle configurations — plus user sentiment data (Phase B), for modeling, analysis, and the dashboard. All data come from public automotive platforms and are used for learning, research, and demonstration only.
 
 ## Data Sources
 

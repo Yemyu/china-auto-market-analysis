@@ -3,81 +3,123 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AutoPulse · 销量预测</title>
-  <link rel="stylesheet" href="static/css/style.css">
-  <!-- 防 FOUC：在 i18n.js 下载/执行前，浏览器可能先把服务端渲染的中文默认文案画出来，
-     视频录制会抓到“中文一闪”。先把带 data-i18n 的元素隐藏，FOUC 应用完语言后再显示。 -->
+  <title>中国车市分析 · 销量预测</title>
+  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body>
+<body class="analysis-page forecast-page">
   <header class="topbar">
-    <div class="brand">AutoPulse</div>
-    <div class="brand-sub" data-i18n="brand_sub">汽车销量预测与用户舆情分析</div>
-    <div class="top-actions">
-      <button id="langSwitch" class="lang-switch" data-i18n="lang_btn">English</button>
-    </div>
+    <div class="brand">中国车市分析</div>
+    <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
+    <div class="top-actions"><button id="langSwitch" class="lang-switch">English</button></div>
   </header>
-
   <div class="layout">
-    <nav class="sidebar">
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_analysis">分析</div>
-        <a href="index.html" data-i18n="nav_overview">项目概览</a>
-        <a href="forecast.html" class="active" data-i18n="nav_forecast">销量预测</a>
-        <a href="absa.html" data-i18n="nav_absa">舆情 ABSA</a>
-        <a href="attribution.html" data-i18n="nav_attribution">销量归因</a>
+    <nav class="sidebar" aria-label="Primary navigation"></nav>
+    <main class="content analysis-content">
+      <header class="analysis-header">
+        <div class="analysis-header-copy">
+          <p class="analysis-breadcrumb" data-i18n="fc_breadcrumb">模型评估 / 销量预测</p>
+          <h1 data-i18n="fc_title_full">六个月车系销量预测</h1>
+          <p data-i18n="fc_lead_public">以2026年1月为统一预测起点，对371个车系连续预测六个月；训练、验证和测试严格按时间隔离。</p>
+        </div>
+        <dl class="analysis-protocol">
+          <div><dt data-i18n="fc_protocol_sample">测试对象</dt><dd><strong>371</strong><span data-i18n="home_series_unit">个车系</span></dd></div>
+          <div><dt data-i18n="fc_protocol_horizon">测试区间</dt><dd>2026-01—06</dd></div>
+          <div><dt data-i18n="fc_protocol_metric">主要指标</dt><dd>Global WMAPE</dd></div>
+        </dl>
+      </header>
+
+      <div class="analysis-timeline" aria-label="Time split">
+        <div><span>TRAIN</span><strong>2022-04—2025-06</strong><em data-i18n="fc_split_train">模型训练</em></div>
+        <div><span>VALIDATION</span><strong>2025-07—12</strong><em data-i18n="fc_split_val">参数与方案选择</em></div>
+        <div><span>TEST</span><strong>2026-01—06</strong><em data-i18n="fc_split_test">仅用于最终评价</em></div>
       </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_relation">关系</div>
-        <a href="relation.html" data-i18n="nav_relation">舆情↔销量</a>
-        <a href="alerts.html" data-i18n="nav_alerts">舆情预警</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_drilldown">钻取</div>
-        <a href="drilldown.html" data-i18n="nav_drilldown">钻取分析</a>
-      </div>
-    </nav>
 
-    <main class="content">
-      <div class="page-head">
-        <h1 data-i18n="fc_title">销量预测</h1>
-        
-<p class="lead-text" data-i18n="fc_lead">对比多种模型在 150 个车系评估集上的体积加权 WMAPE，并展示最优模型的预测效果。</p>
+      <section class="analysis-section" aria-labelledby="fc-performance-title">
+        <header class="analysis-section-head">
+          <span>01</span>
+          <div><h2 id="fc-performance-title" data-i18n="fc_performance_title">模型表现</h2><p data-i18n="fc_performance_lead">先比较核心方案，再展开全部消融。全局 WMAPE 为主要指标，逐车系中位数 WMAPE 用于补充观察长尾车系。</p></div>
+        </header>
 
-      </div>
-      
-  <div class="grid-2">
-    <div class="card">
-      <h3 data-i18n="fc_model_cmp">模型对比（体积加权 WMAPE）</h3>
-      <p class="conclusion" id="fc-concl"></p>
-      <div id="chartModels" class="chart"></div>
-      <p class="source" data-i18n="fc_source_mc">数据来源：data/processed/stage3/model_comparison.csv</p>
-    </div>
+        <div class="forecast-score-wrap">
+          <table class="forecast-score-table">
+            <thead><tr><th data-i18n="home_model_col">比较方案</th><th data-i18n="home_global_col">全局 WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th><th data-i18n="home_change_col">相对基线</th></tr></thead>
+            <tbody>
+              <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="fc_baseline_scope">历史销量、日历与车型属性</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td>—</td></tr>
+              <tr class="forecast-primary-row"><td><strong data-i18n="home_model_review">用户口碑增强模型</strong><span data-i18n="fc_review_scope">加入预测起点前可获得的平台评分与评论特征</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
+              <tr><td><strong data-i18n="home_model_cold">冷启动补充方案</strong><span data-i18n="fc_cold_scope">为9个历史不足的新车系补充上市曲线</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td id="fc-score-cold-gain">—</td></tr>
+            </tbody>
+          </table>
+        </div>
 
-    <div class="card">
-      <h3 data-i18n="fc_features">特征重要性（Top 12）</h3>
-      <p class="insight" id="fc-feat-insight"></p>
-      <div id="chartFeatures" class="chart"></div>
-      <p class="source" data-i18n="fc_source_abl">数据来源：data/processed/stage3/xgb_ablation.csv</p>
-    </div>
-  </div>
+        <div class="forecast-main-grid">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_all_models_title">全部方案对比</h3><p data-i18n="fc_all_models_note">同一测试集上的全局 WMAPE 与逐车系中位数 WMAPE；数值越低越好。</p></div></div>
+            <div id="chartModels" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+          <aside class="analysis-reading">
+            <h3 data-i18n="fc_metric_reading">指标口径</h3>
+            <dl>
+              <div><dt data-i18n="home_global_col">全局 WMAPE</dt><dd data-i18n="fc_global_explain">将全部车系月的绝对误差汇总后除以实际销量总和，高销量车系权重更大。</dd></div>
+              <div><dt data-i18n="home_median_col">逐车系中位数 WMAPE</dt><dd data-i18n="fc_median_explain">先分别计算每个车系的误差，再取中位数，用来观察典型车系表现。</dd></div>
+              <div><dt data-i18n="fc_cold_label">冷启动补充</dt><dd data-i18n="fc_cold_explain">只影响9个历史不足的新车系，是补充策略，不替代371车系核心模型。</dd></div>
+            </dl>
+          </aside>
+        </div>
+      </section>
 
-  <div class="grid-2">
-    <div class="card">
-      <h3 data-i18n="fc_scatter">预测 vs 实际散点图</h3>
-      <p class="insight" data-i18n="fc_scatter_insight">每个点代表一个车系月的预测值与实际值。点越靠近对角线，模型预测越准确；偏离对角线的点是模型预测误差较大的样本。</p>
-      <div id="chartScatter" class="chart tall"></div>
-      <p class="source" data-i18n="fc_source_preds"></p>
-    </div>
+      <section class="analysis-section" aria-labelledby="fc-signal-title">
+        <header class="analysis-section-head"><span>02</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">模型主要依赖什么信号？</h2><p data-i18n="fc_signal_lead">特征贡献用于解释模型如何形成预测，不代表这些因素对销量具有因果作用。</p></div></header>
+        <div class="forecast-signal-grid">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_features_public">前12项特征贡献</h3><p data-i18n="fc_features_public_note">平均绝对 SHAP 值，基于对数销量预测；数值越大，模型越依赖该特征。</p></div></div>
+            <div id="chartFeatures" class="analysis-chart analysis-chart-tall"></div>
+          </article>
+          <aside class="forecast-signal-summary">
+            <div><span>01</span><strong data-i18n="fc_signal_history">销量历史占主导</strong><p data-i18n="fc_signal_history_note">上月销量、前2月销量和前3月销量位列前三，历史惯性远高于其他信号。</p></div>
+            <div><span>02</span><strong data-i18n="fc_signal_calendar">季节项提供补充</strong><p data-i18n="fc_signal_calendar_note">月份正弦与余弦项排在第4、第5位，用于刻画年度季节变化。</p></div>
+            <div><span>03</span><strong data-i18n="fc_signal_reviews">口碑特征不是主驱动</strong><p data-i18n="fc_signal_reviews_note">评论量与长期情感进入前12，但贡献明显低于销量滞后特征。</p></div>
+          </aside>
+        </div>
+      </section>
 
-    <div class="card">
-      <h3 data-i18n="fc_class_wmape">按车型级别的预测误差对比</h3>
-      <p class="insight" data-i18n="fc_class_insight">对比 SUV、轿车、MPV 三类车型的体积加权 WMAPE，评估模型在不同车型级别上的预测表现差异。</p>
-      <div id="chartClass" class="chart tall"></div>
-      <p class="source" data-i18n="fc_source_preds"></p>
-    </div>
-  </div>
+      <section class="analysis-section" aria-labelledby="fc-error-title">
+        <header class="analysis-section-head"><span>03</span><div><h2 id="fc-error-title" data-i18n="fc_error_title">误差分布</h2><p data-i18n="fc_error_lead">测试集包含1,951个车系月样本。散点图观察整体偏差，分车型结果用于定位误差较高的市场类别。</p></div></header>
+        <div class="analysis-grid-2">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_scatter_public">实际销量与预测销量</h3><p data-i18n="fc_scatter_public_note">点越接近对角线，预测误差越小；高销量车系的绝对偏差更明显。</p></div></div>
+            <div id="chartScatter" class="analysis-chart"></div>
+          </article>
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_class_public">分车型误差</h3><p data-i18n="fc_class_public_note">SUV的全局 WMAPE 最低，轿车最高；括号内为对应车系数量。</p></div></div>
+            <div id="chartClass" class="analysis-chart"></div>
+          </article>
+        </div>
+      </section>
 
+      <section class="analysis-section" id="sentiment-value" aria-labelledby="fc-review-value-title">
+        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">用户口碑是否增加预测价值？</h2><p data-i18n="fc_review_value_lead">点估计有所改善，但稳定性证据有限，因此将用户口碑保留为补充信号。</p></div></header>
+
+        <div class="forecast-evidence-strip">
+          <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong>1.73<small>pp</small></strong></div>
+          <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong>89.84<small>%</small></strong></div>
+          <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong>−0.78—5.02<small>pp</small></strong></div>
+          <p data-i18n="fc_evidence_plain">区间包含零，表示部分重采样结果中口碑增强模型并未优于基线。当前证据支持“小幅改善信号”，不支持“稳定胜出”。</p>
+        </div>
+
+        <div class="analysis-grid-2">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_probability_public">不同口碑方案优于基线的比例</h3><p data-i18n="fc_probability_public_note">对371个车系进行5,000次聚类重采样，统计每个方案全局 WMAPE 更低的比例。</p></div></div>
+            <div id="chartBootstrap" class="analysis-chart"></div>
+          </article>
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_ablation_public">固定起点口碑消融</h3><p data-i18n="fc_ablation_public_note">只改变口碑特征组合，其余样本、时间切分与模型配置保持一致。</p></div></div>
+            <div id="chartFusion" class="analysis-chart"></div>
+          </article>
+        </div>
+
+        <details class="analysis-method-note"><summary data-i18n="fc_method_summary">不确定性与数据来源</summary><p data-i18n="fc_source_mc"></p></details>
+      </section>
     </main>
   </div>
 
@@ -85,96 +127,138 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js"></script>
   <script src="static/js/i18n.js"></script>
-  <!-- 在首屏绘制前同步应用语言，避免服务端渲染的中文默认文案先闪现再被 JS 替换（FOUC）。
-     中文版 zh→zh 为恒等式，无任何视觉变化；英文版绘制前即为英文，切换无卡顿。
-     应用完成后再显示 [data-i18n] 元素，彻底消除加载阶段的中文闪烁。 -->
   <script>
-    try { window.I18N && window.I18N.apply(); } catch (e) {}
-    document.querySelectorAll("[data-i18n]").forEach(function (el) { el.style.visibility = "visible"; });
-  </script>
-  
-<script>
-var T = window.AUTOPULSE;
-var chartModels, chartFeatures, chartScatter, chartClass;
+    try { window.I18N.apply(); } catch (e) {}
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
+    var forecastData = null, relationData = null;
+    var chartModels, chartFeatures, chartScatter, chartClass, chartBootstrap, chartFusion;
 
-function renderForecast() {
-  loadJSON('forecast').then(function (d) {
-    document.getElementById('fc-concl').textContent = d.conclusion[window.AUTOPULSE.lang] || d.conclusion.zh;
+    function fcSetText(id, value) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
 
-    var models = d.models.slice().sort(function (a, b) { return b.wmape_vol - a.wmape_vol; });
-    if (!chartModels) chartModels = initChart('chartModels');
-    chartModels.setOption({
-      tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-      grid: baseGrid({ top: 24, right: 72 }),
-      xAxis: Object.assign({ type: 'value', name: window.I18N.get('fc_axis_wmape'), nameLocation: 'middle', nameGap: 24 }, axisStyle()),
-      yAxis: Object.assign({ type: 'category', data: models.map(function (m) { return m.name; }) }, axisStyle()),
-      series: [{
-        type: 'bar',
-        data: models.map(function (m) { return { value: m.wmape_vol, itemStyle: { color: m.color, borderRadius: [0, 4, 4, 0] } }; }),
-        label: { show: true, position: 'right', color: T.text, formatter: '{c}%' }
-      }]
-    }, true);
+    function fcPct(value) { return Number(value).toFixed(2) + '%'; }
 
-    if (d.features && d.features.length) {
-      document.getElementById('fc-feat-insight').textContent = d.feature_insight[window.AUTOPULSE.lang] || d.feature_insight.zh;
+    function publicModelName(model) {
+      var key = model.name_en || model.version_en || model.name_zh || model.version;
+      var names = {
+        'No-sentiment baseline': ['销量基线', 'Sales baseline'],
+        'Platform rating': ['平台评分', 'Platform ratings'],
+        'Local lexicon': ['本地词典', 'Local lexicon'],
+        'DeepSeek core': ['文本情感特征', 'Text sentiment'],
+        'DeepSeek rolling (supplement)': ['滚动口碑特征', 'Rolling review signals'],
+        'DeepSeek rich': ['用户口碑增强', 'User-review enhanced'],
+        'All sentiment': ['全部口碑特征', 'Combined review features'],
+        'DeepSeek rich + cold-start': ['口碑增强＋冷启动', 'Review enhanced + cold-start']
+      };
+      var mapped = names[key];
+      if (mapped) return window.CHINA_AUTO_MARKET.lang === 'en' ? mapped[1] : mapped[0];
+      return window.CHINA_AUTO_MARKET.lang === 'en' ? (model.name_en || model.version_en || key) : (model.name_zh || model.version || key);
+    }
+
+    function publicReviewName(item) {
+      var key = item.en || item.version_en || item.zh || item.version;
+      var names = {
+        'Platform rating': ['平台评分', 'Platform ratings'],
+        'DeepSeek rich': ['用户口碑增强', 'User-review enhanced'],
+        'Local lexicon': ['本地词典', 'Local lexicon'],
+        'DeepSeek core': ['文本情感特征', 'Text sentiment'],
+        'No-sentiment baseline': ['销量基线', 'Sales baseline']
+      };
+      var mapped = names[key];
+      if (mapped) return window.CHINA_AUTO_MARKET.lang === 'en' ? mapped[1] : mapped[0];
+      return window.CHINA_AUTO_MARKET.lang === 'en' ? (item.en || item.version_en || key) : (item.zh || item.version || key);
+    }
+
+    function className(value) {
+      var map = { SUV: ['SUV', 'SUV'], MPV: ['MPV', 'MPV'], Sedan: ['轿车', 'Sedan'] };
+      var pair = map[value] || [value, value];
+      return window.CHINA_AUTO_MARKET.lang === 'en' ? pair[1] : pair[0];
+    }
+
+    function renderForecast() {
+      if (!forecastData || !relationData) return;
+      var d = forecastData, r = relationData, T = window.CHINA_AUTO_MARKET;
+      var base = d.models.find(function (m) { return m.name_en === 'No-sentiment baseline'; });
+      var review = d.models.find(function (m) { return m.name_en === 'DeepSeek rich'; });
+      var cold = d.models.find(function (m) { return m.scenario === 'fixed_origin_primary_cold_hybrid'; });
+      fcSetText('fc-score-base-global', fcPct(base.wmape_vol));
+      fcSetText('fc-score-base-median', fcPct(base.wmape_med));
+      fcSetText('fc-score-review-global', fcPct(review.wmape_vol));
+      fcSetText('fc-score-review-median', fcPct(review.wmape_med));
+      fcSetText('fc-score-review-gain', '−' + (base.wmape_vol - review.wmape_vol).toFixed(2) + ' pp');
+      fcSetText('fc-score-cold-global', fcPct(cold.wmape_vol));
+      fcSetText('fc-score-cold-median', fcPct(cold.wmape_med));
+      fcSetText('fc-score-cold-gain', '−' + (base.wmape_vol - cold.wmape_vol).toFixed(2) + ' pp');
+
+      var models = d.models.slice().sort(function (a, b) { return b.wmape_vol - a.wmape_vol; });
+      if (!chartModels) chartModels = initChart('chartModels');
+      chartModels.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
+        legend: { top: 2, right: 8, itemWidth: 12, itemHeight: 8, textStyle: { color: T.muted, fontSize: 10 } },
+        grid: baseGrid({ left: 160, top: 42, right: 62, bottom: 38 }),
+        xAxis: Object.assign({ type: 'value', min: 30, max: 55, name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: models.map(publicModelName), axisLabel: { color: T.muted, fontSize: 10 } }, axisStyle()),
+        series: [
+          { name: window.I18N.get('home_global_col'), type: 'bar', barMaxWidth: 9, data: models.map(function (m) { return m.wmape_vol; }), itemStyle: { color: '#2a65b7' }, label: { show: true, position: 'right', color: T.text, fontSize: 9, formatter: function (p) { return p.value.toFixed(2); } } },
+          { name: window.I18N.get('home_median_col'), type: 'bar', barMaxWidth: 9, data: models.map(function (m) { return m.wmape_med; }), itemStyle: { color: '#9ca9b7' }, label: { show: true, position: 'right', color: T.muted, fontSize: 9, formatter: function (p) { return p.value.toFixed(2); } } }
+        ]
+      }, true);
+
+      var features = d.features.slice().reverse();
       if (!chartFeatures) chartFeatures = initChart('chartFeatures');
       chartFeatures.setOption({
-        tooltip: { trigger: 'axis', axisPointer: { type: 'shadow' },
-          formatter: function (params) {
-            var p = params[0];
-            var f = d.features[d.features.length - 1 - p.dataIndex];
-            var desc = window.AUTOPULSE.lang === 'en' ? f.desc_en : f.desc_zh;
-            return '<b>' + p.name + '</b><br/>importance: ' + p.value + (desc ? '<br/>' + desc : '');
-          }
-        },
-        grid: baseGrid({ left: 120, top: 24, right: 72 }),
-        xAxis: Object.assign({ type: 'value' }, axisStyle()),
-        yAxis: Object.assign({ type: 'category', data: d.features.map(function (f) { return nameFromAspect(f); }).reverse() }, axisStyle()),
-        series: [{
-          type: 'bar',
-          data: d.features.map(function (f, i) { return { value: f.importance, itemStyle: { color: T.palette[i % T.palette.length], borderRadius: [0, 4, 4, 0] } }; }).reverse(),
-          label: { show: true, position: 'right', color: T.text }
-        }]
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
+        grid: baseGrid({ left: 140, top: 18, right: 58, bottom: 34 }),
+        xAxis: Object.assign({ type: 'value', name: 'mean |SHAP|', nameLocation: 'middle', nameGap: 25 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: features.map(nameFromAspect), axisLabel: { color: T.muted, fontSize: 10 } }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 12, data: features.map(function (f, i) { return { value: f.importance, itemStyle: { color: i > 8 ? T.primary : '#8fa4ba', borderRadius: [0, 5, 5, 0] } }; }), label: { show: true, position: 'right', color: T.muted, fontSize: 11 } }]
       }, true);
-    }
 
-    if (d.scatter && d.scatter.length) {
       if (!chartScatter) chartScatter = initChart('chartScatter');
-      var maxVal = Math.max.apply(null, d.scatter.map(function(p){return Math.max(p[0],p[1]);}));
+      var maxVal = Math.max.apply(null, d.scatter.map(function (p) { return Math.max(p[0], p[1]); }));
       chartScatter.setOption({
-        tooltip: { trigger: 'item', formatter: function(p){ return window.I18N.get('fc_legend_actual') + ': ' + p.data[0] + '<br>' + window.I18N.get('fc_legend_pred') + ': ' + p.data[1]; } },
-        grid: baseGrid({ top: 24, bottom: 40, left: 56, right: 56 }),
-        xAxis: Object.assign({ type: 'value', name: window.I18N.get('fc_legend_actual'), nameLocation: 'middle', nameGap: 24, min: 0, max: maxVal }, axisStyle()),
-        yAxis: Object.assign({ type: 'value', name: window.I18N.get('fc_legend_pred'), nameLocation: 'middle', nameGap: 44, min: 0, max: maxVal }, axisStyle()),
-        series: [{
-          type: 'scatter', data: d.scatter, symbolSize: 5,
-          itemStyle: { color: 'rgba(44,123,229,.45)' }
-        }, {
-          type: 'line', data: [[0,0],[maxVal,maxVal]], symbol: 'none',
-          lineStyle: { color: T.muted, type: 'dashed', width: 1.5 }, silent: true
-        }]
+        tooltip: { trigger: 'item', backgroundColor: 'rgba(15,28,47,.96)', borderWidth: 0, textStyle: { color: '#fff' }, formatter: function (p) { return window.I18N.get('fc_legend_actual') + ': ' + p.data[0] + '<br>' + window.I18N.get('fc_legend_pred') + ': ' + p.data[1]; } },
+        grid: baseGrid({ top: 20, bottom: 48, left: 52, right: 30 }),
+        xAxis: Object.assign({ type: 'value', min: 0, max: maxVal, name: window.I18N.get('fc_legend_actual'), nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        yAxis: Object.assign({ type: 'value', min: 0, max: maxVal, name: window.I18N.get('fc_legend_pred') }, axisStyle()),
+        series: [{ type: 'scatter', data: d.scatter, symbolSize: 4, itemStyle: { color: 'rgba(40,120,255,.34)' } }, { type: 'line', data: [[0,0],[maxVal,maxVal]], symbol: 'none', silent: true, lineStyle: { color: '#7a8ca1', type: 'dashed' } }]
       }, true);
-    }
 
-    if (d.class_wmape && d.class_wmape.length) {
       if (!chartClass) chartClass = initChart('chartClass');
+      var classes = d.class_wmape.slice().sort(function (a, b) { return b.wmape - a.wmape; });
       chartClass.setOption({
         tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-        grid: baseGrid({ top: 24, right: 72 }),
-        xAxis: Object.assign({ type: 'value', name: 'WMAPE (%)', nameLocation: 'middle', nameGap: 24 }, axisStyle()),
-        yAxis: Object.assign({ type: 'category', data: d.class_wmape.map(function(x){return x.category;}) }, axisStyle()),
-        series: [{
-          type: 'bar',
-          data: d.class_wmape.map(function(x, i) { return { value: x.wmape, itemStyle: { color: T.palette[i % T.palette.length], borderRadius: [0, 4, 4, 0] } }; }),
-          label: { show: true, position: 'right', color: T.text, formatter: '{c}%' }
-        }]
+        grid: baseGrid({ left: 62, top: 20, right: 60, bottom: 44 }),
+        xAxis: Object.assign({ type: 'value', name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: classes.map(function (x) { return className(x.category) + ' · n=' + x.n_series; }) }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 20, data: classes.map(function (x, i) { return { value: x.wmape, itemStyle: { color: T.palette[i], borderRadius: [0,5,5,0] } }; }), label: { show: true, position: 'right', color: T.text, formatter: '{c}%' } }]
+      }, true);
+
+      var bootLabels = r.granger.aspects.map(publicReviewName);
+      if (!chartBootstrap) chartBootstrap = initChart('chartBootstrap');
+      chartBootstrap.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
+        grid: baseGrid({ left: 125, top: 22, right: 56, bottom: 44 }),
+        xAxis: Object.assign({ type: 'value', min: .7, max: 1, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } } }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: bootLabels }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 18, data: r.granger.sig_rates.map(function (v) { return { value: v, itemStyle: { color: v >= .9 ? '#2a65b7' : '#8fa2b5' } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 10, formatter: function (p) { return (p.value * 100).toFixed(1) + '%'; } } }]
+      }, true);
+
+      var fusion = r.fusion;
+      if (!chartFusion) chartFusion = initChart('chartFusion');
+      chartFusion.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'line' } }, tooltipStyle()),
+        grid: baseGrid({ left: 110, top: 22, right: 62, bottom: 44 }),
+        xAxis: Object.assign({ type: 'value', min: 38.5, max: 40.7, name: 'WMAPE %', nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: fusion.map(publicReviewName) }, axisStyle()),
+        series: [{ type: 'scatter', symbolSize: 12, data: fusion.map(function (x) { return { value: x.wmape_vol, itemStyle: { color: x.wmape_vol === Math.min.apply(null, fusion.map(function (v) { return v.wmape_vol; })) ? T.sentimentPos : '#2a65b7' } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 10, formatter: function (p) { return p.value.toFixed(3) + '%'; } } }]
       }, true);
     }
-  });
-}
-renderForecast();
-window.__renderers.renderForecast = renderForecast;
-</script>
 
+    Promise.all([loadJSON('forecast'), loadJSON('relation')]).then(function (all) { forecastData = all[0]; relationData = all[1]; renderForecast(); });
+    window.__renderers.renderForecast = renderForecast;
+  </script>
 </body>
 </html>

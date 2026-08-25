@@ -3,85 +3,94 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AutoPulse · 舆情预警</title>
-  <link rel="stylesheet" href="static/css/style.css">
-  <!-- 防 FOUC：在 i18n.js 下载/执行前，浏览器可能先把服务端渲染的中文默认文案画出来，
-     视频录制会抓到“中文一闪”。先把带 data-i18n 的元素隐藏，FOUC 应用完语言后再显示。 -->
+  <title>中国车市分析 · 风险监测</title>
+  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body>
+<body class="analysis-page alerts-page">
   <header class="topbar">
-    <div class="brand">AutoPulse</div>
-    <div class="brand-sub" data-i18n="brand_sub">汽车销量预测与用户舆情分析</div>
-    <div class="top-actions">
-      <button id="langSwitch" class="lang-switch" data-i18n="lang_btn">English</button>
-    </div>
+    <div class="brand">中国车市分析</div>
+    <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
+    <div class="top-actions"><button id="langSwitch" class="lang-switch">English</button></div>
   </header>
-
   <div class="layout">
-    <nav class="sidebar">
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_analysis">分析</div>
-        <a href="index.html" data-i18n="nav_overview">项目概览</a>
-        <a href="forecast.html" data-i18n="nav_forecast">销量预测</a>
-        <a href="absa.html" data-i18n="nav_absa">舆情 ABSA</a>
-        <a href="attribution.html" data-i18n="nav_attribution">销量归因</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_relation">关系</div>
-        <a href="relation.html" data-i18n="nav_relation">舆情↔销量</a>
-        <a href="alerts.html" class="active" data-i18n="nav_alerts">舆情预警</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_drilldown">钻取</div>
-        <a href="drilldown.html" data-i18n="nav_drilldown">钻取分析</a>
-      </div>
-    </nav>
+    <nav class="sidebar" aria-label="Primary navigation"></nav>
+    <main class="content analysis-content">
+      <header class="analysis-header">
+        <div class="analysis-header-copy">
+          <p class="analysis-breadcrumb" data-i18n="al_breadcrumb">规则监测 / 用户反馈</p>
+          <h1 data-i18n="al_title_full">近期口碑异常监测</h1>
+          <p data-i18n="al_lead_public">比较相邻两个180天评论窗口，筛出近期评价已经转负且继续恶化的车系，作为人工复核入口。</p>
+        </div>
+        <dl class="analysis-protocol">
+          <div><dt data-i18n="al_protocol_month">监测月份</dt><dd id="al-latest">2026-07</dd></div>
+          <div><dt data-i18n="al_protocol_eligible">具备判定资格</dt><dd><strong id="al-eligible">123</strong><span data-i18n="home_series_unit">个车系</span></dd></div>
+          <div><dt data-i18n="al_protocol_active">当前预警</dt><dd><strong id="al-active">1</strong><span data-i18n="ov_unit_alert">条</span></dd></div>
+        </dl>
+      </header>
 
-    <main class="content">
-      <div class="page-head">
-        <h1 data-i18n="al_title">舆情预警</h1>
-        
-<p class="lead-text" data-i18n="al_lead">基于规则识别口碑明显恶化的车系，作为声誉风险监测入口。</p>
+      <section class="analysis-section" aria-labelledby="al-current-title">
+        <header class="analysis-section-head">
+          <span>01</span>
+          <div><h2 id="al-current-title" data-i18n="al_current_title">当前监测结果</h2><p data-i18n="al_current_lead">预警只表示评论信号满足规则，不代表已经确认产品故障或经营问题。</p></div>
+        </header>
+        <div class="alerts-current-grid">
+          <article class="alerts-current-card">
+            <div class="alerts-current-head"><div><span data-i18n="al_current_alert">当前有效预警</span><h3 id="al-current-name">—</h3></div><span id="al-current-risk" class="risk-badge">—</span></div>
+            <dl>
+              <div><dt data-i18n="al_tbl_overall">综合评价</dt><dd id="al-current-overall">—</dd></div>
+              <div><dt data-i18n="al_tbl_drop">较前180天下降</dt><dd id="al-current-drop">—</dd></div>
+              <div><dt data-i18n="al_tbl_samples">当前/前窗样本</dt><dd id="al-current-samples">—</dd></div>
+              <div><dt data-i18n="al_tbl_aspect">主要恶化维度</dt><dd id="al-current-aspect">—</dd></div>
+            </dl>
+          </article>
+          <aside class="alerts-rule-card">
+            <span data-i18n="al_rule">预警规则</span>
+            <p id="al-rule-text"></p>
+            <div class="alerts-rule-steps">
+              <div><b>01</b><span data-i18n="al_rule_sample">相邻两个窗口均有足够评论</span></div>
+              <div><b>02</b><span data-i18n="al_rule_negative">近期综合评价已低于阈值</span></div>
+              <div><b>03</b><span data-i18n="al_rule_drop">较前一窗口继续下降</span></div>
+            </div>
+            <p class="alerts-conclusion" id="al-concl"></p>
+          </aside>
+        </div>
+      </section>
 
-      </div>
-      
-  <p class="conclusion" id="al-concl"></p>
-  <p class="source" style="margin:0 0 14px;border:none;padding:0;" id="al-rule-text"></p>
+      <section class="analysis-section" aria-labelledby="al-history-title">
+        <header class="analysis-section-head">
+          <span>02</span>
+          <div><h2 id="al-history-title" data-i18n="al_history_title">历史预警分布</h2><p data-i18n="al_history_lead">查看预警在时间上的集中程度和风险等级构成，用来区分单次异常与集中出现的阶段。</p></div>
+        </header>
+        <div class="alerts-history-strip">
+          <div><span data-i18n="al_kpi_history">历史预警事件</span><strong id="al-history">—</strong></div>
+          <div><span data-i18n="al_kpi_peak">单月预警峰值</span><strong id="al-peak">—</strong></div>
+          <div><span data-i18n="al_peak_month">峰值月份</span><strong id="al-peak-month">—</strong></div>
+        </div>
+        <div class="analysis-grid-2">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="al_trend">预警月度趋势</h3><p data-i18n="al_trend_insight">只显示触发过规则的月份；未显示月份的事件数为零。</p></div></div>
+            <div id="chartTrend" class="analysis-chart"></div>
+          </article>
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="al_risk">历史事件风险等级</h3><p data-i18n="al_risk_insight">风险等级依据当期综合评价区间划分，用于排序复核优先级。</p></div></div>
+            <div id="chartRisk" class="analysis-chart"></div>
+          </article>
+        </div>
+      </section>
 
-  <div class="grid-2">
-    <div class="card">
-      <h3 data-i18n="al_trend">预警月度趋势</h3>
-      <p class="insight" data-i18n="al_trend_insight">趋势图定位口碑危机集中爆发的月份，帮助判断是偶发事件还是系统性恶化。</p>
-      <div id="chartTrend" class="chart"></div>
-    </div>
-    <div class="card">
-      <h3 data-i18n="al_risk">风险等级分布</h3>
-      <p class="insight" data-i18n="al_risk_insight">按综合情感分把预警划分为高/中/低三档，优先关注高危车系。</p>
-      <div id="chartRisk" class="chart"></div>
-    </div>
-  </div>
-
-  <div class="card">
-    <h3 data-i18n="al_list">预警车系列表</h3>
-    <p class="insight" data-i18n="al_list_insight">明细列出触发规则的具体车系、月份与情感变化，可直接用于运营侧跟进。</p>
-    <div class="tbl-wrap">
-      <table class="tbl" id="alertTbl">
-        <thead>
-          <tr>
-            <th data-i18n="al_tbl_brand">品牌</th>
-            <th data-i18n="al_tbl_series">车系</th>
-            <th data-i18n="al_tbl_period">月份</th>
-            <th data-i18n="al_tbl_overall">综合情感</th>
-            <th data-i18n="al_tbl_drop">环比下降</th>
-          </tr>
-        </thead>
-        <tbody id="alertBody"></tbody>
-      </table>
-    </div>
-    <p class="source" data-i18n="al_source"></p>
-  </div>
-
+      <section class="analysis-section" aria-labelledby="al-list-title">
+        <header class="analysis-section-head"><span>03</span><div><h2 id="al-list-title" data-i18n="al_list">预警事件明细</h2><p data-i18n="al_list_insight">表格保留当前与历史事件，便于按车系、月份和主要恶化维度复核。</p></div></header>
+        <div class="alerts-table-panel">
+          <div class="tbl-wrap">
+          <table class="tbl">
+            <thead><tr><th data-i18n="al_tbl_brand">品牌</th><th data-i18n="al_tbl_series">车系</th><th data-i18n="al_tbl_period">月份</th><th data-i18n="al_tbl_risk">风险</th><th data-i18n="al_tbl_overall">综合评价</th><th data-i18n="al_tbl_drop">较前180天下降</th><th data-i18n="al_tbl_samples">当前/前窗样本</th><th data-i18n="al_tbl_aspect">主要恶化维度</th></tr></thead>
+            <tbody id="alertBody"></tbody>
+          </table>
+          </div>
+        </div>
+        <details class="analysis-method-note"><summary data-i18n="al_method_summary">查看阈值与数据来源</summary><p data-i18n="al_method_note">每个监测月只使用当月第一天前发布的评论。预警规则不参与销量预测，也不会自动给出故障结论。</p><p data-i18n="al_source"></p></details>
+      </section>
     </main>
   </div>
 
@@ -89,75 +98,79 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js"></script>
   <script src="static/js/i18n.js"></script>
-  <!-- 在首屏绘制前同步应用语言，避免服务端渲染的中文默认文案先闪现再被 JS 替换（FOUC）。
-     中文版 zh→zh 为恒等式，无任何视觉变化；英文版绘制前即为英文，切换无卡顿。
-     应用完成后再显示 [data-i18n] 元素，彻底消除加载阶段的中文闪烁。 -->
   <script>
-    try { window.I18N && window.I18N.apply(); } catch (e) {}
-    document.querySelectorAll("[data-i18n]").forEach(function (el) { el.style.visibility = "visible"; });
+    try { window.I18N.apply(); } catch (e) {}
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
+    var alertsData = null, chartTrend, chartRisk;
+
+    function renderAlerts() {
+      if (!alertsData) return;
+      var d = alertsData, T = window.CHINA_AUTO_MARKET;
+      document.getElementById('al-concl').textContent = d.conclusion[window.CHINA_AUTO_MARKET.lang] || d.conclusion.zh;
+      document.getElementById('al-rule-text').textContent = d.rule[window.CHINA_AUTO_MARKET.lang] || d.rule.zh;
+      document.getElementById('al-active').textContent = formatNumber(d.meta.active_alerts);
+      document.getElementById('al-history').textContent = formatNumber(d.meta.historical_alerts);
+      document.getElementById('al-eligible').textContent = formatNumber(d.meta.eligible_series);
+      document.getElementById('al-latest').textContent = d.meta.latest_month;
+      var peak = d.monthly.slice().sort(function (a, b) { return b.count - a.count; })[0];
+      document.getElementById('al-peak').textContent = peak ? peak.count : 0;
+      document.getElementById('al-peak-month').textContent = peak ? peak.month : '—';
+
+      var current = d.alerts.filter(function (a) { return a.period === d.meta.latest_month; })[0];
+      if (current) {
+        var currentBrand = window.CHINA_AUTO_MARKET.lang === 'en' ? (current.brand_en || current.brand) : current.brand;
+        var currentSeries = window.CHINA_AUTO_MARKET.lang === 'en' ? (current.series_en || current.series_name) : current.series_name;
+        var currentRisk = window.CHINA_AUTO_MARKET.lang === 'en' ? current.risk_en : current.risk;
+        document.getElementById('al-current-name').textContent = currentBrand + ' · ' + currentSeries;
+        document.getElementById('al-current-risk').textContent = currentRisk;
+        document.getElementById('al-current-risk').className = 'risk-badge ' + (current.risk_en || '').toLowerCase();
+        document.getElementById('al-current-overall').textContent = current.overall.toFixed(3);
+        document.getElementById('al-current-drop').textContent = current.overall_drop.toFixed(3);
+        document.getElementById('al-current-samples').textContent = current.current_reviews + ' / ' + current.previous_reviews;
+        document.getElementById('al-current-aspect').textContent = window.CHINA_AUTO_MARKET.lang === 'en' ? current.worst_aspect_en : current.worst_aspect;
+      } else {
+        document.getElementById('al-current-name').textContent = window.I18N.get('al_no_current');
+        document.getElementById('al-current-risk').textContent = '—';
+        document.getElementById('al-current-risk').className = 'risk-badge';
+        ['al-current-overall','al-current-drop','al-current-samples','al-current-aspect'].forEach(function (id) { document.getElementById(id).textContent = '—'; });
+      }
+
+      if (!chartTrend) chartTrend = initChart('chartTrend');
+      chartTrend.clear();
+      chartTrend.setOption({
+        tooltip: tooltipStyle(),
+        grid: baseGrid({ top: 28, left: 42, right: 20, bottom: 48 }),
+        xAxis: Object.assign({ type: 'category', boundaryGap: false, data: d.monthly.map(function (x) { return x.month; }), axisLabel: { interval: Math.max(0, Math.floor(d.monthly.length / 7)) } }, axisStyle()),
+        yAxis: Object.assign({ type: 'value', minInterval: 1, max: function (range) { return Math.max(1, Math.ceil(range.max + 1)); } }, axisStyle()),
+        series: [{ type: 'line', symbolSize: 5, smooth: .2, data: d.monthly.map(function (x) { return x.count; }), lineStyle: { color: T.warn, width: 2.4 }, itemStyle: { color: T.warn }, areaStyle: { color: 'rgba(231,165,63,.15)' } }]
+      }, true);
+
+      var riskColors = { '高危': T.sentimentNeg, '中危': T.warn, '低危': T.sentimentPos };
+      var riskKeys = { '高危': 'al_risk_high', '中危': 'al_risk_mid', '低危': 'al_risk_low' };
+      var riskRows = d.risk_dist.slice().sort(function (a, b) { return a.count - b.count; });
+      if (!chartRisk) chartRisk = initChart('chartRisk');
+      chartRisk.setOption({
+        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
+        grid: baseGrid({ left: 78, top: 24, right: 52, bottom: 40 }),
+        xAxis: Object.assign({ type: 'value', minInterval: 1, name: window.I18N.get('al_axis_count'), nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        yAxis: Object.assign({ type: 'category', data: riskRows.map(function (x) { return window.I18N.get(riskKeys[x.level] || x.level); }) }, axisStyle()),
+        series: [{ type: 'bar', barMaxWidth: 24, data: riskRows.map(function (x) { return { value: x.count, itemStyle: { color: riskColors[x.level] || T.primary, borderRadius: [0,4,4,0] } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 11 } }]
+      }, true);
+
+      document.getElementById('alertBody').innerHTML = d.alerts.map(function (a) {
+        var brand = window.CHINA_AUTO_MARKET.lang === 'en' ? (a.brand_en || a.brand) : a.brand;
+        var series = window.CHINA_AUTO_MARKET.lang === 'en' ? (a.series_en || a.series_name) : a.series_name;
+        var risk = window.CHINA_AUTO_MARKET.lang === 'en' ? a.risk_en : a.risk;
+        var riskClass = (a.risk_en || '').toLowerCase();
+        return '<tr><td>' + escapeHTML(brand) + '</td><td>' + escapeHTML(series) + '</td><td>' + escapeHTML(a.period) + '</td>' +
+          '<td><span class="risk-badge ' + escapeHTML(riskClass) + '">' + escapeHTML(risk) + '</span></td>' +
+          '<td>' + a.overall.toFixed(2) + '</td><td class="neg">' + a.overall_drop.toFixed(2) + '</td><td>' + a.current_reviews + ' / ' + a.previous_reviews + '</td>' +
+          '<td>' + escapeHTML(window.CHINA_AUTO_MARKET.lang === 'en' ? a.worst_aspect_en : a.worst_aspect) + '</td></tr>';
+      }).join('');
+    }
+
+    loadJSON('alerts').then(function (d) { alertsData = d; renderAlerts(); });
+    window.__renderers.renderAlerts = renderAlerts;
   </script>
-  
-<script>
-var T = window.AUTOPULSE;
-var chartTrend, chartRisk;
-
-function renderAlerts() {
-  loadJSON('alerts').then(function (d) {
-    document.getElementById('al-concl').textContent = d.conclusion[window.AUTOPULSE.lang] || d.conclusion.zh;
-    document.getElementById('al-rule-text').textContent = d.rule[window.AUTOPULSE.lang] || d.rule.zh;
-
-    if (!chartTrend) chartTrend = initChart('chartTrend');
-    chartTrend.setOption({
-      tooltip: tooltipStyle(),
-      grid: baseGrid({ top: 48 }),
-      xAxis: Object.assign({ type: 'category', data: d.monthly.map(function (x) { return x.month; }) }, axisStyle()),
-      yAxis: Object.assign({ type: 'value', minInterval: 1 }, axisStyle()),
-      series: [{
-        type: 'line',
-        data: d.monthly.map(function (x) { return x.count; }),
-        itemStyle: { color: T.warn },
-        areaStyle: { color: 'rgba(246,195,67,.18)' },
-        smooth: true,
-        markPoint: { data: [{ type: 'max', name: 'max' }], symbolOffset: [0, 10] }
-      }]
-    }, true);
-
-    var riskMap = { '高危': T.sentimentNeg, '中危': T.warn, '低危': T.sentimentPos,
-                  'High': T.sentimentNeg, 'Medium': T.warn, 'Low': T.sentimentPos };
-    var riskLabel = {'高危': 'al_risk_high', '中危': 'al_risk_mid', '低危': 'al_risk_low'};
-    if (!chartRisk) chartRisk = initChart('chartRisk');
-    chartRisk.setOption({
-      tooltip: { trigger: 'item' },
-      legend: { orient: 'vertical', right: 10, top: 'center', textStyle: { color: T.muted } },
-      series: [{
-        type: 'pie',
-        radius: ['42%', '68%'],
-        center: ['38%', '55%'],
-        data: d.risk_dist.map(function (x) {
-          return { name: window.I18N.get(riskLabel[x.level] || x.level), value: x.count, itemStyle: { color: riskMap[x.level] || T.palette[0] } };
-        }),
-        label: { color: T.text, formatter: '{b}\n{c} ({d}%)' }
-      }]
-    }, true);
-
-    var tbody = document.getElementById('alertBody');
-    tbody.innerHTML = '';
-    d.alerts.forEach(function (a) {
-      var tr = document.createElement('tr');
-      var brandDisplay = (window.AUTOPULSE.lang === 'en' && a.brand_en) ? a.brand_en : a.brand;
-      var seriesDisplay = (window.AUTOPULSE.lang === 'en' && a.series_en) ? a.series_en : a.series_name;
-      tr.innerHTML = '<td>' + brandDisplay + '</td>' +
-                     '<td>' + seriesDisplay + '</td>' +
-                     '<td>' + a.period + '</td>' +
-                     '<td>' + a.overall.toFixed(2) + '</td>' +
-                     '<td class="neg">' + a.overall_drop.toFixed(2) + '</td>';
-      tbody.appendChild(tr);
-    });
-  });
-}
-renderAlerts();
-window.__renderers.renderAlerts = renderAlerts;
-</script>
-
 </body>
 </html>

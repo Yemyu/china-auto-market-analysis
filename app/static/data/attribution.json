@@ -1,111 +1,173 @@
 {
   "shap": [
     {
-      "key": "comfort",
-      "name_zh": "舒适",
-      "name_en": "Comfort",
-      "importance": 0.3299,
+      "key": "engine_cylinder_arrangement_L",
+      "name_zh": "气缸排列：L",
+      "name_en": "Cylinder layout: Inline (L)",
+      "importance": 0.0348,
       "color": "#2c7be5"
     },
     {
-      "key": "value",
-      "name_zh": "性价比",
-      "name_en": "Value",
-      "importance": 0.3012,
+      "key": "battery_type_NA",
+      "name_zh": "电池类型：缺失",
+      "name_en": "Battery type: Missing",
+      "importance": 0.0291,
       "color": "#00a9ae"
     },
     {
-      "key": "intelligence",
-      "name_zh": "智能化",
-      "name_en": "Intelligence",
-      "importance": 0.1872,
+      "key": "oil_supply_直喷",
+      "name_zh": "供油方式：直喷",
+      "name_en": "Fuel supply: Direct injection",
+      "importance": 0.0265,
       "color": "#34c38f"
     },
     {
-      "key": "configuration",
-      "name_zh": "配置",
-      "name_en": "Config",
-      "importance": 0.1721,
+      "key": "cylinder_material_铝",
+      "name_zh": "气缸材料：铝",
+      "name_en": "Cylinder material: Aluminum",
+      "importance": 0.0213,
       "color": "#f6c343"
     },
     {
-      "key": "space",
-      "name_zh": "空间",
-      "name_en": "Space",
-      "importance": 0.1653,
+      "key": "engine_intake_type_NA",
+      "name_zh": "进气形式：缺失",
+      "name_en": "Intake type: Missing",
+      "importance": 0.0212,
       "color": "#ee5b5b"
     },
     {
-      "key": "appearance",
-      "name_zh": "外观",
-      "name_en": "Appearance",
-      "importance": 0.1456,
+      "key": "fuel_form_插电式混合动力",
+      "name_zh": "燃料形式：插电式混合动力",
+      "name_en": "Fuel form: Plug-in hybrid",
+      "importance": 0.0204,
       "color": "#a55eea"
     },
     {
-      "key": "interior",
-      "name_zh": "内饰",
-      "name_en": "Interior",
-      "importance": 0.0888,
+      "key": "steering_wheel_material_真皮",
+      "name_zh": "方向盘材质：真皮",
+      "name_en": "Steering-wheel material: Leather",
+      "importance": 0.0204,
       "color": "#7783f5"
     },
     {
-      "key": "control",
-      "name_zh": "操控",
-      "name_en": "Control",
-      "importance": 0.0794,
-      "color": "#fd7e56"
+      "key": "steering_wheel_material_NA",
+      "name_zh": "方向盘材质：缺失",
+      "name_en": "Steering-wheel material: Missing",
+      "importance": 0.0181,
+      "color": "#2c7be5"
     },
     {
-      "key": "fuel_consumption",
-      "name_zh": "油耗",
-      "name_en": "Fuel",
-      "importance": 0.0488,
-      "color": "#26c6da"
+      "key": "motor_type_永磁同步",
+      "name_zh": "电机类型：永磁同步",
+      "name_en": "Motor type: Permanent-magnet synchronous",
+      "importance": 0.0179,
+      "color": "#00a9ae"
     },
     {
-      "key": "power",
-      "name_zh": "动力",
-      "name_en": "Power",
-      "importance": 0.0335,
-      "color": "#95aac9"
+      "key": "center_screen_NA",
+      "name_zh": "中控屏：缺失",
+      "name_en": "Center screen: Missing",
+      "importance": 0.0176,
+      "color": "#34c38f"
+    },
+    {
+      "key": "fuel_form_48V轻混系统",
+      "name_zh": "燃料形式：48V轻混系统",
+      "name_en": "Fuel form: 48V mild hybrid",
+      "importance": 0.0159,
+      "color": "#f6c343"
+    },
+    {
+      "key": "manufacturer_freq",
+      "name_zh": "制造商频次",
+      "name_en": "Manufacturer frequency",
+      "importance": 0.0154,
+      "color": "#ee5b5b"
+    },
+    {
+      "key": "fuel_grade_95#",
+      "name_zh": "燃油标号：95#",
+      "name_en": "Fuel grade: 95#",
+      "importance": 0.0142,
+      "color": "#a55eea"
+    },
+    {
+      "key": "sound_brand_宝华韦健",
+      "name_zh": "音响品牌：宝华韦健",
+      "name_en": "Audio brand: Bowers & Wilkins",
+      "importance": 0.0139,
+      "color": "#7783f5"
+    },
+    {
+      "key": "oil_supply_混合喷射",
+      "name_zh": "供油方式：混合喷射",
+      "name_en": "Fuel supply: Combined injection",
+      "importance": 0.0118,
+      "color": "#2c7be5"
     }
   ],
-  "comparison": {
-    "with": {
-      "r2": 0.138,
-      "mape": 0.147
+  "models": [
+    {
+      "variant": "YEAR-ONLY",
+      "r2": 0.089,
+      "r2_std": 0.016,
+      "wmape": 87.67,
+      "n_features": 5
     },
-    "without": {
-      "r2": -0.073,
-      "mape": 0.165
+    {
+      "variant": "+BRAND",
+      "r2": 0.154,
+      "r2_std": 0.054,
+      "wmape": 83.77,
+      "n_features": 131
+    },
+    {
+      "variant": "+CONFIG",
+      "r2": 0.303,
+      "r2_std": 0.082,
+      "wmape": 75.38,
+      "n_features": 310
+    },
+    {
+      "variant": "CONFIG-ONLY",
+      "r2": 0.173,
+      "r2_std": 0.043,
+      "wmape": 81.27,
+      "n_features": 179
     }
+  ],
+  "blocks": [
+    {
+      "block": "config",
+      "name_zh": "配置",
+      "name_en": "Configuration",
+      "share": 0.7613
+    },
+    {
+      "block": "brand",
+      "name_zh": "品牌",
+      "name_en": "Brand",
+      "share": 0.2248
+    },
+    {
+      "block": "year",
+      "name_zh": "年份",
+      "name_en": "Year",
+      "share": 0.0139
+    }
+  ],
+  "meta": {
+    "series": 736,
+    "series_year_rows": 2007,
+    "cv_folds": 5
   },
-  "top_example": {
-    "series": "创酷",
-    "dates": [
-      "2025-09-01",
-      "2025-10-01",
-      "2025-11-01"
-    ],
-    "actual": [
-      2.0,
-      2.0,
-      1.0
-    ],
-    "pred": [
-      1.9,
-      2.8,
-      2.2
-    ],
-    "error": [
-      0.1,
-      0.8,
-      1.2
-    ]
+  "comparison": {
+    "with": null,
+    "without": null
   },
+  "top_example": null,
   "conclusion": {
-    "zh": "加入舆情特征后销量归因 R² 由 −0.073 提升至 0.138（+0.211）；SHAP 显示「舒适 > 性价比 > 智能化」是舆情影响销量的关键维度。",
-    "en": "Adding sentiment features lifts sales attribution R² from −0.073 to 0.138 (+0.211); SHAP shows Comfort > Value > Intelligence are the key sentiment drivers of sales."
+    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.154提升至0.303（+0.149）；配置解释车系之间差异，不解释同车系短期涨跌。",
+    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.154 to 0.303 (+0.149) after adding configuration. Configuration explains between-series differences, not short-term within-series changes."
   }
 }

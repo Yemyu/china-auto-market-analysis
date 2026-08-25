@@ -3,91 +3,186 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>AutoPulse · 项目概览</title>
-  <link rel="stylesheet" href="static/css/style.css">
-  <!-- 防 FOUC：在 i18n.js 下载/执行前，浏览器可能先把服务端渲染的中文默认文案画出来，
-     视频录制会抓到“中文一闪”。先把带 data-i18n 的元素隐藏，FOUC 应用完语言后再显示。 -->
+  <meta name="description" content="中国汽车市场分析：销量预测、产品配置与用户需求">
+  <title>中国车市分析 · 决策概览</title>
+  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body>
+<body class="home-page">
   <header class="topbar">
-    <div class="brand">AutoPulse</div>
-    <div class="brand-sub" data-i18n="brand_sub">汽车销量预测与用户舆情分析</div>
+    <div class="brand">中国车市分析</div>
+    <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
     <div class="top-actions">
-      <button id="langSwitch" class="lang-switch" data-i18n="lang_btn">English</button>
+      <nav class="home-topnav" aria-label="Overview sections">
+        <a href="#question-title" data-i18n="home_top_questions">研究问题</a>
+        <a href="#results-title" data-i18n="home_top_results">主要结果</a>
+        <a href="#method-title" data-i18n="home_top_methods">研究设计</a>
+      </nav>
+      <button id="langSwitch" class="lang-switch">English</button>
     </div>
   </header>
-
   <div class="layout">
-    <nav class="sidebar">
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_analysis">分析</div>
-        <a href="index.html" class="active" data-i18n="nav_overview">项目概览</a>
-        <a href="forecast.html" data-i18n="nav_forecast">销量预测</a>
-        <a href="absa.html" data-i18n="nav_absa">舆情 ABSA</a>
-        <a href="attribution.html" data-i18n="nav_attribution">销量归因</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_relation">关系</div>
-        <a href="relation.html" data-i18n="nav_relation">舆情↔销量</a>
-        <a href="alerts.html" data-i18n="nav_alerts">舆情预警</a>
-      </div>
-      <div class="nav-group">
-        <div class="nav-group-title" data-i18n="nav_group_drilldown">钻取</div>
-        <a href="drilldown.html" data-i18n="nav_drilldown">钻取分析</a>
-      </div>
-    </nav>
+    <nav class="sidebar" aria-label="Primary navigation"></nav>
+    <main class="content home-content">
+      <section class="home-intro" aria-labelledby="home-title">
+        <div class="home-intro-copy">
+          <p class="home-label" data-i18n="home_label">独立研究项目 · 中国汽车市场</p>
+          <h1 id="home-title" data-i18n="home_title">中国汽车市场分析：销量预测、产品配置与用户需求</h1>
+          <p class="home-deck" data-i18n="home_deck">基于公开月销量、车型配置与24,175条车主评论，分别完成六个月销量预测、年度产品配置分析和用户需求监测。</p>
+          <div class="home-meta-line" aria-label="Project scope">
+            <span data-i18n="home_meta_period">研究期 2022-01—2026-07</span>
+            <span data-i18n="home_meta_sources">三类公开数据</span>
+            <span data-i18n="home_meta_updated">最后更新 2026-08</span>
+          </div>
+        </div>
+      </section>
 
-    <main class="content">
-      <div class="page-head">
-        <h1 data-i18n="ov_title">项目概览</h1>
-        
-<p class="lead-text" data-i18n="ov_lead">AutoPulse 将汽车月度销量数据与懂车帝用户口碑进行对齐，系统评估舆情对销量预测与归因的价值。</p>
+      <section class="home-questions" aria-labelledby="question-title">
+        <div class="home-section-heading">
+          <h2 id="question-title"><span class="home-heading-no" aria-hidden="true">01</span><span data-i18n="home_questions_title">研究问题</span></h2>
+        </div>
+        <div class="home-question-grid">
+          <a class="home-question" href="forecast.html">
+            <span class="home-question-no">01</span>
+            <h3 data-i18n="home_q1_title">未来六个月的车系销量能否被可靠预测？</h3>
+            <p data-i18n="home_q1_body">在371个连续月销车系上进行固定起点递归预测，严格隔离训练、验证与测试期。</p>
+            <span class="home-question-link" data-i18n="home_q1_link">查看销量预测 →</span>
+          </a>
+          <a class="home-question" href="attribution.html">
+            <span class="home-question-no">02</span>
+            <h3 data-i18n="home_q2_title">哪些产品配置能够解释年度销量差异？</h3>
+            <p data-i18n="home_q2_body">在736个车系、2,007条车系年记录上，区分年份、品牌与配置的增量解释力。</p>
+            <span class="home-question-link" data-i18n="home_q2_link">查看产品配置 →</span>
+          </a>
+          <a class="home-question" href="absa.html">
+            <span class="home-question-no">03</span>
+            <h3 data-i18n="home_q3_title">用户在意什么，哪些口碑问题正在恶化？</h3>
+            <p data-i18n="home_q3_body">将24,175条评论归纳为10个需求维度，分开观察讨论热度、负面比例与异常变化。</p>
+            <span class="home-question-link" data-i18n="home_q3_link">查看用户需求 →</span>
+          </a>
+        </div>
+      </section>
 
-      </div>
-      
-  <div class="kpi-grid">
-    <div class="kpi">
-      <div><span class="kpi-val" id="kpi-coverage">-</span><span class="kpi-unit" data-i18n="ov_unit_series">车系</span></div>
-      <div class="kpi-label" data-i18n="ov_kpi_coverage">覆盖车系</div>
-    </div>
-    <div class="kpi">
-      <div><span class="kpi-val" id="kpi-wmape">-</span><span class="kpi-unit">%</span></div>
-      <div class="kpi-label" data-i18n="ov_kpi_forecast">预测 WMAPE</div>
-    </div>
-    <div class="kpi">
-      <div><span class="kpi-val" id="kpi-horizon">-</span><span class="kpi-unit" data-i18n="ov_unit_horizon">月</span></div>
-      <div class="kpi-label" data-i18n="ov_kpi_horizon">预测区间</div>
-    </div>
-    <div class="kpi">
-      <div><span class="kpi-val" id="kpi-alerts">-</span><span class="kpi-unit" data-i18n="ov_unit_alert">条</span></div>
-      <div class="kpi-label" data-i18n="ov_kpi_alerts">舆情预警</div>
-    </div>
-    <div class="kpi">
-      <div><span class="kpi-val" id="kpi-brands">-</span><span class="kpi-unit" data-i18n="ov_unit_brand">个</span></div>
-      <div class="kpi-label" data-i18n="ov_kpi_brands">覆盖品牌</div>
-    </div>
-    <div class="kpi">
-      <div><span class="kpi-val" id="kpi-reviews">-</span><span class="kpi-unit" data-i18n="ov_unit_review">条</span></div>
-      <div class="kpi-label" data-i18n="ov_kpi_reviews">评论样本</div>
-    </div>
-  </div>
+      <section class="home-report-section" aria-labelledby="cohort-title">
+        <div class="home-section-aside">
+          <h2 id="cohort-title"><span class="home-heading-no" aria-hidden="true">02</span><span data-i18n="home_scope_title">三组分析样本</span></h2>
+          <p data-i18n="home_scope_body">销量预测、产品分析和用户需求模块的筛选条件不同，最终分别保留371、736和345个车系。</p>
+        </div>
+        <div class="home-section-body">
+          <div class="home-cohort-list">
+            <article class="home-cohort-row">
+              <div class="home-cohort-name"><span>FORECAST</span><h3 data-i18n="home_cohort_forecast">月度销量预测</h3></div>
+              <div class="home-cohort-count"><strong id="cohort-forecast">—</strong><span data-i18n="home_series_unit">个车系</span></div>
+              <p data-i18n="home_cohort_forecast_rule">保留连续月销且具备建模字段的车系；用于2026年1—6月固定起点递归测试。</p>
+              <a href="forecast.html" data-i18n="home_read_analysis">进入分析 →</a>
+            </article>
+            <article class="home-cohort-row">
+              <div class="home-cohort-name"><span>ATTRIBUTION</span><h3 data-i18n="home_cohort_attribution">产品配置分析</h3></div>
+              <div class="home-cohort-count"><strong id="cohort-attribution">—</strong><span data-i18n="home_series_unit">个车系</span></div>
+              <p data-i18n="home_cohort_attribution_rule">年度销量与配置可对齐，共形成2,007条车系年记录；通过GroupKFold按车系分组验证。</p>
+              <a href="attribution.html" data-i18n="home_read_analysis">进入分析 →</a>
+            </article>
+            <article class="home-cohort-row">
+              <div class="home-cohort-name"><span>USER VOICE</span><h3 data-i18n="home_cohort_reviews">用户需求与风险</h3></div>
+              <div class="home-cohort-count"><strong id="cohort-reviews">—</strong><span data-i18n="home_series_unit">个车系</span></div>
+              <p data-i18n="home_cohort_reviews_rule">24,175条有效车主评论覆盖345个车系，按10个需求维度提取提及率和正负倾向。</p>
+              <a href="absa.html" data-i18n="home_read_analysis">进入分析 →</a>
+            </article>
+          </div>
+          <div class="home-source-ledger" aria-label="Source data ledger">
+            <div><span data-i18n="home_ledger_sales">月销量基础库</span><strong id="ledger-sales">—</strong><em data-i18n="home_ledger_sales_note">个车系 · 54,918条月记录</em></div>
+            <div><span data-i18n="home_ledger_config">配置基础库</span><strong id="ledger-config">—</strong><em data-i18n="home_ledger_config_note">个车系 · 2,084条车系年记录</em></div>
+            <div><span data-i18n="home_ledger_reviews">评论语料</span><strong id="ledger-review-count">—</strong><em data-i18n="home_ledger_reviews_note">条有效评论 · 10个需求维度</em></div>
+          </div>
+        </div>
+      </section>
 
-  <div class="card">
-    <h3 data-i18n="ov_stage_flow">阶段流程</h3>
-    <div class="stage-flow" id="stageFlow"></div>
-  </div>
+      <section class="home-figure" aria-labelledby="market-title">
+        <div class="home-figure-head">
+          <div>
+            <p class="home-label" data-i18n="home_figure_label">图 1 · 市场背景</p>
+            <h2 id="market-title" data-i18n="home_market_title">样本市场的月度销量与时间切分</h2>
+          </div>
+          <p data-i18n="home_market_note">阴影区域标出训练、验证与测试期。测试期数据只用于最终评价，不参与参数选择。</p>
+        </div>
+        <div id="chartTrend" class="home-chart" role="img" aria-label="Monthly sales with train validation and test periods"></div>
+        <div class="home-figure-caption"><span data-i18n="home_market_source">来源：公开月销量数据，自然月汇总。</span><span data-i18n="home_market_scope">图示为市场背景；模型评价以371车系测试样本为准。</span></div>
+      </section>
 
-  <div class="card">
-    <h3 data-i18n="ov_monthly_trend">全市场月度销量走势</h3>
-    <div id="chartTrend" class="chart"></div>
-  </div>
+      <section class="home-report-section home-results" aria-labelledby="results-title">
+        <div class="home-section-aside">
+          <h2 id="results-title"><span class="home-heading-no" aria-hidden="true">03</span><span data-i18n="home_results_title">主要结果</span></h2>
+          <p data-i18n="home_results_body">主指标采用全局 WMAPE，同时保留逐车系中位数 WMAPE、分组交叉验证 R² 与需求维度负面率，避免用单一指标代替全部证据。</p>
+        </div>
+        <div class="home-section-body">
+          <article class="home-result-block home-result-primary">
+            <div class="home-result-heading">
+              <div><span class="home-result-index">A</span><h3 data-i18n="home_result_forecast_title">销量预测：用户口碑提供小幅增量，销量历史仍是主信号</h3></div>
+              <a href="forecast.html" data-i18n="home_view_detail">查看完整结果 →</a>
+            </div>
+            <div class="home-table-wrap">
+              <table class="home-model-table">
+                <thead><tr><th data-i18n="home_model_col">比较方案</th><th><span data-i18n="home_global_col">全局 WMAPE</span><small data-i18n="home_primary_lower">主指标 · 越低越好</small></th><th><span data-i18n="home_median_col">逐车系中位数 WMAPE</span><small data-i18n="home_supporting_lower">补充指标 · 越低越好</small></th><th data-i18n="home_change_col">相对基线</th></tr></thead>
+                <tbody>
+                  <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="home_model_baseline_note">历史销量、日历与产品属性</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td class="home-neutral">—</td></tr>
+                  <tr class="home-best-core"><td><strong data-i18n="home_model_review">用户口碑增强模型</strong><span data-i18n="home_model_review_note">加入预测起点前可获得的用户评价</span></td><td id="model-core-global">—</td><td id="model-core-median">—</td><td id="model-core-gain">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_cold">冷启动补充方案</strong><span data-i18n="home_model_cold_note">为历史不足的新车系补充上市曲线</span></td><td id="model-cold-global">—</td><td id="model-cold-median">—</td><td id="model-cold-gain">—</td></tr>
+                </tbody>
+              </table>
+            </div>
+            <div class="home-metric-explain">
+              <p><strong data-i18n="home_wmape_why">全局 WMAPE</strong><span data-i18n="home_wmape_answer">它按真实销量加权，更接近整体市场误差；同时展示逐车系中位数，防止高销量车系完全遮住长尾表现。</span></p>
+              <p><strong data-i18n="home_uncertainty_title">不确定性</strong><span data-i18n="home_uncertainty_body">点估计优于基线，但按车系重采样的95%区间仍包含零，因此结论是“有小幅改善信号”，不是“已证明稳定胜出”。</span></p>
+            </div>
+          </article>
 
-  <div class="card conclusion-card">
-    <h3 data-i18n="ov_key_findings">核心发现</h3>
-    <ul class="findings-list" id="findings"></ul>
-  </div>
+          <div class="home-supporting-results">
+            <article class="home-result-block">
+              <div class="home-result-heading"><div><span class="home-result-index">B</span><h3 data-i18n="home_result_attr_title">产品配置提高年度销量差异的解释力</h3></div><a href="attribution.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
+              <div class="home-evidence-line"><strong>0.154</strong><span aria-hidden="true">→</span><strong class="accent">0.303</strong></div>
+              <p data-i18n="home_result_attr_body">在同一736车系口径下，加入配置后，GroupKFold验证 R² 从品牌模型的0.154提升至0.303；说明产品属性有增量解释力，但不等同于因果效应。</p>
+            </article>
+            <article class="home-result-block">
+              <div class="home-result-heading"><div><span class="home-result-index">C</span><h3 data-i18n="home_result_need_title">用户需求：智能化与舒适性是负面反馈最集中的维度</h3></div><a href="absa.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
+              <div class="home-need-bars">
+                <div><span data-i18n="home_intelligence">智能化</span><i><b style="width:47.9%"></b></i><strong>47.9%</strong></div>
+                <div><span data-i18n="home_comfort">舒适性</span><i><b style="width:37.4%"></b></i><strong>37.4%</strong></div>
+              </div>
+              <p data-i18n="home_result_need_body">负面率只在明确提及该维度的评论中计算；截至2026年7月，规则系统识别到1条当前有效预警。</p>
+            </article>
+          </div>
+        </div>
+      </section>
 
+      <section class="home-report-section home-methods" aria-labelledby="method-title">
+        <div class="home-section-aside">
+          <h2 id="method-title"><span class="home-heading-no" aria-hidden="true">04</span><span data-i18n="home_methods_title">研究设计</span></h2>
+          <p data-i18n="home_methods_body">首页只给出判断所需的信息；完整特征、模型消融、误差分布和车系明细保留在各分析页。</p>
+        </div>
+        <div class="home-section-body">
+          <div class="home-method-list">
+            <article><span>01</span><h3 data-i18n="home_method_time">严格时间切分</h3><p data-i18n="home_method_time_body">训练截至2025-06；验证为2025-07—12；测试为2026-01—06。每个预测月只使用当月第一天前已经发布的评论。</p></article>
+            <article><span>02</span><h3 data-i18n="home_method_metric">主指标与补充指标</h3><p data-i18n="home_method_metric_body">主指标为全局 WMAPE：∑|实际−预测| ÷ ∑实际。补充报告逐车系中位数 WMAPE、分车型误差与不确定性。</p></article>
+            <article><span>03</span><h3 data-i18n="home_method_text">评论文本分析</h3><p data-i18n="home_method_text_body">评论被拆分为10个产品维度，并区分“是否提及”与正、中、负倾向。</p></article>
+            <article><span>04</span><h3 data-i18n="home_method_limit">结果边界</h3><p data-i18n="home_method_limit_body">销量预测是固定样本期的测试结果；产品配置分析衡量解释关联而非因果；评论覆盖不完整的车系保留为缺失，不强行填成中性。</p></article>
+          </div>
+          <details class="home-audit-note">
+            <summary data-i18n="home_audit_summary">模型不确定性</summary>
+            <div><p data-i18n="home_audit_text">用户口碑增强模型相对销量基线的点改善为1.73个百分点；5,000次车系聚类重采样中胜出概率为89.84%，95%区间为−0.78至5.02个百分点。</p></div>
+          </details>
+        </div>
+      </section>
+
+      <section class="home-directory" aria-labelledby="directory-title">
+        <div><h2 id="directory-title" data-i18n="home_directory_title">分析入口</h2></div>
+        <div class="home-directory-links">
+          <a href="forecast.html"><span>01</span><strong data-i18n="nav_forecast">销量预测</strong><em data-i18n="home_dir_forecast">模型比较、误差与特征</em></a>
+          <a href="absa.html"><span>02</span><strong data-i18n="nav_absa">用户需求</strong><em data-i18n="home_dir_absa">十维度需求与负面集中度</em></a>
+          <a href="attribution.html"><span>03</span><strong data-i18n="nav_attribution">产品配置</strong><em data-i18n="home_dir_attr">品牌与配置的增量解释力</em></a>
+          <a href="alerts.html"><span>04</span><strong data-i18n="nav_alerts">风险监测</strong><em data-i18n="home_dir_alerts">当前异常与历史事件</em></a>
+          <a href="drilldown.html"><span>05</span><strong data-i18n="nav_drilldown">品牌与车系</strong><em data-i18n="home_dir_drill">品牌与车系明细</em></a>
+        </div>
+      </section>
     </main>
   </div>
 
@@ -95,64 +190,68 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js"></script>
   <script src="static/js/i18n.js"></script>
-  <!-- 在首屏绘制前同步应用语言，避免服务端渲染的中文默认文案先闪现再被 JS 替换（FOUC）。
-     中文版 zh→zh 为恒等式，无任何视觉变化；英文版绘制前即为英文，切换无卡顿。
-     应用完成后再显示 [data-i18n] 元素，彻底消除加载阶段的中文闪烁。 -->
   <script>
-    try { window.I18N && window.I18N.apply(); } catch (e) {}
-    document.querySelectorAll("[data-i18n]").forEach(function (el) { el.style.visibility = "visible"; });
+    try { window.I18N.apply(); } catch (e) {}
+    document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
+    var overviewData = null;
+    var forecastData = null;
+    var overviewChart = null;
+
+    function setText(id, value) {
+      var el = document.getElementById(id);
+      if (el) el.textContent = value;
+    }
+
+    function pct(value) { return Number(value).toFixed(2) + '%'; }
+
+    function renderOverview() {
+      if (!overviewData) return;
+      var d = overviewData;
+      var k = d.kpis;
+      setText('hero-wmape', k.forecast_wmape.toFixed(2));
+      setText('cohort-forecast', formatNumber(k.eval_series));
+      setText('cohort-attribution', formatNumber(k.attribution_series));
+      setText('cohort-reviews', formatNumber(k.coverage_series));
+      setText('ledger-sales', formatNumber(k.sales_series));
+      setText('ledger-config', formatNumber(k.config_series));
+      setText('ledger-review-count', formatNumber(k.review_count));
+      setText('model-base-global', pct(k.baseline_wmape));
+      setText('model-core-global', pct(k.core_forecast_wmape));
+      setText('model-cold-global', pct(k.forecast_wmape));
+      setText('model-core-gain', '−' + (k.baseline_wmape - k.core_forecast_wmape).toFixed(2) + ' pp');
+      setText('model-cold-gain', '−' + k.wmape_gain_pp.toFixed(2) + ' pp');
+
+      if (forecastData) {
+        var base = forecastData.models.find(function (x) { return x.name_en === 'No-sentiment baseline'; });
+        var core = forecastData.models.find(function (x) { return x.name_en === 'DeepSeek rich'; });
+        var cold = forecastData.models.find(function (x) { return x.scenario === 'fixed_origin_primary_cold_hybrid'; });
+        if (base) setText('model-base-median', pct(base.wmape_med));
+        if (core) setText('model-core-median', pct(core.wmape_med));
+        if (cold) setText('model-cold-median', pct(cold.wmape_med));
+      }
+
+      if (!overviewChart) overviewChart = initChart('chartTrend');
+      overviewChart.setOption({
+        tooltip: tooltipStyle(),
+        grid: baseGrid({ top: 48, bottom: 42, left: 58, right: 24 }),
+        xAxis: Object.assign({ type: 'category', boundaryGap: false, data: d.monthly_trend.map(function (x) { return x.month; }), axisLabel: { interval: Math.max(0, Math.floor(d.monthly_trend.length / 8)), color: '#6b737d' } }, axisStyle()),
+        yAxis: Object.assign({ type: 'value', name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'Units' : '辆', nameTextStyle: { color: '#6b737d', padding: [0, 0, 0, -34] }, axisLabel: { formatter: function (v) { return window.CHINA_AUTO_MARKET.lang === 'en' ? (v / 1000).toFixed(0) + 'k' : (v / 10000).toFixed(0) + '万'; }, color: '#6b737d' } }, axisStyle()),
+        series: [{
+          name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'Monthly sales' : '月销量', type: 'line', symbol: 'none', smooth: false,
+          data: d.monthly_trend.map(function (x) { return x.sales; }), lineStyle: { width: 2.2, color: '#1f5ab7' },
+          markArea: { silent: true, label: { color: '#5b6470', fontSize: 10, position: 'insideTop' }, data: [
+            [{ name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'TRAIN' : '训练', xAxis: d.monthly_trend[0].month, itemStyle: { color: 'rgba(31,90,183,.045)' } }, { xAxis: '2025-06' }],
+            [{ name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'VALIDATION' : '验证', xAxis: '2025-07', itemStyle: { color: 'rgba(196,137,35,.08)' } }, { xAxis: '2025-12' }],
+            [{ name: window.CHINA_AUTO_MARKET.lang === 'en' ? 'TEST' : '测试', xAxis: '2026-01', itemStyle: { color: 'rgba(174,57,68,.07)' } }, { xAxis: '2026-06' }]
+          ] }
+        }]
+      }, true);
+    }
+
+    Promise.all([loadJSON('overview'), loadJSON('forecast')]).then(function (data) {
+      overviewData = data[0]; forecastData = data[1]; renderOverview();
+    });
+    window.__renderers.renderOverview = renderOverview;
   </script>
-  
-<script>
-loadJSON('overview').then(function (d) {
-  document.getElementById('kpi-coverage').textContent = d.kpis.coverage_series;
-  document.getElementById('kpi-wmape').textContent = d.kpis.forecast_wmape;
-  document.getElementById('kpi-horizon').textContent = d.kpis.forecast_horizon;
-  document.getElementById('kpi-alerts').textContent = d.kpis.alert_count;
-  document.getElementById('kpi-brands').textContent = d.kpis.brand_count;
-  document.getElementById('kpi-reviews').textContent = d.kpis.review_count ? d.kpis.review_count.toLocaleString() : '-';
-
-  if (d.monthly_trend && d.monthly_trend.length) {
-    var chart = initChart('chartTrend');
-    chart.setOption({
-      tooltip: tooltipStyle(),
-      grid: baseGrid({ top: 24, bottom: 40 }),
-      xAxis: Object.assign({ type: 'category', data: d.monthly_trend.map(function(x){return x.month;}), axisLabel: { interval: Math.floor(d.monthly_trend.length/8) } }, axisStyle()),
-      yAxis: Object.assign({ type: 'value' }, axisStyle()),
-      series: [{ type: 'line', data: d.monthly_trend.map(function(x){return x.sales;}), smooth: true, itemStyle: { color: window.AUTOPULSE.primary }, areaStyle: { color: 'rgba(44,123,229,.12)' } }]
-    });
-  }
-
-  var flow = document.getElementById('stageFlow');
-  flow.innerHTML = '';
-  d.stages.forEach(function (s) {
-    var cls = 'stage ' + (s.status === 'done' ? 'done' : (s.status === 'current' ? 'current' : ''));
-    var div = document.createElement('div');
-    div.className = cls;
-    div.innerHTML = '<div class="stage-no">Stage ' + s.id + '</div>' +
-                    '<div class="stage-name">' + s.name + '</div>' +
-                    '<div class="stage-en">' + s.en + '</div>';
-    flow.appendChild(div);
-  });
-
-  var list = document.getElementById('findings');
-  list.innerHTML = '';
-    d.findings.forEach(function (f) {
-      var li = document.createElement('li');
-      li.textContent = window.AUTOPULSE.lang === 'en' ? f.en : f.zh;
-      list.appendChild(li);
-    });
-
-  document.addEventListener('i18nChanged', function () {
-    list.innerHTML = '';
-    d.findings.forEach(function (f) {
-      var li = document.createElement('li');
-      li.textContent = window.AUTOPULSE.lang === 'en' ? f.en : f.zh;
-      list.appendChild(li);
-    });
-  });
-});
-</script>
-
 </body>
 </html>

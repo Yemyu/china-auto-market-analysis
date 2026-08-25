@@ -1,225 +1,226 @@
 {
   "kpis": {
-    "coverage_series": 669,
-    "forecast_wmape": 29.26,
-    "forecast_horizon": 24,
-    "alert_count": 17,
-    "brand_count": 74,
-    "eval_series": 150,
-    "review_count": 21950
+    "coverage_series": 345,
+    "forecast_wmape": 38.64,
+    "core_forecast_wmape": 38.71,
+    "baseline_wmape": 40.44,
+    "wmape_gain_pp": 1.8,
+    "wmape_relative_gain_pct": 4.45,
+    "forecast_horizon": 6,
+    "alert_count": 1,
+    "historical_alerts": 60,
+    "brand_count": 86,
+    "eval_series": 371,
+    "sales_series": 1017,
+    "config_series": 766,
+    "attribution_series": 736,
+    "attribution_rows": 2007,
+    "review_count": 24175
   },
   "monthly_trend": [
     {
-      "month": "2022-01",
-      "sales": 286059.0
-    },
-    {
-      "month": "2022-02",
-      "sales": 170364.0
-    },
-    {
-      "month": "2022-03",
-      "sales": 193286.0
-    },
-    {
       "month": "2022-04",
-      "sales": 104588.0
+      "sales": 626128.0
     },
     {
       "month": "2022-05",
-      "sales": 148407.0
+      "sales": 807116.0
     },
     {
       "month": "2022-06",
-      "sales": 258159.0
+      "sales": 1067168.0
     },
     {
       "month": "2022-07",
-      "sales": 213068.0
+      "sales": 1031117.0
     },
     {
       "month": "2022-08",
-      "sales": 268568.0
+      "sales": 1226290.0
     },
     {
       "month": "2022-09",
-      "sales": 128957.0
+      "sales": 1234979.0
     },
     {
       "month": "2022-10",
-      "sales": 163926.0
+      "sales": 1143189.0
     },
     {
       "month": "2022-11",
-      "sales": 131702.0
+      "sales": 1043201.0
     },
     {
       "month": "2022-12",
-      "sales": 137136.0
+      "sales": 1258033.0
     },
     {
       "month": "2023-01",
-      "sales": 82394.0
+      "sales": 831918.0
     },
     {
       "month": "2023-02",
-      "sales": 88212.0
+      "sales": 812052.0
     },
     {
       "month": "2023-03",
-      "sales": 119003.0
+      "sales": 1061340.0
     },
     {
       "month": "2023-04",
-      "sales": 94300.0
+      "sales": 1025329.0
     },
     {
       "month": "2023-05",
-      "sales": 71952.0
+      "sales": 1179692.0
     },
     {
       "month": "2023-06",
-      "sales": 88896.0
+      "sales": 1221092.0
     },
     {
       "month": "2023-07",
-      "sales": 77537.0
+      "sales": 966529.0
     },
     {
       "month": "2023-08",
-      "sales": 106804.0
+      "sales": 1175295.0
     },
     {
       "month": "2023-09",
-      "sales": 76784.0
+      "sales": 1181047.0
     },
     {
       "month": "2023-10",
-      "sales": 59512.0
+      "sales": 1319345.0
     },
     {
       "month": "2023-11",
-      "sales": 83700.0
+      "sales": 1152905.0
     },
     {
       "month": "2023-12",
-      "sales": 102755.0
+      "sales": 1552618.0
     },
     {
       "month": "2024-01",
-      "sales": 114777.0
+      "sales": 1287862.0
     },
     {
       "month": "2024-02",
-      "sales": 48550.0
+      "sales": 680475.0
     },
     {
       "month": "2024-03",
-      "sales": 65120.0
+      "sales": 1018727.0
     },
     {
       "month": "2024-04",
-      "sales": 63457.0
+      "sales": 866674.0
     },
     {
       "month": "2024-05",
-      "sales": 62175.0
+      "sales": 1062573.0
     },
     {
       "month": "2024-06",
-      "sales": 50418.0
+      "sales": 972368.0
     },
     {
       "month": "2024-07",
-      "sales": 46328.0
+      "sales": 1035117.0
     },
     {
       "month": "2024-08",
-      "sales": 42867.0
+      "sales": 1221509.0
     },
     {
       "month": "2024-09",
-      "sales": 39674.0
+      "sales": 1259598.0
     },
     {
       "month": "2024-10",
-      "sales": 130145.0
+      "sales": 1212852.0
     },
     {
       "month": "2024-11",
-      "sales": 131085.0
+      "sales": 1418034.0
     },
     {
       "month": "2024-12",
-      "sales": 125975.0
+      "sales": 1418404.0
     },
     {
       "month": "2025-01",
-      "sales": 6160.0
+      "sales": 1085645.0
     },
     {
       "month": "2025-02",
-      "sales": 23633.0
+      "sales": 890211.0
     },
     {
       "month": "2025-03",
-      "sales": 57837.0
+      "sales": 1214883.0
     },
     {
       "month": "2025-04",
-      "sales": 69342.0
+      "sales": 987878.0
     },
     {
       "month": "2025-05",
-      "sales": 125676.0
+      "sales": 844687.0
     },
     {
       "month": "2025-06",
-      "sales": 128689.0
+      "sales": 1188552.0
     },
     {
       "month": "2025-07",
-      "sales": 133110.0
+      "sales": 1200092.0
     },
     {
       "month": "2025-08",
-      "sales": 98373.0
+      "sales": 1283568.0
     },
     {
       "month": "2025-09",
-      "sales": 113856.0
+      "sales": 1415512.0
     },
     {
       "month": "2025-10",
-      "sales": 233999.0
+      "sales": 1382521.0
     },
     {
       "month": "2025-11",
-      "sales": 237840.0
+      "sales": 1311455.0
     },
     {
       "month": "2025-12",
-      "sales": 189571.0
+      "sales": 1323066.0
     },
     {
       "month": "2026-01",
-      "sales": 131719.0
+      "sales": 966913.0
     },
     {
       "month": "2026-02",
-      "sales": 99541.0
+      "sales": 619944.0
     },
     {
       "month": "2026-03",
-      "sales": 164611.0
+      "sales": 1001629.0
     },
     {
       "month": "2026-04",
-      "sales": 151784.0
+      "sales": 788058.0
     },
     {
       "month": "2026-05",
-      "sales": 148656.0
+      "sales": 821225.0
+    },
+    {
+      "month": "2026-06",
+      "sales": 856582.0
     }
   ],
   "stages": [
@@ -231,55 +232,55 @@
     },
     {
       "id": 2,
-      "name": "数据筛选与 EDA",
-      "en": "Screening & EDA",
+      "name": "严格时间切分",
+      "en": "Strict Time Split",
       "status": "done"
     },
     {
       "id": 3,
-      "name": "销量预测建模",
-      "en": "Sales Forecasting",
+      "name": "销量预测与消融",
+      "en": "Forecasting & Ablation",
       "status": "done"
     },
     {
       "id": 4,
-      "name": "舆情 ABSA 与归因",
-      "en": "ABSA & Attribution",
+      "name": "配置年度归因",
+      "en": "Annual Config Attribution",
       "status": "done"
     },
     {
       "id": 5,
-      "name": "情感融合·主题·预警",
-      "en": "Fusion · Topics · Alerts",
+      "name": "需求主题与预警",
+      "en": "Needs & Alerts",
       "status": "done"
     },
     {
       "id": 6,
-      "name": "看板交付",
-      "en": "Dashboard Delivery",
+      "name": "看板更新",
+      "en": "Dashboard Refresh",
       "status": "current"
     }
   ],
   "findings": [
     {
-      "zh": "销量预测最优基线：XGBoost 体积加权 WMAPE 为 29.26%",
-      "en": "Best sales forecast baseline: XGBoost volume-weighted WMAPE 29.26%"
+      "zh": "371车系六个月递归预测：冷启动混合模型全局WMAPE为38.64%",
+      "en": "371-series six-month recursive forecast: cold-start hybrid global WMAPE is 38.64%"
     },
     {
-      "zh": "舆情与销量存在弱相关，但品牌级 Granger 显著率仅 4%~15%",
-      "en": "Weak correlation between sentiment and sales; brand-level Granger significance 4-15%"
+      "zh": "DeepSeek丰富特征相对无舆情基线改善1.735个百分点，但Bootstrap区间跨0",
+      "en": "DeepSeek-rich improves 1.735 pp over baseline, but the bootstrap interval crosses zero"
     },
     {
-      "zh": "加入舆情特征后销量归因 R² 提升 +0.211",
-      "en": "Adding sentiment features improves sales attribution R² by +0.211"
+      "zh": "736车系年度归因中，配置将交叉验证R²从0.154提升到0.303",
+      "en": "Across 736 series, configuration raises annual-attribution CV R² from 0.154 to 0.303"
     },
     {
-      "zh": "情感融合预测未降低 WMAPE：舆情是同期/滞后指标，非先行指标",
-      "en": "Sentiment fusion does not lower WMAPE: sentiment is coincident/lagging, not leading"
+      "zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度",
+      "en": "Intelligence and comfort carry the highest complaint concentration"
     },
     {
-      "zh": "共触发 17 条口碑恶化预警，可作为声誉风险监测入口",
-      "en": "17 sentiment deterioration alerts triggered as reputation risk monitoring entry"
+      "zh": "截至2026-07，当前有效预警1条",
+      "en": "As of 2026-07, 1 active alert is detected"
     }
   ]
 }

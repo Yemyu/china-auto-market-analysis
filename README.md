@@ -2,7 +2,7 @@
   <a href="./README.md">🇨🇳 中文</a> &nbsp;|&nbsp; <a href="./README_EN.md">🌐 English</a>
 </p>
 
-<h1 align="center">AutoPulse：汽车销量预测与用户舆情分析</h1>
+<h1 align="center">中国汽车市场分析：销量预测、产品配置与用户需求</h1>
 
 <p align="center">
   多源汽车数据 + 用户口碑舆情 + 销量预测与归因 → 一套端到端分析流水线与交互式网页看板
@@ -15,7 +15,7 @@
 
 ## 项目简介
 
-**AutoPulse** 是一套面向汽车行业的数据洞察项目，把「太平洋汽车月度销量」与「车型配置参数（汽车之家/太平洋）」两类公开数据打通，先做**无舆情基线**（销量预测 + 配置归因），再接入用户口碑舆情（**Phase B**）。回答三个核心问题：
+**中国汽车市场分析**是一套面向汽车行业的数据洞察项目，把「太平洋汽车月度销量」与「车型配置参数（汽车之家/太平洋）」两类公开数据打通，先做**无舆情基线**（销量预测 + 配置归因），再接入用户口碑舆情（**Phase B**）。回答三个核心问题：
 
 1. **下个月能卖多少？** —— 用 ARIMA / Prophet / XGBoost / LSTM / 融合模型做销量预测。
 2. **用户舆情真的影响销量吗？** —— 用大模型做 ABSA（Aspect-Based Sentiment Analysis）逐维度情感分析，再用 SHAP / Granger 因果量化影响。
@@ -27,7 +27,7 @@
 
 ## 在线看板
 
-- 🌐 **在线演示**：https://yemyu.github.io/AutoPulse/
+- 🌐 **在线演示**：https://yemyu.github.io/china-auto-market-analysis/
 - 本地预览：`cd app && python -m http.server 8000`，浏览器打开 http://localhost:8000/
 
 > 完整环境安装、本地运行与数据更新见下方「快速开始」。
@@ -36,7 +36,7 @@
 
 ## 六阶段工作流
 
-项目按真实工作流拆成 6 个阶段，对应 `scripts/new_pipeline/` 下 `06_` ~ `20_` 流水线脚本与 `notebook/AutoPulse_Analysis.ipynb`。
+项目按真实工作流拆成 6 个阶段，对应 `scripts/new_pipeline/` 下 `06_` ~ `20_` 流水线脚本与 `notebook/China_Auto_Market_Analysis.ipynb`。
 
 > 当前已完成「无舆情基线」：阶段一~四（数据/筛选/月度预测 + 配置归因）。舆情相关的阶段五~六属于 **Phase B（待接入新数据）**，方法论已就绪，将在新口径（371 车系）下重做。
 
@@ -193,27 +193,40 @@ feature       ──series_name──┘
 
 ### 环境
 
-依赖已整理在 `requirements.txt`，用你习惯的 Python 环境（venv / conda / 全局均可）安装即可：
+项目统一使用 Conda 环境 `nlp-sentiment`，不使用系统 Python 或全局 pip 环境。依赖已整理在 `requirements.txt`：
 
 ```bash
-pip install -r requirements.txt
+conda activate nlp-sentiment
+python -m pip install -r requirements.txt
+```
+
+首次创建或同步环境时，使用仓库内的 `environment.yml`：
+
+```bash
+conda env update -n nlp-sentiment -f environment.yml --prune
+```
+
+不希望激活环境时，所有脚本也可以显式执行：
+
+```bash
+conda run -n nlp-sentiment python scripts/new_pipeline/18_build_target_review_corpus.py
 ```
 
 ### 启动网页看板（本地）
 
 ```bash
-cd app && python -m http.server 8000
+cd app && conda run -n nlp-sentiment python -m http.server 8000
 ```
 
 打开浏览器访问 http://localhost:8000/ 即可预览。（看板是纯静态站点，不依赖任何后端服务。）
 
 ### 在线看板
 
-- 🌐 **在线演示**：https://yemyu.github.io/AutoPulse/
+- 🌐 **在线演示**：https://yemyu.github.io/china-auto-market-analysis/
 - 看板所需数据已预烘焙在 `app/static/data/*.json`，**无需重跑任何采集或建模脚本即可直接查看**。如需在本地更新数据桥（需已跑过完整管线、本地存在 `data/processed_new/*.csv`），运行：
 
 ```bash
-python app/build_dashboard_data.py
+conda run -n nlp-sentiment python app/build_dashboard_data.py
 ```
 
 ---
@@ -221,7 +234,7 @@ python app/build_dashboard_data.py
 ## 目录结构
 
 ```
-AutoPulse/
+china-auto-market-analysis/
 ├── app/                           # 阶段六 · 纯静态网页看板（HTML + ECharts，GitHub Pages 部署）
 │   ├── index.html / forecast.html / …  # 7 屏静态页面
 │   ├── build_dashboard_data.py    # 预烘焙 JSON 数据桥
@@ -236,8 +249,8 @@ AutoPulse/
 ├── figures/                       # 分析结果图、看板截图与交互演示（入库）
 ├── LICENSE                        # MIT 许可证
 ├── notebook/                      # 中英双语数据分析笔记本
-│   ├── AutoPulse_Analysis.ipynb
-│   └── AutoPulse_Analysis_EN.ipynb
+│   ├── China_Auto_Market_Analysis.ipynb
+│   └── China_Auto_Market_Analysis_EN.ipynb
 ├── scripts/                       # 01_~20_ 流水线脚本
 ├── config/                        # 配置与 .env 模板
 ├── requirements.txt               # Python 依赖
