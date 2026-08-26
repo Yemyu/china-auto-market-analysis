@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Full-371 XGBoost sentiment ablation with fixed-origin primary testing.
-
-Model capacity is selected by recursive six-month validation WMAPE, not by
-row-wise validation with realised within-horizon sales lags. The final model is
-refit on point-in-time train+validation rows, then recursively forecasts the
-six-month test horizon. Fixed-origin sentiment is the primary fair comparison;
-rolling DeepSeek updates are reported only as a supplemental business scenario.
-"""
+"""Evaluate review-feature variants on the 371-series forecast panel."""
 from __future__ import annotations
 
 import os
@@ -32,22 +25,22 @@ import _font_setup  # noqa: F401
 import _model_utils as mu
 
 
-BASE = Path(__file__).resolve().parents[2]
-SENTIMENT = BASE / "data" / "sentiment_new" / "processed"
+BASE = Path(__file__).resolve().parents[1]
+SENTIMENT = BASE / "data" / "reviews" / "processed"
 LOCAL_ROLLING = SENTIMENT / "sentiment_features_by_series_month.csv"
-DEEP_FIXED = SENTIMENT / "deepseek_features_by_series_month_fixed_origin.csv"
-DEEP_ROLLING = SENTIMENT / "deepseek_features_by_series_month_rolling.csv"
-OUT = BASE / "data" / "processed_new" / "stage3"
-FIG = BASE / "figures_new"
+REVIEW_FIXED = SENTIMENT / "review_features_by_series_month_fixed_origin.csv"
+REVIEW_ROLLING = SENTIMENT / "review_features_by_series_month_rolling.csv"
+OUT = BASE / "data" / "processed" / "forecast"
+FIG = BASE / "assets/analysis"
 
-SUMMARY = OUT / "xgb_deepseek_full371_summary.csv"
-VALIDATION_GRID = OUT / "xgb_deepseek_full371_validation_grid.csv"
-PREDICTIONS = OUT / "xgb_deepseek_full371_preds.csv"
-SERIES_METRICS = OUT / "xgb_deepseek_full371_series_metrics.csv"
-COVERAGE = OUT / "xgb_deepseek_full371_coverage.csv"
-FEATURE_MANIFEST = OUT / "xgb_deepseek_full371_feature_manifest.csv"
-RUN_SUMMARY = OUT / "xgb_deepseek_full371_run_summary.json"
-FIGURE = FIG / "xgb_deepseek_full371_ablation.png"
+SUMMARY = OUT / "review_feature_ablation_summary.csv"
+VALIDATION_GRID = OUT / "review_feature_validation_grid.csv"
+PREDICTIONS = OUT / "review_feature_predictions.csv"
+SERIES_METRICS = OUT / "review_feature_series_metrics.csv"
+COVERAGE = OUT / "review_feature_coverage.csv"
+FEATURE_MANIFEST = OUT / "review_feature_manifest.csv"
+RUN_SUMMARY = OUT / "review_feature_run_summary.json"
+FIGURE = FIG / "forecast_review_feature_ablation.png"
 
 EXPECTED_SERIES = 371
 TREE_GRID = [50, 100, 200, 400, 700]
@@ -79,20 +72,20 @@ def normalize_dates(frame: pd.DataFrame) -> pd.DataFrame:
 
 
 def read_external_tables() -> tuple[pd.DataFrame, pd.DataFrame, pd.DataFrame, list[str], list[str]]:
-    for path in (LOCAL_ROLLING, DEEP_FIXED, DEEP_ROLLING):
+    for path in (LOCAL_ROLLING, REVIEW_FIXED, REVIEW_ROLLING):
         if not path.exists():
             raise FileNotFoundError(path)
     local = normalize_dates(pd.read_csv(LOCAL_ROLLING, low_memory=False))
-    deep_fixed = normalize_dates(pd.read_csv(DEEP_FIXED, low_memory=False))
-    deep_rolling = normalize_dates(pd.read_csv(DEEP_ROLLING, low_memory=False))
-    for name, table in (("local", local), ("deep_fixed", deep_fixed), ("deep_rolling", deep_rolling)):
+    review_fixed = normalize_dates(pd.read_csv(REVIEW_FIXED, low_memory=False))
+    review_rolling = normalize_dates(pd.read_csv(REVIEW_ROLLING, low_memory=False))
+    for name, table in (("local", local), ("review_fixed", review_fixed), ("review_rolling", review_rolling)):
         if table.duplicated(["series_name", "date"]).any():
             raise ValueError(f"{name} table contains duplicate series/month rows")
     local_features = [column for column in local.columns if column not in ("series_name", "date")]
-    deep_features = [column for column in deep_fixed.columns if column.startswith("deepseek_")]
-    if set(deep_features) != {column for column in deep_rolling.columns if column.startswith("deepseek_")}:
-        raise ValueError("Fixed and rolling DeepSeek schemas differ")
-    return local, deep_fixed, deep_rolling, local_features, deep_features
+    review_features = [column for column in review_fixed.columns if column.startswith("review_")]
+    if set(review_features) != {column for column in review_rolling.columns if column.startswith("review_")}:
+        raise ValueError("Fixed and rolling review-feature schemas differ")
+    return local, review_fixed, review_rolling, local_features, review_features
 
 
 def attach_by_month(frame: pd.DataFrame, table: pd.DataFrame, columns: list[str]) -> pd.DataFrame:
@@ -118,7 +111,7 @@ def attach_anchor(frame: pd.DataFrame, table: pd.DataFrame, columns: list[str], 
 
 
 def build_frames() -> tuple[dict[str, pd.DataFrame], dict[str, list[str]], pd.DataFrame]:
-    local, deep_fixed, deep_rolling, local_features, deep_features = read_external_tables()
+    local, review_fixed, review_rolling, local_features, review_features = read_external_tables()
     train, validation, test = mu.load_splits()
     train = normalize_dates(train)
     validation = normalize_dates(validation)
@@ -127,16 +120,16 @@ def build_frames() -> tuple[dict[str, pd.DataFrame], dict[str, list[str]], pd.Da
         raise ValueError("Test split no longer contains all 371 series")
 
     train_roll = attach_by_month(train, local, local_features)
-    train_roll = attach_by_month(train_roll, deep_rolling, deep_features)
+    train_roll = attach_by_month(train_roll, review_rolling, review_features)
     val_roll = attach_by_month(validation, local, local_features)
-    val_roll = attach_by_month(val_roll, deep_rolling, deep_features)
+    val_roll = attach_by_month(val_roll, review_rolling, review_features)
     test_roll = attach_by_month(test, local, local_features)
-    test_roll = attach_by_month(test_roll, deep_rolling, deep_features)
+    test_roll = attach_by_month(test_roll, review_rolling, review_features)
 
     val_fixed = attach_anchor(validation, local, local_features, "2025-07-01")
-    val_fixed = attach_by_month(val_fixed, deep_fixed, deep_features)
+    val_fixed = attach_by_month(val_fixed, review_fixed, review_features)
     test_fixed = attach_anchor(test, local, local_features, "2026-01-01")
-    test_fixed = attach_by_month(test_fixed, deep_fixed, deep_features)
+    test_fixed = attach_by_month(test_fixed, review_fixed, review_features)
 
     platform = [column for column in local_features if column.startswith("platform_rating_")]
     local_text = [
@@ -145,29 +138,29 @@ def build_frames() -> tuple[dict[str, pd.DataFrame], dict[str, list[str]], pd.Da
             column.endswith("_polarity_180d_mean") or column.endswith("_mentioned_180d_count")
         )
     ]
-    deep_context = [
-        "deepseek_review_count_prior_all", "deepseek_review_count_180d",
-        "deepseek_available_prior", "deepseek_available_180d",
+    review_context = [
+        "review_count_prior_all", "review_count_180d",
+        "review_available_prior", "review_available_180d",
     ]
-    deep_core = unique(deep_context + [
-        column for column in deep_features
+    review_core = unique(review_context + [
+        column for column in review_features
         if column.endswith("_score_prior_mean")
         or column.endswith("_score_180d_mean")
         or column in (
-            "deepseek_overall_aspect_score_180d_mean",
-            "deepseek_any_positive_180d_rate",
-            "deepseek_any_negative_180d_rate",
+            "review_overall_aspect_score_180d_mean",
+            "review_any_positive_180d_rate",
+            "review_any_negative_180d_rate",
         )
     ])
-    if not platform or not local_text or not deep_core:
+    if not platform or not local_text or not review_core:
         raise ValueError("One or more sentiment feature families are empty")
 
     candidate_families = {
         "platform_rating": platform,
         "local_context": LOCAL_CONTEXT,
         "local_lexicon": local_text,
-        "deepseek_core": deep_core,
-        "deepseek_rich": deep_features,
+        "review_core": review_core,
+        "review_rich": review_features,
     }
     manifest_rows: list[dict[str, Any]] = []
     usable_by_family: dict[str, list[str]] = {}
@@ -192,16 +185,16 @@ def build_frames() -> tuple[dict[str, pd.DataFrame], dict[str, list[str]], pd.Da
     platform = usable_by_family["platform_rating"]
     local_context = usable_by_family["local_context"]
     local_text = usable_by_family["local_lexicon"]
-    deep_core = usable_by_family["deepseek_core"]
-    deep_features = usable_by_family["deepseek_rich"]
+    review_core = usable_by_family["review_core"]
+    review_features = usable_by_family["review_rich"]
 
     versions = {
         "BASE": list(mu.FEAT_COLS),
         "PLATFORM_RATING_FIXED": unique(list(mu.FEAT_COLS) + local_context + platform),
         "LOCAL_LEXICON_FIXED": unique(list(mu.FEAT_COLS) + local_context + local_text),
-        "DEEPSEEK_CORE_FIXED": unique(list(mu.FEAT_COLS) + deep_core),
-        "DEEPSEEK_RICH_FIXED": unique(list(mu.FEAT_COLS) + deep_features),
-        "ALL_SENTIMENT_FIXED": unique(list(mu.FEAT_COLS) + platform + local_text + deep_core),
+        "REVIEW_TEXT_FIXED": unique(list(mu.FEAT_COLS) + review_core),
+        "REVIEW_RICH_FIXED": unique(list(mu.FEAT_COLS) + review_features),
+        "ALL_SENTIMENT_FIXED": unique(list(mu.FEAT_COLS) + platform + local_text + review_core),
     }
     frames = {
         "train_roll": train_roll,
@@ -288,8 +281,8 @@ def recursive_predictions(
                 "actual": float(row[mu.TARGET]),
                 "pred": float(pred),
                 "cold_start_at_forecast_origin": cold_start,
-                "deepseek_available_prior": int(row["deepseek_available_prior"]),
-                "deepseek_available_180d": int(row["deepseek_available_180d"]),
+                "review_available_prior": int(row["review_available_prior"]),
+                "review_available_180d": int(row["review_available_180d"]),
             })
     result = pd.DataFrame(rows)
     expected = panel.loc[panel["split"].eq(forecast_split), ["series_name", "date"]]
@@ -371,7 +364,7 @@ def summary_table(
     rows: list[dict[str, Any]] = []
     for (version, scenario), group in predictions.groupby(["version", "scenario"], sort=False):
         version_metrics = metrics.loc[metrics["version"].eq(version)]
-        source_version = "DEEPSEEK_CORE_FIXED" if version == "DEEPSEEK_CORE_ROLLING" else version
+        source_version = "REVIEW_TEXT_FIXED" if version == "REVIEW_TEXT_ROLLING" else version
         rows.append({
             "version": version,
             "scenario": scenario,
@@ -398,10 +391,10 @@ def coverage_table(predictions: pd.DataFrame) -> pd.DataFrame:
             "all_test_rows": pd.Series(True, index=version_rows.index),
             "historical_series": ~version_rows["cold_start_at_forecast_origin"],
             "cold_start_series": version_rows["cold_start_at_forecast_origin"],
-            "any_prior_review": version_rows["deepseek_available_prior"].eq(1),
-            "no_prior_review": version_rows["deepseek_available_prior"].eq(0),
-            "recent_180d_review": version_rows["deepseek_available_180d"].eq(1),
-            "no_recent_180d_review": version_rows["deepseek_available_180d"].eq(0),
+            "any_prior_review": version_rows["review_available_prior"].eq(1),
+            "no_prior_review": version_rows["review_available_prior"].eq(0),
+            "recent_180d_review": version_rows["review_available_180d"].eq(1),
+            "no_recent_180d_review": version_rows["review_available_180d"].eq(0),
         }
         for group_name, mask in groups.items():
             part = version_rows.loc[mask]
@@ -485,14 +478,14 @@ def main() -> None:
             flush=True,
         )
 
-    core_version = "DEEPSEEK_CORE_FIXED"
+    core_version = "REVIEW_TEXT_FIXED"
     rolling_predictions = recursive_predictions(
         final_models[core_version],
         rolling_test_panel,
         versions[core_version],
         "test",
         ("train", "val"),
-        "DEEPSEEK_CORE_ROLLING",
+        "REVIEW_TEXT_ROLLING",
         "rolling_origin_supplement",
     )
     prediction_frames.append(rolling_predictions)

@@ -1,9 +1,5 @@
 #!/usr/bin/env python3
-"""New-scope dashboard payloads built from the 371/736-series pipeline.
-
-The existing static pages and JSON filenames are preserved.  This module only
-replaces their data sources and conclusions; it does not create a new app.
-"""
+"""Assemble the dashboard payloads from audited analysis outputs."""
 from __future__ import annotations
 
 import json
@@ -33,24 +29,24 @@ MODEL_LABELS = {
     "BASE": ("销量基线", "Sales baseline"),
     "PLATFORM_RATING_FIXED": ("平台评分", "Platform ratings"),
     "LOCAL_LEXICON_FIXED": ("本地词典", "Local lexicon"),
-    "DEEPSEEK_CORE_FIXED": ("文本情感特征", "Text sentiment"),
-    "DEEPSEEK_RICH_FIXED": ("用户口碑增强", "User-review enhanced"),
+    "REVIEW_TEXT_FIXED": ("文本情感特征", "Text sentiment"),
+    "REVIEW_RICH_FIXED": ("用户口碑增强", "User-review enhanced"),
     "ALL_SENTIMENT_FIXED": ("全部口碑特征", "Combined review features"),
-    "DEEPSEEK_CORE_ROLLING": ("滚动口碑特征", "Rolling review signals"),
-    "DEEPSEEK_RICH_FIXED_COLD_HYBRID": ("口碑增强＋冷启动", "Review enhanced + cold-start"),
+    "REVIEW_TEXT_ROLLING": ("滚动口碑特征", "Rolling review signals"),
+    "REVIEW_RICH_COLD_START": ("口碑增强＋冷启动", "Review enhanced + cold-start"),
 }
 FEATURE_FAMILY_LABELS = {
     "sales_lag_roll": ("历史销量", "Sales history"),
     "calendar": ("日历", "Calendar"),
     "configuration": ("产品配置", "Product configuration"),
-    "deepseek_observation_context": ("评论覆盖", "Review coverage"),
-    "deepseek_expanding_score": ("历史评价", "Historical review score"),
-    "deepseek_recent_score": ("近期评价", "Recent review score"),
-    "deepseek_positive_rate": ("正面比例", "Positive share"),
-    "deepseek_negative_rate": ("负面比例", "Negative share"),
-    "deepseek_mention_count": ("需求提及量", "Need mentions"),
-    "deepseek_mention_rate": ("需求提及率", "Mention share"),
-    "deepseek_overall": ("评论特征", "Review features"),
+    "review_observation_context": ("评论覆盖", "Review coverage"),
+    "review_expanding_score": ("历史评价", "Historical review score"),
+    "review_recent_score": ("近期评价", "Recent review score"),
+    "review_positive_rate": ("正面比例", "Positive share"),
+    "review_negative_rate": ("负面比例", "Negative share"),
+    "review_mention_count": ("需求提及量", "Need mentions"),
+    "review_mention_rate": ("需求提及率", "Mention share"),
+    "review_overall": ("评论特征", "Review features"),
 }
 CONFIG_LABELS = {
     "official_price_wan": ("官方价格", "Official price"),
@@ -88,8 +84,8 @@ def _feature_label(feature: str) -> tuple[str, str]:
         "lag_3": ("前3月销量", "Sales lag 3"), "roll_mean_3": ("近3月销量均值", "3-month sales mean"),
         "roll_mean_6": ("近6月销量均值", "6-month sales mean"), "month_sin": ("月份季节性（正弦）", "Month seasonality (sin)"),
         "month_cos": ("月份季节性（余弦）", "Month seasonality (cos)"), "year": ("年份", "Year"),
-        "deepseek_review_count_prior_all": ("历史评论数量", "Prior review count"),
-        "deepseek_review_count_180d": ("近180天评论数量", "180-day review count"),
+        "review_count_prior_all": ("历史评论数量", "Prior review count"),
+        "review_count_180d": ("近180天评论数量", "180-day review count"),
     }
     if feature in simple:
         return simple[feature]
@@ -126,7 +122,7 @@ def _feature_label(feature: str) -> tuple[str, str]:
     if feature == "manufacturer_freq":
         return "制造商频次", "Manufacturer frequency"
     for aspect in ASPECTS:
-        if f"deepseek_{aspect}_" in feature:
+        if f"review_{aspect}_" in feature:
             zh, en = ASPECT_ZH[aspect], ASPECT_EN[aspect]
             suffixes = {
                 "score_prior_mean": ("长期情感", "expanding sentiment"),
@@ -142,11 +138,11 @@ def _feature_label(feature: str) -> tuple[str, str]:
     return CONFIG_LABELS.get(feature, (feature, feature))
 
 
-class DashboardV2:
+class DashboardData:
     def __init__(self, root: str | Path, brand_en: Callable[[str], str], series_en: Callable[[str, str | None], str]):
         self.root = Path(root)
-        self.new = self.root / "data" / "processed_new"
-        self.sentiment = self.root / "data" / "sentiment_new" / "processed"
+        self.processed = self.root / "data" / "processed"
+        self.reviews = self.root / "data" / "reviews" / "processed"
         self.brand_en = brand_en
         self.series_en = series_en
         self._panel: pd.DataFrame | None = None
@@ -155,7 +151,7 @@ class DashboardV2:
     def panel(self) -> pd.DataFrame:
         if self._panel is None:
             parts = [
-                _read(self.new / "splits" / f"{name}.csv", parse_dates=["date"])
+                _read(self.processed / "splits" / f"{name}.csv", parse_dates=["date"])
                 for name in ("train", "val", "test")
             ]
             self._panel = pd.concat(parts, ignore_index=True).sort_values(["series_name", "date"])
@@ -164,13 +160,13 @@ class DashboardV2:
     def aligned(self) -> pd.DataFrame:
         if self._aligned is None:
             panel = self.panel()
-            sentiment = _read(self.sentiment / "deepseek_features_by_series_month_rolling.csv", parse_dates=["date"])
-            columns = ["series_name", "date", "deepseek_review_count_180d", *[
-                f"deepseek_{aspect}_score_180d_mean" for aspect in ASPECTS
+            sentiment = _read(self.reviews / "review_features_by_series_month_rolling.csv", parse_dates=["date"])
+            columns = ["series_name", "date", "review_count_180d", *[
+                f"review_{aspect}_score_180d_mean" for aspect in ASPECTS
             ]]
             aligned = panel.merge(sentiment[columns], on=["series_name", "date"], how="left", validate="one_to_one")
             aligned = aligned.rename(columns={
-                f"deepseek_{aspect}_score_180d_mean": aspect for aspect in ASPECTS
+                f"review_{aspect}_score_180d_mean": aspect for aspect in ASPECTS
             })
             aligned["overall"] = aligned[ASPECTS].mean(axis=1, skipna=True)
             aligned["period"] = aligned["date"].dt.to_period("M").astype(str)
@@ -179,11 +175,11 @@ class DashboardV2:
 
     def overview(self) -> dict[str, Any]:
         panel = self.panel()
-        needs = _read_json(self.new / "stage5" / "user_needs_alerts_summary.json")
-        cold = _read_json(self.new / "stage3" / "cold_start_launch_curve_summary.json")
-        model_summary = _read(self.new / "stage3" / "xgb_deepseek_full371_summary.csv")
+        needs = _read_json(self.processed / "user_feedback" / "user_needs_alerts_summary.json")
+        cold = _read_json(self.processed / "forecast" / "cold_start_launch_curve_summary.json")
+        model_summary = _read(self.processed / "forecast" / "review_feature_ablation_summary.csv")
         baseline = float(model_summary.loc[model_summary["version"].eq("BASE"), "global_volume_weighted_WMAPE"].iloc[0])
-        rich = float(model_summary.loc[model_summary["version"].eq("DEEPSEEK_RICH_FIXED"), "global_volume_weighted_WMAPE"].iloc[0])
+        rich = float(model_summary.loc[model_summary["version"].eq("REVIEW_RICH_FIXED"), "global_volume_weighted_WMAPE"].iloc[0])
         hybrid = float(cold["hybrid_full371_global_WMAPE"])
         monthly = panel.groupby("date")["monthly_sales"].sum().sort_index()
         return {
@@ -220,17 +216,17 @@ class DashboardV2:
             "findings": [
                 {"zh": "371车系六个月递归预测：冷启动混合模型全局WMAPE为38.64%", "en": "371-series six-month recursive forecast: cold-start hybrid global WMAPE is 38.64%"},
                 {"zh": "用户口碑增强相对销量基线改善1.735个百分点，但Bootstrap区间跨0", "en": "User-review features improve 1.735 pp over the sales baseline, but the bootstrap interval crosses zero"},
-                {"zh": "736车系年度归因中，配置将交叉验证R²从0.154提升到0.303", "en": "Across 736 series, configuration raises annual-attribution CV R² from 0.154 to 0.303"},
+                {"zh": "736车系年度归因中，配置将交叉验证R²从0.156提升到0.300", "en": "Across 736 series, configuration raises annual-attribution CV R² from 0.156 to 0.300"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
                 {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前有效预警{needs['latest_active_alerts']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} active alert is detected"},
             ],
         }
 
     def forecast(self) -> dict[str, Any]:
-        summary = _read(self.new / "stage3" / "xgb_deepseek_full371_summary.csv")
-        shap = _read(self.new / "stage3" / "xgb_deepseek_full371_shap_importance.csv")
-        hybrid = _read(self.new / "stage3" / "xgb_deepseek_cold_hybrid_preds.csv", parse_dates=["date"])
-        cold = _read_json(self.new / "stage3" / "cold_start_launch_curve_summary.json")
+        summary = _read(self.processed / "forecast" / "review_feature_ablation_summary.csv")
+        shap = _read(self.processed / "forecast" / "review_feature_shap_importance.csv")
+        hybrid = _read(self.processed / "forecast" / "cold_start_hybrid_predictions.csv", parse_dates=["date"])
+        cold = _read_json(self.processed / "forecast" / "cold_start_launch_curve_summary.json")
         models: list[dict[str, Any]] = []
         for _, row in summary.sort_values("global_volume_weighted_WMAPE").iterrows():
             zh, en = MODEL_LABELS.get(row["version"], (row["version"], row["version"]))
@@ -241,7 +237,7 @@ class DashboardV2:
                 "mae": None, "color": PALETTE[len(models) % len(PALETTE)],
                 "scenario": str(row["scenario"]),
             })
-        zh, en = MODEL_LABELS["DEEPSEEK_RICH_FIXED_COLD_HYBRID"]
+        zh, en = MODEL_LABELS["REVIEW_RICH_COLD_START"]
         models.append({
             "name": zh, "name_zh": zh, "name_en": en,
             "wmape_vol": round(float(cold["hybrid_full371_global_WMAPE"]), 4),
@@ -297,9 +293,9 @@ class DashboardV2:
         }
 
     def absa(self) -> dict[str, Any]:
-        summary = _read(self.new / "stage5" / "user_need_aspect_summary.csv").set_index("aspect")
-        reviews = _read(self.sentiment / "unified_deepseek_absa_review_features.csv", parse_dates=["publish_time"])
-        monitoring = _read_json(self.new / "stage5" / "user_needs_alerts_summary.json")
+        summary = _read(self.processed / "user_feedback" / "user_need_aspect_summary.csv").set_index("aspect")
+        reviews = _read(self.reviews / "review_aspect_labels.csv", parse_dates=["publish_time"])
+        monitoring = _read_json(self.processed / "user_feedback" / "user_needs_alerts_summary.json")
         cutoff = pd.Timestamp(monitoring["latest_completed_monitoring_month"]) + pd.Timedelta(days=1)
         reviews = reviews.loc[reviews["publish_time"].between(pd.Timestamp("2022-01-01"), cutoff, inclusive="left")].copy()
         reviews["period"] = reviews["publish_time"].dt.to_period("M").astype(str)
@@ -307,7 +303,7 @@ class DashboardV2:
         monthly: dict[str, pd.Series] = {}
         for index, aspect in enumerate(ASPECTS):
             mentioned = reviews[f"uniform_local_{aspect}_mentioned"].eq(1)
-            values = pd.to_numeric(reviews[f"deepseek_{aspect}_raw_polarity"], errors="coerce").where(mentioned)
+            values = pd.to_numeric(reviews[f"review_{aspect}_raw_polarity"], errors="coerce").where(mentioned)
             valid = values.isin([-1, 0, 1])
             values = values.where(valid)
             row = summary.loc[aspect]
@@ -349,8 +345,8 @@ class DashboardV2:
         }
 
     def attribution(self) -> dict[str, Any]:
-        ablation = _read(self.new / "stage4" / "config_attribution_ablation.csv")
-        importance = _read(self.new / "stage4" / "config_importance_annual.csv")
+        ablation = _read(self.processed / "product" / "config_attribution_ablation.csv")
+        importance = _read(self.processed / "product" / "config_importance_annual.csv")
         features = []
         for index, (_, row) in enumerate(importance.loc[importance["block"].eq("config")].head(15).iterrows()):
             zh, en = _feature_label(str(row["feature"]))
@@ -386,18 +382,18 @@ class DashboardV2:
 
     def forecast_evidence(self) -> dict[str, Any]:
         aligned = self.aligned()
-        bootstrap = _read(self.new / "stage3" / "xgb_deepseek_full371_bootstrap.csv")
+        bootstrap = _read(self.processed / "forecast" / "forecast_robustness_bootstrap.csv")
         comparison = bootstrap.loc[
             bootstrap["comparator"].eq("BASE")
-            & bootstrap["candidate"].isin(["PLATFORM_RATING_FIXED", "LOCAL_LEXICON_FIXED", "DEEPSEEK_CORE_FIXED", "DEEPSEEK_RICH_FIXED"])
+            & bootstrap["candidate"].isin(["PLATFORM_RATING_FIXED", "LOCAL_LEXICON_FIXED", "REVIEW_TEXT_FIXED", "REVIEW_RICH_FIXED"])
         ].sort_values("bootstrap_probability_candidate_better", ascending=False)
         evidence = {"aspects": [], "sig_rates": []}
         for _, row in comparison.iterrows():
             zh, en = MODEL_LABELS[str(row["candidate"])]
             evidence["aspects"].append({"zh": zh, "en": en})
             evidence["sig_rates"].append(round(float(row["bootstrap_probability_candidate_better"]), 4))
-        model_summary = _read(self.new / "stage3" / "xgb_deepseek_full371_summary.csv")
-        selected_versions = ["BASE", "PLATFORM_RATING_FIXED", "DEEPSEEK_CORE_FIXED", "DEEPSEEK_RICH_FIXED"]
+        model_summary = _read(self.processed / "forecast" / "review_feature_ablation_summary.csv")
+        selected_versions = ["BASE", "PLATFORM_RATING_FIXED", "REVIEW_TEXT_FIXED", "REVIEW_RICH_FIXED"]
         fusion = []
         for version in selected_versions:
             row = model_summary.loc[model_summary["version"].eq(version)].iloc[0]
@@ -416,7 +412,7 @@ class DashboardV2:
             market_rows.append({
                 "period": period,
                 "sales": float(group["monthly_sales"].sum()),
-                "sentiment": _weighted_mean(group["overall"], group["deepseek_review_count_180d"]),
+                "sentiment": _weighted_mean(group["overall"], group["review_count_180d"]),
             })
         return {
             "granger": evidence,
@@ -435,8 +431,8 @@ class DashboardV2:
         }
 
     def alerts(self) -> dict[str, Any]:
-        alerts = _read(self.new / "stage5" / "sentiment_alerts.csv", parse_dates=["information_cutoff_inclusive"])
-        summary = _read_json(self.new / "stage5" / "user_needs_alerts_summary.json")
+        alerts = _read(self.processed / "user_feedback" / "sentiment_alerts.csv", parse_dates=["information_cutoff_inclusive"])
+        summary = _read_json(self.processed / "user_feedback" / "user_needs_alerts_summary.json")
         risk_labels = {"high": "高危", "medium": "中危", "low": "低危"}
         rows = []
         for _, row in alerts.sort_values(["information_cutoff_inclusive", "score_change"], ascending=[False, True]).iterrows():
@@ -507,7 +503,7 @@ class DashboardV2:
         aligned = self.aligned()
         aligned = aligned.loc[aligned["overall"].notna()].copy()
         out: dict[str, Any] = {"brands": [], "brand_en": {}, "market_radar": {}, "data": {}}
-        weights = aligned["deepseek_review_count_180d"]
+        weights = aligned["review_count_180d"]
         out["market_radar"] = {
             aspect: round(_weighted_mean(aligned[aspect], weights), 3) for aspect in ASPECTS
         }
@@ -517,10 +513,10 @@ class DashboardV2:
                 monthly_rows.append({
                     "period": period,
                     "sales": float(group["monthly_sales"].sum()),
-                    "sentiment": _weighted_mean(group["overall"], group["deepseek_review_count_180d"]),
+                    "sentiment": _weighted_mean(group["overall"], group["review_count_180d"]),
                 })
             radar = {
-                aspect: round(_weighted_mean(brand_rows[aspect], brand_rows["deepseek_review_count_180d"]), 3)
+                aspect: round(_weighted_mean(brand_rows[aspect], brand_rows["review_count_180d"]), 3)
                 for aspect in ASPECTS
             }
             ranks = []
@@ -532,7 +528,7 @@ class DashboardV2:
                     "id": str(series_name), "name": str(series_name),
                     "series_en": self.series_en(str(series_name), str(brand)),
                     "avg_monthly": round(float(active["monthly_sales"].mean()), 1),
-                    "avg_sent": round(_weighted_mean(group["overall"], group["deepseek_review_count_180d"]), 3),
+                    "avg_sent": round(_weighted_mean(group["overall"], group["review_count_180d"]), 3),
                 })
             ranks.sort(key=lambda row: row["avg_monthly"], reverse=True)
             out["data"][str(brand)] = {

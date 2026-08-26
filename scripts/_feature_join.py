@@ -1,25 +1,11 @@
 #!/usr/bin/env python3
-"""
-_feature_join.py — 共享的正确配置接入模块 (2026-08-12 修正)
-
-背景: 旧版 new_pipeline 用 data/processed_new/series_config.csv 作为配置源,
-但该文件把 feature.csv 里「同车系不同年份」的行误当「不同 trim」聚合
-(n_trims 实为年份数 / price_min_max 实为跨年调价 / has_ev 实为跨年能源变更 /
-*_cov 实为跨年配备变化), 语义错误, 已被废弃。
-
-本模块直接从 data/raw/feature.csv 取配置, 按 (series_name, year) 精确 join 到
-月度面板, 配置随年份更新(换代/改款能反映), 不压扁、不依赖错口径中间文件。
-
-提供:
-  CFG_NUM / CFG_CAT / CFG_COLS  配置特征列名
-  join_cfg(sm)                  把配置 join 进月度面板(限定 feature 主表车系, 带同系跨年兜底)
-"""
+"""Join annual specifications to the monthly sales panel without future fill."""
 import os
 
 import numpy as np
 import pandas as pd
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FEAT = os.path.join(BASE, "data", "raw", "feature.csv")
 
 # 连续数值配置特征
@@ -50,15 +36,7 @@ def _load_cfg_frame():
 
 
 def join_cfg(sm):
-    """Left-join 配置到月度面板 sm (需含 series_name, year 列)。
-
-    - 只保留 feature 主表里的车系(绝不用主表外的车充数)
-    - 按 (series_name, year) 精确命中
-    - **因果回退(防泄漏)**: 该(车系,年)无记录时, 取同车系『年份 <= 当前行年份』的
-      最近一条配置; 绝不用未来年份(如 2026)的配置去填过去(如 2022)的月份。
-      (旧版用「同车系最近一年」= 最新年份兜底, 会把换代后的新配置泄漏给历史月, 已修正)
-    - 返回仅含配置齐全的行
-    """
+    """Join by series and year, falling back only to an earlier specification."""
     fk = _load_cfg_frame()
     fs = set(fk["series_name"])
     sm = sm[sm["series_name"].isin(fs)].copy()

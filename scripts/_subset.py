@@ -1,27 +1,19 @@
 #!/usr/bin/env python3
-"""Stage 3 — shared, time-eligible representative evaluation cohort.
+"""Build the shared 150-series cohort used for multi-model comparison.
 
-The 371 series with both monthly sales and configuration data are the Leg-B
-*population*.  Forecast-model comparisons are intentionally run on a smaller,
-stratified cohort because ARIMA/Prophet are fitted once per series.  This file
-builds that cohort deterministically and, crucially, makes every model use the
-same time-eligible series.
-
-Eligibility is decided from the authoritative train/val/test files, not just
-from total lifetime months: a selected series must have enough usable training
-history and all six validation and six test months.  This prevents a new model
-from silently evaluating a different subset from the other models.
+Eligible series need at least 24 training months and complete six-month
+validation and test windows. Sampling is deterministic and stratified.
 """
 import os
 
 import numpy as np
 import pandas as pd
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-SALES = os.path.join(BASE, "data", "processed_new", "sales_filtered_24m.csv")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+SALES = os.path.join(BASE, "data", "processed", "sales_filtered_24m.csv")
 FEAT = os.path.join(BASE, "data", "raw", "feature.csv")
-SPLITS = os.path.join(BASE, "data", "processed_new", "splits")
-SUBSET_CSV = os.path.join(BASE, "data", "processed_new", "subset_150.csv")
+SPLITS = os.path.join(BASE, "data", "processed", "splits")
+SUBSET_CSV = os.path.join(BASE, "data", "processed", "subset_150.csv")
 N_EVAL = 150
 MIN_TRAIN_MONTHS = 24
 VAL_MONTHS = 6
@@ -35,11 +27,9 @@ def _time_eligibility() -> pd.DataFrame:
         path = os.path.join(SPLITS, f"{split}.csv")
         if not os.path.exists(path):
             raise FileNotFoundError(
-                f"Missing {path}; run scripts/new_pipeline/06_make_splits.py first."
+                f"Missing {path}; run scripts/06_make_splits.py first."
             )
         d = pd.read_csv(path, parse_dates=["date"])
-        # Unique months rather than raw rows: one series may never contribute
-        # more than one observation per month, but this keeps the invariant explicit.
         parts[split] = d.groupby("series_name")["date"].nunique().rename(f"{split}_months")
 
     cov = pd.concat(parts.values(), axis=1).fillna(0).astype(int).reset_index()
@@ -156,8 +146,6 @@ def build_stratified_subset(n=N_EVAL):
 
 
 def load_subset(n=N_EVAL):
-    # The old cached file was based only on lifetime coverage.  Regenerate it
-    # once so every modelling script gets the corrected common cohort.
     required = {"series_name", "train_months", "val_months", "test_months"}
     if not os.path.exists(SUBSET_CSV) or not required <= set(pd.read_csv(SUBSET_CSV, nrows=0).columns):
         build_stratified_subset(n)

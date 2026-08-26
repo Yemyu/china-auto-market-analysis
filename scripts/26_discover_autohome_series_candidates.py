@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Discover Autohome series-ID candidates through its public suggestion API.
-
-Discovery is deliberately separate from acceptance.  This script records the
-official suggestions and marks only a unique normalised-name match as ready
-for endpoint verification.  Aliases, ambiguous names and IDs already assigned
-to another target are retained for manual review or missing-data handling.
-"""
+"""Discover Autohome series-ID candidates through the suggestion endpoint."""
 from __future__ import annotations
 
 import argparse
@@ -18,15 +12,15 @@ from urllib.parse import quote
 
 import pandas as pd
 
-BASE = Path(__file__).resolve().parents[2]
-PHASE_B = BASE / "data" / "processed_new" / "phase_b"
-SPLITS = BASE / "data" / "processed_new" / "splits"
-AVAILABILITY = BASE / "data" / "sentiment_new" / "processed" / "review_temporal_availability_by_series.csv"
-CANDIDATES = PHASE_B / "autohome_id_candidates.csv"
-RESOLUTIONS = PHASE_B / "autohome_id_resolutions.csv"
-EXCEPTIONS = PHASE_B / "sentiment_resolution_exceptions.csv"
-OUT = PHASE_B / "autohome_id_discovery.csv"
-SUMMARY = PHASE_B / "autohome_id_discovery_summary.json"
+BASE = Path(__file__).resolve().parents[1]
+COLLECTION_DIR = BASE / "data" / "processed" / "review_collection"
+SPLITS = BASE / "data" / "processed" / "splits"
+AVAILABILITY = BASE / "data" / "reviews" / "processed" / "review_temporal_availability_by_series.csv"
+CANDIDATES = COLLECTION_DIR / "autohome_id_candidates.csv"
+RESOLUTIONS = COLLECTION_DIR / "autohome_id_resolutions.csv"
+EXCEPTIONS = COLLECTION_DIR / "sentiment_resolution_exceptions.csv"
+OUT = COLLECTION_DIR / "autohome_id_discovery.csv"
+SUMMARY = COLLECTION_DIR / "autohome_id_discovery_summary.json"
 API = "https://sou.api.autohome.com.cn/sug/_suggest?plat=pc&uid=&q={}"
 USER_AGENT = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
               "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36")
@@ -142,7 +136,7 @@ def main() -> None:
         persisted = pd.read_csv(OUT)
     else:
         persisted = latest
-    PHASE_B.mkdir(parents=True, exist_ok=True)
+    COLLECTION_DIR.mkdir(parents=True, exist_ok=True)
     persisted.to_csv(OUT, index=False, encoding="utf-8-sig")
     summary = {
         "targets_this_run": int(len(latest)),

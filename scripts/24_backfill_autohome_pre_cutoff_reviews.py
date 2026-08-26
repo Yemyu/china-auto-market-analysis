@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Backfill historical Autohome reviews for verified series lacking a safe cutoff.
-
-Unlike the regular incremental collector, this script traverses list pages until
-it finds reviews at or before a declared cutoff.  It writes only those eligible
-rows, so the raw corpus does not accumulate known post-cutoff records merely
-while searching backward.  The ordinary raw corpus remains append-only and the
-separate manifest makes the backfill audit reproducible.
-"""
+"""Backfill Autohome reviews published at or before a declared cutoff."""
 from __future__ import annotations
 
 import argparse
@@ -18,13 +11,13 @@ from pathlib import Path
 
 import pandas as pd
 
-BASE = Path(__file__).resolve().parents[2]
-RAW = BASE / "data" / "sentiment_new" / "raw"
+BASE = Path(__file__).resolve().parents[1]
+RAW = BASE / "data" / "reviews" / "raw"
 REVIEWS_OUT = RAW / "autohome_incremental_reviews.csv"
 MANIFEST = RAW / "autohome_pre_cutoff_backfill_manifest.csv"
-CORPUS = BASE / "data" / "sentiment_new" / "processed" / "target_371_review_corpus.csv"
-ID_MAP = BASE / "data" / "processed_new" / "phase_b" / "autohome_id_resolutions.csv"
-COLLECTOR = BASE / "scripts" / "new_pipeline" / "20_crawl_autohome_incremental.py"
+CORPUS = BASE / "data" / "reviews" / "processed" / "target_371_review_corpus.csv"
+ID_MAP = BASE / "data" / "processed" / "review_collection" / "autohome_id_resolutions.csv"
+COLLECTOR = BASE / "scripts" / "20_crawl_autohome_incremental.py"
 
 
 def load_collector():
@@ -37,15 +30,10 @@ def load_collector():
 
 
 def roster(cutoff: pd.Timestamp) -> pd.DataFrame:
-    """Return verified targets without an eligible review at the given cutoff.
-
-    ``pre_test_end_reviews`` is intentionally not used here: a review from a
-    later test month is valid for the coarse corpus audit but cannot be used
-    as information available at an earlier forecast origin.
-    """
+    """Return verified targets without an eligible review by the cutoff."""
     if not CORPUS.exists():
         raise FileNotFoundError(f"Run 18_build_target_review_corpus.py first: {CORPUS}")
-    target = pd.read_csv(BASE / "data" / "processed_new" / "splits" / "test.csv", usecols=["series_name"])
+    target = pd.read_csv(BASE / "data" / "processed" / "splits" / "test.csv", usecols=["series_name"])
     target = target.drop_duplicates()
     corpus = pd.read_csv(
         CORPUS,

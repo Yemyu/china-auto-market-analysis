@@ -7,9 +7,9 @@ from pathlib import Path
 
 import pandas as pd
 
-BASE = Path(__file__).resolve().parents[2]
-SPLITS = BASE / "data" / "processed_new" / "splits"
-OUT = BASE / "data" / "sentiment_new" / "processed"
+BASE = Path(__file__).resolve().parents[1]
+SPLITS = BASE / "data" / "processed" / "splits"
+OUT = BASE / "data" / "reviews" / "processed"
 CORPUS = OUT / "target_371_review_corpus.csv"
 AVAILABILITY = OUT / "review_temporal_availability_by_series.csv"
 SUMMARY = OUT / "review_temporal_availability_summary.json"

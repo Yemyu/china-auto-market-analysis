@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Validate, deduplicate and time-audit the incremental review staging corpus.
-
-Raw crawler output is immutable evidence.  This script writes a separate
-deduplicated corpus and a per-series quality report, so failed/retried pages or
-post-cutoff reviews never silently contaminate a modelling table.
-"""
+"""Deduplicate collected reviews and write source and time-quality audits."""
 from __future__ import annotations
 
 import json
@@ -12,9 +7,9 @@ from pathlib import Path
 
 import pandas as pd
 
-BASE = Path(__file__).resolve().parents[2]
-RAW = BASE / "data" / "sentiment_new" / "raw" / "dongchedi_incremental_reviews.csv"
-OUT = BASE / "data" / "sentiment_new" / "processed"
+BASE = Path(__file__).resolve().parents[1]
+RAW = BASE / "data" / "reviews" / "raw" / "dongchedi_incremental_reviews.csv"
+OUT = BASE / "data" / "reviews" / "processed"
 DEDUP = OUT / "dongchedi_incremental_reviews_dedup.csv"
 AUDIT = OUT / "incremental_review_quality.csv"
 SUMMARY = OUT / "incremental_review_quality_summary.json"

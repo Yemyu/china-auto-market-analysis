@@ -1,20 +1,5 @@
 #!/usr/bin/env python3
-"""
-11_xgb_ablation.py — 月度预测消融：lag(近期销量) vs 配置，谁在真正起作用？
-
-数据来源（统一）：06_make_splits.py 的 train/val/test。
-  * 三组消融都只在 train 上训练，val 上 early-stop，test 上报告（口径一致）。
-  * 递归多步预测（同 07），保证三组用的是「同一个 test 窗口」下公平对比。
-
-三组消融（回答「基线里到底是什么在起作用」）
-  FULL      : lag + 日历 + 配置
-  NO-LAG    : 日历 + 配置          -> 去掉近期销量信息
-  NO-CONFIG : lag + 日历           -> 去掉配置信息
-
-输出：
-  data/processed_new/stage3/xgb_ablation.csv
-  figures_new/xgb_ablation.png
-"""
+"""Ablate lag and configuration features from the XGBoost baseline."""
 import os
 os.environ["OMP_NUM_THREADS"] = "1"
 import warnings
@@ -31,9 +16,9 @@ from xgboost import XGBRegressor
 import _model_utils as mu
 import _subset
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIG = os.path.join(BASE, "figures_new")
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIG = os.path.join(BASE, "assets/analysis")
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
@@ -136,7 +121,7 @@ def main():
         axes[1].tick_params(labelsize=8)
     fig.suptitle("XGBoost 消融 — 近期销量(lag) 与 配置 各自的贡献 (temporal test)", fontsize=12)
     fig.savefig(os.path.join(FIG, "xgb_ablation.png"), dpi=130)
-    print("\n[消融] 图已保存 -> figures_new/xgb_ablation.png")
+    print("\n[消融] 图已保存 -> assets/analysis/xgb_ablation.png")
     print("[消融] 完成。")
 
 

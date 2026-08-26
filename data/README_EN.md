@@ -4,17 +4,17 @@
 
 # Data documentation
 
-This directory contains the raw tables, temporal splits, review corpus, model artifacts, and data audits used by the current analysis. Reusable review data and historical labels from the first project version are isolated under `resources/`; other legacy data no longer enters the current pipeline.
+This directory contains source tables, temporal splits, the review corpus, model artifacts, and data audits. Reusable historical reviews and labels are isolated under `resources/`.
 
 ## Data layers
 
 | Path | Contents | Used by current pipeline |
 |---|---|---|
 | `raw/` | Monthly sales and vehicle-specification source tables | Yes |
-| `processed_new/` | Cleaned data, temporal splits, forecasts, attribution, and monitoring outputs | Yes |
-| `sentiment_new/raw/` | Newly collected reviews, source detail pages, and crawl manifests | After quality filtering |
-| `sentiment_new/processed/` | Strict corpus, structured labels, temporal features, and audits | Yes |
-| `resources/` | Curated reusable data from the first project version | Reference or future extension |
+| `processed/` | Cleaned data, temporal splits, forecasts, attribution, and monitoring outputs | Yes |
+| `reviews/raw/` | Collected reviews, source detail pages, and crawl manifests | After quality filtering |
+| `reviews/processed/` | Strict corpus, structured labels, temporal features, and audits | Yes |
+| `resources/` | Historical review and label archive | Reference or future extension |
 
 ## Three analysis samples
 
@@ -76,7 +76,7 @@ Engine, motor, and battery columns contain structural missingness. A BEV has no 
 
 ## 2. Forecast sample and temporal split
 
-`processed_new/splits/` stores the fixed split for 371 series:
+`processed/splits/` stores the fixed split for 371 series:
 
 | File | Period | Purpose |
 |---|---|---|
@@ -92,7 +92,7 @@ The primary experiment is a fixed-origin forecast made in January 2026 for all s
 
 ### Raw collection layer
 
-`sentiment_new/raw/` stores collected owner reviews and crawl manifests locally. Full records contain platform user identifiers and are excluded from the public repository; crawl manifests and de-identified analysis artifacts remain versioned.
+`reviews/raw/` stores collected owner reviews and crawl manifests locally. Full records contain platform user identifiers and are excluded from the public repository; crawl manifests and de-identified analysis artifacts remain versioned.
 
 Main audit files:
 
@@ -101,12 +101,12 @@ Main audit files:
 | `dongchedi_incremental_manifest.csv` | Dongchedi incremental-crawl manifest |
 | `autohome_incremental_manifest.csv` | Autohome incremental-crawl manifest |
 | `autohome_incremental_review_details.csv` | Full Autohome review text |
-| `processed_new/phase_b/autohome_id_resolutions.csv` | Series mapping and resolution |
-| `processed_new/phase_b/sentiment_resolution_exceptions.csv` | Unresolved cases and stop rules |
+| `processed/review_collection/autohome_id_resolutions.csv` | Series mapping and resolution |
+| `processed/review_collection/sentiment_resolution_exceptions.csv` | Unresolved cases and stop rules |
 
 ### Strict modeling corpus
 
-The local file `sentiment_new/processed/target_371_review_corpus.csv` includes candidate reviews, quality flags, and source audit fields for the 371 target series. A modeling record must have:
+The local file `reviews/processed/target_371_review_corpus.csv` includes candidate reviews, quality flags, and source audit fields for the 371 target series. A modeling record must have:
 
 1. valid series identity;
 2. parseable publication time;
@@ -125,7 +125,7 @@ The final corpus contains 24,175 reviews across 345 series. Another 103 Autohome
 
 ### Review-level labels
 
-The [structured review labels](./sentiment_new/processed/unified_deepseek_absa_review_features.csv) store ten product dimensions:
+The [structured review labels](./reviews/processed/review_aspect_labels.csv) store ten product dimensions:
 
 `appearance`, `interior`, `space`, `power`, `control`, `comfort`, `fuel_consumption`, `configuration`, `intelligence`, and `value`.
 
@@ -138,7 +138,7 @@ Platform star ratings and text evidence are not interchangeable. If a review doe
 
 ### Leakage-safe monthly features
 
-The [fixed-origin review feature panel](./sentiment_new/processed/deepseek_features_by_series_month_fixed_origin.csv) has 13,866 rows across 371 series and 51 forecast months. It contains:
+The [fixed-origin review feature panel](./reviews/processed/review_features_by_series_month_fixed_origin.csv) has 13,866 rows across 371 series and 51 forecast months. It contains:
 
 - cumulative reviews available before the origin;
 - review count and availability in the previous 180 days;
@@ -151,30 +151,29 @@ Test features for the primary experiment are frozen before `2026-01-01`. Rolling
 
 ## 5. Analysis artifacts
 
-### Sales forecasting: `processed_new/stage3/`
+### Sales forecasting: `processed/forecast/`
 
 | Artifact | Contents |
 |---|---|
-| `xgb_deepseek_full371_summary.csv` | Model comparison on 371 series |
-| `xgb_deepseek_full371_preds.csv` | Series-month test predictions |
-| `xgb_deepseek_full371_series_metrics.csv` | Per-series errors |
-| `xgb_deepseek_full371_bootstrap.csv` | Series-cluster bootstrap |
-| `xgb_deepseek_full371_shap_importance.csv` | Feature contributions |
+| `review_feature_ablation_summary.csv` | Model comparison on 371 series |
+| `review_feature_predictions.csv` | Series-month test predictions |
+| `review_feature_series_metrics.csv` | Per-series errors |
+| `forecast_robustness_bootstrap.csv` | Series-cluster bootstrap |
+| `review_feature_shap_importance.csv` | Feature contributions |
 | `cold_start_launch_curve_summary.json` | Cold-start method and results |
 
 Headline global WMAPE: 40.44% for the sales baseline, 38.71% for the owner-feedback model, and 38.64% after the cold-start supplement.
 
-### Product specifications: `processed_new/stage4/`
+### Product specifications: `processed/product/`
 
 | Artifact | Contents |
 |---|---|
 | `config_attribution_ablation.csv` | Sequential year, brand, and specification ablation |
 | `config_importance_annual.csv` | Annual feature importance |
-| `shap_values_trim.csv` | Sampled explanation values |
 
-The complete model reaches a five-fold grouped cross-validated R² of 0.303.
+The complete model reaches a five-fold grouped cross-validated R² of 0.300.
 
-### User needs and risk: `processed_new/stage5/`
+### User needs and risk: `processed/user_feedback/`
 
 | Artifact | Contents |
 |---|---|
@@ -188,7 +187,7 @@ An alert is a manual-review entry, not a confirmed product defect.
 
 ## 6. Curated historical resource
 
-`resources/legacy_sentiment/` is the only standalone data package retained from the first project version:
+`resources/historical_reviews/` stores the reusable historical review archive:
 
 | File | Contents |
 |---|---|
@@ -196,16 +195,17 @@ An alert is a manual-review entry, not a confirmed product defect.
 | `manifest.json` | Counts, time range, SHA-256, and label semantics |
 | `README.md` | Usage and limitations |
 
-The current corpus reuses 16,538 previously paid historical labels. Full text, publication time, series, purchase context, and platform ratings stay in the local archive; the public repository contains de-identified labels and aggregates.
+The current corpus reuses 16,538 previously generated historical labels. Full text, publication time, series, purchase context, and platform ratings stay in the local archive; the public repository contains de-identified labels and aggregates.
 
-A historical label of `0` cannot reliably separate “not mentioned,” “neutral,” and old parser fallback. It must not be used directly as mention ground truth; the current feature table uses a separate uniform mention flag.
+A historical label of `0` cannot reliably separate “not mentioned,” “neutral,” and parser fallback. It is not used directly as mention ground truth; the current feature table uses a separate uniform mention flag.
 
 ## 7. Reproduction
 
-Run all Python commands through `nlp-sentiment`:
+Create and activate the environment from the root `environment.yml`, then run scripts normally:
 
 ```bash
-conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
+conda activate nlp-sentiment
+python scripts/<script>.py
 ```
 
 The main review and modeling sequence is:
@@ -214,12 +214,16 @@ The main review and modeling sequence is:
 18  build target-series corpus
 21  audit multi-source quality
 25  validate temporal availability
-32  unify review-level labels
-33  aggregate leakage-safe monthly features
-34  run the 371-series forecast ablation
-35  analyze robustness
-36  build user-needs and risk monitoring outputs
-38  curate the legacy review resource
+27  build platform-rating and lexicon features
+28  aggregate local review monthly features
+30  backfill missing labels (optional, requires an API)
+31  merge review-level labels
+32  aggregate leakage-safe monthly features
+33  run the 371-series forecast ablation
+34  analyze robustness
+35  build user-needs and risk monitoring outputs
+36  validate the cold-start method
+37  generate the report notebooks
 ```
 
 Source-platform data remains subject to the respective owners' rights. Data in this directory is included only for learning, research, and project demonstration.

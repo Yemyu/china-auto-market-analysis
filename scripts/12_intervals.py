@@ -1,24 +1,5 @@
 #!/usr/bin/env python3
-"""
-12_intervals.py — 预测区间与覆盖度（无舆情基线）
-
-数据来源（统一）：06_make_splits.py 的 train / val / test。
-  * 在验证期选择树的迭代轮数后，模型以 train+val 重拟合，在
-    **test (2026-01..06, 6 个月)** 上评估区间覆盖度；
-  * 区间方法：
-      ARIMA   : get_forecast 的解析 conf_int(alpha=0.10)
-      Prophet : interval_width=0.9 的 yhat_lower / yhat_upper
-      XGBoost : 3 个分位数回归 (alpha 0.05 / 0.50 / 0.95)，递归多步（median 回填 lag）
-
-指标：PICP（覆盖率，目标≈0.90）/ MPIW（平均区间宽度）/ WMAPE（点预测误差）。
-
-输出：
-  data/processed_new/stage3/interval_results.csv
-  figures_new/intervals_coverage.png + intervals_example.png
-
-Run:
-  python scripts/new_pipeline/12_intervals.py
-"""
+"""Evaluate 90% forecast intervals for ARIMA, Prophet, and XGBoost."""
 import os
 os.environ["OMP_NUM_THREADS"] = "1"
 import warnings
@@ -40,9 +21,9 @@ from prophet import Prophet
 import _model_utils as mu
 import _subset
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIG = os.path.join(BASE, "figures_new")
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIG = os.path.join(BASE, "assets/analysis")
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
@@ -229,7 +210,7 @@ def main():
     ax.set_title(f"Prediction interval example: {name}")
     ax.legend(fontsize=8); ax.tick_params(labelsize=8)
     fig.savefig(os.path.join(FIG, "intervals_example.png"), dpi=130)
-    print("[PI] figures saved -> figures_new/intervals_coverage.png, intervals_example.png")
+    print("[PI] figures saved -> assets/analysis/intervals_coverage.png, intervals_example.png")
     print("[PI] done.")
 
 

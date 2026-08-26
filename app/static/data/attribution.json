@@ -116,23 +116,23 @@
     },
     {
       "variant": "+BRAND",
-      "r2": 0.154,
-      "r2_std": 0.054,
-      "wmape": 83.77,
+      "r2": 0.156,
+      "r2_std": 0.052,
+      "wmape": 83.92,
       "n_features": 131
     },
     {
       "variant": "+CONFIG",
-      "r2": 0.303,
-      "r2_std": 0.082,
-      "wmape": 75.38,
+      "r2": 0.3,
+      "r2_std": 0.077,
+      "wmape": 75.69,
       "n_features": 310
     },
     {
       "variant": "CONFIG-ONLY",
-      "r2": 0.173,
-      "r2_std": 0.043,
-      "wmape": 81.27,
+      "r2": 0.188,
+      "r2_std": 0.07,
+      "wmape": 81.12,
       "n_features": 179
     }
   ],
@@ -167,7 +167,7 @@
   },
   "top_example": null,
   "conclusion": {
-    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.154提升至0.303（+0.149）；配置解释车系之间差异，不解释同车系短期涨跌。",
-    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.154 to 0.303 (+0.149) after adding configuration. Configuration explains between-series differences, not short-term within-series changes."
+    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.156提升至0.300（+0.144）；配置解释车系之间差异，不解释同车系短期涨跌。",
+    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.156 to 0.300 (+0.144) after adding configuration. Configuration explains between-series differences, not short-term within-series changes."
   }
 }

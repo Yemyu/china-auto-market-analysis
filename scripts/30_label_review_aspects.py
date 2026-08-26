@@ -1,23 +1,8 @@
 #!/usr/bin/env python3
-"""Cost-efficient DeepSeek ABSA backfill for reviews missing legacy labels.
+"""Label review aspects in compact, resumable API batches.
 
-The old corpus already has 16,538 successful DeepSeek labels.  This script
-scores only the 7,637 leakage-eligible reviews without such labels and emits a
-legacy-compatible polarity for each of ten aspects.  Several reviews share one
-API request and the response uses compact fixed-order arrays, substantially
-reducing prompt/output tokens relative to the evidence-rich QA scorer (30).
-
-Label encoding per aspect:
-  null = aspect not mentioned
-  -1   = mentioned negatively
-   0   = mentioned neutrally / objectively / balanced mixed sentiment
-   1   = mentioned positively
-
-``legacy_compatible_*`` collapses null to 0, yielding the same -1/0/1 schema
-as the reusable old labels.  Mention flags remain available for diagnostics.
-
-Safety defaults: 300-row proportional pilot, one-review smoke gate, batches of
-10, non-thinking V4 Flash, CNY 2 run ceiling, resumable JSONL checkpoints.
+Each aspect uses ``null`` for not mentioned and ``-1 / 0 / 1`` for negative,
+neutral, and positive mentions. The default run is a 300-review pilot.
 """
 from __future__ import annotations
 
@@ -34,18 +19,18 @@ import pandas as pd
 import requests
 
 
-BASE = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(BASE))
 from config import settings  # noqa: E402
 
 
-CORPUS = BASE / "data" / "sentiment_new" / "processed" / "target_371_review_corpus.csv"
-LEGACY = BASE / "data" / "resources" / "legacy_sentiment" / "review_absa_reference.csv.gz"
-OUT = BASE / "data" / "sentiment_new" / "processed"
-CHECKPOINT = OUT / "deepseek_absa_compact_results.jsonl"
-RESULT_CSV = OUT / "deepseek_absa_compact_results.csv"
-CALL_LOG = OUT / "deepseek_absa_compact_calls.jsonl"
-RUN_HISTORY = OUT / "deepseek_absa_compact_run_history.jsonl"
+CORPUS = BASE / "data" / "reviews" / "processed" / "target_371_review_corpus.csv"
+HISTORICAL = BASE / "data" / "resources" / "historical_reviews" / "review_absa_reference.csv.gz"
+OUT = BASE / "data" / "reviews" / "processed"
+CHECKPOINT = OUT / "api_aspect_labels.jsonl"
+RESULT_CSV = OUT / "api_aspect_labels.csv"
+CALL_LOG = OUT / "api_aspect_calls.jsonl"
+RUN_HISTORY = OUT / "api_aspect_run_history.jsonl"
 
 ASPECTS = [
     "appearance", "interior", "space", "power", "control", "comfort",
@@ -64,9 +49,9 @@ ASPECT_DESCRIPTIONS = [
     "售价/优惠/成本/物有所值",
 ]
 
-MODEL = settings.DEEPSEEK_ABSA_MODEL
-PROMPT_VERSION = "autopulse_compact_backfill_v1_2026-08-24"
-SAMPLE_VERSION = "autopulse_compact_missing_sample_v1"
+MODEL = settings.REVIEW_LABEL_MODEL
+PROMPT_VERSION = "review_aspect_batch_v1"
+SAMPLE_VERSION = "review_aspect_missing_v1"
 MAX_OUTPUT_TOKENS = 2000
 USD_TO_CNY = 7.20
 PRICE_USD_PER_MILLION = {
@@ -94,12 +79,15 @@ def load_missing_reviews() -> pd.DataFrame:
     corpus = pd.read_csv(CORPUS, low_memory=False)
     eligible = corpus["eligible_for_temporal_model"].astype(str).str.lower().eq("true")
     corpus = corpus.loc[eligible].copy()
-    legacy = pd.read_csv(LEGACY, low_memory=False)
-    legacy = legacy.loc[legacy["success"].astype(str).str.lower().eq("true")].copy()
+    historical = pd.read_csv(HISTORICAL, low_memory=False)
+    historical = historical.loc[historical["success"].astype(str).str.lower().eq("true")].copy()
     corpus["review_id_key"] = corpus["review_id"].astype(str).str.replace(r"\.0$", "", regex=True)
-    legacy_ids = set(legacy["review_id"].astype(str).str.replace(r"\.0$", "", regex=True))
-    corpus["legacy_available"] = corpus["corpus_source"].eq("old_v1") & corpus["review_id_key"].isin(legacy_ids)
-    missing = corpus.loc[~corpus["legacy_available"]].copy()
+    historical_ids = set(historical["review_id"].astype(str).str.replace(r"\.0$", "", regex=True))
+    corpus["historical_label_available"] = (
+        corpus["corpus_source"].eq("historical_archive")
+        & corpus["review_id_key"].isin(historical_ids)
+    )
+    missing = corpus.loc[~corpus["historical_label_available"]].copy()
     required = ["identity", "review_id", "series_name", "publish_time", "corpus_source", "content"]
     if missing[required].isna().any().any():
         raise ValueError("Missing-label corpus contains null required values")
@@ -223,7 +211,7 @@ def request_batch(batch: list[pd.Series], retries: int) -> tuple[dict[str, Any],
         "max_tokens": MAX_OUTPUT_TOKENS,
         "temperature": 0,
     }
-    headers = {"Authorization": f"Bearer {settings.DEEPSEEK_API_KEY}", "Content-Type": "application/json"}
+    headers = {"Authorization": f"Bearer {settings.REVIEW_LABEL_API_KEY}", "Content-Type": "application/json"}
     started = datetime.now(timezone.utc)
     total_usage = {key: 0 for key in [
         "prompt_tokens", "cache_hit_tokens", "cache_miss_tokens", "completion_tokens", "total_tokens"
@@ -240,8 +228,8 @@ def request_batch(batch: list[pd.Series], retries: int) -> tuple[dict[str, Any],
         tier = pricing_tier(datetime.now(timezone.utc))
         try:
             response = requests.post(
-                f"{settings.DEEPSEEK_BASE_URL.rstrip('/')}/chat/completions",
-                headers=headers, json=body, timeout=settings.LLM_REQUEST_TIMEOUT,
+                f"{settings.REVIEW_LABEL_BASE_URL.rstrip('/')}/chat/completions",
+                headers=headers, json=body, timeout=settings.REVIEW_LABEL_TIMEOUT,
             )
             if response.status_code >= 400:
                 detail = response.text.replace("\n", " ")[:300]
@@ -299,7 +287,7 @@ def result_records(batch: list[pd.Series], call: dict[str, Any], parsed: dict[st
             "identity": row["identity"], "review_id": row["review_id"],
             "series_name": row["series_name"], "publish_time": row["publish_time"],
             "corpus_source": row["corpus_source"], "content_chars": int(row["content_chars"]),
-            "content_sha256": row["content_sha256"], "legacy_absa_available": False,
+            "content_sha256": row["content_sha256"], "historical_label_available": False,
             "prompt_version": PROMPT_VERSION, "requested_model": MODEL,
             "batch_id": batch_id, "batch_size": len(batch),
             "success": bool(call["success"]), "error": call["error"],
@@ -308,7 +296,7 @@ def result_records(batch: list[pd.Series], call: dict[str, Any], parsed: dict[st
         for aspect, label in zip(ASPECTS, labels or [None] * len(ASPECTS)):
             record[f"{aspect}_mentioned"] = label is not None if labels is not None else None
             record[f"{aspect}_polarity"] = label
-            record[f"legacy_compatible_{aspect}"] = 0 if label is None and labels is not None else label
+            record[f"{aspect}_score"] = 0 if label is None and labels is not None else label
         records.append(record)
     return records
 
@@ -335,7 +323,7 @@ def export_latest(records: list[dict[str, Any]]) -> pd.DataFrame:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(description="Compact DeepSeek ABSA missing-label backfill")
+    parser = argparse.ArgumentParser(description="Batch review-aspect label backfill")
     scope = parser.add_mutually_exclusive_group()
     scope.add_argument("--limit", type=int, default=300)
     scope.add_argument("--all", action="store_true")
@@ -350,8 +338,13 @@ def main() -> None:
     args = build_parser().parse_args()
     if args.batch_size < 1 or args.max_cost_cny <= 0 or args.max_retries < 1:
         raise ValueError("batch size, cost ceiling, and retries must be positive")
-    if not args.dry_run and (not settings.DEEPSEEK_API_KEY or settings.DEEPSEEK_API_KEY == "xxxxx"):
-        raise RuntimeError("DeepSeek key is not configured")
+    if not args.dry_run and (
+        not settings.REVIEW_LABEL_API_KEY
+        or settings.REVIEW_LABEL_API_KEY == "xxxxx"
+        or not settings.REVIEW_LABEL_MODEL
+        or not settings.REVIEW_LABEL_BASE_URL
+    ):
+        raise RuntimeError("Review-label API credentials are not configured")
     missing = load_missing_reviews()
     selected = stable_order(missing) if args.all else select_pilot(missing, args.limit)
     prior = read_jsonl(CHECKPOINT)

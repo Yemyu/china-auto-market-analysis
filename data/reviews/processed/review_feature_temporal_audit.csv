@@ -1,4 +1,4 @@
-﻿feature_protocol,forecast_month,split,series_rows,information_cutoff_exclusive,lookback_start_inclusive,max_review_time_used,all_prior_review_rows,recent_180d_review_rows,series_with_any_prior_review,series_with_recent_180d_review,recent_legacy_review_rows,recent_compact_review_rows,recent_manual_override_rows
+﻿feature_protocol,forecast_month,split,series_rows,information_cutoff_exclusive,lookback_start_inclusive,max_review_time_used,all_prior_review_rows,recent_180d_review_rows,series_with_any_prior_review,series_with_recent_180d_review,recent_historical_label_rows,recent_project_label_rows,recent_manual_override_rows
 fixed_origin,2022-04,train,202,2022-04-01,2021-10-03,2022-03-31T23:16:00,6593,2595,161,157,1374,1221,0
 fixed_origin,2022-05,train,205,2022-05-01,2021-11-02,2022-04-30T23:07:00,6986,2660,164,158,1752,908,0
 fixed_origin,2022-06,train,203,2022-06-01,2021-12-03,2022-05-31T23:16:00,7452,2719,169,164,2209,510,0

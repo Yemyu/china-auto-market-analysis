@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Leakage-free fusion and Stage-3 model comparison.
-
-Fusion weights are selected using *validation* predictions only, then frozen
-before the final test forecast.  Every model must use the time-eligible
-stratified cohort built by ``_subset.py``; comparison therefore never mixes
-different series counts.
-"""
+"""Compare forecast models and fit validation-selected ensemble weights."""
 import os
 import warnings
 warnings.filterwarnings("ignore")
@@ -17,10 +11,10 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 import _font_setup
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
-FIG = os.path.join(BASE, "figures_new")
+FIG = os.path.join(BASE, "assets/analysis")
 
 
 def metrics(y_true, y_pred):
@@ -148,7 +142,7 @@ def main():
     ]
     comp = pd.DataFrame(rows).sort_values("WMAPE_vol")
     comp.to_csv(os.path.join(PROC, "model_comparison.csv"), index=False)
-    print("\n===== Stage 3 multi-model comparison (common cohort, 6-month test) =====")
+    print("\n===== Multi-model comparison: common cohort, six-month test =====")
     print(comp.to_string(index=False))
 
 # bar chart
@@ -170,10 +164,10 @@ def main():
     for i, v in enumerate(c2["MAE"].values):
         axes[1].text(i, v + 80, f"{v:.0f}", ha="center", fontsize=8)
 
-    fig.suptitle("Stage 3 — model comparison (common time-eligible cohort, 6-month test)", fontsize=12)
+    fig.suptitle("Model comparison on a common cohort and six-month test", fontsize=12)
     fig.savefig(os.path.join(FIG, "model_comparison.png"), dpi=130)
-    print("\n[Compare] figure saved -> figures_new/model_comparison.png")
-    print("[Compare] table saved -> data/processed_new/stage3/model_comparison.csv")
+    print("\n[Compare] figure saved -> assets/analysis/model_comparison.png")
+    print("[Compare] table saved -> data/processed/forecast/model_comparison.csv")
     print("[Compare] done.")
 
 

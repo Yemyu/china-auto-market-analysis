@@ -1,14 +1,5 @@
 #!/usr/bin/env python3
-"""Build fixed-origin and rolling-origin DeepSeek monthly features.
-
-The fixed-origin table is the primary fair comparison with the existing
-six-month recursive forecast: validation is frozen at 2025-07-01 and test is
-frozen at 2026-01-01. The rolling table is a separate operational scenario in
-which each target month may use reviews observed before that month's first day.
-
-No target month ever uses a review published on or after its information
-cutoff. Missing scores stay null; counts and availability flags stay explicit.
-"""
+"""Aggregate review labels into leakage-safe monthly features."""
 from __future__ import annotations
 
 import json
@@ -19,16 +10,16 @@ import pandas as pd
 from pandas.testing import assert_frame_equal
 
 
-BASE = Path(__file__).resolve().parents[2]
-SPLITS = BASE / "data" / "processed_new" / "splits"
-OUT = BASE / "data" / "sentiment_new" / "processed"
-REVIEWS = OUT / "unified_deepseek_absa_review_features.csv"
+BASE = Path(__file__).resolve().parents[1]
+SPLITS = BASE / "data" / "processed" / "splits"
+OUT = BASE / "data" / "reviews" / "processed"
+REVIEWS = OUT / "review_aspect_labels.csv"
 AVAILABILITY = OUT / "review_temporal_availability_by_series.csv"
 
-FIXED_OUTPUT = OUT / "deepseek_features_by_series_month_fixed_origin.csv"
-ROLLING_OUTPUT = OUT / "deepseek_features_by_series_month_rolling.csv"
-AUDIT_OUTPUT = OUT / "deepseek_feature_temporal_audit.csv"
-SUMMARY_OUTPUT = OUT / "deepseek_feature_temporal_summary.json"
+FIXED_OUTPUT = OUT / "review_features_by_series_month_fixed_origin.csv"
+ROLLING_OUTPUT = OUT / "review_features_by_series_month_rolling.csv"
+AUDIT_OUTPUT = OUT / "review_feature_temporal_audit.csv"
+SUMMARY_OUTPUT = OUT / "review_feature_temporal_summary.json"
 
 ASPECTS = [
     "appearance", "interior", "space", "power", "control", "comfort",
@@ -70,18 +61,18 @@ def load_reviews() -> pd.DataFrame:
     reviews["series_name"] = reviews["series_name"].astype(str)
     reviews["publish_time"] = pd.to_datetime(reviews["publish_time"], errors="raise")
     if len(reviews) != EXPECTED_REVIEWS or reviews["identity"].duplicated().any():
-        raise ValueError("Unified DeepSeek review population changed")
-    score_columns = [f"deepseek_{aspect}_legacy_compatible" for aspect in ASPECTS]
+        raise ValueError("Review-label population changed")
+    score_columns = [f"review_{aspect}_score" for aspect in ASPECTS]
     mention_columns = [f"uniform_local_{aspect}_mentioned" for aspect in ASPECTS]
     for column in score_columns:
         if not reviews[column].isin([-1, 0, 1]).all():
-            raise ValueError(f"Invalid DeepSeek score column: {column}")
+            raise ValueError(f"Invalid review score column: {column}")
     for column in mention_columns:
         if not reviews[column].isin([0, 1]).all():
             raise ValueError(f"Invalid uniform mention column: {column}")
-    reviews["deepseek_overall_aspect_score"] = reviews[score_columns].mean(axis=1)
-    reviews["deepseek_any_positive"] = reviews[score_columns].eq(1).any(axis=1).astype(int)
-    reviews["deepseek_any_negative"] = reviews[score_columns].eq(-1).any(axis=1).astype(int)
+    reviews["review_overall_aspect_score"] = reviews[score_columns].mean(axis=1)
+    reviews["review_any_positive"] = reviews[score_columns].eq(1).any(axis=1).astype(int)
+    reviews["review_any_negative"] = reviews[score_columns].eq(-1).any(axis=1).astype(int)
     return reviews.sort_values(["publish_time", "identity"]).reset_index(drop=True)
 
 
@@ -97,20 +88,20 @@ def aggregate_at_cutoff(
 
     all_counts = prior.groupby("series_name").size()
     recent_counts = recent.groupby("series_name").size()
-    base["deepseek_review_count_prior_all"] = all_counts
-    base["deepseek_review_count_180d"] = recent_counts
-    base[["deepseek_review_count_prior_all", "deepseek_review_count_180d"]] = (
-        base[["deepseek_review_count_prior_all", "deepseek_review_count_180d"]].fillna(0).astype(int)
+    base["review_count_prior_all"] = all_counts
+    base["review_count_180d"] = recent_counts
+    base[["review_count_prior_all", "review_count_180d"]] = (
+        base[["review_count_prior_all", "review_count_180d"]].fillna(0).astype(int)
     )
-    base["deepseek_available_prior"] = base["deepseek_review_count_prior_all"].gt(0).astype(int)
-    base["deepseek_available_180d"] = base["deepseek_review_count_180d"].gt(0).astype(int)
+    base["review_available_prior"] = base["review_count_prior_all"].gt(0).astype(int)
+    base["review_available_180d"] = base["review_count_180d"].gt(0).astype(int)
 
-    score_columns = [f"deepseek_{aspect}_legacy_compatible" for aspect in ASPECTS]
+    score_columns = [f"review_{aspect}_score" for aspect in ASPECTS]
     prior_means = prior.groupby("series_name")[score_columns].mean().rename(
-        columns={column: column.replace("_legacy_compatible", "_score_prior_mean") for column in score_columns}
+        columns={column: column.replace("_score", "_score_prior_mean") for column in score_columns}
     )
     recent_means = recent.groupby("series_name")[score_columns].mean().rename(
-        columns={column: column.replace("_legacy_compatible", "_score_180d_mean") for column in score_columns}
+        columns={column: column.replace("_score", "_score_180d_mean") for column in score_columns}
     )
     base = base.join(prior_means).join(recent_means)
 
@@ -120,37 +111,37 @@ def aggregate_at_cutoff(
         positive["series_name"] = recent["series_name"].values
         negative["series_name"] = recent["series_name"].values
         positive_rates = positive.groupby("series_name")[score_columns].mean().rename(
-            columns={column: column.replace("_legacy_compatible", "_positive_180d_rate") for column in score_columns}
+            columns={column: column.replace("_score", "_positive_180d_rate") for column in score_columns}
         )
         negative_rates = negative.groupby("series_name")[score_columns].mean().rename(
-            columns={column: column.replace("_legacy_compatible", "_negative_180d_rate") for column in score_columns}
+            columns={column: column.replace("_score", "_negative_180d_rate") for column in score_columns}
         )
         base = base.join(positive_rates).join(negative_rates)
     else:
         for aspect in ASPECTS:
-            base[f"deepseek_{aspect}_positive_180d_rate"] = pd.NA
-            base[f"deepseek_{aspect}_negative_180d_rate"] = pd.NA
+            base[f"review_{aspect}_positive_180d_rate"] = pd.NA
+            base[f"review_{aspect}_negative_180d_rate"] = pd.NA
 
     mention_columns = [f"uniform_local_{aspect}_mentioned" for aspect in ASPECTS]
     mention_counts = recent.groupby("series_name")[mention_columns].sum().rename(
-        columns={column: column.replace("uniform_local_", "deepseek_").replace("_mentioned", "_uniform_mention_180d_count")
+        columns={column: column.replace("uniform_local_", "review_").replace("_mentioned", "_uniform_mention_180d_count")
                  for column in mention_columns}
     )
     mention_rates = recent.groupby("series_name")[mention_columns].mean().rename(
-        columns={column: column.replace("uniform_local_", "deepseek_").replace("_mentioned", "_uniform_mention_180d_rate")
+        columns={column: column.replace("uniform_local_", "review_").replace("_mentioned", "_uniform_mention_180d_rate")
                  for column in mention_columns}
     )
     base = base.join(mention_counts).join(mention_rates)
-    count_columns = [f"deepseek_{aspect}_uniform_mention_180d_count" for aspect in ASPECTS]
+    count_columns = [f"review_{aspect}_uniform_mention_180d_count" for aspect in ASPECTS]
     base[count_columns] = base[count_columns].fillna(0).astype(int)
 
     overall_columns = [
-        "deepseek_overall_aspect_score", "deepseek_any_positive", "deepseek_any_negative",
+        "review_overall_aspect_score", "review_any_positive", "review_any_negative",
     ]
     overall = recent.groupby("series_name")[overall_columns].mean().rename(columns={
-        "deepseek_overall_aspect_score": "deepseek_overall_aspect_score_180d_mean",
-        "deepseek_any_positive": "deepseek_any_positive_180d_rate",
-        "deepseek_any_negative": "deepseek_any_negative_180d_rate",
+        "review_overall_aspect_score": "review_overall_aspect_score_180d_mean",
+        "review_any_positive": "review_any_positive_180d_rate",
+        "review_any_negative": "review_any_negative_180d_rate",
     })
     base = base.join(overall)
 
@@ -163,10 +154,10 @@ def aggregate_at_cutoff(
         "max_review_time_used": "" if pd.isna(max_used) else max_used.isoformat(),
         "all_prior_review_rows": int(len(prior)),
         "recent_180d_review_rows": int(len(recent)),
-        "series_with_any_prior_review": int(base["deepseek_available_prior"].sum()),
-        "series_with_recent_180d_review": int(base["deepseek_available_180d"].sum()),
-        "recent_legacy_review_rows": int(recent["label_source"].eq("legacy_deepseek_chat_2025").sum()),
-        "recent_compact_review_rows": int(recent["label_source"].eq("compact_deepseek_v4_flash_2026").sum()),
+        "series_with_any_prior_review": int(base["review_available_prior"].sum()),
+        "series_with_recent_180d_review": int(base["review_available_180d"].sum()),
+        "recent_historical_label_rows": int(recent["label_source"].eq("historical_labels_2025").sum()),
+        "recent_project_label_rows": int(recent["label_source"].eq("project_labels_2026").sum()),
         "recent_manual_override_rows": int(recent["manual_qa_status"].eq("overridden_false_negative").sum()),
     }
     return base.reset_index(), audit
@@ -259,23 +250,23 @@ def assert_availability(fixed: pd.DataFrame, rolling: pd.DataFrame) -> None:
     for month_value in test_months:
         month = pd.Timestamp(month_value)
         expected_column = f"reviews_available_before_{month.strftime('%Y_%m')}"
-        actual = rolling.loc[rolling["date"].eq(month), ["series_name", "deepseek_review_count_prior_all"]]
+        actual = rolling.loc[rolling["date"].eq(month), ["series_name", "review_count_prior_all"]]
         check = expected[["series_name", expected_column]].merge(actual, on="series_name", validate="one_to_one")
-        if len(check) != EXPECTED_SERIES or not check[expected_column].eq(check["deepseek_review_count_prior_all"]).all():
+        if len(check) != EXPECTED_SERIES or not check[expected_column].eq(check["review_count_prior_all"]).all():
             raise ValueError(f"Rolling availability mismatch for {month.strftime('%Y-%m')}")
 
     january_column = "reviews_available_before_2026_01"
     for month_value in test_months:
         month = pd.Timestamp(month_value)
-        actual = fixed.loc[fixed["date"].eq(month), ["series_name", "deepseek_review_count_prior_all"]]
+        actual = fixed.loc[fixed["date"].eq(month), ["series_name", "review_count_prior_all"]]
         check = expected[["series_name", january_column]].merge(actual, on="series_name", validate="one_to_one")
-        if len(check) != EXPECTED_SERIES or not check[january_column].eq(check["deepseek_review_count_prior_all"]).all():
+        if len(check) != EXPECTED_SERIES or not check[january_column].eq(check["review_count_prior_all"]).all():
             raise ValueError(f"Fixed-origin availability mismatch for {month.strftime('%Y-%m')}")
 
 
 def main() -> None:
     if not REVIEWS.exists():
-        raise FileNotFoundError(f"Run 32_build_unified_deepseek_absa.py first: {REVIEWS}")
+        raise FileNotFoundError(f"Run 31_merge_review_labels.py first: {REVIEWS}")
     panel = load_panel()
     reviews = load_reviews()
     cache: dict[pd.Timestamp, tuple[pd.DataFrame, dict[str, Any]]] = {}
@@ -297,8 +288,8 @@ def main() -> None:
     fixed_test = fixed.loc[fixed["split"].eq("test")]
     rolling_test = rolling.loc[rolling["split"].eq("test")]
     rolling_test_monthly = rolling_test.groupby("date").agg(
-        series_with_any_prior_review=("deepseek_available_prior", "sum"),
-        series_with_recent_180d_review=("deepseek_available_180d", "sum"),
+        series_with_any_prior_review=("review_available_prior", "sum"),
+        series_with_recent_180d_review=("review_available_180d", "sum"),
     ).reset_index()
     summary = {
         "schema_version": "v1",
@@ -310,8 +301,8 @@ def main() -> None:
         "feature_columns": sentiment_columns(fixed),
         "fixed_origin_validation_cutoff_exclusive": VALIDATION_ORIGIN.strftime("%Y-%m-%d"),
         "fixed_origin_test_cutoff_exclusive": TEST_ORIGIN.strftime("%Y-%m-%d"),
-        "fixed_test_series_with_any_prior_review": int(fixed_test.groupby("date")["deepseek_available_prior"].sum().iloc[0]),
-        "fixed_test_series_with_recent_180d_review": int(fixed_test.groupby("date")["deepseek_available_180d"].sum().iloc[0]),
+        "fixed_test_series_with_any_prior_review": int(fixed_test.groupby("date")["review_available_prior"].sum().iloc[0]),
+        "fixed_test_series_with_recent_180d_review": int(fixed_test.groupby("date")["review_available_180d"].sum().iloc[0]),
         "rolling_test_coverage_by_month": [
             {
                 "month": row["date"].strftime("%Y-%m"),

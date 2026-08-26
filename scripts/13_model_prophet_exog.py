@@ -1,21 +1,5 @@
 #!/usr/bin/env python3
-"""
-13_model_prophet_exog.py — Prophet + 外生变量（无舆情基线）
-
-数据来源（统一）：06_make_splits.py 的 train / val / test。
-  * 每车系在 train (2022-01..2025-06) 上拟合，外生变量：
-      - add_country_holidays("CN")  春节 / 国庆月效应
-      - add_regressor("price_wan")   官方指导价（价格弹性水平）
-      - add_regressor("promo")       大促月指示（6·18 / 双11 / 年末清库）
-  * 验证期结束后，以 train+val 重拟合，在 **test (2026-01..06, 6 个月)**
-    上评估（外生变量随真实未来日期前推）。
-
-输出：
-  data/processed_new/stage3/prophet_exog_results.csv / prophet_exog_preds.csv
-
-Run:
-  python scripts/new_pipeline/13_model_prophet_exog.py
-"""
+"""Evaluate Prophet with calendar, price, and promotion regressors."""
 import os
 import warnings
 import logging
@@ -34,9 +18,9 @@ from prophet import Prophet
 import _model_utils as mu
 import _subset
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIG = os.path.join(BASE, "figures_new")
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIG = os.path.join(BASE, "assets/analysis")
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
 TRAIN_STYLE = "#4C78A8"
 TEST_STYLE = "#F58518"
@@ -131,7 +115,7 @@ def main():
             axes[j].axis("off")
         fig.suptitle("Prophet + exogenous (holidays/promo/price) — 6-month forecast on temporal TEST", fontsize=11)
         fig.savefig(os.path.join(FIG, "prophet_exog_forecast.png"), dpi=130)
-        print("[Prophet-exog] figure saved -> figures_new/prophet_exog_forecast.png")
+        print("[Prophet-exog] figure saved -> assets/analysis/prophet_exog_forecast.png")
     print("[Prophet-exog] done.")
 
 

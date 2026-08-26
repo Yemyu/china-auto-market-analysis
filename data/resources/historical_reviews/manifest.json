@@ -1,11 +1,11 @@
 {
   "schema_version": "1.0",
-  "resource": "data/resources/legacy_sentiment/review_absa_reference.csv.gz",
+  "resource": "data/resources/historical_reviews/review_absa_reference.csv.gz",
   "sha256": "02cc3e84078838cc646c3422fbb8f8c6823ad053f1f71621d1afc70b8022c941",
   "reviews": 39496,
   "series": 490,
   "duplicate_source_rows_removed": 558,
-  "legacy_deepseek_labeled_reviews": 28724,
+  "labeled_reviews": 28724,
   "unlabeled_reviews": 10772,
   "review_date_min": "2019-06-24 00:04:00",
   "review_date_max": "2026-07-10 18:32:00",
@@ -14,10 +14,5 @@
     "0": "ambiguous neutral/unmentioned/parser fallback",
     "1": "positive"
   },
-  "warning": "Legacy zero is not mention ground truth; use the unified 2026 feature table for forecasting.",
-  "source_files": [
-    "data/sentiment/sentiment_reviews.csv",
-    "data/sentiment/absa/absa_results.csv"
-  ],
-  "external_api_calls": 0
+  "warning": "Historical zero labels are not mention ground truth; use data/reviews/processed/review_aspect_labels.csv for modeling."
 }

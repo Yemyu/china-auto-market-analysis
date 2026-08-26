@@ -1,7 +1,7 @@
 {
   "schema_version": "v1",
-  "generated_at": "2026-08-12T13:22:20.783493+00:00",
-  "source_sales": "data/processed_new/sales_filtered_24m.csv",
+  "generated_at": "2026-08-25T08:35:55.670751+00:00",
+  "source_sales": "data/processed/sales_filtered_24m.csv",
   "source_config": "data/raw/feature.csv (车系×年, 因果回退 join)",
   "population": "feature 主表车系 (有配置), 月度面板",
   "time_cutoffs": {
@@ -54,5 +54,5 @@
     "配置 join 因果回退: 只用 <= 行年份的最新规格, 不借未来年份",
     "训练仅用 train.csv; val/test 仅供评估, 不参与训练"
   ],
-  "leg_a_note": "年度配置归因 (腿A) 用 GroupKFold(5) by series_name 防泄漏, 属另一套切分, 见 20_config_attribution.py"
+  "annual_attribution_note": "年度配置归因使用按 series_name 分组的 GroupKFold(5)，与月度预测的时间切分相互独立。"
 }

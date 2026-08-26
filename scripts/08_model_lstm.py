@@ -1,15 +1,5 @@
 #!/usr/bin/env python3
-"""
-08_model_lstm.py — 全局 LSTM + 车系 embedding 月度预测（无舆情基线）
-
-数据来源（统一）：06_make_splits.py 的 train / val / test。
-  * 模型权重只在 train (2022-01..2025-06) 上学习；
-  * 测试预测以已观测的 val (2025-07..12) 作为历史，预测 test
-    (2026-01..06)，绝不读取 test 真实销量。
-
-Run:
-  python scripts/new_pipeline/08_model_lstm.py
-"""
+"""Evaluate a global LSTM with series embeddings on the fixed time split."""
 import os
 import warnings
 import random
@@ -27,9 +17,9 @@ import torch.nn as nn
 import _model_utils as mu
 import _subset
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIG = os.path.join(BASE, "figures_new")
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIG = os.path.join(BASE, "assets/analysis")
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
 
 WIN = 12
@@ -222,7 +212,7 @@ def main():
             axes[j].axis("off")
         fig.suptitle("Global LSTM + series embedding — 6-month forecast on temporal TEST", fontsize=11)
         fig.savefig(os.path.join(FIG, "lstm_forecast.png"), dpi=130)
-        print("[LSTM] figure saved -> figures_new/lstm_forecast.png")
+        print("[LSTM] figure saved -> assets/analysis/lstm_forecast.png")
     print("[LSTM] done.")
 
 

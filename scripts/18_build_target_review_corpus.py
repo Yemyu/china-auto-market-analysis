@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Build a time-auditable review corpus for the new 371-series population.
-
-This is deliberately a data-integration step, not an ABSA or forecasting
-step.  It preserves the old corpus and the new incremental corpus unchanged,
-then creates one standardised, de-duplicated table keyed to the authoritative
-new series roster.  Downstream modelling must filter this corpus by its own
-forecast origin; this script merely exposes the dates required to do so.
-"""
+"""Build a dated, deduplicated review corpus for the 371 forecast series."""
 from __future__ import annotations
 
 import json
@@ -15,18 +8,20 @@ from pathlib import Path
 
 import pandas as pd
 
-BASE = Path(__file__).resolve().parents[2]
-SPLITS = BASE / "data" / "processed_new" / "splits"
-OLD = BASE / "data" / "resources" / "legacy_sentiment" / "review_absa_reference.csv.gz"
-NEW = BASE / "data" / "sentiment_new" / "processed" / "dongchedi_incremental_reviews_dedup.csv"
-AUTOHOME = BASE / "data" / "sentiment_new" / "raw" / "autohome_incremental_reviews.csv"
-AUTOHOME_DETAILS = BASE / "data" / "sentiment_new" / "raw" / "autohome_incremental_review_details.csv"
-OUT = BASE / "data" / "sentiment_new" / "processed"
+BASE = Path(__file__).resolve().parents[1]
+SPLITS = BASE / "data" / "processed" / "splits"
+ARCHIVE = BASE / "data" / "resources" / "historical_reviews" / "review_absa_reference.csv.gz"
+DONGCHEDI_INCREMENT = BASE / "data" / "reviews" / "processed" / "dongchedi_incremental_reviews_dedup.csv"
+AUTOHOME = BASE / "data" / "reviews" / "raw" / "autohome_incremental_reviews.csv"
+AUTOHOME_DETAILS = BASE / "data" / "reviews" / "raw" / "autohome_incremental_review_details.csv"
+OUT = BASE / "data" / "reviews" / "processed"
 CORPUS = OUT / "target_371_review_corpus.csv"
 COVERAGE = OUT / "target_371_review_coverage.csv"
 SUMMARY = OUT / "target_371_review_corpus_summary.json"
 TEST_END = pd.Timestamp("2026-06-30 23:59:59")
-LEGACY_LABEL_COLUMNS = {
+ARCHIVED_LABEL_COLUMNS = {
+    # The "legacy_deepseek_*" columns carry the archived resource's original
+    # schema. They are dropped here and never appear in public features.
     "success", "error", "appearance", "interior", "space", "power",
     "control", "comfort", "fuel_consumption", "configuration",
     "intelligence", "value", "legacy_deepseek_available",
@@ -76,15 +71,15 @@ def load_autohome() -> pd.DataFrame:
     return data
 
 
-def load_legacy_reviews() -> pd.DataFrame:
+def load_archived_reviews() -> pd.DataFrame:
     """Read review evidence without leaking the colocated label columns."""
-    data = pd.read_csv(OLD, low_memory=False)
-    return data.drop(columns=[c for c in LEGACY_LABEL_COLUMNS if c in data], errors="ignore")
+    data = pd.read_csv(ARCHIVE, low_memory=False)
+    return data.drop(columns=[c for c in ARCHIVED_LABEL_COLUMNS if c in data], errors="ignore")
 
 
 def main() -> None:
-    if not OLD.exists():
-        raise FileNotFoundError(OLD)
+    if not ARCHIVE.exists():
+        raise FileNotFoundError(ARCHIVE)
     OUT.mkdir(parents=True, exist_ok=True)
     target = pd.read_csv(SPLITS / "test.csv", usecols=["series_name"]).drop_duplicates().copy()
     target["series_key"] = target["series_name"].map(norm_name)
@@ -93,17 +88,15 @@ def main() -> None:
         raise ValueError(f"Ambiguous normalised target names: {duplicates}")
     roster = target.rename(columns={"series_name": "target_series_name"})
 
-    frames = [prepare(load_legacy_reviews(), "old_v1", roster)]
-    if NEW.exists():
-        frames.append(prepare(pd.read_csv(NEW, low_memory=False), "dongchedi_incremental", roster))
+    frames = [prepare(load_archived_reviews(), "historical_archive", roster)]
+    if DONGCHEDI_INCREMENT.exists():
+        frames.append(prepare(pd.read_csv(DONGCHEDI_INCREMENT, low_memory=False), "dongchedi_incremental", roster))
     if AUTOHOME.exists():
         frames.append(prepare(load_autohome(), "autohome_incremental", roster))
     combined = pd.concat(frames, ignore_index=True, sort=False)
     matched_rows = len(combined)
 
-    # A public review ID is only an identity inside its platform.  A freshly
-    # crawled copy takes precedence if the *same platform review* is present
-    # in both sources; distinct platforms are never deduplicated by text.
+    # Review IDs are unique only within a platform.
     combined["identity"] = combined["platform"].fillna("unknown").astype(str) + "::" + combined["review_id"]
     combined["valid_identity"] = combined["review_id"].notna() & ~combined["review_id"].isin(["", "nan"])
     combined["source_priority"] = combined["corpus_source"].isin(
@@ -117,10 +110,7 @@ def main() -> None:
 
     corpus["valid_time"] = corpus["publish_time"].notna()
     corpus["valid_content"] = corpus["content"].ne("")
-    # Autohome's list endpoint is a resumable discovery source, but its text
-    # can be abbreviated. Preserve those summaries in the corpus/audit while
-    # excluding them from sentiment features unless the corresponding detail
-    # page was fetched and parsed successfully.
+    # Autohome list summaries enter the audit, but only full detail text is eligible.
     corpus["eligible_content_quality"] = (
         corpus["corpus_source"].ne("autohome_incremental")
         | corpus["content_source"].fillna("").eq("detail_full_html")
@@ -135,7 +125,7 @@ def main() -> None:
     usable = corpus.loc[corpus["eligible_for_temporal_model"]].copy()
     coverage = (usable.groupby("series_name_canonical")
                 .agg(review_count=("review_id", "size"),
-                     old_v1_reviews=("corpus_source", lambda s: int(s.eq("old_v1").sum())),
+                     archived_reviews=("corpus_source", lambda s: int(s.eq("historical_archive").sum())),
                      dongchedi_incremental_reviews=("corpus_source", lambda s: int(s.eq("dongchedi_incremental").sum())),
                      autohome_incremental_reviews=("corpus_source", lambda s: int(s.eq("autohome_incremental").sum())),
                      earliest_review=("publish_time", "min"),
@@ -146,7 +136,7 @@ def main() -> None:
     coverage = roster[["target_series_name"]].merge(
         coverage, left_on="target_series_name", right_on="series_name_canonical", how="left"
     ).drop(columns="series_name_canonical").rename(columns={"target_series_name": "series_name"})
-    for col in ["review_count", "old_v1_reviews", "dongchedi_incremental_reviews", "autohome_incremental_reviews", "pre_test_end_reviews", "post_test_end_reviews"]:
+    for col in ["review_count", "archived_reviews", "dongchedi_incremental_reviews", "autohome_incremental_reviews", "pre_test_end_reviews", "post_test_end_reviews"]:
         coverage[col] = coverage[col].fillna(0).astype(int)
     coverage["review_coverage_status"] = "no_review"
     coverage.loc[coverage["review_count"].gt(0), "review_coverage_status"] = "review_available"

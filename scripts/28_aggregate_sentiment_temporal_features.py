@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Aggregate local sentiment signals at each forecast origin without leakage.
-
-For a target month ``t``, every aggregate uses review timestamps strictly
-earlier than the first day of ``t``.  The table keeps count/availability fields
-alongside scores so models can distinguish no observed sentiment from a neutral
-sentiment estimate based on observed reviews.
-"""
+"""Aggregate local review signals strictly before each forecast origin."""
 from __future__ import annotations
 
 import json
@@ -14,9 +8,9 @@ from pathlib import Path
 import pandas as pd
 
 
-BASE = Path(__file__).resolve().parents[2]
-SPLITS = BASE / "data" / "processed_new" / "splits"
-OUT = BASE / "data" / "sentiment_new" / "processed"
+BASE = Path(__file__).resolve().parents[1]
+SPLITS = BASE / "data" / "processed" / "splits"
+OUT = BASE / "data" / "reviews" / "processed"
 FEATURES = OUT / "local_sentiment_review_features.csv"
 AVAILABILITY = OUT / "review_temporal_availability_by_series.csv"
 FEATURE_TABLE = OUT / "sentiment_features_by_series_month.csv"

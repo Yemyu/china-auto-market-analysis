@@ -1,59 +1,29 @@
 # -*- coding: utf-8 -*-
-"""
-00_build_series_index.py — 建立跨平台统一车系索引 (新 ID 体系)
-=============================================================
-设计目标
--------
-把"舆情 / 配置 / 销量"三套数据用 **series_name (车系名)** 作为唯一通用连接键，
-统一到一个索引表里。每个车系一行，横向挂上它在各平台的自有 id：
-
-  canonical_id          本项目自建的稳定车系主键 (S0001, S0002, ...)
-  series_name           车系名 (通用键, 全表唯一)
-  dongchedi_series_id   懂车帝数字 id  (来自 feature.csv / 历史舆情资源)
-  pcauto_series_id      太平洋数字 id  (来自 monthly_sales.csv 的 series_id 列)
-  pcauto_source_series_id  太平洋 sgXXXX id (来自 all_sales 的 source_series_id 列)
-  n_platforms          该系在几个源里出现 (用于覆盖率诊断)
-
-为什么需要它
------------
-- 销量(all_sales) 的 series_id 是太平洋编码(106/27043), 配置(vehicles/feature) 的
-  series_id 是懂车帝编码(1291/10026), 二者**不是一套**, 无法直接 join。
-- 唯一跨文件对齐的键是 series_name。本表把两套 id 并到一行, 下游所有脚本
-  统一按 canonical_id / series_name 连接, 不再关心源平台编码。
-
-用法
----
-  python scripts/00_build_series_index.py
-输出: data/raw/series_index.csv
-（属数据接入层, 不进 git —— 与 data/raw 其他大文件一致）
-"""
+"""Build a cross-source series index keyed by canonical series name."""
 import os
 import pandas as pd
 
-ROOT = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(ROOT, "data", "raw")
 
 
 def _load_dongchedi_ids():
     """从懂车帝体系文件收集 series_name -> 懂车帝数字 id"""
     frames = []
-    # Canonical configuration table.  feature.xlsx was a byte-heavier export
-    # of the same 2,084 rows and is intentionally no longer required.
+    # Canonical configuration table.
     feature = os.path.join(RAW, "feature.csv")
     if os.path.exists(feature):
         df = pd.read_csv(feature, encoding="utf-8-sig", low_memory=False)
         if {"series_name", "series_id"} <= set(df.columns):
             frames.append(df[["series_name", "series_id"]].astype(str))
-    # Curated legacy review resource (舆情宇宙, 自带懂车帝 id)
-    legacy = os.path.join(ROOT, "data", "resources", "legacy_sentiment", "review_absa_reference.csv.gz")
-    if os.path.exists(legacy):
-        df = pd.read_csv(legacy, usecols=["series_name", "series_id"])
+    # Archived reviews retain Dongchedi series IDs.
+    archive = os.path.join(ROOT, "data", "resources", "historical_reviews", "review_absa_reference.csv.gz")
+    if os.path.exists(archive):
+        df = pd.read_csv(archive, usecols=["series_name", "series_id"])
         if {"series_name", "series_id"} <= set(df.columns):
             frames.append(df[["series_name", "series_id"]].astype(str))
-    # New-data ID resolution register.  This is deliberately a small,
-    # auditable supplement: every inferred match must retain its source URL
-    # and verification status instead of being silently hard-coded elsewhere.
-    resolved = os.path.join(ROOT, "data", "processed_new", "phase_b", "dongchedi_id_resolutions.csv")
+    # Only verified entries from the resolution register are accepted.
+    resolved = os.path.join(ROOT, "data", "processed", "review_collection", "dongchedi_id_resolutions.csv")
     if os.path.exists(resolved):
         df = pd.read_csv(resolved)
         required = {"series_name", "dongchedi_series_id", "resolution_status"}

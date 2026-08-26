@@ -1,10 +1,5 @@
 #!/usr/bin/env python3
-"""Create source-aware quality checks for the integrated target review corpus.
-
-The report distinguishes owner-review platforms and distinguishes list-page
-summaries from full text.  It is intentionally descriptive: it does not score
-sentiment, impute missing content, or declare post-origin reviews usable.
-"""
+"""Audit source, content type, and date coverage in the review corpus."""
 from __future__ import annotations
 
 import json
@@ -12,8 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
-BASE = Path(__file__).resolve().parents[2]
-OUT = BASE / "data" / "sentiment_new" / "processed"
+BASE = Path(__file__).resolve().parents[1]
+OUT = BASE / "data" / "reviews" / "processed"
 CORPUS = OUT / "target_371_review_corpus.csv"
 BY_SOURCE = OUT / "multisource_review_quality_by_source.csv"
 BY_SERIES = OUT / "multisource_review_quality_by_series.csv"

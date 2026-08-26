@@ -1,22 +1,5 @@
 #!/usr/bin/env python3
-"""
-10_rolling_cv.py — 多步长误差增长检查（rolling-origin 风格）
-
-数据来源（统一）：仅用 06_make_splits.py 的 **train** 切分，在 train 内部做
-多步长 holdout（绝不触碰 val/test，彻底无泄漏）：
-  * 对每个 horizon h，训练集 = 每个车系去掉最后 h 个月，预测目标 = 那最后 h 个月；
-  * 衡量「预测越远，误差涨多少」。
-
-模型：ARIMA（逐车系，廉价）+ XGBoost（全局，train 一次/horizon）。
-LSTM 已在 08 评估，这里略去以控制耗时。
-
-输出：
-  data/processed_new/stage3/cv_results.csv   (model,horizon,mean_wmape,std_wmape,n_series)
-  figures_new/cv_wmape_by_horizon.png
-
-Run:
-  python scripts/new_pipeline/10_rolling_cv.py
-"""
+"""Measure ARIMA and XGBoost error growth across forecast horizons."""
 import os
 os.environ["OMP_NUM_THREADS"] = "1"
 import warnings
@@ -34,9 +17,9 @@ from xgboost import XGBRegressor
 import _model_utils as mu
 import _subset
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIG = os.path.join(BASE, "figures_new")
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIG = os.path.join(BASE, "assets/analysis")
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
@@ -143,7 +126,7 @@ def main():
     ax.set_xticks(HORIZONS)
     ax.legend(); ax.grid(alpha=0.3)
     fig.savefig(os.path.join(FIG, "cv_wmape_by_horizon.png"), dpi=130)
-    print("[CV] figure saved -> figures_new/cv_wmape_by_horizon.png")
+    print("[CV] figure saved -> assets/analysis/cv_wmape_by_horizon.png")
     print("[CV] done.")
 
 

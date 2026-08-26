@@ -1,34 +1,8 @@
 #!/usr/bin/env python3
-"""
-配置 → 年销量 归因（正确口径版）
+"""Estimate configuration contribution to annual sales.
 
-背景 / 为什么需要这个脚本
---------------------------------------------------
-实测确认 feature.csv 的粒度是「车系 × 年」(唯一键, 2084 行 = 2084 组合),
-且 annual_sales 精确等于 monthly_sales 按 (车系,年) 的汇总 (1484 条 ratio=1.0, std=0)。
-每个「车系-年」只挂一个代表车型 (car_id), 不是全部 trim。
-
-由此产生两个硬约束:
- 1) 配置在车系内跨年几乎不变 (vehicle_class 0%, 座椅加热 0%, 轴距 4.1%, 能源 5.8% 有变化),
-    所以配置只能解释「车系之间」的销量差异 (between-series),
-    无法解释同一车系的年度涨跌 (within-series)。
-    => 归因必须建立在 between 变异上; 绝不能加车系固定效应(会把配置效应吃光)。
- 2) 同车系多年记录的配置近乎重复 => 随机切分会泄露
-    (训练集见过同车系另一年的 y, 而配置几乎一样, 等于背答案)。
-    => 必须按 series_name 分组切分 (GroupKFold)。
-
-消融设计 (直接回答「配置贡献多少」)
---------------------------------------------------
-  A. YEAR-ONLY    : 仅年份         —— 大盘/时间基准
-  B. +BRAND       : 年份 + 品牌     —— 品牌资产能解释多少
-  C. +CONFIG      : 年份 + 品牌 + 配置 —— 配置的增量贡献 = C - B
-  D. CONFIG-ONLY  : 仅配置         —— 配置单独的解释力
-
-输出:
-  data/processed_new/stage4/config_attribution_ablation.csv
-  data/processed_new/stage4/config_importance_annual.csv
-  figures_new/config_attribution_ablation.png
-  figures_new/config_attribution_shap.png
+The table is one row per series and year. Cross-validation is grouped by
+series, and the ablation compares year, year plus brand, and configuration.
 """
 import os
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -46,10 +20,10 @@ from sklearn.model_selection import GroupKFold
 from sklearn.metrics import r2_score
 from xgboost import XGBRegressor
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FEAT = os.path.join(BASE, "data", "raw", "feature.csv")
-FIG = os.path.join(BASE, "figures_new")
-PROC = os.path.join(BASE, "data", "processed_new", "stage4")
+FIG = os.path.join(BASE, "assets/analysis")
+PROC = os.path.join(BASE, "data", "processed", "product")
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
@@ -84,8 +58,7 @@ def wmape(y_true, y_pred):
     return np.sum(np.abs(y_true - y_pred)) / d * 100 if d > 0 else np.nan
 
 
-def build_matrix(df):
-    """把 车系×年 表拆成 数值配置 / 类别配置 / 品牌 / 年份 四组特征块。"""
+def feature_columns(df):
     num_cols, cat_cols = [], []
     for c in df.columns:
         if c in DROP or c == "year":
@@ -98,50 +71,86 @@ def build_matrix(df):
             if s.nunique(dropna=True) >= 2:
                 num_cols.append(c)
 
-    # 数值: 中位数填充
-    X_num = df[num_cols].apply(pd.to_numeric, errors="coerce")
-    X_num = X_num.fillna(X_num.median())
+    return num_cols, cat_cols
 
-    # 类别: 低基数 one-hot, 高基数(如 manufacturer) 用频次编码避免维度爆炸
-    parts, cat_used = [], []
-    brand_parts = []
-    for c in cat_cols:
-        s = df[c].astype(str).fillna("NA")
-        if c == "brand_name":
-            d = pd.get_dummies(s, prefix="brand").astype(float)
-            brand_parts.append(d)
-            continue
-        if s.nunique() <= 15:
-            parts.append(pd.get_dummies(s, prefix=c).astype(float))
+
+def _one_hot(train, test, prefix):
+    train_encoded = pd.get_dummies(train, prefix=prefix).astype(float)
+    test_encoded = pd.get_dummies(test, prefix=prefix).astype(float)
+    return train_encoded, test_encoded.reindex(columns=train_encoded.columns, fill_value=0.0)
+
+
+def transform_blocks(train_df, test_df, num_cols, cat_cols):
+    train_index = train_df.index
+    test_index = test_df.index
+
+    train_num = train_df[num_cols].apply(pd.to_numeric, errors="coerce")
+    test_num = test_df[num_cols].apply(pd.to_numeric, errors="coerce")
+    medians = train_num.median()
+    train_num = train_num.fillna(medians).fillna(0.0).astype(float)
+    test_num = test_num.fillna(medians).fillna(0.0).astype(float)
+
+    train_cfg_parts = [train_num]
+    test_cfg_parts = [test_num]
+    train_brand = pd.DataFrame(index=train_index)
+    test_brand = pd.DataFrame(index=test_index)
+    for column in cat_cols:
+        train_values = train_df[column].fillna("NA").astype(str)
+        test_values = test_df[column].fillna("NA").astype(str)
+        if column == "brand_name":
+            train_brand, test_brand = _one_hot(train_values, test_values, "brand")
+        elif train_values.nunique() <= 15:
+            train_part, test_part = _one_hot(train_values, test_values, column)
+            train_cfg_parts.append(train_part)
+            test_cfg_parts.append(test_part)
         else:
-            freq = s.map(s.value_counts(normalize=True))
-            parts.append(freq.rename(f"{c}_freq").to_frame())
-        cat_used.append(c)
+            frequency = train_values.value_counts(normalize=True)
+            train_cfg_parts.append(train_values.map(frequency).rename(f"{column}_freq").to_frame())
+            test_cfg_parts.append(
+                test_values.map(frequency).fillna(0.0).rename(f"{column}_freq").to_frame()
+            )
 
-    X_cfg = pd.concat([X_num] + parts, axis=1) if parts else X_num
-    X_brand = pd.concat(brand_parts, axis=1) if brand_parts else pd.DataFrame(index=df.index)
-    X_year = pd.get_dummies(df["year"].astype(int), prefix="year").astype(float)
-    return X_cfg, X_brand, X_year, num_cols, cat_used
+    train_year, test_year = _one_hot(
+        train_df["year"].astype(int), test_df["year"].astype(int), "year"
+    )
+    train_blocks = {
+        "year": train_year,
+        "brand": train_brand,
+        "config": pd.concat(train_cfg_parts, axis=1),
+    }
+    test_blocks = {
+        "year": test_year,
+        "brand": test_brand,
+        "config": pd.concat(test_cfg_parts, axis=1),
+    }
+    return train_blocks, test_blocks
 
 
-def cv_eval(X, y, groups, label):
-    """GroupKFold CV: 同一车系整组进同一折, 防跨年泄露。"""
-    if X.shape[1] == 0:
-        return None
+def assemble(blocks, names):
+    return pd.concat([blocks[name] for name in names], axis=1)
+
+
+def cv_eval(df, y, groups, label, block_names, num_cols, cat_cols, full_feature_count):
+    """Fit preprocessing and the model within each grouped fold."""
     gkf = GroupKFold(n_splits=N_SPLITS)
     r2s, wms, oof = [], [], np.zeros(len(y))
-    for tr, te in gkf.split(X, y, groups):
+    for tr, te in gkf.split(df, y, groups):
+        train_blocks, test_blocks = transform_blocks(
+            df.iloc[tr], df.iloc[te], num_cols, cat_cols
+        )
+        X_train = assemble(train_blocks, block_names)
+        X_test = assemble(test_blocks, block_names)
         m = XGBRegressor(n_estimators=500, max_depth=5, learning_rate=0.05,
                          subsample=0.8, colsample_bytree=0.8,
                          reg_lambda=1.0, random_state=42, n_jobs=1)
-        m.fit(X.iloc[tr], y[tr])
-        p = m.predict(X.iloc[te])
+        m.fit(X_train, y[tr])
+        p = m.predict(X_test)
         oof[te] = p
         r2s.append(r2_score(y[te], p))
         wms.append(wmape(np.expm1(y[te]), np.maximum(np.expm1(p), 0)))
-    print(f"  {label:14s} R2(log)={np.mean(r2s):6.3f}  WMAPE={np.mean(wms):7.1f}%  维度={X.shape[1]}")
+    print(f"  {label:14s} R2(log)={np.mean(r2s):6.3f}  WMAPE={np.mean(wms):7.1f}%  维度={full_feature_count}")
     return {"variant": label, "R2_log_mean": np.mean(r2s), "R2_log_std": np.std(r2s),
-            "WMAPE_mean": np.mean(wms), "n_features": X.shape[1]}, oof
+            "WMAPE_mean": np.mean(wms), "n_features": full_feature_count}, oof
 
 
 def main():
@@ -154,21 +163,25 @@ def main():
           f"年份 {YEAR_MIN}-{YEAR_MAX}")
     print(f"[归因] y=log1p(annual_sales), 分组切分 GroupKFold({N_SPLITS}) by series_name\n")
 
-    X_cfg, X_brand, X_year, num_cols, cat_used = build_matrix(df)
-    print(f"[特征] 数值配置 {len(num_cols)} | 类别配置 {len(cat_used)} | "
-          f"品牌 one-hot {X_brand.shape[1]} | 年份 {X_year.shape[1]}")
-    print(f"[特征] 配置块合计 {X_cfg.shape[1]} 维\n")
+    num_cols, cat_cols = feature_columns(df)
+    full_blocks, _ = transform_blocks(df, df, num_cols, cat_cols)
+    print(f"[特征] 数值配置 {len(num_cols)} | 类别配置 {len(cat_cols) - 1} | "
+          f"品牌 one-hot {full_blocks['brand'].shape[1]} | 年份 {full_blocks['year'].shape[1]}")
+    print(f"[特征] 配置块合计 {full_blocks['config'].shape[1]} 维\n")
 
     print("===== 消融 (GroupKFold 交叉验证均值) =====")
     variants = {
-        "YEAR-ONLY": X_year,
-        "+BRAND": pd.concat([X_year, X_brand], axis=1),
-        "+CONFIG": pd.concat([X_year, X_brand, X_cfg], axis=1),
-        "CONFIG-ONLY": X_cfg,
+        "YEAR-ONLY": ("year",),
+        "+BRAND": ("year", "brand"),
+        "+CONFIG": ("year", "brand", "config"),
+        "CONFIG-ONLY": ("config",),
     }
     rows = []
-    for lab, X in variants.items():
-        res, _ = cv_eval(X, y, groups, lab)
+    for lab, block_names in variants.items():
+        full_feature_count = assemble(full_blocks, block_names).shape[1]
+        res, _ = cv_eval(
+            df, y, groups, lab, block_names, num_cols, cat_cols, full_feature_count
+        )
         if res:
             rows.append(res)
     abl = pd.DataFrame(rows)
@@ -179,7 +192,7 @@ def main():
     print(f"\n[配置增量贡献] R2: {r_b:.3f} -> {r_c:.3f}  (ΔR2 = {r_c - r_b:+.3f})")
 
     # ---- 全量拟合一次, 取重要性 + SHAP ----
-    X_full = pd.concat([X_year, X_brand, X_cfg], axis=1)
+    X_full = assemble(full_blocks, variants["+CONFIG"])
     model = XGBRegressor(n_estimators=500, max_depth=5, learning_rate=0.05,
                          subsample=0.8, colsample_bytree=0.8,
                          reg_lambda=1.0, random_state=42, n_jobs=1)
@@ -228,7 +241,7 @@ def main():
         plt.tight_layout()
         plt.savefig(os.path.join(FIG, "config_attribution_shap.png"), dpi=130)
         plt.close()
-        print("\n[SHAP] figures_new/config_attribution_shap.png")
+        print("\n[SHAP] assets/analysis/config_attribution_shap.png")
     except Exception as e:
         print(f"\n[SHAP] 跳过: {e}")
 

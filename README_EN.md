@@ -16,13 +16,11 @@
   <a href="./data/README_EN.md">Data documentation</a>
 </p>
 
-<video src="https://github.com/user-attachments/assets/06416183-a6bb-415e-98ad-f96c836382d2" width="100%" controls></video>
-
 ---
 
 ## Overview
 
-The project contains three analyses that share a data foundation but use different samples and validation protocols.
+The project has three parts.
 
 | Module | Sample | Scope | Validation |
 |---|---:|---|---|
@@ -53,10 +51,10 @@ Year, brand, and specifications are added sequentially on the same 736-series sa
 | Feature set | Grouped CV R² | WMAPE |
 |---|---:|---:|
 | Year | 0.089 | 87.67% |
-| Year + brand | 0.154 | 83.77% |
-| Year + brand + specifications | **0.303** | **75.38%** |
+| Year + brand | 0.156 | 83.92% |
+| Year + brand + specifications | **0.300** | **75.69%** |
 
-Specifications add `0.149` to cross-validated R². This is an explanatory association within the study sample, not a causal estimate.
+Specifications add `0.144` to cross-validated R². This is an out-of-fold explanatory association, not a causal estimate.
 
 ### User needs and risk
 
@@ -121,16 +119,17 @@ The bilingual dashboard uses vanilla HTML, CSS, JavaScript, and ECharts. Data is
 
 ## Quick start
 
-The project uses the `nlp-sentiment` Conda environment exclusively and does not rely on system Python.
+Create the project environment:
 
 ```bash
-conda env update -n nlp-sentiment -f environment.yml --prune
+conda env create -f environment.yml
+conda activate nlp-sentiment
 ```
 
 Launch the dashboard:
 
 ```bash
-conda run -n nlp-sentiment python -m http.server 8000 --directory app
+python -m http.server 8000 --directory app
 ```
 
 Open <http://127.0.0.1:8000/>. Dashboard data is already bundled; crawling and modeling are not required for viewing.
@@ -138,22 +137,22 @@ Open <http://127.0.0.1:8000/>. Dashboard data is already bundled; crawling and m
 Rebuild dashboard data:
 
 ```bash
-conda run -n nlp-sentiment python app/build_dashboard_data.py
+python app/build_dashboard_data.py
 ```
 
-The reproducible pipeline lives in `scripts/new_pipeline/`:
+The reproducible pipeline lives in `scripts/`:
 
 ```text
-00–15  series index, temporal splits, baseline models, and data audits
-16–28  review collection, corpus validation, local baseline, and leakage-safe features
-29–35  review-feature ablation, fixed-origin forecasting, and robustness analysis
-36–39  user needs, monitoring, cold-start handling, resource curation, and report notebooks
+00–14  series index, sales panel, temporal splits, and baseline models
+15–28  review collection, series mapping, corpus audits, and review features
+29     annual product-configuration attribution
+30–37  label merging, forecast ablation, robustness, user needs, cold-start handling, and report notebooks
 ```
 
 Run every Python script through the project environment:
 
 ```bash
-conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
+python scripts/<script>.py
 ```
 
 ## Repository layout
@@ -161,14 +160,14 @@ conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
 ```text
 china-auto-market-analysis/
 ├── app/                    static dashboard and pre-baked JSON
-├── assets/                 analysis figures, dashboard captures, and demo video
+├── assets/                 analysis figures and dashboard captures
 ├── data/
 │   ├── raw/                monthly sales and vehicle specifications
-│   ├── sentiment_new/      review corpus, labels, and temporal features
-│   ├── processed_new/      splits, model outputs, and audit artifacts
-│   └── resources/          curated historical data resources
+│   ├── reviews/            review corpus, labels, and temporal features
+│   ├── processed/          splits, model outputs, and audit artifacts
+│   └── resources/          historical review resources
 ├── notebook/               Chinese and English analysis notebooks
-├── scripts/new_pipeline/   reproducible current pipeline
+├── scripts/                reproducible scripts
 ├── environment.yml
 ├── requirements.txt
 ├── README.md

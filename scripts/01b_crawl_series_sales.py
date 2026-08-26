@@ -1,42 +1,21 @@
-"""
-01b_crawl_series_sales.py  -  新版工程：补齐 feature 主表缺失车系的月度销量
+"""Collect recent sales for configured series missing from the monthly panel.
 
-背景
-----
-- feature.csv 是建模主表（766 车系，含配置）。
-- 其中只有 371 个能在 monthly_sales.csv 找到销量；其余约 387 个缺月度销量。
-- 太平洋销量页 price.pcauto.com.cn/salescar/<sg/nb id>/ 按车系给出销量，
-  但每系仅暴露「最近 6 个月 + 年内累计(1-N月) + 上年累计」，没有 2022-2026 全历史。
-  => 本脚本补的是「近期窗口」销量，不能替代全历史面板。
-
-流程
-----
-1. 以 feature.csv 为主表，算出缺销量的车系（norm(name) 不在 monthly_sales 已覆盖集合里）。
-2. 解析车系 id：
-   - Tier1: monthly_sales.csv 自带 source_series_id（sg/nb 系列级 id），按 norm(name) 直接复用。
-   - Tier2: 对仍未解析的，爬太平洋「销量目录」按品牌分页收集全量 (车系名 -> sg id) 映射，
-            再按 norm(name) 匹配（缓存到 data/raw/pcauto_series_map.csv）。
-3. 对每个解析到的车系，抓 salescar 页，解析表头 yYYYY-mM 月度链接 + 数据行，得到近期月度销量。
-4. 原始抓取结果写入 data/raw/sales_crawl_raw.csv（仅落盘，不自动合并进 monthly_sales.csv，
-   等人工核对质量后再决定合并）。
-
-不自动合并的原因：用户要求「没数据就去爬，但别把别的车的数据丢进模型」，
-抓取质量需先审一遍再并入主销量表。
+The source exposes only a recent window, so results are written to a separate
+audit file and are not merged into the historical panel automatically.
 """
 import os, re, time, sys
 import pandas as pd
 import requests
 from pathlib import Path
 
-BASE = Path(__file__).resolve().parent.parent.parent
+BASE = Path(__file__).resolve().parent.parent
 RAW = BASE / "data" / "raw"
-FIG = BASE / "figures_new"
 
 UA = {"User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 "
                     "(KHTML, like Gecko) Chrome/124.0 Safari/537.36",
       "Accept-Language": "zh-CN,zh;q=0.9"}
 
-SLEEP = 1.0  # 礼貌间隔（秒）
+SLEEP = 1.0  # request interval in seconds
 
 
 def norm(s):
@@ -130,7 +109,7 @@ def main():
     ms = pd.read_csv(RAW / "monthly_sales.csv")
     ms["series_name"] = ms["series_name"].astype(str)
 
-    # Tier1: 已有覆盖（series 级 sg id）
+    # Reuse known series-level IDs.
     ms_map = {}
     for _, r in ms.iterrows():
         sid = str(r.get("source_series_id", "")).strip()
@@ -144,7 +123,7 @@ def main():
     print(f"[01b] feature 车系 {len(feat_names)} | 已由 monthly_sales 覆盖 {len(feat_names)-len(missing)} "
           f"| 缺销量 {len(missing)}")
 
-    # Tier2: 爬品牌目录建全量映射
+    # Resolve the remaining IDs from the sales directory.
     map_cache = RAW / "pcauto_series_map.csv"
     if map_cache.exists():
         sm = pd.read_csv(map_cache)

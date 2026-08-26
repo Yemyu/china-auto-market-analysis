@@ -1,27 +1,7 @@
 #!/usr/bin/env python3
-"""
-07_model_xgboost.py — XGBoost 月度销量预测（无舆情基线）
-
-数据来源（统一）：由 06_make_splits.py 生成的
-  data/processed_new/splits/train.csv  (2022-01..2025-06)  -> 训练
-  data/processed_new/splits/val.csv    (2025-07..2025-12)  -> 早停 / 选超参
-  data/processed_new/splits/test.csv   (2026-01..2026-06)  -> 最终诚实评估
-
-评估口径（与旧版一致，但 holdout 换成显式时序 test）：
-  * 在 val 上 early-stopping 选 best_iteration；
-  * 在 test 上仅报告最终指标（绝不在 test 上调参）；
-  * 递归多步预测：seed=真实 train 历史，val/test 用预测值回填 lag（无泄漏）。
-
-输出：
-  data/processed_new/stage3/xgboost_results.csv   (逐车系 WMAPE/MAE/RMSE/MAPE)
-  data/processed_new/stage3/xgboost_preds.csv     (series,date,actual,pred)
-  figures_new/xgboost_forecast.png
-
-Run:
-  python scripts/new_pipeline/07_model_xgboost.py
-"""
+"""Train and evaluate the baseline XGBoost sales forecaster."""
 import os
-os.environ["OMP_NUM_THREADS"] = "1"  # 环境铁律：避免 XGBoost 多线程段错误
+os.environ["OMP_NUM_THREADS"] = "1"
 import warnings
 warnings.filterwarnings("ignore")
 
@@ -36,9 +16,9 @@ from xgboost import XGBRegressor
 import _model_utils as mu
 import _subset
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-FIG = os.path.join(BASE, "figures_new")
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+FIG = os.path.join(BASE, "assets/analysis")
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
@@ -155,7 +135,7 @@ def main():
         axes[0].axis("off")
     fig.suptitle("XGBoost — recursive forecast on temporal TEST split (2026-01..06)", fontsize=11)
     fig.savefig(os.path.join(FIG, "xgboost_forecast.png"), dpi=130)
-    print("[XGBoost] figure saved -> figures_new/xgboost_forecast.png")
+    print("[XGBoost] figure saved -> assets/analysis/xgboost_forecast.png")
     print("[XGBoost] done.")
 
 

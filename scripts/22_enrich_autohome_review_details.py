@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Fetch and parse full-detail pages for staged Autohome list summaries.
-
-The list corpus and the detail corpus remain separate raw artifacts.  This
-script is resumable by review ID and records fetch failures instead of silently
-falling back to a truncated summary.  The integration step may only promote a
-row to ``detail_full_html`` when ``detail_status == 'ok'`` and parsed text is
-non-empty.
-"""
+"""Fetch full Autohome review pages for collected list summaries."""
 from __future__ import annotations
 
 import argparse
@@ -21,8 +14,8 @@ import pandas as pd
 import requests
 from bs4 import BeautifulSoup
 
-BASE = Path(__file__).resolve().parents[2]
-RAW = BASE / "data" / "sentiment_new" / "raw"
+BASE = Path(__file__).resolve().parents[1]
+RAW = BASE / "data" / "reviews" / "raw"
 SUMMARIES = RAW / "autohome_incremental_reviews.csv"
 DETAILS = RAW / "autohome_incremental_review_details.csv"
 

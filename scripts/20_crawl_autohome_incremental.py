@@ -1,13 +1,5 @@
 #!/usr/bin/env python3
-"""Collect a source-separated, resumable Autohome review increment for target series.
-
-The collector intentionally begins only with IDs manually verified against an
-official Autohome series page.  It never guesses an ID from a series name and
-does not overwrite either the legacy review corpus or the Dongchedi increment.
-The public list endpoint returns structured review summaries.  Long summaries
-can be abbreviated by the source, so each row carries an explicit flag rather
-than representing the text as a full review.
-"""
+"""Collect Autohome review summaries for verified target-series IDs."""
 from __future__ import annotations
 
 import argparse
@@ -22,11 +14,11 @@ from urllib.parse import urlencode
 import pandas as pd
 import requests
 
-BASE = Path(__file__).resolve().parents[2]
-SPLITS = BASE / "data" / "processed_new" / "splits"
-ID_MAP = BASE / "data" / "processed_new" / "phase_b" / "autohome_id_resolutions.csv"
-AVAILABILITY = BASE / "data" / "sentiment_new" / "processed" / "review_temporal_availability_by_series.csv"
-OUT = BASE / "data" / "sentiment_new" / "raw"
+BASE = Path(__file__).resolve().parents[1]
+SPLITS = BASE / "data" / "processed" / "splits"
+ID_MAP = BASE / "data" / "processed" / "review_collection" / "autohome_id_resolutions.csv"
+AVAILABILITY = BASE / "data" / "reviews" / "processed" / "review_temporal_availability_by_series.csv"
+OUT = BASE / "data" / "reviews" / "raw"
 REVIEWS_OUT = OUT / "autohome_incremental_reviews.csv"
 MANIFEST_OUT = OUT / "autohome_incremental_manifest.csv"
 
@@ -40,7 +32,7 @@ HEADERS = {
 
 
 def target_roster(mode: str) -> pd.DataFrame:
-    """Return only verified IDs belonging to the new 371-series population."""
+    """Return verified IDs belonging to the 371-series population."""
     if not ID_MAP.exists():
         raise FileNotFoundError(f"Missing verified ID register: {ID_MAP}")
     target = pd.read_csv(SPLITS / "test.csv", usecols=["series_name"]).drop_duplicates()
@@ -109,7 +101,7 @@ def content_from_sections(review: dict) -> tuple[str, bool]:
         for item in sections if str(item.get("content") or "").strip()
     ).strip()
     # The list API visibly marks abbreviated passages with an ellipsis.  This
-    # is intentionally a conservative flag: False means no visible marker,
+    # False means no visible abbreviation marker,
     # not a guarantee that it is the original full-detail text.
     abbreviated = any(str(item.get("content") or "").rstrip().endswith(("...", "…")) for item in sections)
     return text, abbreviated

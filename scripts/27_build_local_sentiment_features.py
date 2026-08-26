@@ -1,16 +1,5 @@
 #!/usr/bin/env python3
-"""Build transparent, non-API sentiment signals for the 371-series corpus.
-
-The output deliberately keeps two sources of evidence separate:
-
-* ``platform_rating_*`` is the score explicitly submitted by a reviewer;
-* ``text_*`` is a deterministic, automotive-domain text signal that records
-  aspect mention separately from the polarity of that mention.
-
-Only reviews already marked ``eligible_for_temporal_model`` by the corpus
-builder are scored.  In particular, an Autohome list summary whose full detail
-page was unavailable remains an audit row but cannot produce a feature here.
-"""
+"""Build platform-rating and lexicon features for eligible reviews."""
 from __future__ import annotations
 
 import json
@@ -21,16 +10,12 @@ import numpy as np
 import pandas as pd
 
 
-BASE = Path(__file__).resolve().parents[2]
-OUT = BASE / "data" / "sentiment_new" / "processed"
+BASE = Path(__file__).resolve().parents[1]
+OUT = BASE / "data" / "reviews" / "processed"
 CORPUS = OUT / "target_371_review_corpus.csv"
-LEGACY = BASE / "data" / "resources" / "legacy_sentiment" / "review_absa_reference.csv.gz"
-QA_SAMPLE = OUT / "absa_qa_sample.csv"
 
 REVIEW_FEATURES = OUT / "local_sentiment_review_features.csv"
 ASPECT_COVERAGE = OUT / "local_sentiment_aspect_coverage.csv"
-LEGACY_AGREEMENT = OUT / "local_sentiment_legacy_agreement.csv"
-QA_OUTPUT = OUT / "local_sentiment_qa_sample.csv"
 SUMMARY = OUT / "local_sentiment_feature_summary.json"
 
 ASPECTS = [
@@ -194,37 +179,6 @@ def platform_rating_features(data: pd.DataFrame) -> pd.DataFrame:
     return output
 
 
-def legacy_agreement(features: pd.DataFrame) -> pd.DataFrame:
-    columns = [
-        "aspect", "legacy_nonzero_reviews", "local_mentioned_reviews",
-        "polarity_comparable_reviews", "same_polarity_reviews", "sign_agreement",
-    ]
-    if not LEGACY.exists():
-        return pd.DataFrame(columns=columns)
-    legacy = pd.read_csv(LEGACY, low_memory=False)
-    legacy["review_id"] = legacy["review_id"].astype(str).str.strip()
-    legacy["success"] = legacy["success"].astype(str).str.lower().eq("true")
-    legacy = legacy.loc[legacy["success"]].drop_duplicates("review_id", keep="last")
-    old = features.loc[features["corpus_source"].eq("old_v1")].copy()
-    joined = old.merge(legacy[["review_id", *ASPECTS]], on="review_id", how="inner", validate="one_to_one")
-    rows: list[dict] = []
-    for aspect in ASPECTS:
-        reference = pd.to_numeric(joined[aspect], errors="coerce")
-        active = reference.isin([-1, 1])
-        local = pd.to_numeric(joined[f"text_{aspect}_polarity"], errors="coerce")
-        comparable = active & local.notna() & local.ne(0)
-        same = comparable & local.eq(reference)
-        rows.append({
-            "aspect": aspect,
-            "legacy_nonzero_reviews": int(active.sum()),
-            "local_mentioned_reviews": int((active & joined[f"text_{aspect}_mentioned"].eq(1)).sum()),
-            "polarity_comparable_reviews": int(comparable.sum()),
-            "same_polarity_reviews": int(same.sum()),
-            "sign_agreement": round(float(same.sum() / comparable.sum()), 4) if comparable.any() else np.nan,
-        })
-    return pd.DataFrame(rows, columns=columns)
-
-
 def main() -> None:
     if not CORPUS.exists():
         raise FileNotFoundError(f"Run 18_build_target_review_corpus.py first: {CORPUS}")
@@ -267,23 +221,6 @@ def main() -> None:
     aspect_coverage = pd.DataFrame(coverage_rows)
     aspect_coverage.to_csv(ASPECT_COVERAGE, index=False, encoding="utf-8-sig")
 
-    agreement = legacy_agreement(features)
-    agreement.to_csv(LEGACY_AGREEMENT, index=False, encoding="utf-8-sig")
-
-    if QA_SAMPLE.exists():
-        qa = pd.read_csv(QA_SAMPLE, low_memory=False)
-        qa["review_id"] = qa["review_id"].astype(str).str.strip()
-        local_cols = [
-            "review_id", "corpus_source", "platform_rating_overall", "platform_rating_overall_polarity",
-            "text_global_polarity", *[
-                item for aspect in ASPECTS for item in (
-                    f"text_{aspect}_mentioned", f"text_{aspect}_polarity",
-                )
-            ],
-        ]
-        qa = qa.merge(features[local_cols], on=["review_id", "corpus_source"], how="left", validate="one_to_one")
-        qa.to_csv(QA_OUTPUT, index=False, encoding="utf-8-sig")
-
     invalid_overall = pd.to_numeric(data["rating_overall"], errors="coerce").notna() & valid_rating(data["rating_overall"]).isna()
     summary = {
         "eligible_full_text_reviews": int(len(features)),
@@ -294,7 +231,6 @@ def main() -> None:
         "method": "Reviewer-submitted platform ratings plus deterministic automotive lexicon ABSA; source ratings and text-derived polarity are not combined.",
         "time_rule": "Downstream monthly features must use only rows published before the relevant forecast origin.",
         "quality_rule": "Only corpus rows eligible_for_temporal_model are scored; Autohome list summaries without successful full-detail parsing are excluded.",
-        "legacy_reference_rule": "Legacy DeepSeek labels are used only for nonzero-label agreement diagnostics. Their zero label is not treated as neutral or as not-mentioned ground truth.",
     }
     SUMMARY.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
     print(json.dumps(summary, ensure_ascii=False, indent=2))

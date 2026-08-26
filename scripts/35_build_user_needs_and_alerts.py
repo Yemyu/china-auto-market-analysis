@@ -1,17 +1,5 @@
 #!/usr/bin/env python3
-"""Build review-topic insights and sample-aware sentiment alerts for 371 series.
-
-This upgrades the legacy Stage 5 in four ways:
-
-* all ten ABSA aspects are analysed instead of a manually chosen top three;
-* topic text is restricted to sentences mentioning the corresponding aspect;
-* alert windows require enough reviews on both sides of a comparison;
-* every monthly alert records its information cutoff and the aspect driving it.
-
-Monitoring is descriptive, not a forecast.  A month-end alert only uses reviews
-published on or before that month end.  The current incomplete calendar month is
-excluded from alert generation.
-"""
+"""Build review topics and sample-aware month-end alerts for 371 series."""
 from __future__ import annotations
 
 import importlib
@@ -32,18 +20,18 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
-BASE = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 importlib.import_module("_font_setup")
 local_sentiment = importlib.import_module("27_build_local_sentiment_features")
 
-SENTIMENT = BASE / "data" / "sentiment_new" / "processed"
+SENTIMENT = BASE / "data" / "reviews" / "processed"
 CORPUS = SENTIMENT / "target_371_review_corpus.csv"
-UNIFIED = SENTIMENT / "unified_deepseek_absa_review_features.csv"
-TEST_SPLIT = BASE / "data" / "processed_new" / "splits" / "test.csv"
-OUT = BASE / "data" / "processed_new" / "stage5"
-FIG_DIR = BASE / "figures_new"
+UNIFIED = SENTIMENT / "review_aspect_labels.csv"
+TEST_SPLIT = BASE / "data" / "processed" / "splits" / "test.csv"
+OUT = BASE / "data" / "processed" / "user_feedback"
+FIG_DIR = BASE / "assets/analysis"
 
 ASPECT_SUMMARY = OUT / "user_need_aspect_summary.csv"
 SERIES_SUMMARY = OUT / "user_need_by_series.csv"
@@ -133,7 +121,7 @@ def add_review_scores(data: pd.DataFrame) -> pd.DataFrame:
     score_columns: list[str] = []
     for aspect in ASPECTS:
         mentioned = output[f"uniform_local_{aspect}_mentioned"].eq(1)
-        raw = pd.to_numeric(output[f"deepseek_{aspect}_raw_polarity"], errors="coerce")
+        raw = pd.to_numeric(output[f"review_{aspect}_raw_polarity"], errors="coerce")
         column = f"monitor_{aspect}_score"
         output[column] = raw.where(mentioned & raw.isin([-1, 0, 1]))
         score_columns.append(column)

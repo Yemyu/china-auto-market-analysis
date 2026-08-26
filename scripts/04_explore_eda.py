@@ -1,23 +1,5 @@
 # -*- coding: utf-8 -*-
-"""
-Stage 2: Data Filtering & Exploratory Visualization
-
-Inputs (prepared in Stage 1):
-  data/raw/monthly_sales.csv                 - monthly sales (1,017 series, 2022-2026)
-  data/raw/feature.csv                       - canonical annual configuration table
-
-NOTE: monthly sales are sourced from monthly_sales.csv (FULL 1,017 series, 2022-2026).
-We keep every series with >=24 consecutive months (all 1,017 qualify) and do not restrict
-the baseline data to review coverage. Configuration joins and sentiment joins both use the
-audited canonical series name rather than a legacy platform ID.
-
-Outputs:
-  data/processed_new/sales_filtered_24m.csv   - series with >=24 consecutive months
-  data/processed_new/timeseries_summary.csv   - full 1,017-series time-series summary
-  figures_new/sales_trend.png                 - monthly sales trend
-  figures_new/category_distribution.png       - category & vehicle class distribution
-  figures_new/hardware_features.png           - hardware feature distributions
-"""
+"""Filter the monthly sales panel and produce exploratory summaries."""
 
 import os
 import pandas as pd
@@ -28,16 +10,15 @@ import matplotlib.pyplot as plt
 import _font_setup
 from matplotlib.ticker import FuncFormatter
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 RAW = os.path.join(BASE, 'data', 'raw')
-PROC = os.path.join(BASE, 'data', 'processed_new')
-FIG = os.path.join(BASE, 'figures_new')
+PROC = os.path.join(BASE, 'data', 'processed')
+FIG = os.path.join(BASE, 'assets/analysis')
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
 MIN_RUN = 24
 
-# Clean, publication-ready style (English-only to avoid font issues)
 plt.rcParams.update({
     'font.family': 'sans-serif',
     'font.sans-serif': ['DejaVu Sans', 'Arial', 'Helvetica', 'sans-serif'],
@@ -60,7 +41,6 @@ plt.rcParams.update({
     'axes.labelsize': 12,
 })
 
-# Professional color palette
 COLORS = {
     'blue': '#2E86AB',
     'orange': '#F18F01',
@@ -70,23 +50,17 @@ COLORS = {
     'gray': '#8D99AE',
 }
 
-# Load data
-# --- NEW sales source (2026-08, full coverage) ---
-# monthly_sales.csv is the complete new monthly sales (1,017 series, 2022-2026).
-# We keep ALL series with >=24 consecutive months (every series qualifies) and do NOT
-# restrict to the sentiment universe, so baseline models see the full new sales.
-# Use one representative (latest available) configuration row per series for
-# descriptive plots.  The predictive configuration join remains year-aware.
+# Use the latest available configuration row only for descriptive plots.
+# Forecast joins remain year-aware.
 features = pd.read_csv(os.path.join(RAW, 'feature.csv'), low_memory=False)
 features['year'] = pd.to_numeric(features['year'], errors='coerce')
 vehicles = (features.sort_values(['series_name', 'year'])
             .drop_duplicates('series_name', keep='last')
             .copy())
 
-new_sales = pd.read_csv(os.path.join(RAW, 'monthly_sales.csv'))
-new_sales['series_name'] = new_sales['series_name'].astype(str)
-sales = new_sales.copy()
-print(f'[04] FULL all_sales kept: {sales["series_id"].nunique()} series')
+sales = pd.read_csv(os.path.join(RAW, 'monthly_sales.csv'))
+sales['series_name'] = sales['series_name'].astype(str)
+print(f'[04] monthly panel: {sales["series_id"].nunique()} series')
 
 sales['period'] = sales['year'] * 12 + (sales['month'] - 1)
 sales['date'] = pd.to_datetime(dict(year=sales.year, month=sales.month, day=1))
@@ -273,9 +247,9 @@ fig.tight_layout()
 fig.savefig(os.path.join(FIG, 'hardware_features.png'), dpi=150, bbox_inches='tight')
 plt.close(fig)
 
-print('\n[DONE] Stage 2 outputs:')
-print('  data/processed_new/sales_filtered_24m.csv')
-print('  data/processed_new/timeseries_summary.csv')
-print('  figures_new/sales_trend.png')
-print('  figures_new/category_distribution.png')
-print('  figures_new/hardware_features.png')
+print('\n[DONE] outputs:')
+print('  data/processed/sales_filtered_24m.csv')
+print('  data/processed/timeseries_summary.csv')
+print('  assets/analysis/sales_trend.png')
+print('  assets/analysis/category_distribution.png')
+print('  assets/analysis/hardware_features.png')

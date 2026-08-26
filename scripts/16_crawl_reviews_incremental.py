@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
-"""Incrementally collect Dongchedi reviews for the new 371-series population.
+"""Collect Dongchedi reviews for the 371-series forecast population.
 
-The old crawler targets the retired V1 roster and appends directly to the old
-corpus.  This script instead takes the authoritative new forecast population
-from ``processed_new/splits/test.csv``, obtains its Dongchedi ``series_id``
-from ``raw/feature.csv``, and writes an isolated Phase-B staging corpus.
-
-Default mode is deliberately conservative: only series with *no* reusable old
-review coverage are crawled.  Use ``--mode all`` only when a complete refresh
-is desired.  A per-series manifest records successful, empty and failed calls
-so it is safe to resume after interruption.
+The default mode targets series without reusable review coverage. A manifest
+records successful, empty, and failed requests for safe resumption.
 """
 from __future__ import annotations
 
@@ -24,11 +17,11 @@ from pathlib import Path
 import pandas as pd
 import requests
 
-BASE = Path(__file__).resolve().parents[2]
-SPLITS = BASE / "data" / "processed_new" / "splits"
+BASE = Path(__file__).resolve().parents[1]
+SPLITS = BASE / "data" / "processed" / "splits"
 SERIES_INDEX = BASE / "data" / "raw" / "series_index.csv"
-READINESS = BASE / "data" / "processed_new" / "phase_b" / "sentiment_readiness.csv"
-OUT = BASE / "data" / "sentiment_new" / "raw"
+READINESS = BASE / "data" / "processed" / "review_collection" / "review_readiness.csv"
+OUT = BASE / "data" / "reviews" / "raw"
 REVIEWS_OUT = OUT / "dongchedi_incremental_reviews.csv"
 MANIFEST_OUT = OUT / "dongchedi_incremental_manifest.csv"
 
@@ -60,10 +53,10 @@ def target_roster(mode: str) -> pd.DataFrame:
     roster = roster.merge(brand, on="series_name", how="left")
     if mode == "missing":
         if not READINESS.exists():
-            raise FileNotFoundError("Run 15_audit_sentiment_readiness.py before --mode missing.")
-        readiness = pd.read_csv(READINESS, usecols=["series_name", "old_reviews_available"])
+            raise FileNotFoundError("Run 15_audit_review_readiness.py before --mode missing.")
+        readiness = pd.read_csv(READINESS, usecols=["series_name", "archived_reviews_available"])
         roster = roster.merge(readiness, on="series_name", how="left")
-        roster = roster[~roster["old_reviews_available"].fillna(False)].drop(columns="old_reviews_available")
+        roster = roster[~roster["archived_reviews_available"].fillna(False)].drop(columns="archived_reviews_available")
     return roster.sort_values(["brand_name", "series_name"]).reset_index(drop=True)
 
 

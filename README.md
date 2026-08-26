@@ -16,13 +16,11 @@
   <a href="./data/README.md">数据文档</a>
 </p>
 
-<video src="https://github.com/user-attachments/assets/06416183-a6bb-415e-98ad-f96c836382d2" width="100%" controls></video>
-
 ---
 
 ## 项目概览
 
-项目包含三项相互独立、又共享数据底座的分析：
+项目分为三部分：
 
 | 模块 | 样本 | 研究内容 | 验证方式 |
 |---|---:|---|---|
@@ -53,10 +51,10 @@
 | 特征组合 | 分组交叉验证 R² | WMAPE |
 |---|---:|---:|
 | 年份 | 0.089 | 87.67% |
-| 年份 + 品牌 | 0.154 | 83.77% |
-| 年份 + 品牌 + 配置 | **0.303** | **75.38%** |
+| 年份 + 品牌 | 0.156 | 83.92% |
+| 年份 + 品牌 + 配置 | **0.300** | **75.69%** |
 
-产品配置带来 `+0.149` 的 R² 增量，说明它能够解释一部分车系间年度销量差异。这里衡量的是样本内解释关联，不作因果推断。
+产品配置带来 `+0.144` 的 R² 增量，说明它能够解释一部分车系间年度销量差异。这里衡量的是样本外解释关联，不作因果推断。
 
 ### 用户需求与风险
 
@@ -121,16 +119,17 @@
 
 ## 快速开始
 
-项目只使用 Conda 环境 `nlp-sentiment`，不依赖系统 Python。
+创建项目环境：
 
 ```bash
-conda env update -n nlp-sentiment -f environment.yml --prune
+conda env create -f environment.yml
+conda activate nlp-sentiment
 ```
 
 直接预览看板：
 
 ```bash
-conda run -n nlp-sentiment python -m http.server 8000 --directory app
+python -m http.server 8000 --directory app
 ```
 
 打开 <http://127.0.0.1:8000/>。看板数据已经预烘焙，无需先运行采集或建模脚本。
@@ -138,22 +137,22 @@ conda run -n nlp-sentiment python -m http.server 8000 --directory app
 重新生成看板数据：
 
 ```bash
-conda run -n nlp-sentiment python app/build_dashboard_data.py
+python app/build_dashboard_data.py
 ```
 
-流水线脚本位于 `scripts/new_pipeline/`。关键阶段包括：
+流水线脚本位于 `scripts/`。关键阶段包括：
 
 ```text
-00—15  数据索引、时间切分、基础模型与数据审计
-16—28  评论补采、语料核验、标签基线与防泄漏月度特征
-29—35  用户评价特征消融、固定起点预测与稳健性分析
-36—39  用户需求、风险监测、冷启动、资源整理与报告 Notebook
+00—14  车系索引、销量面板、时间切分与基础模型
+15—28  评论采集、车系映射、语料质量与评论特征
+29     产品配置年度归因
+30—37  评论标签合并、预测消融、稳健性、用户需求、冷启动与报告 Notebook
 ```
 
 所有 Python 脚本均按以下方式执行：
 
 ```bash
-conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
+python scripts/<script>.py
 ```
 
 ## 目录
@@ -161,14 +160,14 @@ conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
 ```text
 china-auto-market-analysis/
 ├── app/                    静态研究看板与预烘焙 JSON
-├── assets/                 分析图、看板截图与演示视频
+├── assets/                 分析图与看板截图
 ├── data/
 │   ├── raw/                月销量与车型配置原始表
-│   ├── sentiment_new/      新版评论语料、标签与时间特征
-│   ├── processed_new/      时间切分、模型结果与审计产物
-│   └── resources/          值得长期保留的历史数据资源
+│   ├── reviews/            评论语料、标签与时间特征
+│   ├── processed/          时间切分、模型结果与审计产物
+│   └── resources/          历史评论资源
 ├── notebook/               中英文分析 Notebook
-├── scripts/new_pipeline/   新版可复现流水线
+├── scripts/                可复现脚本
 ├── environment.yml
 ├── requirements.txt
 ├── README.md

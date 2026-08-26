@@ -1,12 +1,5 @@
 #!/usr/bin/env python3
-"""Verify Autohome series-ID candidates against the official review endpoint.
-
-Candidate discovery and candidate acceptance are intentionally separate.  The
-official endpoint must return the candidate ID and a compatible series name.
-An ID already assigned to another target series is never auto-verified.  Alias
-and renamed-series matches are sent to manual review even when an expected
-source display name was supplied with evidence.
-"""
+"""Verify Autohome series-ID candidates against the review endpoint."""
 from __future__ import annotations
 
 import argparse
@@ -20,14 +13,14 @@ from urllib.parse import urlencode
 
 import pandas as pd
 
-BASE = Path(__file__).resolve().parents[2]
-PHASE_B = BASE / "data" / "processed_new" / "phase_b"
-CANDIDATES = PHASE_B / "autohome_id_candidates.csv"
-RESOLUTIONS = PHASE_B / "autohome_id_resolutions.csv"
-SPLITS = BASE / "data" / "processed_new" / "splits"
-AVAILABILITY = BASE / "data" / "sentiment_new" / "processed" / "review_temporal_availability_by_series.csv"
-AUDIT = PHASE_B / "autohome_id_candidate_audit.csv"
-SUMMARY = PHASE_B / "autohome_id_candidate_audit_summary.json"
+BASE = Path(__file__).resolve().parents[1]
+COLLECTION_DIR = BASE / "data" / "processed" / "review_collection"
+CANDIDATES = COLLECTION_DIR / "autohome_id_candidates.csv"
+RESOLUTIONS = COLLECTION_DIR / "autohome_id_resolutions.csv"
+SPLITS = BASE / "data" / "processed" / "splits"
+AVAILABILITY = BASE / "data" / "reviews" / "processed" / "review_temporal_availability_by_series.csv"
+AUDIT = COLLECTION_DIR / "autohome_id_candidate_audit.csv"
+SUMMARY = COLLECTION_DIR / "autohome_id_candidate_audit_summary.json"
 
 API_URL = "https://koubeiipv6.app.autohome.com.cn/pc/series/list"
 USER_AGENT = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "

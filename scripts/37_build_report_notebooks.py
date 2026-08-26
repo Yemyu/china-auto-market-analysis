@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build bilingual report notebooks from the current saved artifacts."""
+"""Build the Chinese and English report notebooks."""
 
 from pathlib import Path
 from textwrap import dedent
@@ -7,7 +7,7 @@ from textwrap import dedent
 import nbformat as nbf
 
 
-ROOT = Path(__file__).resolve().parents[2]
+ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "notebook"
 
 
@@ -32,10 +32,10 @@ ROOT = Path.cwd().resolve()
 if not (ROOT / "data").exists():
     ROOT = ROOT.parent
 DATA = ROOT / "data"
-STAGE3 = DATA / "processed_new" / "stage3"
-STAGE4 = DATA / "processed_new" / "stage4"
-STAGE5 = DATA / "processed_new" / "stage5"
-SENTIMENT = DATA / "sentiment_new" / "processed"
+FORECAST_DIR = DATA / "processed" / "forecast"
+PRODUCT_DIR = DATA / "processed" / "product"
+FEEDBACK_DIR = DATA / "processed" / "user_feedback"
+REVIEW_DIR = DATA / "reviews" / "processed"
 
 plt.rcParams.update({
     "figure.figsize": (10, 5), "figure.dpi": 120,
@@ -60,21 +60,21 @@ print("Project root:", ROOT)
 LOAD = r"""
 sales = pd.read_csv(DATA / "raw" / "monthly_sales.csv")
 specs = pd.read_csv(DATA / "raw" / "feature.csv")
-train = pd.read_csv(DATA / "processed_new" / "splits" / "train.csv")
-val = pd.read_csv(DATA / "processed_new" / "splits" / "val.csv")
-test = pd.read_csv(DATA / "processed_new" / "splits" / "test.csv")
-split_manifest = read_json(DATA / "processed_new" / "splits" / "manifest.json")
-corpus = read_json(SENTIMENT / "target_371_review_corpus_summary.json")
-labels = read_json(SENTIMENT / "unified_deepseek_absa_summary.json")
-temporal = read_json(SENTIMENT / "deepseek_feature_temporal_summary.json")
-forecast = pd.read_csv(STAGE3 / "xgb_deepseek_full371_summary.csv", encoding="utf-8-sig")
-robustness = read_json(STAGE3 / "xgb_deepseek_full371_robustness_summary.json")
-cold = read_json(STAGE3 / "cold_start_launch_curve_summary.json")
-config = pd.read_csv(STAGE4 / "config_attribution_ablation.csv")
-aspects = pd.read_csv(STAGE5 / "user_need_aspect_summary.csv", encoding="utf-8-sig")
-alerts = pd.read_csv(STAGE5 / "sentiment_alerts.csv")
-monitor = read_json(STAGE5 / "user_needs_alerts_summary.json")
-print("Loaded current pipeline artifacts.")
+train = pd.read_csv(DATA / "processed" / "splits" / "train.csv")
+val = pd.read_csv(DATA / "processed" / "splits" / "val.csv")
+test = pd.read_csv(DATA / "processed" / "splits" / "test.csv")
+split_manifest = read_json(DATA / "processed" / "splits" / "manifest.json")
+corpus = read_json(REVIEW_DIR / "target_371_review_corpus_summary.json")
+labels = read_json(REVIEW_DIR / "review_aspect_labels_summary.json")
+temporal = read_json(REVIEW_DIR / "review_feature_temporal_summary.json")
+forecast = pd.read_csv(FORECAST_DIR / "review_feature_ablation_summary.csv", encoding="utf-8-sig")
+robustness = read_json(FORECAST_DIR / "forecast_robustness_summary.json")
+cold = read_json(FORECAST_DIR / "cold_start_launch_curve_summary.json")
+config = pd.read_csv(PRODUCT_DIR / "config_attribution_ablation.csv")
+aspects = pd.read_csv(FEEDBACK_DIR / "user_need_aspect_summary.csv", encoding="utf-8-sig")
+alerts = pd.read_csv(FEEDBACK_DIR / "sentiment_alerts.csv")
+monitor = read_json(FEEDBACK_DIR / "user_needs_alerts_summary.json")
+print("Loaded analysis artifacts.")
 """
 
 
@@ -138,7 +138,7 @@ global_name = "全局 WMAPE" if ZH else "Global WMAPE"
 median_name = "逐车系中位数 WMAPE" if ZH else "Median per-series WMAPE"
 names = {
     "BASE": "销量基线" if ZH else "Sales baseline",
-    "DEEPSEEK_RICH_FIXED": "用户口碑增强" if ZH else "Owner-feedback enhanced",
+    "REVIEW_RICH_FIXED": "用户口碑增强" if ZH else "Owner-feedback enhanced",
 }
 main = forecast[forecast.version.isin(names)].copy()
 main[model_name] = main.version.map(names)
@@ -163,8 +163,8 @@ plt.show()
 
 
 UNCERTAINTY = r"""
-point = robustness["deepseek_rich_vs_base_improvement_pp"]
-low, high = robustness["deepseek_rich_vs_base_bootstrap_95pct_ci_pp"]
+point = robustness["review_rich_vs_base_improvement_pp"]
+low, high = robustness["review_rich_vs_base_bootstrap_95pct_ci_pp"]
 fig, ax = plt.subplots(figsize=(9, 2.8))
 ax.errorbar(point, 0, xerr=np.array([[point-low], [high-point]]),
             fmt="o", markersize=8, color=COLORS["blue"], capsize=6, lw=2)
@@ -177,31 +177,31 @@ ax.text(point, .08, f"{point:.2f} pp  [95%: {low:.2f}, {high:.2f}]",
         ha="center", va="bottom")
 plt.show()
 if ZH:
-    print(f"重采样中优于基线的比例：{robustness['deepseek_rich_vs_base_probability_better']:.1%}")
-    print(f"六个测试月中优于基线：{robustness['test_months_deepseek_rich_better_than_base']} / 6")
+    print(f"重采样中优于基线的比例：{robustness['review_rich_vs_base_probability_better']:.1%}")
+    print(f"六个测试月中优于基线：{robustness['test_months_review_rich_better_than_base']} / 6")
 else:
     print("Share of bootstrap replicates better than baseline: "
-          f"{robustness['deepseek_rich_vs_base_probability_better']:.1%}")
-    print(f"Test months better than baseline: {robustness['test_months_deepseek_rich_better_than_base']} / 6")
+          f"{robustness['review_rich_vs_base_probability_better']:.1%}")
+    print(f"Test months better than baseline: {robustness['test_months_review_rich_better_than_base']} / 6")
 """
 
 
 IMPORTANCE = r"""
-family = pd.read_csv(STAGE3 / "xgb_deepseek_full371_feature_family_importance.csv",
+family = pd.read_csv(FORECAST_DIR / "review_feature_family_importance.csv",
                      encoding="utf-8-sig")
 maps = {
     "zh": {"sales_lag_roll": "历史销量", "calendar": "日历", "configuration": "产品配置",
-           "deepseek_expanding_score": "历史评价得分", "deepseek_observation_context": "评论覆盖",
-           "deepseek_mention_count": "需求提及量", "deepseek_negative_rate": "负面比例",
-           "deepseek_recent_score": "近期评价得分", "deepseek_mention_rate": "需求提及率",
-           "deepseek_positive_rate": "正面比例"},
+           "review_expanding_score": "历史评价得分", "review_observation_context": "评论覆盖",
+           "review_mention_count": "需求提及量", "review_negative_rate": "负面比例",
+           "review_recent_score": "近期评价得分", "review_mention_rate": "需求提及率",
+           "review_positive_rate": "正面比例"},
     "en": {"sales_lag_roll": "Sales history", "calendar": "Calendar",
            "configuration": "Product specifications",
-           "deepseek_expanding_score": "Historical review score",
-           "deepseek_observation_context": "Review coverage",
-           "deepseek_mention_count": "Need mentions", "deepseek_negative_rate": "Negative share",
-           "deepseek_recent_score": "Recent review score",
-           "deepseek_mention_rate": "Mention share", "deepseek_positive_rate": "Positive share"},
+           "review_expanding_score": "Historical review score",
+           "review_observation_context": "Review coverage",
+           "review_mention_count": "Need mentions", "review_negative_rate": "Negative share",
+           "review_recent_score": "Recent review score",
+           "review_mention_rate": "Mention share", "review_positive_rate": "Positive share"},
 }
 label = "信息类型" if ZH else "Information"
 family[label] = family.feature_family.map(maps["zh" if ZH else "en"])
@@ -307,8 +307,8 @@ if ZH:
          "冻结于 2026-01-01 前"],
         ["最近 180 天有评论", f"{temporal['fixed_test_series_with_recent_180d_review']} 个车系",
          "其余保留缺失标记"],
-        ["复用历史标签", f"{labels['reused_legacy_reviews']:,} 条", "避免重复付费生成"],
-        ["新版补充标签", f"{labels['compact_v4_flash_reviews']:,} 条", "结构校验与人工抽样"],
+        ["复用历史标签", f"{labels['historical_labeled_reviews']:,} 条", "保留来源与标签限制"],
+        ["补充标签", f"{labels['api_labeled_reviews']:,} 条", "结构校验与人工抽样"],
     ], columns=["审计项", "结果", "处理"])
 else:
     audit = pd.DataFrame([
@@ -320,9 +320,9 @@ else:
          "Frozen before 2026-01-01"],
         ["Review in prior 180 days", f"{temporal['fixed_test_series_with_recent_180d_review']} series",
          "Missingness retained elsewhere"],
-        ["Reused historical labels", f"{labels['reused_legacy_reviews']:,}",
-         "Avoids duplicate paid generation"],
-        ["Newly supplemented labels", f"{labels['compact_v4_flash_reviews']:,}",
+        ["Reused historical labels", f"{labels['historical_labeled_reviews']:,}",
+         "Source and label limitations retained"],
+        ["Newly supplemented labels", f"{labels['api_labeled_reviews']:,}",
          "Schema checks and manual sampling"],
     ], columns=["Audit item", "Result", "Treatment"])
 display(audit)
@@ -333,7 +333,7 @@ TEXT = {
     "zh": {
         "title": """# 中国汽车市场分析：销量预测、产品配置与用户需求
 
-这本 Notebook 汇总当前版本的实证结果，并从已落盘的中间产物复现主要图表。耗时较长的采集、标签生成和模型训练保留在 `scripts/new_pipeline/`，这里不重复调用外部服务。
+这本 Notebook 从已保存的数据产物复现主要结果与图表。采集、标签生成和模型训练脚本位于 `scripts/`。
 
 **研究期：** 2022-01—2026-07
 
@@ -358,7 +358,7 @@ TEXT = {
         "config": """## 3. 产品配置与年度销量差异
 
 样本为 736 个车系、2,007 条车系年记录。验证按车系分组，避免同一车系的不同年份同时出现在训练折和验证折。""",
-        "config_read": """**结果解读：** 加入品牌后 R² 从 0.089 升至 0.154；继续加入配置后达到 0.303。这个模块衡量车系间的解释关联，不用于判断单一配置是否会直接导致销量增长。""",
+        "config_read": """**结果解读：** 加入品牌后 R² 从 0.089 升至 0.156；继续加入配置后达到 0.300。这个模块衡量车系间的解释关联，不用于判断单一配置是否会直接导致销量增长。""",
         "needs": """## 4. 用户需求与口碑风险
 
 严格语料包含 24,175 条评论。十个维度同时保留提及率和有效评分中的负面率，避免把“讨论很多”和“评价很差”合并成一个指标。""",
@@ -374,7 +374,7 @@ TEXT = {
 
 本地启动（在项目根目录执行）：
 
-    conda run -n nlp-sentiment python -m http.server 8000 --directory app""",
+    python -m http.server 8000 --directory app""",
         "conclusion": """## 7. 结论
 
 1. 历史销量是六个月预测的主要信息来源；用户口碑提供小幅、但尚未稳健显著的增量。
@@ -385,7 +385,7 @@ TEXT = {
     "en": {
         "title": """# China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs
 
-This notebook summarizes the current empirical results and reproduces the main figures from saved pipeline artifacts. Expensive collection, labeling, and model fitting remain in `scripts/new_pipeline/`; this report makes no external service calls.
+This notebook reproduces the main results and figures from saved analysis artifacts. Collection, labeling, and model-fitting scripts are in `scripts/`.
 
 **Study period:** 2022-01—2026-07
 
@@ -410,7 +410,7 @@ WMAPE for nine history-poor series falls from 98.76% to 89.62%. Their limited vo
         "config": """## 3. Product specifications and annual sales variation
 
 The sample contains 736 series and 2,007 series-year records. Validation groups by series so different years of one series cannot enter both training and validation folds.""",
-        "config_read": """**Interpretation:** R² rises from 0.089 to 0.154 after adding brand and reaches 0.303 after adding specifications. This is an explanatory association across series, not a causal estimate for an individual feature.""",
+        "config_read": """**Interpretation:** R² rises from 0.089 to 0.156 after adding brand and reaches 0.300 after adding specifications. This is an out-of-fold explanatory association across series, not a causal estimate for an individual feature.""",
         "needs": """## 4. User needs and review risk
 
 The strict corpus contains 24,175 reviews. Mention share and negative share among scored mentions remain separate, so discussion volume is not conflated with dissatisfaction.""",
@@ -426,7 +426,7 @@ The dashboard is a static site backed by pre-baked JSON in `app/static/data/`. A
 
 Launch from the repository root:
 
-    conda run -n nlp-sentiment python -m http.server 8000 --directory app""",
+    python -m http.server 8000 --directory app""",
         "conclusion": """## 7. Conclusions
 
 1. Sales history remains the dominant forecasting signal; owner feedback adds a modest but not yet robustly significant increment.
@@ -459,7 +459,7 @@ def build(lang):
     return nbf.v4.new_notebook(
         cells=cells,
         metadata={
-            "kernelspec": {"display_name": "Python (nlp-sentiment)",
+            "kernelspec": {"display_name": "Python 3",
                            "language": "python", "name": "python3"},
             "language_info": {"name": "python", "version": "3.13"},
         },

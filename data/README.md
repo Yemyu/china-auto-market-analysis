@@ -4,17 +4,17 @@
 
 # 数据说明
 
-本目录保存新版分析所需的原始表、时间切分、评论语料、模型产物和数据审计。第一版项目中仍值得复用的评论与历史标签单独放在 `resources/`；其余旧版数据不再参与当前分析。
+本目录保存原始表、时间切分、评论语料、模型产物和数据审计。可复用的历史评论与标签单独放在 `resources/`。
 
 ## 目录分层
 
 | 路径 | 内容 | 是否进入当前流程 |
 |---|---|---|
 | `raw/` | 月销量与车型配置原始表 | 是 |
-| `processed_new/` | 清洗结果、时间切分、模型预测、归因与监测产物 | 是 |
-| `sentiment_new/raw/` | 新采集评论、源站详情与采集清单 | 是，经质量筛选后 |
-| `sentiment_new/processed/` | 严格评论语料、结构化标签、月度特征与审计 | 是 |
-| `resources/` | 从第一版项目整理出的可复用数据资源 | 仅供参考或扩展 |
+| `processed/` | 清洗结果、时间切分、模型预测、归因与监测产物 | 是 |
+| `reviews/raw/` | 采集评论、源站详情与采集清单 | 是，经质量筛选后 |
+| `reviews/processed/` | 严格评论语料、结构化标签、月度特征与审计 | 是 |
+| `resources/` | 历史评论与标签归档 | 参考与扩展 |
 
 ## 三组分析样本
 
@@ -76,7 +76,7 @@
 
 ## 2. 月度预测样本与时间切分
 
-`processed_new/splits/` 保存 371 车系的固定时间切分：
+`processed/splits/` 保存 371 车系的固定时间切分：
 
 | 文件 | 时间 | 用途 |
 |---|---|---|
@@ -92,7 +92,7 @@
 
 ### 原始采集层
 
-`sentiment_new/raw/` 在本地保存懂车帝与汽车之家两类公开车主评论及采集清单。完整评论含平台用户标识，不随公开仓库提交；采集清单和去标识后的分析产物保留在仓库中。
+`reviews/raw/` 在本地保存懂车帝与汽车之家两类公开车主评论及采集清单。完整评论含平台用户标识，不随公开仓库提交；采集清单和去标识后的分析产物保留在仓库中。
 
 主要审计文件：
 
@@ -101,12 +101,12 @@
 | `dongchedi_incremental_manifest.csv` | 懂车帝增量采集清单 |
 | `autohome_incremental_manifest.csv` | 汽车之家增量采集清单 |
 | `autohome_incremental_review_details.csv` | 汽车之家详情正文 |
-| `processed_new/phase_b/autohome_id_resolutions.csv` | 车系映射与解析结果 |
-| `processed_new/phase_b/sentiment_resolution_exceptions.csv` | 未解决项及止损说明 |
+| `processed/review_collection/autohome_id_resolutions.csv` | 车系映射与解析结果 |
+| `processed/review_collection/sentiment_resolution_exceptions.csv` | 未解决项及止损说明 |
 
 ### 严格建模语料
 
-本地文件 `sentiment_new/processed/target_371_review_corpus.csv` 包含 371 个目标车系的候选评论、质量标记和来源审计。进入模型的记录必须同时满足：
+本地文件 `reviews/processed/target_371_review_corpus.csv` 包含 371 个目标车系的候选评论、质量标记和来源审计。进入模型的记录必须同时满足：
 
 1. 车系身份有效；
 2. 发布时间可解析；
@@ -125,7 +125,7 @@
 
 ### 评论级标签
 
-[结构化评论标签](./sentiment_new/processed/unified_deepseek_absa_review_features.csv) 对每条合格评论保存十个维度：
+[结构化评论标签](./reviews/processed/review_aspect_labels.csv) 对每条合格评论保存十个维度：
 
 `appearance`, `interior`, `space`, `power`, `control`, `comfort`, `fuel_consumption`, `configuration`, `intelligence`, `value`。
 
@@ -138,7 +138,7 @@
 
 ### 防泄漏月度特征
 
-[固定起点月度评论特征](./sentiment_new/processed/deepseek_features_by_series_month_fixed_origin.csv) 有 13,866 行，覆盖 371 个车系和 51 个预测月份。主要字段包括：
+[固定起点月度评论特征](./reviews/processed/review_features_by_series_month_fixed_origin.csv) 有 13,866 行，覆盖 371 个车系和 51 个预测月份。主要字段包括：
 
 - 截止预测起点的累计评论数；
 - 最近 180 天评论数与可用性；
@@ -151,30 +151,29 @@
 
 ## 5. 分析产物
 
-### 销量预测：`processed_new/stage3/`
+### 销量预测：`processed/forecast/`
 
 | 产物 | 内容 |
 |---|---|
-| `xgb_deepseek_full371_summary.csv` | 371 车系方案对比 |
-| `xgb_deepseek_full371_preds.csv` | 测试期逐车系、逐月预测 |
-| `xgb_deepseek_full371_series_metrics.csv` | 逐车系误差 |
-| `xgb_deepseek_full371_bootstrap.csv` | 按车系重采样结果 |
-| `xgb_deepseek_full371_shap_importance.csv` | 特征贡献 |
+| `review_feature_ablation_summary.csv` | 371 车系方案对比 |
+| `review_feature_predictions.csv` | 测试期逐车系、逐月预测 |
+| `review_feature_series_metrics.csv` | 逐车系误差 |
+| `forecast_robustness_bootstrap.csv` | 按车系重采样结果 |
+| `review_feature_shap_importance.csv` | 特征贡献 |
 | `cold_start_launch_curve_summary.json` | 冷启动方法与结果 |
 
 主结果中的全局 WMAPE 为：销量基线 40.44%，用户口碑增强 38.71%，冷启动补充后 38.64%。
 
-### 产品配置：`processed_new/stage4/`
+### 产品配置：`processed/product/`
 
 | 产物 | 内容 |
 |---|---|
 | `config_attribution_ablation.csv` | 年份、品牌与配置的逐步消融 |
 | `config_importance_annual.csv` | 年度配置重要性 |
-| `shap_values_trim.csv` | 解释值抽样 |
 
-完整模型的五折分组交叉验证 R² 为 0.303。
+完整模型的五折分组交叉验证 R² 为 0.300。
 
-### 用户需求与风险：`processed_new/stage5/`
+### 用户需求与风险：`processed/user_feedback/`
 
 | 产物 | 内容 |
 |---|---|
@@ -188,7 +187,7 @@
 
 ## 6. 历史资源归档
 
-`resources/legacy_sentiment/` 是第一版项目中唯一单独保留的数据资源包：
+`resources/historical_reviews/` 保存可复用的历史评论资源：
 
 | 文件 | 内容 |
 |---|---|
@@ -196,16 +195,17 @@
 | `manifest.json` | 行数、车系数、时间范围、SHA-256 与标签语义 |
 | `README.md` | 使用方式和限制 |
 
-新版语料复用了其中 16,538 条已支付生成的历史标签。归档表保留原文、时间、车型、购车信息和平台评分，仅在本地保存；公开仓库提交去标识标签和聚合结果。
+当前语料复用了其中 16,538 条已经生成的历史标签。归档表保留原文、时间、车型、购车信息和平台评分，仅在本地保存；公开仓库提交去标识标签和聚合结果。
 
-历史标签中的 `0` 不能可靠区分“未提及”“中性”和旧解析回退，因此不应直接作为维度提及真值；当前模型使用单独的统一提及标记。
+历史标签中的 `0` 不能可靠区分“未提及”“中性”和解析回退，因此不直接作为维度提及真值；当前模型使用单独的统一提及标记。
 
 ## 7. 复现与更新
 
-所有 Python 命令使用 `nlp-sentiment`：
+先按根目录 `environment.yml` 创建并激活项目环境，再运行脚本：
 
 ```bash
-conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
+conda activate nlp-sentiment
+python scripts/<script>.py
 ```
 
 评论语料、标签和月度特征的主要顺序为：
@@ -214,12 +214,16 @@ conda run -n nlp-sentiment python scripts/new_pipeline/<script>.py
 18 生成目标车系语料
 21 多来源质量审计
 25 检查时间可用性
-32 合并评论级标签
-33 生成防泄漏月度特征
-34 运行 371 车系预测消融
-35 稳健性分析
-36 用户需求与风险监测
-38 整理历史评论资源
+27 生成平台评分与词典标签
+28 聚合本地评论月度特征
+30 补标缺失评论（可选，需配置 API）
+31 合并评论级标签
+32 生成防泄漏月度特征
+33 运行 371 车系预测消融
+34 稳健性分析
+35 用户需求与风险监测
+36 冷启动验证
+37 生成报告 Notebook
 ```
 
 原始平台数据版权归相应来源方。本目录的数据仅用于学习、研究与项目展示。

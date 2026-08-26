@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Robustness, SHAP contribution, and error diagnostics for full-371 results."""
+"""Run robustness, feature-contribution, and error diagnostics."""
 from __future__ import annotations
 
 import importlib
@@ -17,27 +17,27 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
-BASE = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-ablation = importlib.import_module("34_xgb_deepseek_full371_ablation")
+ablation = importlib.import_module("33_evaluate_review_features")
 mu = ablation.mu
 
-STAGE3 = BASE / "data" / "processed_new" / "stage3"
-PREDICTIONS = STAGE3 / "xgb_deepseek_full371_preds.csv"
-ABLATION_SUMMARY = STAGE3 / "xgb_deepseek_full371_summary.csv"
-TEST_SPLIT = BASE / "data" / "processed_new" / "splits" / "test.csv"
+FORECAST_DIR = BASE / "data" / "processed" / "forecast"
+PREDICTIONS = FORECAST_DIR / "review_feature_predictions.csv"
+ABLATION_SUMMARY = FORECAST_DIR / "review_feature_ablation_summary.csv"
+TEST_SPLIT = BASE / "data" / "processed" / "splits" / "test.csv"
 
-BOOTSTRAP_OUTPUT = STAGE3 / "xgb_deepseek_full371_bootstrap.csv"
-SHAP_OUTPUT = STAGE3 / "xgb_deepseek_full371_shap_importance.csv"
-FAMILY_OUTPUT = STAGE3 / "xgb_deepseek_full371_feature_family_importance.csv"
-MONTHLY_OUTPUT = STAGE3 / "xgb_deepseek_full371_monthly_stability.csv"
-SERIES_OUTPUT = STAGE3 / "xgb_deepseek_full371_series_diagnostics.csv"
-SEGMENT_OUTPUT = STAGE3 / "xgb_deepseek_full371_error_segments.csv"
-SUMMARY_OUTPUT = STAGE3 / "xgb_deepseek_full371_robustness_summary.json"
-FIGURE = BASE / "figures_new" / "xgb_deepseek_full371_robustness.png"
+BOOTSTRAP_OUTPUT = FORECAST_DIR / "forecast_robustness_bootstrap.csv"
+SHAP_OUTPUT = FORECAST_DIR / "review_feature_shap_importance.csv"
+FAMILY_OUTPUT = FORECAST_DIR / "review_feature_family_importance.csv"
+MONTHLY_OUTPUT = FORECAST_DIR / "forecast_monthly_stability.csv"
+SERIES_OUTPUT = FORECAST_DIR / "forecast_series_diagnostics.csv"
+SEGMENT_OUTPUT = FORECAST_DIR / "forecast_error_segments.csv"
+SUMMARY_OUTPUT = FORECAST_DIR / "forecast_robustness_summary.json"
+FIGURE = BASE / "assets/analysis" / "forecast_robustness.png"
 
 BASE_VERSION = "BASE"
-BEST_VERSION = "DEEPSEEK_RICH_FIXED"
+BEST_VERSION = "REVIEW_RICH_FIXED"
 PLATFORM_VERSION = "PLATFORM_RATING_FIXED"
 BOOTSTRAP_REPLICATES = 5_000
 BOOTSTRAP_SEED = 42
@@ -75,11 +75,11 @@ def bootstrap_comparisons(predictions: pd.DataFrame) -> pd.DataFrame:
     rng = np.random.default_rng(BOOTSTRAP_SEED)
     indices = rng.integers(0, len(series_names), size=(BOOTSTRAP_REPLICATES, len(series_names)))
     sampled_volume = volume[indices]
-    comparisons = [(BASE_VERSION, version) for version in sorted(errors) if version not in (BASE_VERSION, "DEEPSEEK_CORE_ROLLING")]
+    comparisons = [(BASE_VERSION, version) for version in sorted(errors) if version not in (BASE_VERSION, "REVIEW_TEXT_ROLLING")]
     comparisons.extend([
-        (BASE_VERSION, "DEEPSEEK_CORE_ROLLING"),
+        (BASE_VERSION, "REVIEW_TEXT_ROLLING"),
         (PLATFORM_VERSION, BEST_VERSION),
-        ("DEEPSEEK_CORE_FIXED", "DEEPSEEK_CORE_ROLLING"),
+        ("REVIEW_TEXT_FIXED", "REVIEW_TEXT_ROLLING"),
     ])
     rows: list[dict[str, Any]] = []
     for comparator, candidate in comparisons:
@@ -155,25 +155,25 @@ def feature_family(feature: str) -> str:
         return "calendar"
     if feature in mu.CFG_COLS:
         return "configuration"
-    if feature.startswith("deepseek_"):
+    if feature.startswith("review_"):
         if feature in (
-            "deepseek_review_count_prior_all", "deepseek_review_count_180d",
-            "deepseek_available_prior", "deepseek_available_180d",
+            "review_count_prior_all", "review_count_180d",
+            "review_available_prior", "review_available_180d",
         ):
-            return "deepseek_observation_context"
+            return "review_observation_context"
         if feature.endswith("_score_prior_mean"):
-            return "deepseek_expanding_score"
+            return "review_expanding_score"
         if feature.endswith("_score_180d_mean"):
-            return "deepseek_recent_score"
+            return "review_recent_score"
         if feature.endswith("_positive_180d_rate"):
-            return "deepseek_positive_rate"
+            return "review_positive_rate"
         if feature.endswith("_negative_180d_rate"):
-            return "deepseek_negative_rate"
+            return "review_negative_rate"
         if feature.endswith("_uniform_mention_180d_count"):
-            return "deepseek_mention_count"
+            return "review_mention_count"
         if feature.endswith("_uniform_mention_180d_rate"):
-            return "deepseek_mention_rate"
-        return "deepseek_overall"
+            return "review_mention_rate"
+        return "review_overall"
     return "other"
 
 
@@ -249,8 +249,8 @@ def series_and_segments(predictions: pd.DataFrame) -> tuple[pd.DataFrame, pd.Dat
         actual_volume=("actual", lambda values: float(np.abs(values).sum())),
         absolute_error=("abs_error", "sum"),
         cold_start=("cold_start_at_forecast_origin", "max"),
-        has_prior_review=("deepseek_available_prior", "max"),
-        has_recent_180d_review=("deepseek_available_180d", "max"),
+        has_prior_review=("review_available_prior", "max"),
+        has_recent_180d_review=("review_available_180d", "max"),
     ).reset_index()
     totals["series_WMAPE"] = np.where(
         totals["actual_volume"].gt(0), totals["absolute_error"] / totals["actual_volume"] * 100, np.nan
@@ -304,7 +304,7 @@ def series_and_segments(predictions: pd.DataFrame) -> tuple[pd.DataFrame, pd.Dat
                 "series": int(len(group)),
                 "actual_volume": volume,
                 "baseline_global_WMAPE": base_error / volume * 100 if volume else np.nan,
-                "deepseek_rich_global_WMAPE": best_error / volume * 100 if volume else np.nan,
+                "review_rich_global_WMAPE": best_error / volume * 100 if volume else np.nan,
                 "improvement_pp": (base_error - best_error) / volume * 100 if volume else np.nan,
             })
     return diagnostics, pd.DataFrame(segment_rows)
@@ -313,7 +313,7 @@ def series_and_segments(predictions: pd.DataFrame) -> tuple[pd.DataFrame, pd.Dat
 def save_figure(bootstrap: pd.DataFrame, importance: pd.DataFrame, monthly: pd.DataFrame) -> None:
     comparisons = bootstrap.loc[
         bootstrap["comparator"].eq(BASE_VERSION)
-        & bootstrap["candidate"].isin([PLATFORM_VERSION, "LOCAL_LEXICON_FIXED", "DEEPSEEK_CORE_FIXED", BEST_VERSION])
+        & bootstrap["candidate"].isin([PLATFORM_VERSION, "LOCAL_LEXICON_FIXED", "REVIEW_TEXT_FIXED", BEST_VERSION])
     ].sort_values("point_improvement_pp")
     top = importance.head(15).sort_values("mean_abs_shap_log_sales")
     month = monthly.loc[monthly["version"].isin([BEST_VERSION, PLATFORM_VERSION])].copy()
@@ -335,7 +335,7 @@ def save_figure(bootstrap: pd.DataFrame, importance: pd.DataFrame, monthly: pd.D
 
     axes[1].barh(top["feature"], top["mean_abs_shap_log_sales"], color="#54A24B")
     axes[1].set_xlabel("Mean |SHAP| on log-sales output")
-    axes[1].set_title("DeepSeek-rich top features")
+    axes[1].set_title("Top review features")
     axes[1].tick_params(axis="y", labelsize=7)
 
     for version, group in month.groupby("version"):
@@ -351,7 +351,7 @@ def save_figure(bootstrap: pd.DataFrame, importance: pd.DataFrame, monthly: pd.D
 
 def main() -> None:
     predictions = pd.read_csv(PREDICTIONS, low_memory=False, parse_dates=["date"])
-    required_versions = {BASE_VERSION, BEST_VERSION, PLATFORM_VERSION, "DEEPSEEK_CORE_FIXED", "DEEPSEEK_CORE_ROLLING"}
+    required_versions = {BASE_VERSION, BEST_VERSION, PLATFORM_VERSION, "REVIEW_TEXT_FIXED", "REVIEW_TEXT_ROLLING"}
     if not required_versions.issubset(set(predictions["version"])):
         raise ValueError("Required ablation prediction versions are missing")
     bootstrap = bootstrap_comparisons(predictions)
@@ -374,24 +374,24 @@ def main() -> None:
         bootstrap["comparator"].eq(PLATFORM_VERSION) & bootstrap["candidate"].eq(BEST_VERSION)
     ].iloc[0]
     best_monthly = monthly.loc[monthly["version"].eq(BEST_VERSION)]
-    sentiment_importance = importance.loc[importance["feature"].str.startswith("deepseek_")]
+    sentiment_importance = importance.loc[importance["feature"].str.startswith("review_")]
     summary = {
         "schema_version": "v1",
         "series_cluster_bootstrap_replicates": BOOTSTRAP_REPLICATES,
-        "deepseek_rich_vs_base_improvement_pp": float(best_boot["point_improvement_pp"]),
-        "deepseek_rich_vs_base_bootstrap_95pct_ci_pp": [
+        "review_rich_vs_base_improvement_pp": float(best_boot["point_improvement_pp"]),
+        "review_rich_vs_base_bootstrap_95pct_ci_pp": [
             float(best_boot["bootstrap_ci_2_5_pp"]), float(best_boot["bootstrap_ci_97_5_pp"]),
         ],
-        "deepseek_rich_vs_base_probability_better": float(best_boot["bootstrap_probability_candidate_better"]),
-        "deepseek_rich_vs_platform_improvement_pp": float(platform_boot["point_improvement_pp"]),
-        "deepseek_rich_vs_platform_bootstrap_95pct_ci_pp": [
+        "review_rich_vs_base_probability_better": float(best_boot["bootstrap_probability_candidate_better"]),
+        "review_rich_vs_platform_improvement_pp": float(platform_boot["point_improvement_pp"]),
+        "review_rich_vs_platform_bootstrap_95pct_ci_pp": [
             float(platform_boot["bootstrap_ci_2_5_pp"]), float(platform_boot["bootstrap_ci_97_5_pp"]),
         ],
-        "deepseek_rich_vs_platform_probability_better": float(platform_boot["bootstrap_probability_candidate_better"]),
-        "test_months_deepseek_rich_better_than_base": int(best_monthly["improvement_vs_base_pp"].gt(0).sum()),
+        "review_rich_vs_platform_probability_better": float(platform_boot["bootstrap_probability_candidate_better"]),
+        "test_months_review_rich_better_than_base": int(best_monthly["improvement_vs_base_pp"].gt(0).sum()),
         "test_months_total": int(len(best_monthly)),
         "top_10_features_by_mean_abs_shap": importance.head(10)["feature"].tolist(),
-        "top_10_deepseek_features_by_mean_abs_shap": sentiment_importance.head(10)["feature"].tolist(),
+        "top_10_review_features_by_mean_abs_shap": sentiment_importance.head(10)["feature"].tolist(),
         "top_10_error_contributing_series": diagnostics.head(10)["series_name"].tolist(),
         "cold_start_series": int(diagnostics["cold_start"].sum()),
         "external_api_calls": 0,

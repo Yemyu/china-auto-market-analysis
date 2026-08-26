@@ -1,11 +1,5 @@
 #!/usr/bin/env python3
-"""Select and evaluate a conservative cold-start forecast for nine new series.
-
-Selection never uses 2026 test targets.  Candidate methods are evaluated by
-rolling launch-cohort backtests: 2024 launches use only earlier launch cohorts,
-and 2025 launches use only earlier launch cohorts.  The winning method is then
-fit on 2023--2025 launches and applied to the nine 2026 cold-start series.
-"""
+"""Select a cold-start method with rolling launch-cohort backtests."""
 from __future__ import annotations
 
 import json
@@ -28,24 +22,24 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
-BASE = Path(__file__).resolve().parents[2]
+BASE = Path(__file__).resolve().parents[1]
 SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 import _font_setup  # noqa: F401
 import _model_utils as mu
 from _feature_join import CFG_NUM
 
-STAGE3 = BASE / "data" / "processed_new" / "stage3"
-SOURCE_PREDICTIONS = STAGE3 / "xgb_deepseek_full371_preds.csv"
-VALIDATION_OUTPUT = STAGE3 / "cold_start_launch_curve_validation.csv"
-CANDIDATE_OUTPUT = STAGE3 / "cold_start_candidate_predictions.csv"
-SERIES_OUTPUT = STAGE3 / "cold_start_series_results.csv"
-HYBRID_OUTPUT = STAGE3 / "xgb_deepseek_cold_hybrid_preds.csv"
-SUMMARY_OUTPUT = STAGE3 / "cold_start_launch_curve_summary.json"
-FIGURE = BASE / "figures_new" / "cold_start_launch_curve.png"
+FORECAST_DIR = BASE / "data" / "processed" / "forecast"
+SOURCE_PREDICTIONS = FORECAST_DIR / "review_feature_predictions.csv"
+VALIDATION_OUTPUT = FORECAST_DIR / "cold_start_launch_curve_validation.csv"
+CANDIDATE_OUTPUT = FORECAST_DIR / "cold_start_candidate_predictions.csv"
+SERIES_OUTPUT = FORECAST_DIR / "cold_start_series_results.csv"
+HYBRID_OUTPUT = FORECAST_DIR / "cold_start_hybrid_predictions.csv"
+SUMMARY_OUTPUT = FORECAST_DIR / "cold_start_launch_curve_summary.json"
+FIGURE = BASE / "assets/analysis" / "cold_start_launch_curve.png"
 
-SOURCE_VERSION = "DEEPSEEK_RICH_FIXED"
-HYBRID_VERSION = "DEEPSEEK_RICH_FIXED_COLD_HYBRID"
+SOURCE_VERSION = "REVIEW_RICH_FIXED"
+HYBRID_VERSION = "REVIEW_RICH_COLD_START"
 VALIDATION_YEARS = (2024, 2025)
 TRAIN_LAUNCH_YEAR_MIN = 2023
 FORECAST_HORIZON = 6

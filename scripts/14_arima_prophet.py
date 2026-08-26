@@ -1,19 +1,5 @@
 #!/usr/bin/env python3
-"""
-14_arima_prophet.py — ARIMA & 普通 Prophet（无舆情基线）
-
-数据来源（统一）：06_make_splits.py 的 train / test。全部从新数据(processed_new)来，
-在 **test (2026-01..06, 6 个月)** 上评估，与 07/08/13 同一拨切分，便于 09 横向对比。
-  * 训练只在 train（每车系 2022-01..2025-06），test 仅用于报告最终指标；
-  * 不使用任何未来信息 -> 无泄漏。
-
-输出（data/processed_new/stage3/）：
-  arima_preds.csv / arima_results.csv
-  prophet_preds.csv / prophet_results.csv
-
-Run:
-  python scripts/new_pipeline/14_arima_prophet.py
-"""
+"""Evaluate per-series ARIMA and Prophet baselines on the fixed time split."""
 import os
 os.environ["OMP_NUM_THREADS"] = "1"
 import warnings
@@ -30,8 +16,8 @@ from prophet import Prophet
 import _model_utils as mu
 import _subset
 
-BASE = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-PROC = os.path.join(BASE, "data", "processed_new", "stage3")
+BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+PROC = os.path.join(BASE, "data", "processed", "forecast")
 os.makedirs(PROC, exist_ok=True)
 
 
@@ -145,7 +131,7 @@ def main():
                    for n in subset}
     te_dates_by = {n: te[te["series_name"].astype(str) == n].sort_values("date")["date"].values
                    for n in subset}
-    print(f"[14] 新数据源: data/processed_new/splits | 子集 {len(subset)} 系 | "
+    print(f"[14] data/processed/splits | 子集 {len(subset)} 系 | "
           f"train 拟合, test(6月) 评估, 无泄漏")
 
     print("[14] ARIMA ...")
@@ -174,7 +160,7 @@ def main():
         a = pp_df["actual"].values.astype(float); p = pp_df["pred"].values.astype(float)
         print(f"[14] Prophet  ok={len(ok_pr)}  WMAPE_vol={mu.wmape_vol(a, p):.1f}%  "
               f"per-series mean={ok_pr['WMAPE'].mean():.1f}%  median={ok_pr['WMAPE'].median():.1f}%")
-    print("[14] written -> data/processed_new/stage3/{arima,prophet}_preds.csv (+_results.csv)")
+    print("[14] written -> data/processed/forecast/{arima,prophet}_preds.csv (+_results.csv)")
     print("[14] done.")
 
 

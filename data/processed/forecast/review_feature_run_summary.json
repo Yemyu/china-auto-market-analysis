@@ -4,14 +4,14 @@
   "validation_protocol": "recursive six-month fixed-origin forecast; select n_estimators by global volume-weighted WMAPE",
   "test_protocol": "refit on point-in-time train+validation rows; recursive fixed-origin 2026-01..06 forecast",
   "primary_versions": [
-    "DEEPSEEK_RICH_FIXED",
+    "REVIEW_RICH_FIXED",
     "PLATFORM_RATING_FIXED",
-    "DEEPSEEK_CORE_FIXED",
+    "REVIEW_TEXT_FIXED",
     "LOCAL_LEXICON_FIXED",
     "ALL_SENTIMENT_FIXED",
     "BASE"
   ],
-  "best_primary_version": "DEEPSEEK_RICH_FIXED",
+  "best_primary_version": "REVIEW_RICH_FIXED",
   "best_primary_global_volume_weighted_WMAPE": 38.70519249287119,
   "baseline_global_volume_weighted_WMAPE": 40.44001904314165,
   "rolling_scenario_is_supplemental": true,
