@@ -119,20 +119,19 @@
 
 ## 快速开始
 
-创建项目环境：
+安装依赖：
 
 ```bash
-conda env create -f environment.yml
-conda activate nlp-sentiment
+pip install -r requirements.txt
 ```
 
-直接预览看板：
+直接预览看板（数据已预烘焙，无需先运行采集或建模脚本）：
 
 ```bash
 python -m http.server 8000 --directory app
 ```
 
-打开 <http://127.0.0.1:8000/>。看板数据已经预烘焙，无需先运行采集或建模脚本。
+打开 <http://127.0.0.1:8000/>。
 
 重新生成看板数据：
 
@@ -140,19 +139,13 @@ python -m http.server 8000 --directory app
 python app/build_dashboard_data.py
 ```
 
-流水线脚本位于 `scripts/`。关键阶段包括：
+复现流水线按顺序运行 `scripts/` 下的脚本：
 
 ```text
 00—14  车系索引、销量面板、时间切分与基础模型
 15—28  评论采集、车系映射、语料质量与评论特征
 29     产品配置年度归因
 30—37  评论标签合并、预测消融、稳健性、用户需求、冷启动与报告 Notebook
-```
-
-所有 Python 脚本均按以下方式执行：
-
-```bash
-python scripts/<script>.py
 ```
 
 ## 目录

@@ -1,4 +1,4 @@
-name: nlp-sentiment
+name: china-auto-market-analysis
 channels:
   - conda-forge
 dependencies:

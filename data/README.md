@@ -201,12 +201,7 @@
 
 ## 7. 复现与更新
 
-先按根目录 `environment.yml` 创建并激活项目环境，再运行脚本：
-
-```bash
-conda activate nlp-sentiment
-python scripts/<script>.py
-```
+安装根目录 `requirements.txt` 中的依赖后，按顺序运行 `scripts/` 下的脚本。
 
 评论语料、标签和月度特征的主要顺序为：
 

@@ -201,12 +201,7 @@ A historical label of `0` cannot reliably separate “not mentioned,” “neutr
 
 ## 7. Reproduction
 
-Create and activate the environment from the root `environment.yml`, then run scripts normally:
-
-```bash
-conda activate nlp-sentiment
-python scripts/<script>.py
-```
+Install the dependencies from the root `requirements.txt`, then run the scripts under `scripts/` in order.
 
 The main review and modeling sequence is:
 

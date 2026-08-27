@@ -119,20 +119,19 @@ The bilingual dashboard uses vanilla HTML, CSS, JavaScript, and ECharts. Data is
 
 ## Quick start
 
-Create the project environment:
+Install the dependencies:
 
 ```bash
-conda env create -f environment.yml
-conda activate nlp-sentiment
+pip install -r requirements.txt
 ```
 
-Launch the dashboard:
+Launch the dashboard (data is pre-baked; no crawl or modeling required):
 
 ```bash
 python -m http.server 8000 --directory app
 ```
 
-Open <http://127.0.0.1:8000/>. Dashboard data is already bundled; crawling and modeling are not required for viewing.
+Open <http://127.0.0.1:8000/>.
 
 Rebuild dashboard data:
 
@@ -147,12 +146,6 @@ The reproducible pipeline lives in `scripts/`:
 15–28  review collection, series mapping, corpus audits, and review features
 29     annual product-configuration attribution
 30–37  label merging, forecast ablation, robustness, user needs, cold-start handling, and report notebooks
-```
-
-Run every Python script through the project environment:
-
-```bash
-python scripts/<script>.py
 ```
 
 ## Repository layout
