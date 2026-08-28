@@ -1,0 +1,10 @@
+series_name,series_id,audit_scope,status,modeling_action,evidence_source,evidence_url,verified_at,note
+Model Y,26651,2026-01_to_2026-06,confirmed_source_gap,apply_verified_months_only,太平洋汽车,https://price.pcauto.com.cn/salescar/sg26651/,2026-08-28,当前同源页面存在非零销量；原快照将零误标为页面明确为0；2024-06至2025-12仍待完整回补
+Model 3,24824,2026-01_to_2026-06,confirmed_source_gap,apply_verified_months_only,太平洋汽车,https://price.pcauto.com.cn/salescar/sg24824/,2026-08-28,当前同源页面存在非零销量；原快照将零误标为页面明确为0；2024-06至2025-12仍待完整回补
+iCAR 03,29436,2026-01_to_2026-06,confirmed_post_discontinuation,keep_zero,太平洋汽车,https://price.pcauto.com.cn/salescar/sg29436/,2026-08-28,同源车系页标记停售且销量序列止于2025-12
+长安启源Q05经典,30092,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车,https://price.pcauto.com.cn/salescar/sg30092/,2026-08-28,同源页面序列止于2025-12；不可与名称不同的新Q05自动合并
+奥迪Q5 e-tron,27551,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车,https://price.pcauto.com.cn/salescar/sg27551/,2026-08-28,同源页面序列止于2025-12但未见明确停售标记
+长安欧尚Z6 智电iDD,28760,2026-01_to_2026-06,unresolved,keep_zero_pending_manual,,,2026-08-28,2025年销量降至个位数后归零；尚无足够证据区分停产后零值和来源缺失
+捷途山海L9,30133,2026-01_to_2026-06,unresolved,keep_zero_pending_manual,,,2026-08-28,2025年末仍有销量；测试期全零需继续核验
+极越01,28842,2025-01_to_2026-06,unresolved,keep_zero_pending_manual,,,2026-08-28,2024-12后全零；尚未以同口径来源确认生命周期状态
+哪吒AYA,30064,2025-01_to_2026-06,unresolved,keep_zero_pending_manual,,,2026-08-28,2024-12后全零；尚未以同口径来源确认生命周期状态

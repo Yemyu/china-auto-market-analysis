@@ -10,6 +10,7 @@ import numpy as np
 import pandas as pd
 
 from _series_mapping import build_series_name_mapping, normalize_series_name
+from _sales_repair import apply_verified_sales_corrections, load_sales_correction_register
 
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -123,13 +124,24 @@ def main() -> None:
     config = pd.read_csv(RAW / "feature.csv", low_memory=False)
     mapping = build_series_name_mapping(sales["series_name"], config["series_name"])
     sales_audit = build_sales_audit(sales, mapping)
+    correction_register = load_sales_correction_register()
+    repaired_sales, overlay_audit = apply_verified_sales_corrections(
+        sales, correction_register
+    )
+    repaired_sales_audit = build_sales_audit(repaired_sales, mapping)
     mapping_audit = build_mapping_audit(sales, config, mapping)
 
     sales_audit.to_csv(OUT / "sales_zero_audit.csv", index=False, encoding="utf-8-sig")
+    repaired_sales_audit.to_csv(
+        OUT / "sales_zero_audit_repaired.csv", index=False, encoding="utf-8-sig"
+    )
+    overlay_audit.to_csv(
+        OUT / "verified_sales_overlay_audit.csv", index=False, encoding="utf-8-sig"
+    )
     mapping_audit.to_csv(OUT / "series_mapping_audit.csv", index=False, encoding="utf-8-sig")
 
     summary = {
-        "schema_version": "v1",
+        "schema_version": "v2",
         "source_rows": {"sales": int(len(sales)), "config": int(len(config))},
         "source_series": {
             "sales": int(sales["series_name"].nunique()),
@@ -142,7 +154,7 @@ def main() -> None:
             "unmatched_sales": int(sales["series_name"].nunique() - len(mapping)),
             "unmatched_config": int(config["series_name"].nunique() - len(mapping)),
         },
-        "sales_zero_audit": {
+        "raw_sales_zero_audit": {
             "zero_rows": int(sales["monthly_sales"].eq(0).sum()),
             "zero_row_share": float(sales["monthly_sales"].eq(0).mean()),
             "never_positive_series": int(sales_audit["flag_never_positive"].sum()),
@@ -155,9 +167,20 @@ def main() -> None:
                 sales_audit["flag_high_2024_then_zero_test"].sum()
             ),
         },
+        "verified_sales_overlay": {
+            "register_rows": int(len(correction_register)),
+            "applied_rows": int(len(overlay_audit)),
+            "affected_series": int(overlay_audit["series_name"].nunique()),
+            "sales_delta": int(overlay_audit["sales_delta"].sum()),
+            "remaining_zero_rows": int(repaired_sales["monthly_sales"].eq(0).sum()),
+            "remaining_high_2024_then_zero_test_series": int(
+                repaired_sales_audit["flag_high_2024_then_zero_test"].sum()
+            ),
+        },
         "decision": (
-            "Do not reinterpret zero rows automatically. Cross-source verification and lifecycle labels "
-            "are required before rebuilding the forecast cohort."
+            "Apply only same-source verified corrections through the overlay. Do not mutate the raw "
+            "snapshot or rerun the headline model until historical gaps and remaining lifecycle labels "
+            "are resolved."
         ),
     }
     (OUT / "data_repair_summary.json").write_text(

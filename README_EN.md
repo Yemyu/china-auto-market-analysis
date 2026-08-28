@@ -45,6 +45,8 @@ The final test covers January–June 2026: 2,226 series-month observations acros
 
 The final method reduces absolute forecast error by 44.9% relative to the best naive baseline. Owner feedback provides a modest incremental signal on top of the sales model but does not displace sales history. A series-cluster bootstrap gives a 95% interval of −0.78 to 5.02 percentage points, which still crosses zero. The cold-start method mainly helps nine series with insufficient history and changes the full-sample score by a further 0.06 percentage points.
 
+> Data-repair status: same-source review confirms gaps in the raw Model Y and Model 3 snapshots, and 12 test-period series-months are now repaired. Their June 2024–December 2025 history remains incomplete. The table is therefore a frozen pre-repair benchmark rather than an updated claim; all models and comparisons will be recomputed after the history is complete. See the [data-repair audit](./data/README_EN.md#data-quality-and-repair-processeddat_quality).
+
 ### Product specifications
 
 Year, brand, and specifications are added sequentially on the same 736-series sample.
@@ -147,6 +149,7 @@ The reproducible pipeline lives in `scripts/`:
 15–28  review collection, series mapping, corpus audits, and review features
 29     annual product-configuration attribution
 30–37  label merging, forecast ablation, robustness, user needs, cold-start handling, and report notebooks
+38–40  direct/naive forecast experiments and sales/series-mapping repair audits
 ```
 
 ## Repository layout

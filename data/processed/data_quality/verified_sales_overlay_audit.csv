@@ -1,0 +1,13 @@
+﻿series_name,date,original_sales,corrected_sales,source_name,source_url,evidence_status,verified_at,note,sales_delta
+Model 3,2026-01-01,0,1640,太平洋汽车,https://price.pcauto.com.cn/salescar/sg24824/y2026-m1/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页；不采用批发口径替代,1640
+Model 3,2026-02-01,0,12920,太平洋汽车,https://price.pcauto.com.cn/salescar/sg24824/y2026-m2/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,12920
+Model 3,2026-03-01,0,16280,太平洋汽车,https://price.pcauto.com.cn/salescar/sg24824/y2026-m3/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,16280
+Model 3,2026-04-01,0,2966,太平洋汽车,https://price.pcauto.com.cn/salescar/sg24824/y2026-m4/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,2966
+Model 3,2026-05-01,0,18370,太平洋汽车,https://price.pcauto.com.cn/salescar/sg24824/y2026-m5/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,18370
+Model 3,2026-06-01,0,14266,太平洋汽车,https://price.pcauto.com.cn/salescar/sg24824/y2026-m6/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,14266
+Model Y,2026-01-01,0,16845,太平洋汽车,https://price.pcauto.com.cn/salescar/sg26651/y2026-m1/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页；不采用批发口径替代,16845
+Model Y,2026-02-01,0,25286,太平洋汽车,https://price.pcauto.com.cn/salescar/sg26651/y2026-m2/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,25286
+Model Y,2026-03-01,0,39827,太平洋汽车,https://price.pcauto.com.cn/salescar/sg26651/y2026-m3/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,39827
+Model Y,2026-04-01,0,22990,太平洋汽车,https://price.pcauto.com.cn/salescar/sg26651/y2026-m4/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,22990
+Model Y,2026-05-01,0,28911,太平洋汽车,https://price.pcauto.com.cn/salescar/sg26651/y2026-m5/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,28911
+Model Y,2026-06-01,0,38654,太平洋汽车,https://price.pcauto.com.cn/salescar/sg26651/y2026-m6/,verified_same_source,2026-08-28,同一车系同一来源的月度销量页,38654
