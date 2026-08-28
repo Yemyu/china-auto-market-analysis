@@ -45,7 +45,8 @@
           <table class="forecast-score-table">
             <thead><tr><th data-i18n="home_model_col">比较方案</th><th data-i18n="home_global_col">全局 WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th><th data-i18n="home_change_col">相对基线</th></tr></thead>
             <tbody>
-              <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="fc_baseline_scope">历史销量、日历与车型属性</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td>—</td></tr>
+              <tr><td><strong data-i18n="home_model_naive">最佳朴素基准</strong><span data-i18n="home_model_naive_note">过去6个月销量均值</span></td><td id="fc-score-naive-global">—</td><td id="fc-score-naive-median">—</td><td>—</td></tr>
+              <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="fc_baseline_scope">历史销量、日历与车型属性</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td id="fc-score-base-gain">—</td></tr>
               <tr class="forecast-primary-row"><td><strong data-i18n="home_model_review">用户口碑增强模型</strong><span data-i18n="fc_review_scope">加入预测起点前可获得的平台评分与评论特征</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
               <tr><td><strong data-i18n="home_model_cold">冷启动补充方案</strong><span data-i18n="fc_cold_scope">为9个历史不足的新车系补充上市曲线</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td id="fc-score-cold-gain">—</td></tr>
             </tbody>
@@ -126,7 +127,7 @@
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js?v=20260825-3"></script>
-  <script src="static/js/i18n.js"></script>
+  <script src="static/js/i18n.js?v=20260828-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
@@ -164,14 +165,18 @@
       var base = d.models.find(function (m) { return m.name_en === 'Sales baseline'; });
       var review = d.models.find(function (m) { return m.name_en === 'User-review enhanced'; });
       var cold = d.models.find(function (m) { return m.scenario === 'fixed_origin_primary_cold_hybrid'; });
+      var naiveGlobal = d.meta.best_naive_global_wmape;
+      fcSetText('fc-score-naive-global', fcPct(naiveGlobal));
+      fcSetText('fc-score-naive-median', fcPct(d.meta.best_naive_median_wmape));
       fcSetText('fc-score-base-global', fcPct(base.wmape_vol));
       fcSetText('fc-score-base-median', fcPct(base.wmape_med));
+      fcSetText('fc-score-base-gain', '−' + (naiveGlobal - base.wmape_vol).toFixed(2) + ' pp');
       fcSetText('fc-score-review-global', fcPct(review.wmape_vol));
       fcSetText('fc-score-review-median', fcPct(review.wmape_med));
-      fcSetText('fc-score-review-gain', '−' + (base.wmape_vol - review.wmape_vol).toFixed(2) + ' pp');
+      fcSetText('fc-score-review-gain', '−' + (naiveGlobal - review.wmape_vol).toFixed(2) + ' pp');
       fcSetText('fc-score-cold-global', fcPct(cold.wmape_vol));
       fcSetText('fc-score-cold-median', fcPct(cold.wmape_med));
-      fcSetText('fc-score-cold-gain', '−' + (base.wmape_vol - cold.wmape_vol).toFixed(2) + ' pp');
+      fcSetText('fc-score-cold-gain', '−' + (naiveGlobal - cold.wmape_vol).toFixed(2) + ' pp');
 
       var models = d.models.slice().sort(function (a, b) { return b.wmape_vol - a.wmape_vol; });
       if (!chartModels) chartModels = initChart('chartModels');

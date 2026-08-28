@@ -161,8 +161,13 @@ Test features for the primary experiment are frozen before `2026-01-01`. Rolling
 | `forecast_robustness_bootstrap.csv` | Series-cluster bootstrap |
 | `review_feature_shap_importance.csv` | Feature contributions |
 | `cold_start_launch_curve_summary.json` | Cold-start method and results |
+| `forecast_benchmark_comparison.csv` | Naive baselines and final models on all 371 series |
+| `direct_multihorizon_validation.csv` | Rolling validation summary for direct multi-horizon candidates |
+| `direct_multihorizon_summary.json` | Locked selection protocol and rejection decision for the direct experiment |
 
-Headline global WMAPE: 40.44% for the sales baseline, 38.71% for the owner-feedback model, and 38.64% after the cold-start supplement.
+The best naive baseline (trailing six-month mean) has 70.11% global WMAPE. The sales baseline reaches 40.44%, the owner-feedback model 38.71%, and the cold-start supplement 38.64%, a 44.9% relative reduction in absolute forecast error versus the best naive baseline.
+
+The direct multi-horizon experiment selected blend weights on three earlier origins and reached 30.42% WMAPE at the July 2025 fixed-origin validation. Its locked specification then rose to 47.46% on the 362 history-bearing series in the 2026 test, underperforming the existing recursive model; it was therefore rejected under the predefined rule and does not replace the headline result. Row-level experimental predictions remain local and are ignored by Git.
 
 ### Product specifications: `processed/product/`
 

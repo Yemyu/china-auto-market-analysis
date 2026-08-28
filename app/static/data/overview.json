@@ -4,6 +4,9 @@
     "forecast_wmape": 38.64,
     "core_forecast_wmape": 38.71,
     "baseline_wmape": 40.44,
+    "naive_wmape": 70.1146,
+    "naive_median_wmape": 90.0208,
+    "relative_error_reduction_vs_naive_pct": 44.89,
     "wmape_gain_pp": 1.8,
     "wmape_relative_gain_pct": 4.45,
     "forecast_horizon": 6,
@@ -263,8 +266,8 @@
   ],
   "findings": [
     {
-      "zh": "371车系六个月递归预测：冷启动混合模型全局WMAPE为38.64%",
-      "en": "371-series six-month recursive forecast: cold-start hybrid global WMAPE is 38.64%"
+      "zh": "最终模型全局WMAPE为38.64%，相对最佳朴素基准70.11%减少44.9%的绝对误差",
+      "en": "The final model reaches 38.64% global WMAPE and reduces absolute error by 44.9% versus the 70.11% best naive baseline"
     },
     {
       "zh": "用户口碑增强相对销量基线改善1.735个百分点，但Bootstrap区间跨0",

@@ -36,13 +36,14 @@ Sales forecasting requires continuous monthly history and usable specifications.
 
 The final test covers January–June 2026: 2,226 series-month observations across 371 series. Global volume-weighted WMAPE is the primary metric, with median per-series WMAPE reported alongside it.
 
-| Model | Global WMAPE ↓ | Median per-series WMAPE ↓ | vs. sales baseline |
+| Model | Global WMAPE ↓ | Median per-series WMAPE ↓ | vs. best naive baseline |
 |---|---:|---:|---:|
-| Sales baseline | 40.44% | 49.98% | — |
-| Owner-feedback enhanced | 38.71% | 48.83% | −1.73 pp |
-| Cold-start supplement | **38.64%** | **48.32%** | −1.80 pp |
+| Trailing six-month mean (best naive) | 70.11% | 90.02% | — |
+| Sales baseline | 40.44% | 49.98% | −29.67 pp |
+| Owner-feedback enhanced | 38.71% | 48.83% | −31.41 pp |
+| Cold-start supplement | **38.64%** | **48.32%** | **−31.47 pp** |
 
-Owner feedback provides a modest improvement signal but does not displace sales history. A series-cluster bootstrap gives a 95% interval of −0.78 to 5.02 percentage points, which still crosses zero. The cold-start method mainly helps nine series with insufficient history and changes the full-sample score by a further 0.06 percentage points.
+The final method reduces absolute forecast error by 44.9% relative to the best naive baseline. Owner feedback provides a modest incremental signal on top of the sales model but does not displace sales history. A series-cluster bootstrap gives a 95% interval of −0.78 to 5.02 percentage points, which still crosses zero. The cold-start method mainly helps nine series with insufficient history and changes the full-sample score by a further 0.06 percentage points.
 
 ### Product specifications
 

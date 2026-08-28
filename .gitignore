@@ -35,6 +35,10 @@ data/reviews/processed/api_aspect_run_history.jsonl
 data/reviews/processed/api_billing_checkpoints.csv
 data/resources/historical_reviews/review_absa_reference.csv.gz
 
+# Large row-level predictions from rejected direct multi-horizon experiments.
+# The compact validation table and JSON summary remain versionable.
+data/processed/forecast/direct_multihorizon_*_predictions.csv*
+
 # Regenerable exploratory output
 artifacts/
 

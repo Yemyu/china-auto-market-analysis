@@ -68,6 +68,7 @@ corpus = read_json(REVIEW_DIR / "target_371_review_corpus_summary.json")
 labels = read_json(REVIEW_DIR / "review_aspect_labels_summary.json")
 temporal = read_json(REVIEW_DIR / "review_feature_temporal_summary.json")
 forecast = pd.read_csv(FORECAST_DIR / "review_feature_ablation_summary.csv", encoding="utf-8-sig")
+benchmark = pd.read_csv(FORECAST_DIR / "forecast_benchmark_comparison.csv", encoding="utf-8-sig")
 robustness = read_json(FORECAST_DIR / "forecast_robustness_summary.json")
 cold = read_json(FORECAST_DIR / "cold_start_launch_curve_summary.json")
 config = pd.read_csv(PRODUCT_DIR / "config_attribution_ablation.csv")
@@ -144,6 +145,13 @@ main = forecast[forecast.version.isin(names)].copy()
 main[model_name] = main.version.map(names)
 main = main[[model_name, "global_volume_weighted_WMAPE", "median_per_series_WMAPE"]]
 main.columns = [model_name, global_name, median_name]
+naive = benchmark.loc[benchmark.method.eq("ROLLING_MEAN_6")].iloc[0]
+main.loc[-1] = [
+    "最近6个月均值（朴素）" if ZH else "Trailing six-month mean (naive)",
+    naive["global_volume_weighted_WMAPE"],
+    naive["median_per_series_WMAPE"],
+]
+main = main.sort_index().reset_index(drop=True)
 main.loc[len(main)] = [
     "冷启动补充" if ZH else "Cold-start supplement",
     cold["hybrid_full371_global_WMAPE"],
@@ -347,7 +355,7 @@ TEXT = {
 训练截至 2025-06，验证期为 2025-07—12，测试期为 2026-01—06。测试采用 2026 年 1 月固定起点；评论特征同样冻结在该起点。""",
         "models": """### 模型比较
 
-先报告全局 WMAPE，再用逐车系中位数观察长尾。两类指标的分母和聚合方式不同，不应相互替代。""",
+先报告全局 WMAPE，再用逐车系中位数观察长尾。最佳朴素基准为最近 6 个月均值，最终方案相对它减少 44.9% 的绝对预测误差。两类指标的分母和聚合方式不同，不应相互替代。""",
         "uncertainty": """### 改善幅度与不确定性
 
 用户口碑增强模型相对销量基线降低 1.73 个百分点。按车系重采样的区间仍跨过零，因此结论是“小幅改善信号”，而不是“稳定优于基线”。""",
@@ -399,7 +407,7 @@ Forecasting requires continuous monthly history; the specification analysis requ
 Training ends in 2025-06, validation covers 2025-07—12, and testing covers 2026-01—06. The test uses a January 2026 fixed origin; review features are frozen at the same origin.""",
         "models": """### Model comparison
 
-Global WMAPE is followed by median per-series WMAPE for the long tail. The two metrics have different denominators and aggregation rules and should not be substituted for each other.""",
+Global WMAPE is followed by median per-series WMAPE for the long tail. The best naive baseline is the trailing six-month mean; the final method reduces absolute forecast error by 44.9% relative to it. The two metrics have different denominators and aggregation rules and should not be substituted for each other.""",
         "uncertainty": """### Improvement and uncertainty
 
 The owner-feedback model lowers global WMAPE by 1.73 percentage points. The series-cluster bootstrap interval still crosses zero, supporting a modest improvement signal rather than a stable proven advantage.""",

@@ -161,8 +161,13 @@
 | `forecast_robustness_bootstrap.csv` | 按车系重采样结果 |
 | `review_feature_shap_importance.csv` | 特征贡献 |
 | `cold_start_launch_curve_summary.json` | 冷启动方法与结果 |
+| `forecast_benchmark_comparison.csv` | 完整 371 车系朴素基准与最终模型对比 |
+| `direct_multihorizon_validation.csv` | 直接多步候选模型的滚动验证汇总 |
+| `direct_multihorizon_summary.json` | 直接多步实验的锁定选模规则与拒绝结论 |
 
-主结果中的全局 WMAPE 为：销量基线 40.44%，用户口碑增强 38.71%，冷启动补充后 38.64%。
+最佳朴素基准（最近 6 个月均值）的全局 WMAPE 为 70.11%；销量基线为 40.44%，用户口碑增强为 38.71%，冷启动补充后为 38.64%。最终方案相对最佳朴素基准减少 44.9% 的绝对预测误差。
+
+直接多步实验先在三个历史起点确定融合权重，并在 2025-07 固定起点以 30.42% WMAPE 胜出；但锁定方案在 2026 测试期的 362 个历史车系上升至 47.46%，差于现有递归模型，因此按预设规则拒绝，不替换主结果。逐行实验预测仅作本地审计并由 Git 忽略。
 
 ### 产品配置：`processed/product/`
 

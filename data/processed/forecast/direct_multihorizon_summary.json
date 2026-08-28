@@ -1,0 +1,475 @@
+{
+  "schema_version": "v1",
+  "test_evaluated": true,
+  "selection_protocol": "ensemble horizon weights selected only on 2024-01/2024-07/2025-01 origins; model family selected on official 2025-07 fixed-origin WMAPE",
+  "backtest_origins": [
+    "2024-01-01",
+    "2024-07-01",
+    "2025-01-01",
+    "2025-07-01"
+  ],
+  "selected_method": "ENSEMBLE_DIRECT_REVIEW_LOG_LEVEL_WITH_ROLLING_MEAN_6",
+  "selected_validation_global_WMAPE": 30.42463235255323,
+  "selected_historical_backtest_mean_WMAPE": 34.98858952066961,
+  "selected_ensemble": {
+    "direct_method": "DIRECT_REVIEW_LOG_LEVEL",
+    "baseline_method": "ROLLING_MEAN_6",
+    "direct_weight_by_horizon": {
+      "1": 0.7000000000000001,
+      "2": 1.0,
+      "3": 0.6000000000000001,
+      "4": 0.8,
+      "5": 0.7000000000000001,
+      "6": 0.4
+    },
+    "weight_selection_origins": [
+      "2024-01-01",
+      "2024-07-01",
+      "2025-01-01"
+    ]
+  },
+  "ensemble_configs": {
+    "ENSEMBLE_DIRECT_LOG_LEVEL_WITH_LAST_VALUE": {
+      "direct_method": "DIRECT_LOG_LEVEL",
+      "baseline_method": "LAST_VALUE",
+      "direct_weight_by_horizon": {
+        "1": 0.7000000000000001,
+        "2": 1.0,
+        "3": 0.8,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 0.9
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_LOG_LEVEL_WITH_SEASONAL_LAG12": {
+      "direct_method": "DIRECT_LOG_LEVEL",
+      "baseline_method": "SEASONAL_LAG12",
+      "direct_weight_by_horizon": {
+        "1": 1.0,
+        "2": 0.9,
+        "3": 0.9,
+        "4": 0.7000000000000001,
+        "5": 0.9,
+        "6": 0.8
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_LOG_LEVEL_WITH_ROLLING_MEAN_6": {
+      "direct_method": "DIRECT_LOG_LEVEL",
+      "baseline_method": "ROLLING_MEAN_6",
+      "direct_weight_by_horizon": {
+        "1": 0.7000000000000001,
+        "2": 1.0,
+        "3": 0.7000000000000001,
+        "4": 0.8,
+        "5": 0.7000000000000001,
+        "6": 0.30000000000000004
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_LOG_GROWTH_WITH_LAST_VALUE": {
+      "direct_method": "DIRECT_LOG_GROWTH",
+      "baseline_method": "LAST_VALUE",
+      "direct_weight_by_horizon": {
+        "1": 0.9,
+        "2": 1.0,
+        "3": 0.9,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 0.8
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_LOG_GROWTH_WITH_SEASONAL_LAG12": {
+      "direct_method": "DIRECT_LOG_GROWTH",
+      "baseline_method": "SEASONAL_LAG12",
+      "direct_weight_by_horizon": {
+        "1": 1.0,
+        "2": 0.9,
+        "3": 0.9,
+        "4": 0.7000000000000001,
+        "5": 0.8,
+        "6": 0.7000000000000001
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_LOG_GROWTH_WITH_ROLLING_MEAN_6": {
+      "direct_method": "DIRECT_LOG_GROWTH",
+      "baseline_method": "ROLLING_MEAN_6",
+      "direct_weight_by_horizon": {
+        "1": 0.9,
+        "2": 1.0,
+        "3": 0.6000000000000001,
+        "4": 0.7000000000000001,
+        "5": 0.7000000000000001,
+        "6": 0.5
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_RAW_SQUARE_WITH_LAST_VALUE": {
+      "direct_method": "DIRECT_RAW_SQUARE",
+      "baseline_method": "LAST_VALUE",
+      "direct_weight_by_horizon": {
+        "1": 0.7000000000000001,
+        "2": 1.0,
+        "3": 0.8,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 0.8
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_RAW_SQUARE_WITH_SEASONAL_LAG12": {
+      "direct_method": "DIRECT_RAW_SQUARE",
+      "baseline_method": "SEASONAL_LAG12",
+      "direct_weight_by_horizon": {
+        "1": 0.9,
+        "2": 0.9,
+        "3": 0.9,
+        "4": 0.7000000000000001,
+        "5": 0.9,
+        "6": 0.8
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_RAW_SQUARE_WITH_ROLLING_MEAN_6": {
+      "direct_method": "DIRECT_RAW_SQUARE",
+      "baseline_method": "ROLLING_MEAN_6",
+      "direct_weight_by_horizon": {
+        "1": 0.5,
+        "2": 1.0,
+        "3": 0.6000000000000001,
+        "4": 0.8,
+        "5": 0.7000000000000001,
+        "6": 0.4
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_RAW_ABSOLUTE_WITH_LAST_VALUE": {
+      "direct_method": "DIRECT_RAW_ABSOLUTE",
+      "baseline_method": "LAST_VALUE",
+      "direct_weight_by_horizon": {
+        "1": 0.8,
+        "2": 1.0,
+        "3": 0.9,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 1.0
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_RAW_ABSOLUTE_WITH_SEASONAL_LAG12": {
+      "direct_method": "DIRECT_RAW_ABSOLUTE",
+      "baseline_method": "SEASONAL_LAG12",
+      "direct_weight_by_horizon": {
+        "1": 0.9,
+        "2": 0.8,
+        "3": 1.0,
+        "4": 0.7000000000000001,
+        "5": 0.9,
+        "6": 0.8
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_RAW_ABSOLUTE_WITH_ROLLING_MEAN_6": {
+      "direct_method": "DIRECT_RAW_ABSOLUTE",
+      "baseline_method": "ROLLING_MEAN_6",
+      "direct_weight_by_horizon": {
+        "1": 0.6000000000000001,
+        "2": 1.0,
+        "3": 0.7000000000000001,
+        "4": 0.9,
+        "5": 0.8,
+        "6": 0.5
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_REVIEW_LOG_LEVEL_WITH_LAST_VALUE": {
+      "direct_method": "DIRECT_REVIEW_LOG_LEVEL",
+      "baseline_method": "LAST_VALUE",
+      "direct_weight_by_horizon": {
+        "1": 0.7000000000000001,
+        "2": 1.0,
+        "3": 0.8,
+        "4": 1.0,
+        "5": 0.9,
+        "6": 0.9
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_REVIEW_LOG_LEVEL_WITH_SEASONAL_LAG12": {
+      "direct_method": "DIRECT_REVIEW_LOG_LEVEL",
+      "baseline_method": "SEASONAL_LAG12",
+      "direct_weight_by_horizon": {
+        "1": 1.0,
+        "2": 0.9,
+        "3": 0.8,
+        "4": 0.7000000000000001,
+        "5": 0.9,
+        "6": 0.8
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_REVIEW_LOG_LEVEL_WITH_ROLLING_MEAN_6": {
+      "direct_method": "DIRECT_REVIEW_LOG_LEVEL",
+      "baseline_method": "ROLLING_MEAN_6",
+      "direct_weight_by_horizon": {
+        "1": 0.7000000000000001,
+        "2": 1.0,
+        "3": 0.6000000000000001,
+        "4": 0.8,
+        "5": 0.7000000000000001,
+        "6": 0.4
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_REVIEW_LOG_GROWTH_WITH_LAST_VALUE": {
+      "direct_method": "DIRECT_REVIEW_LOG_GROWTH",
+      "baseline_method": "LAST_VALUE",
+      "direct_weight_by_horizon": {
+        "1": 0.8,
+        "2": 1.0,
+        "3": 0.9,
+        "4": 1.0,
+        "5": 1.0,
+        "6": 0.9
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_REVIEW_LOG_GROWTH_WITH_SEASONAL_LAG12": {
+      "direct_method": "DIRECT_REVIEW_LOG_GROWTH",
+      "baseline_method": "SEASONAL_LAG12",
+      "direct_weight_by_horizon": {
+        "1": 1.0,
+        "2": 0.9,
+        "3": 0.8,
+        "4": 0.8,
+        "5": 0.9,
+        "6": 0.7000000000000001
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    },
+    "ENSEMBLE_DIRECT_REVIEW_LOG_GROWTH_WITH_ROLLING_MEAN_6": {
+      "direct_method": "DIRECT_REVIEW_LOG_GROWTH",
+      "baseline_method": "ROLLING_MEAN_6",
+      "direct_weight_by_horizon": {
+        "1": 0.8,
+        "2": 1.0,
+        "3": 0.6000000000000001,
+        "4": 0.9,
+        "5": 0.8,
+        "6": 0.5
+      },
+      "weight_selection_origins": [
+        "2024-01-01",
+        "2024-07-01",
+        "2025-01-01"
+      ]
+    }
+  },
+  "feature_count": 116,
+  "features": [
+    "horizon",
+    "target_month_sin",
+    "target_month_cos",
+    "target_year",
+    "lag_1",
+    "lag_2",
+    "lag_3",
+    "lag_6",
+    "lag_12",
+    "seasonal_target_lag12",
+    "seasonal_target_available",
+    "roll_mean_3",
+    "roll_mean_6",
+    "roll_mean_12",
+    "roll_median_6",
+    "roll_std_6",
+    "roll_std_12",
+    "trend_3",
+    "trend_6",
+    "trend_12",
+    "history_months",
+    "positive_history_months",
+    "launch_age_months",
+    "zero_streak",
+    "recent_zero_rate_6",
+    "recent_nonzero_rate_6",
+    "last_vs_mean6",
+    "last_vs_seasonal",
+    "official_price_wan",
+    "engine_max_power_kw",
+    "engine_max_torque_nm",
+    "battery_capacity_kwh",
+    "battery_range_km",
+    "length_mm",
+    "width_mm",
+    "height_mm",
+    "wheelbase_mm",
+    "curb_weight_kg",
+    "seat_count",
+    "door_count",
+    "trunk_volume_l",
+    "acceleration_0_100_s",
+    "fuel_consumption_l_100km",
+    "energy_type_enc",
+    "vehicle_class_enc",
+    "brand_name_enc",
+    "body_structure_enc",
+    "gearbox_type_enc",
+    "seat_material_enc",
+    "review_count_prior_all",
+    "review_count_180d",
+    "review_available_prior",
+    "review_available_180d",
+    "review_appearance_score_prior_mean",
+    "review_interior_score_prior_mean",
+    "review_space_score_prior_mean",
+    "review_power_score_prior_mean",
+    "review_control_score_prior_mean",
+    "review_comfort_score_prior_mean",
+    "review_fuel_consumption_score_prior_mean",
+    "review_configuration_score_prior_mean",
+    "review_intelligence_score_prior_mean",
+    "review_value_score_prior_mean",
+    "review_appearance_score_180d_mean",
+    "review_interior_score_180d_mean",
+    "review_space_score_180d_mean",
+    "review_power_score_180d_mean",
+    "review_control_score_180d_mean",
+    "review_comfort_score_180d_mean",
+    "review_fuel_consumption_score_180d_mean",
+    "review_configuration_score_180d_mean",
+    "review_intelligence_score_180d_mean",
+    "review_value_score_180d_mean",
+    "review_appearance_positive_180d_rate",
+    "review_interior_positive_180d_rate",
+    "review_space_positive_180d_rate",
+    "review_power_positive_180d_rate",
+    "review_control_positive_180d_rate",
+    "review_comfort_positive_180d_rate",
+    "review_fuel_consumption_positive_180d_rate",
+    "review_configuration_positive_180d_rate",
+    "review_intelligence_positive_180d_rate",
+    "review_value_positive_180d_rate",
+    "review_appearance_negative_180d_rate",
+    "review_interior_negative_180d_rate",
+    "review_space_negative_180d_rate",
+    "review_power_negative_180d_rate",
+    "review_control_negative_180d_rate",
+    "review_comfort_negative_180d_rate",
+    "review_fuel_consumption_negative_180d_rate",
+    "review_configuration_negative_180d_rate",
+    "review_intelligence_negative_180d_rate",
+    "review_value_negative_180d_rate",
+    "review_appearance_uniform_mention_180d_count",
+    "review_interior_uniform_mention_180d_count",
+    "review_space_uniform_mention_180d_count",
+    "review_power_uniform_mention_180d_count",
+    "review_control_uniform_mention_180d_count",
+    "review_comfort_uniform_mention_180d_count",
+    "review_fuel_consumption_uniform_mention_180d_count",
+    "review_configuration_uniform_mention_180d_count",
+    "review_intelligence_uniform_mention_180d_count",
+    "review_value_uniform_mention_180d_count",
+    "review_appearance_uniform_mention_180d_rate",
+    "review_interior_uniform_mention_180d_rate",
+    "review_space_uniform_mention_180d_rate",
+    "review_power_uniform_mention_180d_rate",
+    "review_control_uniform_mention_180d_rate",
+    "review_comfort_uniform_mention_180d_rate",
+    "review_fuel_consumption_uniform_mention_180d_rate",
+    "review_configuration_uniform_mention_180d_rate",
+    "review_intelligence_uniform_mention_180d_rate",
+    "review_value_uniform_mention_180d_rate",
+    "review_overall_aspect_score_180d_mean",
+    "review_any_positive_180d_rate",
+    "review_any_negative_180d_rate"
+  ],
+  "model_params": {
+    "n_estimators": 500,
+    "max_depth": 6,
+    "learning_rate": 0.04,
+    "min_child_weight": 8,
+    "subsample": 0.8,
+    "colsample_bytree": 0.85,
+    "reg_lambda": 5.0,
+    "random_state": 42,
+    "n_jobs": 4
+  },
+  "external_api_calls": 0,
+  "test_origin": "2026-01-01",
+  "direct_test_rows": 2172,
+  "direct_test_series": 362,
+  "direct_test_global_WMAPE": 47.46003854578741,
+  "direct_test_median_per_series_WMAPE": 56.220249560261784
+}

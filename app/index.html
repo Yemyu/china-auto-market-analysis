@@ -124,7 +124,8 @@
               <table class="home-model-table">
                 <thead><tr><th data-i18n="home_model_col">比较方案</th><th><span data-i18n="home_global_col">全局 WMAPE</span><small data-i18n="home_primary_lower">主指标 · 越低越好</small></th><th><span data-i18n="home_median_col">逐车系中位数 WMAPE</span><small data-i18n="home_supporting_lower">补充指标 · 越低越好</small></th><th data-i18n="home_change_col">相对基线</th></tr></thead>
                 <tbody>
-                  <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="home_model_baseline_note">历史销量、日历与产品属性</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td class="home-neutral">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_naive">最佳朴素基准</strong><span data-i18n="home_model_naive_note">过去6个月销量均值</span></td><td id="model-naive-global">—</td><td id="model-naive-median">—</td><td class="home-neutral">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="home_model_baseline_note">历史销量、日历与产品属性</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td id="model-base-gain">—</td></tr>
                   <tr class="home-best-core"><td><strong data-i18n="home_model_review">用户口碑增强模型</strong><span data-i18n="home_model_review_note">加入预测起点前可获得的用户评价</span></td><td id="model-core-global">—</td><td id="model-core-median">—</td><td id="model-core-gain">—</td></tr>
                   <tr><td><strong data-i18n="home_model_cold">冷启动补充方案</strong><span data-i18n="home_model_cold_note">为历史不足的新车系补充上市曲线</span></td><td id="model-cold-global">—</td><td id="model-cold-median">—</td><td id="model-cold-gain">—</td></tr>
                 </tbody>
@@ -189,7 +190,7 @@
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js?v=20260825-3"></script>
-  <script src="static/js/i18n.js"></script>
+  <script src="static/js/i18n.js?v=20260828-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
@@ -215,11 +216,14 @@
       setText('ledger-sales', formatNumber(k.sales_series));
       setText('ledger-config', formatNumber(k.config_series));
       setText('ledger-review-count', formatNumber(k.review_count));
+      setText('model-naive-global', pct(k.naive_wmape));
+      setText('model-naive-median', pct(k.naive_median_wmape));
       setText('model-base-global', pct(k.baseline_wmape));
       setText('model-core-global', pct(k.core_forecast_wmape));
       setText('model-cold-global', pct(k.forecast_wmape));
-      setText('model-core-gain', '−' + (k.baseline_wmape - k.core_forecast_wmape).toFixed(2) + ' pp');
-      setText('model-cold-gain', '−' + k.wmape_gain_pp.toFixed(2) + ' pp');
+      setText('model-base-gain', '−' + (k.naive_wmape - k.baseline_wmape).toFixed(2) + ' pp');
+      setText('model-core-gain', '−' + (k.naive_wmape - k.core_forecast_wmape).toFixed(2) + ' pp');
+      setText('model-cold-gain', '−' + (k.naive_wmape - k.forecast_wmape).toFixed(2) + ' pp');
 
       if (forecastData) {
         var base = forecastData.models.find(function (x) { return x.name_en === 'Sales baseline'; });

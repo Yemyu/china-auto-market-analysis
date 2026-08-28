@@ -89,7 +89,10 @@
     "train_end": "2025-06",
     "validation_period": "2025-07~2025-12",
     "test_period": "2026-01~2026-06",
-    "cold_start_series": 9
+    "cold_start_series": 9,
+    "best_naive_global_wmape": 70.1146,
+    "best_naive_median_wmape": 90.0208,
+    "relative_error_reduction_vs_naive_pct": 44.89
   },
   "class_wmape": [
     {
@@ -8013,8 +8016,8 @@
     }
   ],
   "conclusion": {
-    "zh": "371车系固定起点六个月递归测试中，用户口碑增强将全局WMAPE从40.44%降至38.71%；冷启动兜底后为38.64%。平台评分与用户口碑增强仅相差0.113个百分点。",
-    "en": "In the fixed-origin six-month test over 371 series, user-review features lower global WMAPE from 40.44% to 38.71%; the cold-start fallback reaches 38.64%. Platform ratings differ from the user-review model by only 0.113 pp."
+    "zh": "371车系固定起点六个月测试中，最佳朴素基准为70.11%；销量模型为40.44%，口碑增强为38.71%，冷启动兜底后为38.64%，相对朴素基准减少44.9%的绝对误差。",
+    "en": "In the fixed-origin six-month test over 371 series, the best naive baseline is 70.11%; the sales model reaches 40.44%, user-review enhancement 38.71%, and the cold-start fallback 38.64%, reducing absolute error by 44.9% versus the naive baseline."
   },
   "feature_insight": {
     "zh": "销量滞后与滚动均值占SHAP绝对重要性的80.17%；评论特征合计约9.03%，主要提供补充信息而非替代历史销量。",

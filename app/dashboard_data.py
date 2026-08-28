@@ -178,9 +178,12 @@ class DashboardData:
         needs = _read_json(self.processed / "user_feedback" / "user_needs_alerts_summary.json")
         cold = _read_json(self.processed / "forecast" / "cold_start_launch_curve_summary.json")
         model_summary = _read(self.processed / "forecast" / "review_feature_ablation_summary.csv")
+        benchmark = _read(self.processed / "forecast" / "forecast_benchmark_comparison.csv")
         baseline = float(model_summary.loc[model_summary["version"].eq("BASE"), "global_volume_weighted_WMAPE"].iloc[0])
         rich = float(model_summary.loc[model_summary["version"].eq("REVIEW_RICH_FIXED"), "global_volume_weighted_WMAPE"].iloc[0])
         hybrid = float(cold["hybrid_full371_global_WMAPE"])
+        naive_row = benchmark.loc[benchmark["method"].eq("ROLLING_MEAN_6")].iloc[0]
+        naive = float(naive_row["global_volume_weighted_WMAPE"])
         monthly = panel.groupby("date")["monthly_sales"].sum().sort_index()
         return {
             "kpis": {
@@ -188,6 +191,9 @@ class DashboardData:
                 "forecast_wmape": round(hybrid, 2),
                 "core_forecast_wmape": round(rich, 2),
                 "baseline_wmape": round(baseline, 2),
+                "naive_wmape": round(naive, 4),
+                "naive_median_wmape": round(float(naive_row["median_per_series_WMAPE"]), 4),
+                "relative_error_reduction_vs_naive_pct": round((naive - hybrid) / naive * 100, 2),
                 "wmape_gain_pp": round(baseline - hybrid, 2),
                 "wmape_relative_gain_pct": round((baseline - hybrid) / baseline * 100, 2),
                 "forecast_horizon": 6,
@@ -214,7 +220,7 @@ class DashboardData:
                 {"id": 6, "name": "看板更新", "en": "Dashboard Refresh", "status": "current"},
             ],
             "findings": [
-                {"zh": "371车系六个月递归预测：冷启动混合模型全局WMAPE为38.64%", "en": "371-series six-month recursive forecast: cold-start hybrid global WMAPE is 38.64%"},
+                {"zh": "最终模型全局WMAPE为38.64%，相对最佳朴素基准70.11%减少44.9%的绝对误差", "en": "The final model reaches 38.64% global WMAPE and reduces absolute error by 44.9% versus the 70.11% best naive baseline"},
                 {"zh": "用户口碑增强相对销量基线改善1.735个百分点，但Bootstrap区间跨0", "en": "User-review features improve 1.735 pp over the sales baseline, but the bootstrap interval crosses zero"},
                 {"zh": "736车系年度归因中，配置将交叉验证R²从0.156提升到0.300", "en": "Across 736 series, configuration raises annual-attribution CV R² from 0.156 to 0.300"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
@@ -227,6 +233,8 @@ class DashboardData:
         shap = _read(self.processed / "forecast" / "review_feature_shap_importance.csv")
         hybrid = _read(self.processed / "forecast" / "cold_start_hybrid_predictions.csv", parse_dates=["date"])
         cold = _read_json(self.processed / "forecast" / "cold_start_launch_curve_summary.json")
+        benchmark = _read(self.processed / "forecast" / "forecast_benchmark_comparison.csv")
+        naive = benchmark.loc[benchmark["method"].eq("ROLLING_MEAN_6")].iloc[0]
         models: list[dict[str, Any]] = []
         for _, row in summary.sort_values("global_volume_weighted_WMAPE").iterrows():
             zh, en = MODEL_LABELS.get(row["version"], (row["version"], row["version"]))
@@ -278,13 +286,20 @@ class DashboardData:
                 "validation_period": "2025-07~2025-12",
                 "test_period": "2026-01~2026-06",
                 "cold_start_series": int(cold["cold_start_series"]),
+                "best_naive_global_wmape": round(float(naive["global_volume_weighted_WMAPE"]), 4),
+                "best_naive_median_wmape": round(float(naive["median_per_series_WMAPE"]), 4),
+                "relative_error_reduction_vs_naive_pct": round(
+                    (float(naive["global_volume_weighted_WMAPE"]) - float(cold["hybrid_full371_global_WMAPE"]))
+                    / float(naive["global_volume_weighted_WMAPE"]) * 100,
+                    2,
+                ),
             },
             "class_wmape": class_rows,
             "scatter": [[round(float(a), 1), round(float(p), 1)] for a, p in zip(valid["actual"], valid["pred"])],
             "features": features,
             "conclusion": {
-                "zh": "371车系固定起点六个月递归测试中，用户口碑增强将全局WMAPE从40.44%降至38.71%；冷启动兜底后为38.64%。平台评分与用户口碑增强仅相差0.113个百分点。",
-                "en": "In the fixed-origin six-month test over 371 series, user-review features lower global WMAPE from 40.44% to 38.71%; the cold-start fallback reaches 38.64%. Platform ratings differ from the user-review model by only 0.113 pp.",
+                "zh": "371车系固定起点六个月测试中，最佳朴素基准为70.11%；销量模型为40.44%，口碑增强为38.71%，冷启动兜底后为38.64%，相对朴素基准减少44.9%的绝对误差。",
+                "en": "In the fixed-origin six-month test over 371 series, the best naive baseline is 70.11%; the sales model reaches 40.44%, user-review enhancement 38.71%, and the cold-start fallback 38.64%, reducing absolute error by 44.9% versus the naive baseline.",
             },
             "feature_insight": {
                 "zh": "销量滞后与滚动均值占SHAP绝对重要性的80.17%；评论特征合计约9.03%，主要提供补充信息而非替代历史销量。",
