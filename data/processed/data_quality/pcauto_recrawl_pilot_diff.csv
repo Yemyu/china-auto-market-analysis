@@ -1,0 +1,541 @@
+﻿series_name,series_id,source_series_id,brand,date,raw_sales,source_sales,source_observation_count,source_value_count,source_identity_match,source_urls,comparison_status,sales_delta
+五菱宏光,4613,sg4613,五菱,2022-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2022-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2022-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2023-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2023-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2024-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2024-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2025-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2025-m12/,source_missing,
+五菱宏光,4613,sg4613,五菱,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2026-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2026-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2026-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2026-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2026-m6/,source_missing,
+五菱宏光,4613,sg4613,五菱,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg4613/y2026-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2022-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2022-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2023-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2023-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2024-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2024-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2025-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2025-m12/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2026-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2026-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2026-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2026-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg9604/y2026-m6/,source_missing,
+五菱宏光S,9604,sg9604,五菱,2026-06-01,0,2215,1,1,True,https://price.pcauto.com.cn/salescar/sg9604/y2026-m6/,raw_zero_source_positive,2215.0
+哪吒AYA,30064,sg30064,哪吒汽车,2022-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2022-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2022-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2023-08-01,5609,5609,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2023-09-01,5225,5225,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2023-10-01,3767,3767,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2023-11-01,126,126,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2023-12-01,8,8,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2023-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-01-01,553,553,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m6/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-02-01,536,536,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m6/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-03-01,1564,1564,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m6/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-04-01,461,461,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m6/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-05-01,462,462,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m6/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-06-01,337,337,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m6/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-07-01,24,24,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-08-01,125,125,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-09-01,1334,1334,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-10-01,1217,1217,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-11-01,259,259,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2024-12-01,49,49,1,1,True,https://price.pcauto.com.cn/salescar/sg30064/y2024-m12/,exact_match,0.0
+哪吒AYA,30064,sg30064,哪吒汽车,2025-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2025-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2025-m12/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2026-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2026-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2026-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2026-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2026-m6/,source_missing,
+哪吒AYA,30064,sg30064,哪吒汽车,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30064/y2026-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2022-01-01,9852,9852,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-02-01,5613,5613,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-03-01,10707,10707,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-04-01,6692,6692,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-05-01,8429,8429,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-06-01,10088,10088,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-07-01,8726,8726,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-08-01,3880,3880,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-09-01,6655,6655,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-10-01,9664,9664,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-11-01,5451,5451,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2022-12-01,6349,6349,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2022-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-01-01,4683,4683,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2023-03-01,14,14,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-04-01,42,42,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-05-01,771,771,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-06-01,936,936,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-07-01,538,538,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-08-01,1169,1169,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-09-01,1458,1458,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-10-01,3342,3342,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-11-01,2281,2281,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2023-12-01,1471,1471,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2023-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-01-01,423,423,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-02-01,339,339,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-03-01,814,814,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-04-01,374,374,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-05-01,418,418,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-06-01,134,134,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-07-01,549,549,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-08-01,636,636,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-09-01,29,29,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-10-01,16,16,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-11-01,13,13,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2024-12-01,4,4,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2024-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2025-01-01,2775,2775,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2025-02-01,3,3,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2025-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2025-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2025-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2025-06-01,10,10,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m6/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2025-07-01,11,11,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2025-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m12/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2025-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m12/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2025-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m12/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2025-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m12/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2025-12-01,3,3,1,1,True,https://price.pcauto.com.cn/salescar/sg26061/y2025-m12/,exact_match,0.0
+奔奔E-Star,26061,sg26061,长安欧尚,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2026-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2026-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2026-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2026-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2026-m6/,source_missing,
+奔奔E-Star,26061,sg26061,长安欧尚,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg26061/y2026-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-03-01,62,62,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-05-01,97,97,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-06-01,125,125,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-07-01,261,261,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-08-01,338,338,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-09-01,340,340,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-10-01,290,290,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-11-01,132,132,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2022-12-01,92,92,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2022-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-01-01,70,70,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-02-01,114,114,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-03-01,260,260,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-04-01,455,455,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-05-01,602,602,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-06-01,618,618,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-07-01,425,425,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-08-01,357,357,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-09-01,510,510,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-10-01,405,405,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-11-01,600,600,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2023-12-01,791,791,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2023-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-01-01,330,330,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-02-01,260,260,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-03-01,390,390,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-04-01,470,470,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-05-01,400,400,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-06-01,350,350,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-07-01,350,350,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-08-01,380,380,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-09-01,380,380,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-10-01,700,700,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-11-01,900,900,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2024-12-01,1092,1092,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2024-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-01-01,200,200,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-02-01,150,150,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-03-01,750,750,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-04-01,450,450,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-05-01,650,650,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-06-01,109,109,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m6/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-07-01,70,70,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-08-01,99,99,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-09-01,30,30,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-10-01,20,20,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-11-01,710,710,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2025-12-01,100,100,1,1,True,https://price.pcauto.com.cn/salescar/sg27551/y2025-m12/,exact_match,0.0
+奥迪Q5 e-tron,27551,sg27551,奥迪,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2026-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2026-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2026-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2026-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2026-m6/,source_missing,
+奥迪Q5 e-tron,27551,sg27551,奥迪,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27551/y2026-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2022-01-01,2542,2542,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m6/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-02-01,1729,1729,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m6/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-03-01,1360,1360,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m6/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-04-01,495,495,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m6/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-05-01,435,435,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m6/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-06-01,448,448,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m6/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-07-01,344,344,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m12/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-08-01,116,116,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m12/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-09-01,31,31,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m12/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-10-01,25,25,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m12/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-11-01,11,11,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m12/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2022-12-01,8,8,1,1,True,https://price.pcauto.com.cn/salescar/sg27201/y2022-m12/,exact_match,0.0
+摩卡,27201,sg27201,魏牌,2023-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2023-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2023-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2024-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2024-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2025-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2025-m12/,source_missing,
+摩卡,27201,sg27201,魏牌,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2026-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2026-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2026-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2026-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2026-m6/,source_missing,
+摩卡,27201,sg27201,魏牌,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg27201/y2026-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2022-01-01,22,22,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-02-01,14,14,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-03-01,18,18,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-04-01,13,13,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-05-01,67,67,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-06-01,74,74,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-07-01,60,60,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-08-01,190,190,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-09-01,153,153,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-10-01,249,249,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-11-01,10,10,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2022-12-01,61,61,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2022-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-01-01,487,487,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-02-01,122,122,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-03-01,961,961,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-04-01,1000,1000,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-05-01,964,964,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-06-01,482,482,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-07-01,3,3,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2023-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2023-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2023-11-01,6,6,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2023-12-01,991,991,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2023-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2024-01-01,27,27,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m6/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2024-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-08-01,245,245,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2024-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2024-12-01,1730,1730,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2024-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2025-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-07-01,44,44,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2025-08-01,480,480,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2025-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m12/,source_missing,
+海马8S,22904,sg22904,海马郑州,2025-11-01,480,480,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2025-12-01,483,483,1,1,True,https://price.pcauto.com.cn/salescar/sg22904/y2025-m12/,exact_match,0.0
+海马8S,22904,sg22904,海马郑州,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2026-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2026-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2026-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2026-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2026-m6/,source_missing,
+海马8S,22904,sg22904,海马郑州,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg22904/y2026-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2022-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2022-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2023-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2023-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2024-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2024-m12/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2025-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2025-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2025-03-01,280,280,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m6/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-04-01,71,71,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m6/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-05-01,326,326,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m6/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-06-01,100,100,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m6/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-07-01,50,50,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m12/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-08-01,50,50,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m12/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-09-01,112,112,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m12/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-10-01,87,87,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m12/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-11-01,149,149,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m12/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2025-12-01,268,268,1,1,True,https://price.pcauto.com.cn/salescar/sg30388/y2025-m12/,exact_match,0.0
+电动MINI ACEMAN,30388,sg30388,MINI,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2026-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2026-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2026-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2026-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2026-m6/,source_missing,
+电动MINI ACEMAN,30388,sg30388,MINI,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30388/y2026-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2022-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2022-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2023-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2023-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2024-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2024-m12/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2025-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2025-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2025-03-01,579,579,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m6/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-04-01,604,604,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m6/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-05-01,1913,1913,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m6/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-06-01,1658,1658,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m6/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-07-01,1707,1707,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m12/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-08-01,645,645,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m12/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-09-01,242,242,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m12/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-10-01,1740,1740,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m12/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-11-01,146,146,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m12/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2025-12-01,298,298,1,1,True,https://price.pcauto.com.cn/salescar/sg30347/y2025-m12/,exact_match,0.0
+电动MINI COOPER,30347,sg30347,MINI,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2026-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2026-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2026-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2026-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2026-m6/,source_missing,
+电动MINI COOPER,30347,sg30347,MINI,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30347/y2026-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2022-12-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2022-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-07-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-08-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-09-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-10-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-11-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m12/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2023-12-01,338,338,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2023-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2024-02-01,1749,1749,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-03-01,4751,4751,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-04-01,3241,3241,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-05-01,4063,4063,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-06-01,4196,4196,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-07-01,2672,2672,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-08-01,3503,3503,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-09-01,3628,3628,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-10-01,3478,3478,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-11-01,3695,3695,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2024-12-01,3201,3201,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2024-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-01-01,2565,2565,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-02-01,1323,1323,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-03-01,3042,3042,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-04-01,2136,2136,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-05-01,1944,1944,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-06-01,2112,2112,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m6/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-07-01,932,932,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-08-01,1193,1193,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-09-01,1895,1895,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-10-01,1649,1649,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-11-01,1338,1338,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2025-12-01,4074,4074,1,1,True,https://price.pcauto.com.cn/salescar/sg30092/y2025-m12/,exact_match,0.0
+长安启源Q05经典,30092,sg30092,长安启源,2026-01-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2026-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2026-02-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2026-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2026-03-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2026-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2026-04-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2026-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2026-05-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2026-m6/,source_missing,
+长安启源Q05经典,30092,sg30092,长安启源,2026-06-01,0,,1,0,True,https://price.pcauto.com.cn/salescar/sg30092/y2026-m6/,source_missing,

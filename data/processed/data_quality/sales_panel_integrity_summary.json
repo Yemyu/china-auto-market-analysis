@@ -26,25 +26,25 @@
     "interpretation": "These fields are deterministic restatements of monthly_sales and cannot independently validate whether a source zero is real."
   },
   "series_risk_scan": {
-    "never_positive_series": 532,
+    "never_positive_series": 531,
     "internal_gap_ge3_series": 29,
     "recent_trailing_cutoff_series": 19,
     "high_volume_cutoff_series": 15,
     "priority_counts": {
       "low": 959,
       "medium": 33,
-      "high": 22,
-      "reviewed_repaired": 2,
+      "high": 21,
+      "reviewed_repaired": 3,
       "reviewed_keep": 1
     }
   },
   "model_cohort_risk": {
     "series": 371,
-    "never_positive_series": 2,
+    "never_positive_series": 1,
     "no_positive_in_training_series": 32,
     "all_zero_raw_test_series": 33,
-    "all_zero_repaired_test_series": 31,
-    "verified_test_sales_delta": 238955
+    "all_zero_repaired_test_series": 30,
+    "verified_test_sales_delta": 241170
   },
   "cohort_construction_finding": "The prior >=24 consecutive-month filter counts padded rows, not positive-sales history. Because every raw series has all 54 calendar rows, all 1,017 series pass that row-continuity test before the configuration join. Rebuild eligibility with lifecycle-aware positive-history rules after source repair.",
   "decision": "Use the full-population scan to prioritize external verification. Do not manually browse all 54,918 rows and do not rebuild the model cohort until critical/high risks are resolved."

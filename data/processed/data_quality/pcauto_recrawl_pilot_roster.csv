@@ -1,0 +1,11 @@
+﻿series_name,series_id,source_series_id,brand,in_model_cohort,verification_priority,risk_score,verification_reason
+长安启源Q05经典,30092,sg30092,长安启源,True,high,135,source page stops before audit period; affects 371-series model cohort; entire repaired test window is zero; positive in 2025 then at least 6 trailing zeros; high-volume history followed by a zero gap
+奥迪Q5 e-tron,27551,sg27551,奥迪,True,high,110,source page stops before audit period; affects 371-series model cohort; entire repaired test window is zero; positive in 2025 then at least 6 trailing zeros
+电动MINI COOPER,30347,sg30347,MINI,True,high,90,affects 371-series model cohort; entire repaired test window is zero; positive in 2025 then at least 6 trailing zeros; high-volume history followed by a zero gap
+海马8S,22904,sg22904,海马郑州,True,high,77,affects 371-series model cohort; entire repaired test window is zero; internal zero run=6 months; positive in 2025 then at least 6 trailing zeros
+奔奔E-Star,26061,sg26061,长安欧尚,True,high,73,affects 371-series model cohort; entire repaired test window is zero; internal zero run=4 months; positive in 2025 then at least 6 trailing zeros
+摩卡,27201,sg27201,魏牌,True,high,70,affects 371-series model cohort; entire repaired test window is zero; high-volume history followed by a zero gap
+五菱宏光,4613,sg4613,五菱,True,high,65,affects 371-series model cohort; no positive sales in entire 54-month panel
+五菱宏光S,9604,sg9604,五菱,False,reviewed_or_not_queued,0,not present in the current external-verification queue
+电动MINI ACEMAN,30388,sg30388,MINI,True,high,65,affects 371-series model cohort; entire repaired test window is zero; positive in 2025 then at least 6 trailing zeros
+哪吒AYA,30064,sg30064,哪吒汽车,False,high,70,previous high-risk review unresolved; entire repaired test window is zero; high-volume history followed by a zero gap

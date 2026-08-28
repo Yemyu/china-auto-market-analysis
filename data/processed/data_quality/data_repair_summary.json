@@ -25,11 +25,11 @@
     "high_2024_then_zero_test_series": 9
   },
   "verified_sales_overlay": {
-    "register_rows": 59,
-    "applied_rows": 59,
-    "affected_series": 2,
-    "sales_delta": 1355272,
-    "remaining_zero_rows": 38697,
+    "register_rows": 60,
+    "applied_rows": 60,
+    "affected_series": 3,
+    "sales_delta": 1357487,
+    "remaining_zero_rows": 38696,
     "remaining_high_2024_then_zero_test_series": 7
   },
   "decision": "Apply only same-source verified corrections through the overlay. Do not mutate the raw snapshot or rerun the headline model until remaining high-priority source and lifecycle risks are resolved."

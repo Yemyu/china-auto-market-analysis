@@ -94,7 +94,7 @@
 25784,五菱730,五菱,MPV,54,0,54,1.0,0,0,0,0.0,0.0,,unmatched,True,True,True,True,False
 28681,五菱佳辰,五菱,MPV,54,51,3,0.05555555555555555,51,45,6,1639.0,2242.9166666666665,五菱佳辰,exact_name,False,False,False,False,False
 4613,五菱宏光,五菱,SUV,54,0,54,1.0,0,0,0,0.0,0.0,五菱宏光,exact_name,True,True,True,True,False
-9604,五菱宏光S,五菱,MPV,54,0,54,1.0,0,0,0,0.0,0.0,五菱宏光S,exact_name,True,True,True,True,False
+9604,五菱宏光S,五菱,MPV,54,1,53,0.9814814814814815,1,0,1,2215.0,0.0,五菱宏光S,exact_name,False,True,True,False,False
 12995,五菱宏光S1,五菱,MPV,54,0,54,1.0,0,0,0,0.0,0.0,,unmatched,True,True,True,True,False
 27762,五菱征程,五菱,MPV,54,54,0,0.0,54,48,6,519.0,1229.4166666666667,五菱征程,exact_name,False,False,False,False,False
 29851,五菱星云,五菱,SUV,54,15,39,0.7222222222222222,14,15,0,0.0,239.08333333333334,五菱星云,exact_name,False,True,False,True,False
