@@ -157,6 +157,10 @@ Test features for the primary experiment are frozen before `2026-01-01`. Rolling
 |---|---|
 | `data_repair_summary.json` | Phase summary for sales zeros and cross-source series mapping |
 | `sales_correction_register.csv` | Reviewable month/source-level sales correction register |
+| `sales_panel_integrity_summary.json` | Full 54,918-row structural, derived-field, and model-cohort audit summary |
+| `sales_series_risk_audit.csv` | Positive-history, zero-window, and model-impact audit for all 1,017 series |
+| `sales_manual_verification_queue.csv` | 57 external-verification targets ranked by severity and model impact |
+| `sales_cutoff_cluster_audit.csv` | Clusters of last-positive months for detecting batch source cutoffs |
 | `sales_zero_audit.csv` | Per-series positive-month coverage, positive runs, test zeros, and audit flags |
 | `sales_zero_audit_repaired.csv` | Like-for-like zero audit after verified corrections only |
 | `sales_zero_status_register.csv` | Source-gap, discontinuation, and unresolved labels for high-risk zeros |
@@ -168,6 +172,10 @@ Phase one accepts only exact names and unambiguous one-to-one normalized matches
 Phase two classifies the nine series with high 2024 volume and an all-zero 2026 test window. Model Y and Model 3 are confirmed same-source snapshot gaps: the overlay repairs 12 January–June 2026 rows and restores 238,955 units. The iCAR 03 test zeros are supported by a discontinued status on the same source. The other six series remain unchanged and pending manual verification; the pipeline neither infers their state nor merges them into differently named series. Raw `monthly_sales.csv` is never overwritten, and the repair helper fails closed on duplicate keys or an original-value mismatch.
 
 The June 2024–December 2025 history gaps for Model Y and Model 3 are not yet complete. The overlay is therefore an audit artifact, not authorization to retrain or revise the headline metric. The existing 38.64% remains a frozen result on the pre-repair snapshot and must be re-evaluated from scratch after the history is complete.
+
+Phase three scans all 54,918 rows and 1,017 series locally. Hard structural checks find no duplicate series-month keys, negative sales, name/ID conflicts, or missing calendar rows, but this does not establish source truth. Annual cumulative sales, brand-month totals, positive-series counts, zero labels, and rank availability all reproduce `monthly_sales` deterministically and therefore cannot serve as independent validation. Risk ranking narrows external review to 57 series: two critical, 22 high, and 33 medium priority, with model-cohort cases first.
+
+The scan also confirms that the previous “at least 24 consecutive months” rule counts padded panel rows rather than positive-sales history. Every one of the 1,017 series has the same 54 rows from January 2022 through June 2026, so every series passes before the configuration join. The current 371-series cohort contains two series with no positive sales anywhere and 32 with no positive sales before the training cutoff. Eligibility must be rebuilt with lifecycle-aware positive-history rules after source gaps are resolved; rows should not be deleted and models rerun prematurely.
 
 ### Sales forecasting: `processed/forecast/`
 

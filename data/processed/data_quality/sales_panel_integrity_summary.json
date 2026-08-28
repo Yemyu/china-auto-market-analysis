@@ -1,0 +1,51 @@
+{
+  "schema_version": "v1",
+  "population": {
+    "rows": 54918,
+    "series": 1017,
+    "months": 54,
+    "date_start": "2022-01-01",
+    "date_end": "2026-06-01"
+  },
+  "hard_integrity_checks": {
+    "duplicate_series_month_keys": 0,
+    "negative_sales_rows": 0,
+    "non_54_month_series": 0,
+    "series_names_with_multiple_ids": 0,
+    "series_ids_with_multiple_names": 0
+  },
+  "derived_field_checks": {
+    "series_year_groups": 5085,
+    "annual_cumulative_exact_groups": 5085,
+    "annual_cumulative_constant_groups": 5085,
+    "brand_month_groups": 8748,
+    "brand_total_exact_groups": 8748,
+    "brand_positive_count_exact_groups": 8748,
+    "zero_label_exact_rows": 54918,
+    "rank_presence_exact_rows": 54918,
+    "interpretation": "These fields are deterministic restatements of monthly_sales and cannot independently validate whether a source zero is real."
+  },
+  "series_risk_scan": {
+    "never_positive_series": 532,
+    "internal_gap_ge3_series": 31,
+    "recent_trailing_cutoff_series": 19,
+    "high_volume_cutoff_series": 17,
+    "priority_counts": {
+      "low": 959,
+      "medium": 33,
+      "high": 22,
+      "critical": 2,
+      "reviewed_keep": 1
+    }
+  },
+  "model_cohort_risk": {
+    "series": 371,
+    "never_positive_series": 2,
+    "no_positive_in_training_series": 32,
+    "all_zero_raw_test_series": 33,
+    "all_zero_repaired_test_series": 31,
+    "verified_test_sales_delta": 238955
+  },
+  "cohort_construction_finding": "The prior >=24 consecutive-month filter counts padded rows, not positive-sales history. Because every raw series has all 54 calendar rows, all 1,017 series pass that row-continuity test before the configuration join. Rebuild eligibility with lifecycle-aware positive-history rules after source repair.",
+  "decision": "Use the full-population scan to prioritize external verification. Do not manually browse all 54,918 rows and do not rebuild the model cohort until critical/high risks are resolved."
+}
