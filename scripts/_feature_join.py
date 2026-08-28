@@ -5,6 +5,8 @@ import os
 import numpy as np
 import pandas as pd
 
+from _series_mapping import build_series_name_mapping
+
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FEAT = os.path.join(BASE, "data", "raw", "feature.csv")
 
@@ -38,21 +40,24 @@ def _load_cfg_frame():
 def join_cfg(sm):
     """Join by series and year, falling back only to an earlier specification."""
     fk = _load_cfg_frame()
-    fs = set(fk["series_name"])
-    sm = sm[sm["series_name"].isin(fs)].copy()
-    sm = sm.merge(fk, on=["series_name", "year"], how="left")
+    mapping = build_series_name_mapping(sm["series_name"], fk["series_name"])
+    name_map = mapping.set_index("sales_series_name")["config_series_name"]
+    sm = sm[sm["series_name"].isin(name_map.index)].copy()
+    sm["config_series_name"] = sm["series_name"].map(name_map)
+    fk = fk.rename(columns={"series_name": "config_series_name"})
+    sm = sm.merge(fk, on=["config_series_name", "year"], how="left")
     miss = sm[CFG_COLS[0]].isna()
     if miss.any():
         # 每个车系: 年份 -> 配置元组, 仅保留 <= 行年份的可用年份
         cfg_by_series = {}
-        for s, g in fk.groupby("series_name"):
+        for s, g in fk.groupby("config_series_name"):
             cfg_by_series[s] = {
                 float(y): tup
                 for y, tup in zip(g["year"].astype(float),
                                   g[CFG_COLS].itertuples(index=False, name=None))
             }
         for idx in sm.index[miss]:
-            s, y = sm.at[idx, "series_name"], float(sm.at[idx, "year"])
+            s, y = sm.at[idx, "config_series_name"], float(sm.at[idx, "year"])
             if s not in cfg_by_series:
                 continue
             cand = [yy for yy in cfg_by_series[s] if yy <= y]
@@ -61,4 +66,5 @@ def join_cfg(sm):
             for j, c in enumerate(CFG_COLS):
                 sm.at[idx, c] = cfg_by_series[s][max(cand)][j]
     sm = sm[sm[CFG_COLS[0]].notna()].copy()
+    sm = sm.drop(columns="config_series_name")
     return sm

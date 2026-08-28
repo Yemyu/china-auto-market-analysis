@@ -1,0 +1,1405 @@
+﻿status,match_method,normalized_key,sales_series_name,series_id,source_series_id,brand,config_series_name,config_series_id,brand_name
+matched,exact_name,aionrt,AION RT,30604.0,sg30604,埃安,AION RT,24800,埃安
+matched,exact_name,aions,AION S,23867.0,sg23867,埃安,AION S,3101,埃安
+matched,exact_name,aionut,AION UT,30636.0,sg30636,埃安,AION UT,25014,埃安
+matched,exact_name,eo羿欧,EO 羿欧,30870.0,sg30870,现代,EO 羿欧,25427,现代
+matched,exact_name,evos,EVOS,27583.0,sg27583,福特,EVOS,sg27583,福特
+matched,exact_name,id4crozz,ID.4 CROZZ,25600.0,sg25600,大众,ID.4 CROZZ,4586,大众
+matched,exact_name,id4x,ID.4 X,26993.0,sg26993,大众,ID.4 X,4258,大众
+matched,exact_name,id6crozz,ID.6 CROZZ,27362.0,sg27362,大众,ID.6 CROZZ,sg27362,大众
+matched,exact_name,iq傲歌,IQ傲歌,30049.0,sg30049,凯迪拉克,IQ傲歌,9186,凯迪拉克
+matched,exact_name,iq锐歌,IQ锐歌,28281.0,sg28281,凯迪拉克,IQ锐歌,5358,凯迪拉克
+matched,exact_name,mg4,MG4,28701.0,sg28701,MG名爵,MG4,sg28701,MG名爵
+matched,exact_name,mg6,MG6,3686.0,sg3686,MG名爵,MG6,sg3686,MG名爵
+matched,exact_name,mg7,MG7,1983.0,sg1983,MG名爵,MG7,sg1983,MG名爵
+matched,exact_name,model3,Model 3,24824.0,sg24824,特斯拉,Model 3,3762,特斯拉
+matched,exact_name,modely,Model Y,26651.0,sg26651,特斯拉,Model Y,4363,特斯拉
+matched,exact_name,pathfinder探陆,PATHFINDER探陆,30130.0,sg30130,日产,PATHFINDER探陆,sg30130,日产
+matched,exact_name,polestar4,Polestar 4,29652.0,sg29652,Polestar极星,Polestar 4,5832,Polestar极星
+matched,exact_name,qq冰淇淋,QQ冰淇淋,27822.0,sg27822,奇瑞新能源,QQ冰淇淋,sg27822,奇瑞新能源
+matched,exact_name,rav4荣放,RAV4荣放,3715.0,sg3715,丰田,RAV4荣放,546,丰田
+matched,exact_name,troc探歌,T-ROC探歌,22663.0,sg22663,大众,T-ROC探歌,sg22663,大众
+matched,exact_name,eπ007,eπ007,30207.0,sg30207,东风奕派,eπ007,sg30207,东风奕派
+matched,exact_name,e爱丽舍,e爱丽舍,26592.0,sg26592,东风富康,e爱丽舍,4391,东风富康
+matched,exact_name,firefly萤火虫,firefly萤火虫,30673.0,sg30673,firefly萤火虫,firefly萤火虫,25116,firefly萤火虫
+matched,exact_name,icar03,iCAR 03,29436.0,sg29436,iCAR,iCAR 03,sg29436,iCAR
+matched,exact_name,世纪,世纪,29236.0,sg29236,别克,世纪,5935,别克
+matched,exact_name,东风本田s7,东风本田S7,30424.0,sg30424,本田,东风本田S7,10128,本田
+matched,exact_name,丰田bz3,丰田bZ3,29117.0,sg29117,丰田,丰田bZ3,6126,丰田
+matched,exact_name,丰田bz5,丰田bZ5,30455.0,sg30455,丰田,丰田bZ5,25314,丰田
+matched,exact_name,五菱佳辰,五菱佳辰,28681.0,sg28681,五菱,五菱佳辰,sg28681,五菱汽车
+matched,exact_name,五菱宏光,五菱宏光,4613.0,sg4613,五菱,五菱宏光,sg4613,五菱汽车
+matched,exact_name,五菱宏光s,五菱宏光S,9604.0,sg9604,五菱,五菱宏光S,sg9604,五菱
+matched,exact_name,五菱征程,五菱征程,27762.0,sg27762,五菱,五菱征程,sg27762,五菱汽车
+matched,exact_name,五菱星云,五菱星云,29851.0,sg29851,五菱,五菱星云,sg29851,五菱汽车
+matched,exact_name,五菱星光,五菱星光,30093.0,sg30093,五菱,五菱星光,sg30093,五菱
+matched,exact_name,五菱星驰,五菱星驰,28864.0,sg28864,五菱,五菱星驰,sg28864,五菱汽车
+matched,exact_name,亚洲狮,亚洲狮,27042.0,sg27042,丰田,亚洲狮,sg27042,丰田
+matched,exact_name,亚洲龙,亚洲龙,23627.0,sg23627,丰田,亚洲龙,3068,丰田
+matched,exact_name,享域,享域,23869.0,sg23869,本田,享域,sg23869,本田
+matched,exact_name,伊兰特,伊兰特,2463.0,sg2463,现代,伊兰特,1310,现代
+matched,exact_name,传祺e8新能源,传祺E8新能源,30061.0,sg30061,广汽传祺,传祺E8新能源,sg30061,广汽传祺
+matched,exact_name,传祺ga8,传祺GA8,12513.0,sg12513,广汽传祺,传祺GA8,sg12513,广汽传祺
+matched,exact_name,传祺m6,传祺M6,22683.0,sg22683,广汽传祺,传祺M6,2832,广汽传祺
+matched,exact_name,传祺m8,传祺M8,4470.0,sg4470,广汽传祺,传祺M8,1794,广汽传祺
+matched,exact_name,元plus,元PLUS,27808.0,sg27808,比亚迪,元PLUS,5248,比亚迪
+matched,exact_name,元up,元UP,30301.0,sg30301,比亚迪,元UP,9689,比亚迪
+matched,exact_name,冠道,冠道,14252.0,sg14252,本田,冠道,292,本田
+matched,exact_name,凌宝box,凌宝BOX,26263.0,sg26263,凌宝汽车,凌宝BOX,4503,凌宝汽车
+matched,exact_name,凌尚,凌尚,27023.0,sg27023,丰田,凌尚,sg27023,丰田
+matched,exact_name,凌放harrier,凌放HARRIER,27803.0,sg27803,丰田,凌放HARRIER,sg27803,丰田
+matched,exact_name,凌渡,凌渡,10891.0,sg10891,大众,凌渡,397,大众
+matched,exact_name,凡尔赛c5x,凡尔赛C5 X,27461.0,sg27461,雪铁龙,凡尔赛C5 X,5048,雪铁龙
+matched,exact_name,凯威德,凯威德,31132.0,sg31132,凯迪拉克,凯威德,25882,凯迪拉克
+matched,exact_name,凯美瑞,凯美瑞,4550.0,sg4550,丰田,凯美瑞,535,丰田
+matched,exact_name,凯翼拾月,凯翼拾月,28972.0,sg28972,凯翼,凯翼拾月,sg28972,凯翼
+matched,exact_name,凯迪拉克ct5,凯迪拉克CT5,24885.0,sg24885,凯迪拉克,凯迪拉克CT5,3736,凯迪拉克
+matched,exact_name,凯迪拉克xt5,凯迪拉克XT5,13635.0,sg13635,凯迪拉克,凯迪拉克XT5,861,凯迪拉克
+matched,exact_name,凯迪拉克xt6,凯迪拉克XT6,24164.0,sg24164,凯迪拉克,凯迪拉克XT6,3164,凯迪拉克
+matched,exact_name,别克e4,别克E4,29443.0,sg29443,别克,别克E4,sg29443,别克
+matched,exact_name,别克gl6,别克GL6,13838.0,sg13838,别克,别克GL6,sg13838,别克
+matched,exact_name,别克gl8,别克GL8,106.0,sg106,别克,别克GL8,353,别克
+matched,exact_name,别克gl8新能源,别克GL8新能源,30413.0,sg30413,别克,别克GL8新能源,sg30413,别克
+matched,exact_name,勇士,勇士,4573.0,sg4573,北汽制造,勇士,sg4573,北汽制造
+matched,exact_name,北京eu5,北京EU5,22795.0,sg22795,北京汽车,北京EU5,sg22795,北京汽车
+matched,exact_name,北京现代ix35,北京现代ix35,4431.0,sg4431,现代,北京现代ix35,sg4431,现代
+matched,exact_name,博越rev,博越REV,31178.0,sg31178,吉利汽车,博越REV,25577,吉利汽车
+matched,exact_name,卡罗拉,卡罗拉,2734.0,sg2734,丰田,卡罗拉,542,丰田
+matched,exact_name,卡罗拉双擎e+,卡罗拉双擎E+,13350.0,sg13350,丰田,卡罗拉双擎E+,sg13350,丰田
+matched,exact_name,卡罗拉锐放,卡罗拉锐放,28123.0,sg28123,丰田,卡罗拉锐放,5382,丰田
+matched,exact_name,合创a06,合创A06,28425.0,sg28425,合创汽车,合创A06,sg28425,合创汽车
+matched,exact_name,吉利icon,吉利ICON,22969.0,sg22969,吉利汽车,吉利ICON,2880,吉利汽车
+matched,exact_name,吉利熊猫,吉利熊猫,29374.0,sg29374,吉利银河,吉利熊猫,sg29374,吉利银河
+matched,exact_name,君威,君威,3543.0,sg3543,别克,君威,348,别克
+matched,exact_name,君越,君越,3745.0,sg3745,别克,君越,347,别克
+matched,exact_name,启辰d60,启辰D60,21914.0,sg21914,启辰,启辰D60,1628,启辰
+matched,exact_name,启辰t60,启辰T60,23313.0,sg23313,启辰,启辰T60,sg23313,启辰
+matched,exact_name,唐新能源,唐新能源,9847.0,sg9847,比亚迪,唐新能源,sg9847,比亚迪
+matched,exact_name,嘉华,嘉华,651.0,sg651,起亚,嘉华,1126,起亚
+matched,exact_name,型格,型格,28005.0,sg28005,本田,型格,5340,本田
+matched,exact_name,埃尚,埃尚,30990.0,sg30990,埃尚,埃尚,25720,埃尚
+matched,exact_name,夏,夏,30571.0,sg30571,比亚迪,夏,24597,比亚迪
+matched,exact_name,大众cc,大众CC,4517.0,sg4517,大众,大众CC,416,大众
+matched,exact_name,大众id3,大众ID.3,25599.0,sg25599,大众,大众ID.3,5217,大众
+matched,exact_name,大家7,大家7,29642.0,sg29642,大通,大家7,sg29642,大通
+matched,exact_name,大家9,大家9,27431.0,sg27431,大通,大家9,sg27431,大通
+matched,exact_name,大通g10,大通G10,9312.0,sg9312,大通,大通G10,1211,大通
+matched,exact_name,大通g50,大通G50,22554.0,sg22554,大通,大通G50,2984,大通
+matched,exact_name,大通g70,大通G70,30056.0,sg30056,大通,大通G70,9188,大通
+matched,exact_name,大通g90,大通G90,28271.0,sg28271,大通,大通G90,5438,大通
+matched,exact_name,天籁,天籁,3195.0,sg3195,日产,天籁,1147,日产
+matched,exact_name,奇骏,奇骏,3384.0,sg3384,日产,奇骏,1151,日产
+matched,exact_name,奔奔estar,奔奔E-Star,26061.0,sg26061,长安欧尚,奔奔E-Star,sg26061,长安欧尚
+matched,exact_name,奔腾小马,奔腾小马,29713.0,sg29713,奔腾,奔腾小马,8956,奔腾
+matched,exact_name,奔驰a级,奔驰A级,22951.0,sg22951,奔驰,奔驰A级,2913,奔驰
+matched,exact_name,奔驰c级,奔驰C级,3178.0,sg3178,奔驰,奔驰C级,212,奔驰
+matched,exact_name,奔驰e级,奔驰E级,1603.0,sg1603,奔驰,奔驰E级,214,奔驰
+matched,exact_name,奔驰glb,奔驰GLB,24905.0,sg24905,奔驰,奔驰GLB,3928,奔驰
+matched,exact_name,奔驰glc,奔驰GLC,12975.0,sg12975,奔驰,奔驰GLC,216,奔驰
+matched,exact_name,奔驰v级,奔驰V级,13360.0,sg13360,奔驰,奔驰V级,245,奔驰
+matched,exact_name,奕炫,奕炫,24417.0,sg24417,东风风神,奕炫,3365,东风风神
+matched,exact_name,奕跑,奕跑,22943.0,sg22943,起亚,奕跑,2890,起亚
+matched,exact_name,奥德赛,奥德赛,3565.0,sg3565,本田,奥德赛,291,本田
+matched,exact_name,奥迪a3,奥迪A3,9550.0,sg9550,奥迪,奥迪A3,95,奥迪
+matched,exact_name,奥迪a4l,奥迪A4L,3524.0,sg3524,奥迪,奥迪A4L,96,奥迪
+matched,exact_name,奥迪a5l,奥迪A5L,30632.0,sg30632,奥迪,奥迪A5L,24521,奥迪
+matched,exact_name,奥迪a5lsportback,奥迪A5L Sportback,30599.0,sg30599,奥迪,奥迪A5L Sportback,24944,奥迪
+matched,exact_name,奥迪a6l,奥迪A6L,4313.0,sg4313,奥迪,奥迪A6L,99,奥迪
+matched,exact_name,奥迪a6letron,奥迪A6L e-tron,21448.0,sg21448,奥迪,奥迪A6L e-tron,25413,奥迪
+matched,exact_name,奥迪a7l,奥迪A7L,25801.0,sg25801,奥迪,奥迪A7L,4302,奥迪
+matched,exact_name,奥迪e5sportback,奥迪E5 Sportback,30661.0,sg30661,奥迪AUDI,奥迪E5 Sportback,25058,奥迪AUDI
+matched,exact_name,奥迪q2l,奥迪Q2L,22543.0,sg22543,奥迪,奥迪Q2L,2963,奥迪
+matched,exact_name,奥迪q3,奥迪Q3,8670.0,sg8670,奥迪,奥迪Q3,100,奥迪
+matched,exact_name,奥迪q3sportback,奥迪Q3 Sportback,26902.0,sg26902,奥迪,奥迪Q3 Sportback,4990,奥迪
+matched,exact_name,奥迪q4etron,奥迪Q4 e-tron,28384.0,sg28384,奥迪,奥迪Q4 e-tron,4334,奥迪
+matched,exact_name,奥迪q5etron,奥迪Q5 e-tron,27551.0,sg27551,奥迪,奥迪Q5 e-tron,5002,奥迪
+matched,exact_name,奥迪q5l,奥迪Q5L,23054.0,sg23054,奥迪,奥迪Q5L,2916,奥迪
+matched,exact_name,奥迪q5lsportback,奥迪Q5L Sportback,27003.0,sg27003,奥迪,奥迪Q5L Sportback,4989,奥迪
+matched,exact_name,奥迪q6lsportbacketron,奥迪Q6L Sportback e-tron,30652.0,sg30652,奥迪,奥迪Q6L Sportback e-tron,25079,奥迪
+matched,exact_name,奥迪q6letron,奥迪Q6L e-tron,30431.0,sg30431,奥迪,奥迪Q6L e-tron,9440,奥迪
+matched,exact_name,威兰达,威兰达,25490.0,sg25490,丰田,威兰达,4172,丰田
+matched,exact_name,威朗,威朗,12381.0,sg12381,别克,威朗,345,别克
+matched,exact_name,威然,威然,25419.0,sg25419,大众,威然,4160,大众
+matched,exact_name,威霆,威霆,4560.0,sg4560,奔驰,威霆,244,奔驰
+matched,exact_name,威飒,威飒,28006.0,sg28006,丰田,威飒,5339,丰田
+matched,exact_name,宋lev,宋L EV,29661.0,sg29661,比亚迪,宋L EV,8979,比亚迪
+matched,exact_name,宋plus新能源,宋PLUS新能源,26406.0,sg26406,比亚迪,宋PLUS新能源,sg26406,比亚迪
+matched,exact_name,宋pro新能源,宋Pro新能源,24638.0,sg24638,比亚迪,宋Pro新能源,sg24638,比亚迪
+matched,exact_name,宏光miniev,宏光MINIEV,26211.0,sg26211,五菱,宏光MINIEV,sg26211,五菱
+matched,exact_name,宝来,宝来,3286.0,sg3286,大众,宝来,409,大众
+matched,exact_name,宝马1系,宝马1系,20583.0,sg20583,宝马,宝马1系,sg20583,宝马
+matched,exact_name,宝马2系,宝马2系,30547.0,sg30547,宝马,宝马2系,24609,宝马
+matched,exact_name,宝马3系,宝马3系,424.0,sg424,宝马,宝马3系,145,宝马
+matched,exact_name,宝马5系,宝马5系,441.0,sg441,宝马,宝马5系,146,宝马
+matched,exact_name,宝马x1,宝马X1,7209.0,sg7209,宝马,宝马X1,148,宝马
+matched,exact_name,宝马x2,宝马X2,24785.0,sg24785,宝马,宝马X2,sg24785,宝马
+matched,exact_name,宝马x3,宝马X3,11244.0,sg11244,宝马,宝马X3,2812,宝马
+matched,exact_name,宝马x5,宝马X5,28452.0,sg28452,宝马,宝马X5,5273,宝马
+matched,exact_name,宝马i3,宝马i3,28462.0,sg28462,宝马,宝马i3,4838,宝马
+matched,exact_name,宝马i5,宝马i5,30081.0,sg30081,宝马,宝马i5,9224,宝马
+matched,exact_name,宝马ix1,宝马iX1,29701.0,sg29701,宝马,宝马iX1,8942,宝马
+matched,exact_name,宝马ix3,宝马iX3,26403.0,sg26403,宝马,宝马iX3,sg26403,宝马
+matched,exact_name,宝骏kiwiev,宝骏KiWi EV,27591.0,sg27591,宝骏,宝骏KiWi EV,sg27591,宝骏
+matched,exact_name,小米su7,小米SU7,29425.0,sg29425,小米汽车,小米SU7,6187,小米汽车
+matched,exact_name,小虎fev,小虎FEV,27422.0,sg27422,小虎,小虎FEV,5014,小虎
+matched,exact_name,小鹏g3,小鹏G3,22263.0,sg22263,小鹏,小鹏G3,sg22263,小鹏
+matched,exact_name,小鹏monam03,小鹏MONA M03,30174.0,sg30174,小鹏,小鹏MONA M03,sg30174,小鹏汽车
+matched,exact_name,小鹏p5,小鹏P5,27442.0,sg27442,小鹏,小鹏P5,sg27442,小鹏
+matched,exact_name,小鹏p7,小鹏P7,24513.0,sg24513,小鹏,小鹏P7,sg24513,小鹏汽车
+matched,exact_name,小鹏p7+,小鹏P7+,30372.0,sg30372,小鹏,小鹏P7+,sg30372,小鹏汽车
+matched,exact_name,小鹏x9,小鹏X9,29369.0,sg29369,小鹏,小鹏X9,sg29369,小鹏汽车
+matched,exact_name,岚图梦想家,岚图梦想家,28371.0,sg28371,岚图汽车,岚图梦想家,sg28371,岚图汽车
+matched,exact_name,岚图追光l,岚图追光L,31015.0,sg31015,岚图汽车,岚图追光L,sg31015,岚图
+matched,exact_name,帕萨特,帕萨特,99.0,sg99,大众,帕萨特,398,大众
+matched,exact_name,帕萨特新能源,帕萨特新能源,23463.0,sg23463,大众,帕萨特新能源,sg23463,大众
+matched,exact_name,广汽本田p7,广汽本田P7,30423.0,sg30423,本田,广汽本田P7,10127,本田
+matched,exact_name,库斯途,库斯途,27451.0,sg27451,现代,库斯途,5034,现代
+matched,exact_name,影豹,影豹,27011.0,sg27011,广汽传祺,影豹,4787,广汽传祺
+matched,exact_name,微蓝6,微蓝6,22833.0,sg22833,别克,微蓝6,3359,别克
+matched,exact_name,思域,思域,1726.0,sg1726,本田,思域,276,本田
+matched,exact_name,悦意03,悦意03,30627.0,sg30627,奔腾,悦意03,24919,奔腾
+matched,exact_name,悦意07,悦意07,30706.0,sg30706,奔腾,悦意07,25138,奔腾
+matched,exact_name,护卫舰07,护卫舰07,27552.0,sg27552,比亚迪,护卫舰07,sg27552,比亚迪
+matched,exact_name,捷豹xel,捷豹XEL,22065.0,sg22065,捷豹,捷豹XEL,sg22065,捷豹
+matched,exact_name,捷豹xfl,捷豹XFL,14113.0,sg14113,捷豹,捷豹XFL,798,捷豹
+matched,exact_name,捷达va3,捷达VA3,24304.0,sg24304,捷达,捷达VA3,3172,捷达
+matched,exact_name,捷达va7,捷达VA7,30642.0,sg30642,捷达,捷达VA7,24893,捷达
+matched,exact_name,探岳,探岳,22813.0,sg22813,大众,探岳,2835,大众
+matched,exact_name,探岳x,探岳X,24604.0,sg24604,大众,探岳X,4425,大众
+matched,exact_name,探界者,探界者,21013.0,sg21013,雪佛兰,探界者,1359,雪佛兰
+matched,exact_name,探险者,探险者,25901.0,sg25901,福特,探险者,4284,福特
+matched,exact_name,揽境,揽境,24603.0,sg24603,大众,揽境,3437,大众
+matched,exact_name,揽巡,揽巡,28793.0,sg28793,大众,揽巡,5929,大众
+matched,exact_name,摩卡,摩卡,27201.0,sg27201,魏牌,摩卡,sg27201,魏牌
+matched,exact_name,新帝豪,新帝豪,11262.0,sg11262,吉利汽车,新帝豪,sg11262,吉利汽车
+matched,exact_name,日产n6,日产N6,30862.0,sg30862,日产,日产N6,25636,日产
+matched,exact_name,日产n7,日产N7,30655.0,sg30655,日产,日产N7,25094,日产
+matched,exact_name,日产nx8,日产NX8,31118.0,sg31118,日产,日产NX8,25874,日产
+matched,exact_name,昂科威,昂科威,11081.0,sg11081,别克,昂科威,352,别克
+matched,exact_name,昊铂gt,昊铂GT,29362.0,sg29362,昊铂,昊铂GT,sg29362,昊铂
+matched,exact_name,星海s7,星海S7,30393.0,sg30393,东风风行,星海S7,9958,东风风行
+matched,exact_name,星海t5,星海T5,31151.0,sg31151,东风风行,星海T5,25831,东风风行
+matched,exact_name,星海v9,星海V9,29351.0,sg29351,东风风行,星海V9,9374,东风风行
+matched,exact_name,星瑞,星瑞,24636.0,sg24636,吉利汽车,星瑞,3476,吉利汽车
+matched,exact_name,星瑞l,星瑞L,30198.0,sg30198,吉利汽车,星瑞L,sg30198,吉利汽车
+matched,exact_name,星越l,星越L,27132.0,sg27132,吉利汽车,星越L,4857,吉利汽车
+matched,exact_name,星越l智擎,星越L 智擎,30206.0,sg30206,吉利汽车,星越L 智擎,sg30206,吉利汽车
+matched,exact_name,星途es,星途ES,29521.0,sg29521,星途,星途ES,8965,星途
+matched,exact_name,普拉多,普拉多,411.0,sg411,丰田,普拉多,547,丰田
+matched,exact_name,智己l6,智己L6,30356.0,sg30356,智己汽车,智己L6,9660,智己汽车
+matched,exact_name,智己l7,智己L7,27191.0,sg27191,智己汽车,智己L7,4870,智己汽车
+matched,exact_name,智跑,智跑,4553.0,sg4553,起亚,智跑,1123,起亚
+matched,exact_name,曹操60,曹操60,29541.0,sg29541,曹操汽车,曹操60,8930,曹操汽车
+matched,exact_name,朗逸,朗逸,3225.0,sg3225,大众,朗逸,393,大众
+matched,exact_name,本田crv,本田CR-V,631.0,sg631,本田,本田CR-V,280,本田
+matched,exact_name,本田hrv,本田HR-V,28953.0,sg28953,本田,本田HR-V,6036,本田
+matched,exact_name,本田urv,本田UR-V,20934.0,sg20934,本田,本田UR-V,281,本田
+matched,exact_name,本田xrv,本田XR-V,11382.0,sg11382,本田,本田XR-V,279,本田
+matched,exact_name,极氪001,极氪001,27421.0,sg27421,极氪,极氪001,sg27421,极氪
+matched,exact_name,极氪009,极氪009,28991.0,sg28991,极氪,极氪009,sg28991,极氪
+matched,exact_name,极狐阿尔法s5,极狐 阿尔法S5,30094.0,sg30094,ARCFOX极狐,极狐 阿尔法S5,9179,ARCFOX极狐
+matched,exact_name,极狐考拉,极狐考拉,29431.0,sg29431,ARCFOX极狐,极狐考拉,sg29431,ARCFOX极狐
+matched,exact_name,林肯z,林肯Z,28261.0,sg28261,林肯,林肯Z,5440,林肯
+matched,exact_name,枫叶60s,枫叶60s,28601.0,sg28601,睿蓝汽车,枫叶60s,5151,睿蓝汽车
+matched,exact_name,标致4008,标致4008,20545.0,sg20545,标致,标致4008,340,标致
+matched,exact_name,标致408,标致408,4447.0,sg4447,标致,标致408,336,标致
+matched,exact_name,标致408x,标致408X,28881.0,sg28881,标致,标致408X,5992,标致
+matched,exact_name,标致5008,标致5008,21224.0,sg21224,标致,标致5008,341,标致
+matched,exact_name,标致508,标致508,4715.0,sg4715,标致,标致508,sg4715,标致
+matched,exact_name,格瑞维亚,格瑞维亚,28711.0,sg28711,丰田,格瑞维亚,5858,丰田
+matched,exact_name,欧拉好猫,欧拉好猫,26572.0,sg26572,欧拉,欧拉好猫,4635,欧拉
+matched,exact_name,欧拉闪电猫,欧拉闪电猫,27476.0,sg27476,欧拉,欧拉闪电猫,5053,欧拉
+matched,exact_name,欧诺s,欧诺S,7739.0,sg7739,长安凯程,欧诺S,1475,长安凯程
+matched,exact_name,比亚迪m9,比亚迪M9,30914.0,sg30914,比亚迪,比亚迪M9,25579,比亚迪
+matched,exact_name,比亚迪e7,比亚迪e7,30728.0,sg30728,比亚迪,比亚迪e7,25188,比亚迪
+matched,exact_name,比亚迪e9,比亚迪e9,27035.0,sg27035,比亚迪,比亚迪e9,4797,比亚迪
+matched,exact_name,汉,汉,25611.0,sg25611,比亚迪,汉,sg25611,比亚迪
+matched,exact_name,江淮a5plus,江淮A5 PLUS,29951.0,sg29951,江淮,江淮A5 PLUS,sg29951,江淮汽车
+matched,exact_name,江淮qxphev,江淮QX PHEV,30117.0,sg30117,江淮,江淮QX PHEV,sg30117,江淮汽车
+matched,exact_name,沃兰多,沃兰多,23253.0,sg23253,雪佛兰,沃兰多,sg23253,雪佛兰
+matched,exact_name,沃尔沃c40,沃尔沃C40,28671.0,sg28671,沃尔沃,沃尔沃C40,sg28671,沃尔沃
+matched,exact_name,沃尔沃em90,沃尔沃EM90,30196.0,sg30196,沃尔沃,沃尔沃EM90,9262,沃尔沃
+matched,exact_name,沃尔沃es90,沃尔沃ES90,31183.0,sg31183,沃尔沃,沃尔沃ES90,25226,沃尔沃
+matched,exact_name,沃尔沃s60,沃尔沃S60,9767.0,sg9767,沃尔沃,沃尔沃S60,1279,沃尔沃
+matched,exact_name,沃尔沃s90,沃尔沃S90,20543.0,sg20543,沃尔沃,沃尔沃S90,1281,沃尔沃
+matched,exact_name,沃尔沃s90新能源,沃尔沃S90新能源,22513.0,sg22513,沃尔沃,沃尔沃S90新能源,sg22513,沃尔沃
+matched,exact_name,海狮05ev,海狮05EV,30704.0,sg30704,比亚迪,海狮05EV,25139,比亚迪
+matched,exact_name,海狮06ev,海狮06EV,30836.0,sg30836,比亚迪,海狮06EV,25400,比亚迪
+matched,exact_name,海狮07ev,海狮07EV,30273.0,sg30273,比亚迪,海狮07EV,6068,比亚迪
+matched,exact_name,海豚,海豚,27496.0,sg27496,比亚迪,海豚,5008,比亚迪
+matched,exact_name,海豹,海豹,28011.0,sg28011,比亚迪,海豹,5579,比亚迪
+matched,exact_name,海豹06dmi,海豹06DM-i,30374.0,sg30374,比亚迪,海豹06DM-i,sg30374,比亚迪
+matched,exact_name,海豹06ev,海豹06EV,30794.0,sg30794,比亚迪,海豹06EV,25238,比亚迪
+matched,exact_name,海豹06gt,海豹06GT,30439.0,sg30439,比亚迪,海豹06GT,10205,比亚迪
+matched,exact_name,海豹07dmi,海豹07DM-i,29582.0,sg29582,比亚迪,海豹07DM-i,sg29582,比亚迪
+matched,exact_name,海豹07ev,海豹07EV,31123.0,sg31123,比亚迪,海豹07EV,24588,比亚迪
+matched,exact_name,海马8s,海马8S,22904.0,sg22904,海马郑州,海马8S,sg22904,海马郑州
+matched,exact_name,海马injoy,海马INJOY,30727.0,sg30727,海马,海马INJOY,sg30727,海马
+matched,exact_name,海鸥,海鸥,28871.0,sg28871,比亚迪,海鸥,5952,比亚迪
+matched,exact_name,深蓝l06,深蓝L06,30944.0,sg30944,深蓝汽车,深蓝L06,25628,深蓝汽车
+matched,exact_name,深蓝l07,深蓝L07,30463.0,sg30463,深蓝汽车,深蓝L07,10214,深蓝汽车
+matched,exact_name,深蓝sl03,深蓝SL03,27941.0,sg27941,深蓝汽车,深蓝SL03,5306,深蓝汽车
+matched,exact_name,灵悉l,灵悉L,30202.0,sg30202,灵悉,灵悉L,9428,灵悉
+matched,exact_name,焕驰,焕驰,21624.0,sg21624,起亚,焕驰,1719,起亚
+matched,exact_name,爱跑,爱跑,30346.0,sg30346,江淮钇为,爱跑,9792,江淮钇为
+matched,exact_name,狮铂拓界,狮铂拓界,28996.0,sg28996,起亚,狮铂拓界,6070,起亚
+matched,exact_name,猛士917,猛士917,29119.0,sg29119,猛士,猛士917,8798,猛士
+matched,exact_name,理想mega,理想MEGA,28995.0,sg28995,理想汽车,理想MEGA,6067,理想汽车
+matched,exact_name,瑞虎3x,瑞虎3x,14373.0,sg14373,奇瑞,瑞虎3x,1092,奇瑞
+matched,exact_name,瑞虎5x,瑞虎5x,22103.0,sg22103,奇瑞,瑞虎5x,1738,奇瑞
+matched,exact_name,瑞虎7,瑞虎7,14068.0,sg14068,奇瑞,瑞虎7,1094,奇瑞
+matched,exact_name,瑞虎8,瑞虎8,22674.0,sg22674,奇瑞,瑞虎8,2794,奇瑞
+matched,exact_name,瑞虎9,瑞虎9,29370.0,sg29370,奇瑞,瑞虎9,6227,奇瑞
+matched,exact_name,瑞风e3,瑞风E3,28391.0,sg28391,江淮瑞风,瑞风E3,5474,江淮瑞风
+matched,exact_name,瑞风m3,瑞风M3,10901.0,sg10901,江淮瑞风,瑞风M3,768,江淮瑞风
+matched,exact_name,瑞风rf8,瑞风RF8,30267.0,sg30267,江淮瑞风,瑞风RF8,8950,江淮瑞风
+matched,exact_name,瑞风rf8新能源,瑞风RF8新能源,29621.0,sg29621,江淮瑞风,瑞风RF8新能源,sg29621,江淮瑞风
+matched,exact_name,电动miniaceman,电动MINI ACEMAN,30388.0,sg30388,MINI,电动MINI ACEMAN,9945,MINI
+matched,exact_name,电动minicooper,电动MINI COOPER,30347.0,sg30347,MINI,电动MINI COOPER,9793,MINI
+matched,exact_name,皇冠陆放,皇冠陆放,27393.0,sg27393,丰田,皇冠陆放,4840,丰田
+matched,exact_name,皓影,皓影,25152.0,sg25152,本田,皓影,4079,本田
+matched,exact_name,皓影新能源,皓影新能源,27432.0,sg27432,本田,皓影新能源,sg27432,本田
+matched,exact_name,睿蓝8,睿蓝8,30631.0,sg30631,睿蓝汽车,睿蓝8,24939,睿蓝汽车
+matched,exact_name,福瑞迪,福瑞迪,3734.0,sg3734,起亚,福瑞迪,sg3734,起亚
+matched,exact_name,秦l,秦L,30359.0,sg30359,比亚迪,秦L,sg30359,比亚迪
+matched,exact_name,秦plus,秦PLUS,27043.0,sg27043,比亚迪,秦PLUS,sg27043,比亚迪
+matched,exact_name,秦新能源,秦新能源,8120.0,sg8120,比亚迪,秦新能源,sg8120,比亚迪
+matched,exact_name,索纳塔,索纳塔,11808.0,sg11808,现代,索纳塔,1318,现代
+matched,exact_name,红旗ehs9,红旗E-HS9,25651.0,sg25651,红旗,红旗E-HS9,4146,红旗
+matched,exact_name,红旗eqm5,红旗E-QM5,27171.0,sg27171,红旗,红旗E-QM5,5092,红旗
+matched,exact_name,红旗eh7,红旗EH7,29681.0,sg29681,红旗,红旗EH7,8947,红旗
+matched,exact_name,红旗h5,红旗H5,29098.0,sg29098,红旗,红旗H5,6132,红旗
+matched,exact_name,红旗h5phev,红旗H5 PHEV,27471.0,sg27471,红旗,红旗H5 PHEV,3801,红旗
+matched,exact_name,红旗h6,红旗H6,29214.0,sg29214,红旗,红旗H6,5417,红旗
+matched,exact_name,红旗h9,红旗H9,25866.0,sg25866,红旗,红旗H9,4355,红旗
+matched,exact_name,红旗hq9,红旗HQ9,28789.0,sg28789,红旗,红旗HQ9,5905,红旗
+matched,exact_name,红旗hs3,红旗HS3,29464.0,sg29464,红旗,红旗HS3,6359,红旗
+matched,exact_name,红旗hs3phev,红旗HS3 PHEV,30537.0,sg30537,红旗,红旗HS3 PHEV,10120,红旗
+matched,exact_name,红旗hs5,红旗HS5,24184.0,sg24184,红旗,红旗HS5,3159,红旗
+matched,exact_name,红旗hs7phev,红旗HS7 PHEV,30373.0,sg30373,红旗,红旗HS7 PHEV,9825,红旗
+matched,exact_name,红旗国耀,红旗国耀,28211.0,sg28211,红旗,红旗国耀,sg28211,红旗
+matched,exact_name,红旗天工05,红旗天工05,30453.0,sg30453,红旗,红旗天工05,10154,红旗
+matched,exact_name,红旗天工06,红旗天工06,30459.0,sg30459,红旗,红旗天工06,10162,红旗
+matched,exact_name,红旗天工08,红旗天工08,30355.0,sg30355,红旗,红旗天工08,8835,红旗
+matched,exact_name,纳米01,纳米01,30120.0,sg30120,东风纳米,纳米01,sg30120,东风纳米
+matched,exact_name,缤智,缤智,10791.0,sg10791,本田,缤智,288,本田
+matched,exact_name,缤瑞,缤瑞,22679.0,sg22679,吉利汽车,缤瑞,2928,吉利汽车
+matched,exact_name,缤越,缤越,22894.0,sg22894,吉利汽车,缤越,2975,吉利汽车
+matched,exact_name,羿驰05,羿驰05,30741.0,sg30741,江铃集团新能源,羿驰05,25194,江铃集团新能源
+matched,exact_name,胜达,胜达,8000.0,sg8000,现代,胜达,1324,现代
+matched,exact_name,腾势d9,腾势D9,28718.0,sg28718,腾势,腾势D9,sg28718,腾势
+matched,exact_name,艾力绅,艾力绅,7989.0,sg7989,本田,艾力绅,282,本田
+matched,exact_name,艾瑞泽5,艾瑞泽5,10660.0,sg10660,奇瑞,艾瑞泽5,1081,奇瑞
+matched,exact_name,艾瑞泽8,艾瑞泽8,28700.0,sg28700,奇瑞,艾瑞泽8,5852,奇瑞
+matched,exact_name,英仕派,英仕派,22980.0,sg22980,本田,英仕派,2875,本田
+matched,exact_name,荣威d5xdmh,荣威D5X DMH,30129.0,sg30129,荣威,荣威D5X DMH,9347,荣威
+matched,exact_name,荣威d6,荣威D6,30716.0,sg30716,荣威,荣威D6,25140,荣威
+matched,exact_name,荣威d7,荣威D7,30001.0,sg30001,荣威,荣威D7,sg30001,荣威
+matched,exact_name,荣威rx3,荣威RX3,21973.0,sg21973,荣威,荣威RX3,sg21973,荣威
+matched,exact_name,荣威i5,荣威i5,23393.0,sg23393,荣威,荣威i5,3041,荣威
+matched,exact_name,荣威i6max新能源,荣威i6 MAX新能源,26763.0,sg26763,荣威,荣威i6 MAX新能源,sg26763,荣威
+matched,exact_name,荣威imax8,荣威iMAX8,26445.0,sg26445,荣威,荣威iMAX8,4535,荣威
+matched,exact_name,荣威imax8新能源,荣威iMAX8新能源,28636.0,sg28636,荣威,荣威iMAX8新能源,sg28636,荣威
+matched,exact_name,菱智,菱智,4556.0,sg4556,东风风行,菱智,445,东风风行
+matched,exact_name,蒙迪欧,蒙迪欧,2143.0,sg2143,福特,蒙迪欧,579,福特
+matched,exact_name,蔚来et5,蔚来ET5,28446.0,sg28446,蔚来,蔚来ET5,5409,蔚来
+matched,exact_name,蔚来et5t,蔚来ET5T,29995.0,sg29995,蔚来,蔚来ET5T,9126,蔚来
+matched,exact_name,蔚来et7,蔚来ET7,24611.0,sg24611,蔚来,蔚来ET7,3478,蔚来
+matched,exact_name,蔚来et9,蔚来ET9,30321.0,sg30321,蔚来,蔚来ET9,9707,蔚来
+matched,exact_name,豪越l,豪越L,29207.0,sg29207,吉利汽车,豪越L,6211,吉利汽车
+matched,exact_name,赛图斯,赛图斯,29561.0,sg29561,起亚,赛图斯,8934,起亚
+matched,exact_name,赛那sienna,赛那SIENNA,27747.0,sg27747,丰田,赛那SIENNA,sg27747,丰田
+matched,exact_name,起亚ev5,起亚EV5,30091.0,sg30091,起亚,起亚EV5,9237,起亚
+matched,exact_name,起亚k3,起亚K3,7889.0,sg7889,起亚,起亚K3,1116,起亚
+matched,exact_name,起亚k5凯酷,起亚K5凯酷,7075.0,sg7075,起亚,起亚K5凯酷,sg7075,起亚
+matched,exact_name,起亚kx3傲跑,起亚KX3傲跑,11787.0,sg11787,起亚,起亚KX3傲跑,sg11787,起亚
+matched,exact_name,轩度ev,轩度EV,28982.0,sg28982,凯翼,轩度EV,sg28982,凯翼
+matched,exact_name,轩逸,轩逸,3996.0,sg3996,日产,轩逸,1145,日产
+matched,exact_name,迈腾,迈腾,2824.0,sg2824,大众,迈腾,415,大众
+matched,exact_name,迈腾phev,迈腾PHEV,23973.0,sg23973,大众,迈腾PHEV,3142,大众
+matched,exact_name,迈锐宝xl,迈锐宝XL,13877.0,sg13877,雪佛兰,迈锐宝XL,sg13877,雪佛兰
+matched,exact_name,逍客,逍客,3127.0,sg3127,日产,逍客,1150,日产
+matched,exact_name,途安,途安,678.0,sg678,大众,途安,sg678,大众
+matched,exact_name,途岳,途岳,22815.0,sg22815,大众,途岳,2836,大众
+matched,exact_name,途昂,途昂,20963.0,sg20963,大众,途昂,405,大众
+matched,exact_name,途胜l,途胜L,1074.0,sg1074,现代,途胜L,sg1074,现代
+matched,exact_name,途观l,途观L,21172.0,sg21172,大众,途观L,404,大众
+matched,exact_name,途观l新能源,途观L新能源,22814.0,sg22814,大众,途观L新能源,sg22814,大众
+matched,exact_name,速腾,速腾,1633.0,sg1633,大众,速腾,414,大众
+matched,exact_name,逸动,逸动,26101.0,sg26101,长安,逸动,1455,长安
+matched,exact_name,钇为3,钇为3,29732.0,sg29732,江淮钇为,钇为3,8897,江淮钇为
+matched,exact_name,铂智3x,铂智3X,30454.0,sg30454,丰田,铂智3X,8987,丰田
+matched,exact_name,铂智4x,铂智4X,30302.0,sg30302,丰田,铂智4X,9668,丰田
+matched,exact_name,铂智7,铂智7,30672.0,sg30672,丰田,铂智7,9657,丰田
+matched,exact_name,银河e8,银河E8,29481.0,sg29481,吉利银河,银河E8,8858,吉利银河
+matched,exact_name,银河v900,银河V900,31093.0,sg31093,吉利银河,银河V900,25711,吉利银河
+matched,exact_name,银河星耀6,银河星耀6,30935.0,sg30935,吉利银河,银河星耀6,25611,吉利银河
+matched,exact_name,银河星耀7,银河星耀7,31010.0,sg31010,吉利银河,银河星耀7,25739,吉利银河
+matched,exact_name,锋兰达,锋兰达,28071.0,sg28071,丰田,锋兰达,5369,丰田
+matched,exact_name,锐界l,锐界L,11607.0,sg11607,福特,锐界L,sg11607,福特
+matched,exact_name,锐程plus,锐程PLUS,29137.0,sg29137,长安,锐程PLUS,6147,长安
+matched,exact_name,锐际,锐际,24504.0,sg24504,福特,锐际,3334,福特
+matched,exact_name,长安cs75plus,长安CS75 PLUS,24393.0,sg24393,长安,长安CS75 PLUS,3196,长安
+matched,exact_name,长安lumin,长安Lumin,28707.0,sg28707,长安启源,长安Lumin,5859,长安启源
+matched,exact_name,长安unik,长安UNI-K,26841.0,sg26841,长安,长安UNI-K,4783,长安
+matched,exact_name,长安unik智电idd,长安UNI-K 智电iDD,28032.0,sg28032,长安,长安UNI-K 智电iDD,5216,长安
+matched,exact_name,长安unit,长安UNI-T,25903.0,sg25903,长安,长安UNI-T,4353,长安
+matched,exact_name,长安univ,长安UNI-V,27881.0,sg27881,长安,长安UNI-V,5288,长安
+matched,exact_name,长安uniz新能源,长安UNI-Z新能源,30365.0,sg30365,长安,长安UNI-Z新能源,sg30365,长安
+matched,exact_name,长安x5plus,长安X5 PLUS,30322.0,sg30322,长安,长安X5 PLUS,9683,长安
+matched,exact_name,长安启源a07,长安启源A07,29653.0,sg29653,长安启源,长安启源A07,8958,长安启源
+matched,exact_name,长安启源q05经典,长安启源Q05经典,30092.0,sg30092,长安启源,长安启源Q05经典,sg30092,长安启源
+matched,exact_name,长安欧尚520,长安欧尚520,30626.0,sg30626,长安欧尚,长安欧尚520,24932,长安欧尚
+matched,exact_name,雅阁,雅阁,90.0,sg90,本田,雅阁,289,本田
+matched,exact_name,零跑b01,零跑B01,30816.0,sg30816,零跑汽车,零跑B01,9266,零跑汽车
+matched,exact_name,零跑lafa5,零跑Lafa5,30983.0,sg30983,零跑汽车,零跑Lafa5,25682,零跑汽车
+matched,exact_name,零跑t03,零跑T03,25653.0,sg25653,零跑汽车,零跑T03,4272,零跑汽车
+matched,exact_name,雷凌,雷凌,10801.0,sg10801,丰田,雷凌,534,丰田
+matched,exact_name,领克03,领克03,21568.0,sg21568,领克,领克03,1623,领克
+matched,exact_name,领克07,领克07,30358.0,sg30358,领克,领克07,sg30358,领克
+matched,exact_name,领克10,领克10,30905.0,sg30905,领克,领克10,26030,领克
+matched,exact_name,风云a9l,风云A9L,30262.0,sg30262,奇瑞风云,风云A9L,8985,奇瑞风云
+matched,exact_name,风光330,风光330,12985.0,sg12985,东风风光,风光330,sg12985,东风风光
+matched,exact_name,风光380,风光380,28692.0,sg28692,东风风光,风光380,5390,东风风光
+matched,exact_name,风光e380,风光E380,29241.0,sg29241,东风风光,风光E380,6230,东风风光
+matched,exact_name,飞凡f7,飞凡F7,29146.0,sg29146,飞凡汽车,飞凡F7,6137,飞凡汽车
+matched,exact_name,马自达3昂克赛拉,马自达3 昂克赛拉,10280.0,sg10280,马自达,马自达3 昂克赛拉,1014,马自达
+matched,exact_name,马自达ez6,马自达EZ-6,30443.0,sg30443,马自达,马自达EZ-6,10137,马自达
+matched,exact_name,驱逐舰05,驱逐舰05,27924.0,sg27924,比亚迪,驱逐舰05,5290,比亚迪
+matched,exact_name,骐达,骐达,5045.0,sg5045,日产,骐达,sg5045,日产
+matched,exact_name,高尔夫,高尔夫,4437.0,sg4437,大众,高尔夫,410,大众
+matched,exact_name,高尔夫gti,高尔夫GTI,30566.0,sg30566,大众,高尔夫GTI,24727,大众
+matched,exact_name,魏牌高山,魏牌 高山,29651.0,sg29651,魏牌,魏牌 高山,sg29651,魏牌
+matched,unique_normalized_name,ariya艾睿雅,ARIYA艾睿雅,28742.0,sg28742,日产,ARIYA 艾睿雅,5895,日产
+matched,unique_normalized_name,idera9x,ID.ERA 9X,30835.0,sg30835,大众,ID. ERA 9X,25395,大众
+matched,unique_normalized_name,极狐贝塔s3,极狐贝塔S3,30917.0,sg30917,ARCFOX极狐,极狐 贝塔S3,25573,ARCFOX极狐
+matched,unique_normalized_name,极狐贝塔t1,极狐贝塔T1,30841.0,sg30841,ARCFOX极狐,极狐 贝塔T1,25401,ARCFOX极狐
+matched,unique_normalized_name,极狐问道v9,极狐问道V9,31087.0,sg31087,ARCFOX极狐,极狐 问道V9,25830,ARCFOX极狐
+matched,unique_normalized_name,长安cs55plus,长安CS55PLUS,25604.0,sg25604,长安,长安CS55 PLUS,4223,长安
+matched,unique_normalized_name,阿维塔06,阿维塔06,30703.0,sg30703,阿维塔,阿维塔 06,10230,阿维塔
+matched,unique_normalized_name,阿维塔12,阿维塔12,29447.0,sg29447,阿维塔,阿维塔 12,8834,阿维塔
+unmatched,unmatched_sales,斯派卡,斯派卡,12904.0,sg12904,野马汽车,,,
+unmatched,unmatched_sales,swm斯威x2,SWM斯威X2,24136.0,sg24136,SWM斯威汽车,,,
+unmatched,unmatched_sales,斯派卡新能源,斯派卡新能源,25542.0,sg25542,野马汽车,,,
+unmatched,unmatched_sales,瑞风,瑞风,215.0,sg215,江淮,,,
+unmatched,unmatched_sales,风尚,风尚,1614.0,sg1614,陆风,,,
+unmatched,unmatched_sales,普力马,普力马,1654.0,sg1654,海马,,,
+unmatched,unmatched_sales,奇瑞v5,奇瑞V5,1903.0,sg1903,奇瑞,,,
+unmatched,unmatched_sales,御轩,御轩,2974.0,sg2974,东风,,,
+unmatched,unmatched_sales,君阁,君阁,3494.0,sg3494,三菱,,,
+unmatched,unmatched_sales,比亚迪m6,比亚迪M6,3629.0,sg3629,比亚迪,,,
+unmatched,unmatched_sales,迷迪,迷迪,3634.0,sg3634,福田,,,
+unmatched,unmatched_sales,瑞风m2,瑞风M2,3924.0,sg3924,江淮,,,
+unmatched,unmatched_sales,日产nv200,日产NV200,4067.0,sg4067,日产,,,
+unmatched,unmatched_sales,帅客,帅客,4315.0,sg4315,东风,,,
+unmatched,unmatched_sales,唯雅诺,唯雅诺,4559.0,sg4559,奔驰,,,
+unmatched,unmatched_sales,森雅m80,森雅M80,5064.0,sg5064,一汽,,,
+unmatched,unmatched_sales,马自达8,马自达8,7042.0,sg7042,马自达,,,
+unmatched,unmatched_sales,逸致,逸致,7087.0,sg7087,丰田,,,
+unmatched,unmatched_sales,纳智捷masterceo,纳智捷MASTER CEO,7282.0,sg7282,纳智捷,,,
+unmatched,unmatched_sales,风行cm7,风行CM7,9261.0,sg9261,东风风行,,,
+unmatched,unmatched_sales,纳智捷大7mpv,纳智捷大7 MPV,9321.0,sg9321,纳智捷,,,
+unmatched,unmatched_sales,风光,风光,9423.0,sg9423,东风小康,,,
+unmatched,unmatched_sales,星朗,星朗,9605.0,sg9605,广汽吉奥,,,
+unmatched,unmatched_sales,艾瑞泽m7,艾瑞泽M7,9838.0,sg9838,奇瑞,,,
+unmatched,unmatched_sales,风尚陆地方舟,风尚·陆地方舟,11002.0,sg11002,陆地方舟,,,
+unmatched,unmatched_sales,华颂7,华颂7,11687.0,sg11687,华颂,,,
+unmatched,unmatched_sales,北汽幻速h2,北汽幻速H2,11879.0,sg11879,北汽幻速,,,
+unmatched,unmatched_sales,k50,K50,12011.0,sg12011,开瑞,,,
+unmatched,unmatched_sales,金杯750,金杯750,12442.0,sg12442,金杯,,,
+unmatched,unmatched_sales,风行s500,风行S500,12543.0,sg12543,东风风行,,,
+unmatched,unmatched_sales,英致737,英致737,12633.0,sg12633,英致,,,
+unmatched,unmatched_sales,北汽幻速h3,北汽幻速H3,12954.0,sg12954,北汽幻速,,,
+unmatched,unmatched_sales,风光360,风光360,12986.0,sg12986,东风风光,,,
+unmatched,unmatched_sales,五菱宏光s1,五菱宏光S1,12995.0,sg12995,五菱,,,
+unmatched,unmatched_sales,高尔夫嘉旅,高尔夫·嘉旅,13428.0,sg13428,大众,,,
+unmatched,unmatched_sales,英致727,英致727,13469.0,sg13469,英致,,,
+unmatched,unmatched_sales,上汽大通maxuseg10,上汽大通MAXUS EG10,13500.0,sg13500,大通,,,
+unmatched,unmatched_sales,伽途ix5,伽途ix5,13655.0,sg13655,福田,,,
+unmatched,unmatched_sales,福美来七座版,福美来七座版,13725.0,sg13725,海马,,,
+unmatched,unmatched_sales,北汽威旺m50f,北汽威旺M50F,20513.0,sg20513,北汽威旺,,,
+unmatched,unmatched_sales,比速m3,比速M3,20672.0,sg20672,比速汽车,,,
+unmatched,unmatched_sales,轩朗,轩朗,20802.0,sg20802,力帆,,,
+unmatched,unmatched_sales,昌河m70,昌河M70,20865.0,sg20865,北汽昌河,,,
+unmatched,unmatched_sales,启辰m50v,启辰M50V,21102.0,sg21102,启辰,,,
+unmatched,unmatched_sales,凌轩,凌轩,21193.0,sg21193,长安,,,
+unmatched,unmatched_sales,金杯f50,金杯F50,21282.0,sg21282,金杯,,,
+unmatched,unmatched_sales,伽途im,伽途im,21303.0,sg21303,福田,,,
+unmatched,unmatched_sales,北汽幻速h5,北汽幻速H5,21336.0,sg21336,北汽幻速,,,
+unmatched,unmatched_sales,长安欧尚a800,长安欧尚A800,21523.0,sg21523,长安欧尚,,,
+unmatched,unmatched_sales,宋max,宋MAX,21633.0,sg21633,比亚迪,,,
+unmatched,unmatched_sales,福美来f7,福美来F7,22124.0,sg22124,海马,,,
+unmatched,unmatched_sales,北汽威旺m60,北汽威旺M60,22190.0,sg22190,北汽威旺,,,
+unmatched,unmatched_sales,汉腾v7,汉腾V7,22962.0,sg22962,汉腾,,,
+unmatched,unmatched_sales,英致737ev,英致737EV,23626.0,sg23626,英致,,,
+unmatched,unmatched_sales,欧尚长行,欧尚长行,24334.0,sg24334,长安凯程,,,
+unmatched,unmatched_sales,五菱730,五菱730,25784.0,sg25784,五菱,,,
+unmatched,unmatched_sales,力帆枫叶80v,力帆枫叶80V,28181.0,sg28181,力帆,,,
+unmatched,unmatched_sales,合创v09,合创V09,28426.0,sg28426,合创汽车,,,
+unmatched,unmatched_sales,王牌m7,王牌M7,29112.0,sg29112,北汽制造,,,
+unmatched,unmatched_sales,王牌m7新能源,王牌M7新能源,29223.0,sg29223,北汽制造,,,
+unmatched,unmatched_sales,传祺e9,传祺E9,29571.0,sg29571,广汽传祺,,,
+unmatched,unmatched_sales,红旗hq9新能源,红旗HQ9新能源,30265.0,sg30265,红旗,,,
+unmatched,unmatched_sales,至境世家,至境世家,30654.0,sg30654,别克,,,
+unmatched,unmatched_sales,大通g50插电混动,大通G50插电混动,30791.0,sg30791,大通,,,
+unmatched,unmatched_sales,五菱星光730新能源,五菱星光730新能源,30906.0,sg30906,五菱,,,
+unmatched,unmatched_sales,五菱星光730,五菱星光730,30919.0,sg30919,五菱,,,
+unmatched,unmatched_sales,锐胜m8新能源,锐胜M8新能源,31051.0,sg31051,北汽制造,,,
+unmatched,unmatched_sales,智界v9,智界V9,31096.0,sg31096,鸿蒙智行,,,
+unmatched,unmatched_sales,零跑d99,零跑D99,31126.0,sg31126,零跑汽车,,,
+unmatched,unmatched_sales,锐胜m8,锐胜M8,31133.0,sg31133,北汽制造,,,
+unmatched,unmatched_sales,宝骏530,宝骏530,22283.0,sg22283,宝骏,,,
+unmatched,unmatched_sales,博骏,博骏,21666.0,sg21666,野马汽车,,,
+unmatched,unmatched_sales,名爵hs,名爵HS,23173.0,sg23173,MG名爵,,,
+unmatched,unmatched_sales,名爵hs新能源,名爵HS新能源,24794.0,sg24794,MG名爵,,,
+unmatched,unmatched_sales,swm斯威x7,SWM斯威X7,20582.0,sg20582,SWM斯威汽车,,,
+unmatched,unmatched_sales,威马ex5,威马EX5,22483.0,sg22483,威马汽车,,,
+unmatched,unmatched_sales,威马w6,威马W6,24725.0,sg24725,威马汽车,,,
+unmatched,unmatched_sales,奕泽izoa,奕泽IZOA,22393.0,sg22393,丰田,,,
+unmatched,unmatched_sales,大通d60,大通D60,24053.0,sg24053,大通,,,
+unmatched,unmatched_sales,锐际新能源,锐际新能源,26402.0,sg26402,福特,,,
+unmatched,unmatched_sales,大指挥官phev,大指挥官PHEV,22923.0,sg22923,Jeep,,,
+unmatched,unmatched_sales,北京现代ix25,北京现代ix25,9917.0,sg9917,现代,,,
+unmatched,unmatched_sales,特拉卡,特拉卡,357.0,sg357,华泰,,,
+unmatched,unmatched_sales,飞腾,飞腾,444.0,sg444,猎豹汽车,,,
+unmatched,unmatched_sales,黑金刚,黑金刚,445.0,sg445,猎豹汽车,,,
+unmatched,unmatched_sales,陆霸,陆霸,652.0,sg652,北汽制造,,,
+unmatched,unmatched_sales,兰德酷路泽,兰德酷路泽,1133.0,sg1133,丰田,,,
+unmatched,unmatched_sales,帕杰罗,帕杰罗,2253.0,sg2253,三菱,,,
+unmatched,unmatched_sales,奥丁,奥丁,2975.0,sg2975,东风,,,
+unmatched,unmatched_sales,猎豹cs6,猎豹CS6,3014.0,sg3014,猎豹汽车,,,
+unmatched,unmatched_sales,途观,途观,3895.0,sg3895,大众,,,
+unmatched,unmatched_sales,荣威w5,荣威W5,3896.0,sg3896,荣威,,,
+unmatched,unmatched_sales,骑士,骑士,3898.0,sg3898,海马,,,
+unmatched,unmatched_sales,比亚迪s6,比亚迪S6,4005.0,sg4005,比亚迪,,,
+unmatched,unmatched_sales,哈弗h5经典,哈弗H5经典,4014.0,sg4014,哈弗,,,
+unmatched,unmatched_sales,狮跑,狮跑,4034.0,sg4034,起亚,,,
+unmatched,unmatched_sales,哈弗h8,哈弗H8,4055.0,sg4055,哈弗,,,
+unmatched,unmatched_sales,吉利gx7,吉利GX7,4076.0,sg4076,吉利汽车,,,
+unmatched,unmatched_sales,陆风x8,陆风X8,4248.0,sg4248,陆风,,,
+unmatched,unmatched_sales,永源a380,永源A380,4278.0,sg4278,永源,,,
+unmatched,unmatched_sales,翼虎,翼虎,4312.0,sg4312,福特,,,
+unmatched,unmatched_sales,奥迪q5,奥迪Q5,4457.0,sg4457,奥迪,,,
+unmatched,unmatched_sales,长城m2,长城M2,4463.0,sg4463,长城,,,
+unmatched,unmatched_sales,驭胜s350,驭胜S350,4519.0,sg4519,驭胜,,,
+unmatched,unmatched_sales,力帆x60,力帆X60,4526.0,sg4526,力帆,,,
+unmatched,unmatched_sales,瑞风s5,瑞风S5,4548.0,sg4548,江淮,,,
+unmatched,unmatched_sales,众泰t600,众泰T600,4665.0,sg4665,众泰,,,
+unmatched,unmatched_sales,宝利格,宝利格,4684.0,sg4684,华泰,,,
+unmatched,unmatched_sales,北京bw007,北京BW007,4685.0,sg4685,北汽制造,,,
+unmatched,unmatched_sales,瑞虎5,瑞虎5,5044.0,sg5044,奇瑞,,,
+unmatched,unmatched_sales,经典圣达菲,经典圣达菲,5052.0,sg5052,华泰,,,
+unmatched,unmatched_sales,长城m4,长城M4,7199.0,sg7199,长城,,,
+unmatched,unmatched_sales,纳智捷大7suv,纳智捷大7 SUV,7281.0,sg7281,纳智捷,,,
+unmatched,unmatched_sales,骏派d60,骏派D60,7329.0,sg7329,一汽,,,
+unmatched,unmatched_sales,野马f16,野马F16,7569.0,sg7569,野马汽车,,,
+unmatched,unmatched_sales,野马f10,野马F10,7629.0,sg7629,野马汽车,,,
+unmatched,unmatched_sales,科帕奇,科帕奇,7650.0,sg7650,雪佛兰,,,
+unmatched,unmatched_sales,奔驰glk,奔驰GLK,7651.0,sg7651,奔驰,,,
+unmatched,unmatched_sales,中华v5,中华V5,7659.0,sg7659,中华,,,
+unmatched,unmatched_sales,景逸suv,景逸SUV,7682.0,sg7682,东风风行,,,
+unmatched,unmatched_sales,长安cs35,长安CS35,8022.0,sg8022,长安,,,
+unmatched,unmatched_sales,翼搏,翼搏,8029.0,sg8029,福特,,,
+unmatched,unmatched_sales,中兴c3,中兴C3,8109.0,sg8109,中兴,,,
+unmatched,unmatched_sales,奥轩gx5,奥轩GX5,8199.0,sg8199,广汽吉奥,,,
+unmatched,unmatched_sales,野马f12,野马F12,8300.0,sg8300,野马汽车,,,
+unmatched,unmatched_sales,陆风x5,陆风X5,8571.0,sg8571,陆风,,,
+unmatched,unmatched_sales,锋驭,锋驭,8575.0,sg8575,铃木,,,
+unmatched,unmatched_sales,奔腾x80,奔腾X80,8582.0,sg8582,奔腾,,,
+unmatched,unmatched_sales,马自达cx7,马自达CX-7,8680.0,sg8680,马自达,,,
+unmatched,unmatched_sales,陆风x7,陆风X7,8860.0,sg8860,陆风,,,
+unmatched,unmatched_sales,帕杰罗劲畅,帕杰罗劲畅,8981.0,sg8981,三菱,,,
+unmatched,unmatched_sales,瑞风s3,瑞风S3,9202.0,sg9202,江淮,,,
+unmatched,unmatched_sales,众泰t200,众泰T200,9220.0,sg9220,众泰,,,
+unmatched,unmatched_sales,比亚迪s7,比亚迪S7,9251.0,sg9251,比亚迪,,,
+unmatched,unmatched_sales,名爵gs锐腾,名爵GS 锐腾,9271.0,sg9271,MG名爵,,,
+unmatched,unmatched_sales,哈弗h2,哈弗H2,9291.0,sg9291,哈弗,,,
+unmatched,unmatched_sales,哈弗h7,哈弗H7,9292.0,sg9292,哈弗,,,
+unmatched,unmatched_sales,yeti,Yeti,9509.0,sg9509,斯柯达,,,
+unmatched,unmatched_sales,景逸x5,景逸X5,9590.0,sg9590,东风风行,,,
+unmatched,unmatched_sales,北汽幻速s2,北汽幻速S2,9857.0,sg9857,北汽幻速,,,
+unmatched,unmatched_sales,力帆x50,力帆X50,9867.0,sg9867,力帆,,,
+unmatched,unmatched_sales,纳智捷优6suv,纳智捷优6 SUV,10221.0,sg10221,纳智捷,,,
+unmatched,unmatched_sales,北汽幻速s3,北汽幻速S3,10510.0,sg10510,北汽幻速,,,
+unmatched,unmatched_sales,ds6,DS 6,10750.0,sg10750,DS,,,
+unmatched,unmatched_sales,猎豹cs10,猎豹CS10,10812.0,sg10812,猎豹汽车,,,
+unmatched,unmatched_sales,帝豪gs,帝豪GS,10822.0,sg10822,吉利汽车,,,
+unmatched,unmatched_sales,猎豹q6,猎豹Q6,10851.0,sg10851,猎豹汽车,,,
+unmatched,unmatched_sales,英致g3,英致G3,10961.0,sg10961,英致,,,
+unmatched,unmatched_sales,哈弗h1,哈弗H1,11041.0,sg11041,哈弗,,,
+unmatched,unmatched_sales,圣达菲,圣达菲,11091.0,sg11091,华泰,,,
+unmatched,unmatched_sales,传祺gs5super,传祺GS5 Super,11121.0,sg11121,广汽传祺,,,
+unmatched,unmatched_sales,沃尔沃xcclassic,沃尔沃XC CLASSIC,11462.0,sg11462,沃尔沃,,,
+unmatched,unmatched_sales,启辰t70,启辰T70,11677.0,sg11677,启辰,,,
+unmatched,unmatched_sales,观致3都市suv,观致3都市SUV,11758.0,sg11758,观致,,,
+unmatched,unmatched_sales,绅宝x65,绅宝X65,11761.0,sg11761,北京汽车,,,
+unmatched,unmatched_sales,gx3,GX3,11763.0,sg11763,中兴,,,
+unmatched,unmatched_sales,东风风度mx6,东风风度MX6,11837.0,sg11837,东风风度,,,
+unmatched,unmatched_sales,瑞风s2,瑞风S2,11869.0,sg11869,江淮,,,
+unmatched,unmatched_sales,元,元,11891.0,sg11891,比亚迪,,,
+unmatched,unmatched_sales,mux牧游侠,mu-X牧游侠,11920.0,sg11920,五十铃,,,
+unmatched,unmatched_sales,中华v3,中华V3,11962.0,sg11962,中华,,,
+unmatched,unmatched_sales,宝骏560,宝骏560,12002.0,sg12002,宝骏,,,
+unmatched,unmatched_sales,北汽幻速s6,北汽幻速S6,12081.0,sg12081,北汽幻速,,,
+unmatched,unmatched_sales,野马t70,野马T70,12091.0,sg12091,野马汽车,,,
+unmatched,unmatched_sales,发现神行,发现神行,12512.0,sg12512,路虎,,,
+unmatched,unmatched_sales,力帆x80,力帆X80,12514.0,sg12514,力帆,,,
+unmatched,unmatched_sales,东风风神ax3,东风风神AX3,12523.0,sg12523,东风风神,,,
+unmatched,unmatched_sales,众泰大迈x5,众泰大迈X5,12553.0,sg12553,众泰,,,
+unmatched,unmatched_sales,绅宝x55,绅宝X55,12592.0,sg12592,北京汽车,,,
+unmatched,unmatched_sales,北京bj20,北京BJ20,12596.0,sg12596,北京越野,,,
+unmatched,unmatched_sales,驭胜s330,驭胜S330,12623.0,sg12623,驭胜,,,
+unmatched,unmatched_sales,绅宝x25,绅宝X25,12744.0,sg12744,北京汽车,,,
+unmatched,unmatched_sales,英致g5,英致G5,12944.0,sg12944,英致,,,
+unmatched,unmatched_sales,科雷嘉,科雷嘉,12997.0,sg12997,雷诺,,,
+unmatched,unmatched_sales,维特拉,维特拉,13069.0,sg13069,铃木,,,
+unmatched,unmatched_sales,众泰sr7,众泰SR7,13070.0,sg13070,众泰,,,
+unmatched,unmatched_sales,野马ec70,野马EC70,13078.0,sg13078,野马汽车,,,
+unmatched,unmatched_sales,宝沃bx7,宝沃BX7,13138.0,sg13138,宝沃,,,
+unmatched,unmatched_sales,绅宝x35,绅宝X35,13258.0,sg13258,北京汽车,,,
+unmatched,unmatched_sales,观致5,观致5,13288.0,sg13288,观致,,,
+unmatched,unmatched_sales,昌河q25,昌河Q25,13386.0,sg13386,北汽昌河,,,
+unmatched,unmatched_sales,自由侠,自由侠,13509.0,sg13509,Jeep,,,
+unmatched,unmatched_sales,风行sx6,风行SX6,13540.0,sg13540,东风风行,,,
+unmatched,unmatched_sales,迈威,迈威,13590.0,sg13590,力帆,,,
+unmatched,unmatched_sales,东风风度mx5,东风风度MX5,13591.0,sg13591,东风风度,,,
+unmatched,unmatched_sales,众泰t700,众泰T700,13604.0,sg13604,众泰,,,
+unmatched,unmatched_sales,凯翼v3,凯翼V3,13614.0,sg13614,凯翼,,,
+unmatched,unmatched_sales,北汽威旺s50,北汽威旺S50,13757.0,sg13757,北汽威旺,,,
+unmatched,unmatched_sales,宝沃bx5,宝沃BX5,13928.0,sg13928,宝沃,,,
+unmatched,unmatched_sales,宝沃bx6,宝沃BX6,13929.0,sg13929,宝沃,,,
+unmatched,unmatched_sales,众泰sr9,众泰SR9,14029.0,sg14029,众泰,,,
+unmatched,unmatched_sales,华泰xev260,华泰XEV260,14039.0,sg14039,华泰新能源,,,
+unmatched,unmatched_sales,瑞风s7,瑞风S7,14142.0,sg14142,江淮,,,
+unmatched,unmatched_sales,众泰t300,众泰T300,14181.0,sg14181,众泰,,,
+unmatched,unmatched_sales,上汽大通maxusd90,上汽大通MAXUS D90,14192.0,sg14192,大通,,,
+unmatched,unmatched_sales,众泰大迈x7,众泰大迈X7,14211.0,sg14211,众泰,,,
+unmatched,unmatched_sales,东风风神ax5,东风风神AX5,14242.0,sg14242,东风风神,,,
+unmatched,unmatched_sales,科雷傲,科雷傲,14251.0,sg14251,雷诺,,,
+unmatched,unmatched_sales,猎豹cs9,猎豹CS9,14264.0,sg14264,猎豹汽车,,,
+unmatched,unmatched_sales,野马t80,野马T80,14382.0,sg14382,野马汽车,,,
+unmatched,unmatched_sales,汉腾x7,汉腾X7,14383.0,sg14383,汉腾,,,
+unmatched,unmatched_sales,汉腾x7phev,汉腾X7 PHEV,14384.0,sg14384,汉腾,,,
+unmatched,unmatched_sales,凯翼x5,凯翼X5,20542.0,sg20542,凯翼,,,
+unmatched,unmatched_sales,比速t3,比速T3,20562.0,sg20562,比速汽车,,,
+unmatched,unmatched_sales,汉腾x5,汉腾X5,20932.0,sg20932,汉腾,,,
+unmatched,unmatched_sales,奔腾x40,奔腾X40,21053.0,sg21053,奔腾,,,
+unmatched,unmatched_sales,魏牌vv7,魏牌 VV7,21073.0,sg21073,魏牌,,,
+unmatched,unmatched_sales,魏牌vv5,魏牌 VV5,21074.0,sg21074,魏牌,,,
+unmatched,unmatched_sales,北汽幻速s5,北汽幻速S5,21091.0,sg21091,北汽幻速,,,
+unmatched,unmatched_sales,传祺gs7,传祺GS7,21162.0,sg21162,广汽传祺,,,
+unmatched,unmatched_sales,东风风神ax4,东风风神AX4,21223.0,sg21223,东风风神,,,
+unmatched,unmatched_sales,传祺ge3,传祺GE3,21255.0,sg21255,埃安,,,
+unmatched,unmatched_sales,远景x1,远景X1,21273.0,sg21273,吉利汽车,,,
+unmatched,unmatched_sales,比速t5,比速T5,21293.0,sg21293,比速汽车,,,
+unmatched,unmatched_sales,元新能源,元新能源,21423.0,sg21423,比亚迪,,,
+unmatched,unmatched_sales,宋新能源,宋新能源,21533.0,sg21533,比亚迪,,,
+unmatched,unmatched_sales,众泰t500,众泰T500,21593.0,sg21593,众泰,,,
+unmatched,unmatched_sales,骁途,骁途,21625.0,sg21625,铃木,,,
+unmatched,unmatched_sales,纳智捷u5suv,纳智捷U5 SUV,21638.0,sg21638,纳智捷,,,
+unmatched,unmatched_sales,猎豹cs9新能源,猎豹CS9新能源,21640.0,sg21640,猎豹汽车,,,
+unmatched,unmatched_sales,长安cs15ev,长安CS15EV,21653.0,sg21653,长安,,,
+unmatched,unmatched_sales,传祺gs4新能源,传祺GS4新能源,21664.0,sg21664,广汽传祺,,,
+unmatched,unmatched_sales,祺智ev,祺智EV,21665.0,sg21665,广汽集团,,,
+unmatched,unmatched_sales,江淮iev7s,江淮iEV7S,21678.0,sg21678,江淮,,,
+unmatched,unmatched_sales,北汽幻速s7,北汽幻速S7,21986.0,sg21986,北汽幻速,,,
+unmatched,unmatched_sales,中华v7,中华V7,22023.0,sg22023,中华,,,
+unmatched,unmatched_sales,中华v6,中华V6,22085.0,sg22085,中华,,,
+unmatched,unmatched_sales,君马s70,君马S70,22089.0,sg22089,君马汽车,,,
+unmatched,unmatched_sales,远景s1,远景S1,22091.0,sg22091,吉利汽车,,,
+unmatched,unmatched_sales,weyp8,WEY P8,22184.0,sg22184,魏牌,,,
+unmatched,unmatched_sales,东南dx3新能源,东南DX3新能源,22253.0,sg22253,东南,,,
+unmatched,unmatched_sales,长安欧尚x70a,长安欧尚X70A,22323.0,sg22323,长安欧尚,,,
+unmatched,unmatched_sales,哈弗h4,哈弗H4,22363.0,sg22363,哈弗,,,
+unmatched,unmatched_sales,昌河q7,昌河Q7,22374.0,sg22374,北汽昌河,,,
+unmatched,unmatched_sales,encino昂希诺,ENCINO昂希诺,22407.0,sg22407,现代,,,
+unmatched,unmatched_sales,帝豪gse,帝豪GSe,22424.0,sg22424,吉利汽车,,,
+unmatched,unmatched_sales,瑞虎3xe,瑞虎3xe,22444.0,sg22444,奇瑞新能源,,,
+unmatched,unmatched_sales,祺智phev,祺智PHEV,22493.0,sg22493,广汽集团,,,
+unmatched,unmatched_sales,mattu,Mattu,22634.0,sg22634,猎豹汽车,,,
+unmatched,unmatched_sales,骏派d80,骏派D80,22635.0,sg22635,一汽,,,
+unmatched,unmatched_sales,广汽丰田ix4,广汽丰田ix4,22675.0,sg22675,广汽集团,,,
+unmatched,unmatched_sales,君马seek5赛克5,君马SEEK 5(赛克5),22676.0,sg22676,君马汽车,,,
+unmatched,unmatched_sales,众泰t300新能源,众泰T300新能源,22764.0,sg22764,众泰,,,
+unmatched,unmatched_sales,全球鹰ex3,全球鹰EX3,22816.0,sg22816,全球鹰,,,
+unmatched,unmatched_sales,森雅r9,森雅R9,22828.0,sg22828,一汽,,,
+unmatched,unmatched_sales,易至ex5,易至EX5,22865.0,sg22865,江铃集团新能源,,,
+unmatched,unmatched_sales,sitechdev1,SITECH DEV 1,22937.0,sg22937,新特,,,
+unmatched,unmatched_sales,魏牌vv6,魏牌 VV6,22948.0,sg22948,魏牌,,,
+unmatched,unmatched_sales,哈弗f5,哈弗F5,22950.0,sg22950,哈弗,,,
+unmatched,unmatched_sales,思皓e20x,思皓E20X,22959.0,sg22959,思皓,,,
+unmatched,unmatched_sales,唐,唐,22976.0,sg22976,比亚迪,,,
+unmatched,unmatched_sales,宝沃bx3,宝沃BX3,23064.0,sg23064,宝沃,,,
+unmatched,unmatched_sales,哪吒n01,哪吒N01,23113.0,sg23113,哪吒汽车,,,
+unmatched,unmatched_sales,汉腾x5ev,汉腾X5 EV,23304.0,sg23304,汉腾,,,
+unmatched,unmatched_sales,起亚kx3新能源,起亚KX3新能源,23314.0,sg23314,起亚,,,
+unmatched,unmatched_sales,宝骏rs5,宝骏RS-5,23534.0,sg23534,宝骏,,,
+unmatched,unmatched_sales,野马ec60,野马EC60,23535.0,sg23535,野马汽车,,,
+unmatched,unmatched_sales,瑞风s4,瑞风S4,23573.0,sg23573,江淮,,,
+unmatched,unmatched_sales,大乘g70s,大乘G70S,23593.0,sg23593,大乘汽车,,,
+unmatched,unmatched_sales,奔腾x40新能源,奔腾X40新能源,23606.0,sg23606,奔腾,,,
+unmatched,unmatched_sales,领途kone,领途K-ONE,23608.0,sg23608,领途,,,
+unmatched,unmatched_sales,世锐phev,世锐PHEV,23694.0,sg23694,广汽集团,,,
+unmatched,unmatched_sales,观境,观境,23753.0,sg23753,金杯,,,
+unmatched,unmatched_sales,星越,星越,23836.0,sg23836,吉利汽车,,,
+unmatched,unmatched_sales,比亚迪s2,比亚迪S2,23984.0,sg23984,比亚迪,,,
+unmatched,unmatched_sales,江淮ievs4,江淮iEVS4,24183.0,sg24183,江淮,,,
+unmatched,unmatched_sales,雷诺e诺,雷诺 e诺,24224.0,sg24224,雷诺,,,
+unmatched,unmatched_sales,纳智捷urx,纳智捷URX,24233.0,sg24233,纳智捷,,,
+unmatched,unmatched_sales,长安欧尚科赛5,长安欧尚科赛5,24443.0,sg24443,长安欧尚,,,
+unmatched,unmatched_sales,启辰e30,启辰e30,24575.0,sg24575,启辰,,,
+unmatched,unmatched_sales,捷途x95,捷途X95,24613.0,sg24613,捷途,,,
+unmatched,unmatched_sales,科雷缤,科雷缤,24955.0,sg24955,雷诺,,,
+unmatched,unmatched_sales,雷丁i9,雷丁i9,24975.0,sg24975,雷丁,,,
+unmatched,unmatched_sales,荣威rx5emax,荣威RX5 eMAX,25051.0,sg25051,荣威,,,
+unmatched,unmatched_sales,冒险家新能源,冒险家新能源,25100.0,sg25100,林肯,,,
+unmatched,unmatched_sales,宝骏rs7,宝骏RS-7,25691.0,sg25691,宝骏,,,
+unmatched,unmatched_sales,海马6p,海马6P,26012.0,sg26012,海马,,,
+unmatched,unmatched_sales,枫叶30x,枫叶30x,26201.0,sg26201,睿蓝汽车,,,
+unmatched,unmatched_sales,嘉悦x7,嘉悦X7,26212.0,sg26212,江淮,,,
+unmatched,unmatched_sales,嘉悦x4,嘉悦X4,26241.0,sg26241,江淮,,,
+unmatched,unmatched_sales,瑞驰新能源s513,瑞驰新能源S513,26363.0,sg26363,瑞驰新能源,,,
+unmatched,unmatched_sales,长安欧尚科赛pro,长安欧尚科赛Pro,26704.0,sg26704,长安欧尚,,,
+unmatched,unmatched_sales,mg领航新能源,MG领航新能源,27044.0,sg27044,MG名爵,,,
+unmatched,unmatched_sales,思皓x7,思皓X7,27084.0,sg27084,思皓,,,
+unmatched,unmatched_sales,思皓x4,思皓X4,27085.0,sg27085,思皓,,,
+unmatched,unmatched_sales,玛奇朵dhtphev,玛奇朵DHT-PHEV,27464.0,sg27464,魏牌,,,
+unmatched,unmatched_sales,长安欧尚z6智电idd,长安欧尚Z6 智电iDD,28760.0,sg28760,长安欧尚,,,
+unmatched,unmatched_sales,极越01,极越01,28842.0,sg28842,极越,,,
+unmatched,unmatched_sales,e:np2极湃2,e:NP2 极湃2,29761.0,sg29761,本田,,,
+unmatched,unmatched_sales,本田e:ns2猎光,本田e:NS2猎光,29771.0,sg29771,本田,,,
+unmatched,unmatched_sales,哪吒aya,哪吒AYA,30064.0,sg30064,哪吒汽车,,,
+unmatched,unmatched_sales,捷途山海l9,捷途山海L9,30133.0,sg30133,捷途,,,
+unmatched,unmatched_sales,极氪mix,极氪MIX,30341.0,sg30341,极氪,,,
+unmatched,unmatched_sales,五菱星光s,五菱星光S,30489.0,sg30489,五菱,,,
+unmatched,unmatched_sales,宋ldmi,宋L DM-i,30526.0,sg30526,比亚迪,,,
+unmatched,unmatched_sales,海狮05dmi,海狮05DM-i,30534.0,sg30534,比亚迪,,,
+unmatched,unmatched_sales,mges5,MG ES5,30535.0,sg30535,MG名爵,,,
+unmatched,unmatched_sales,海狮07dmi,海狮07DM-i,30707.0,sg30707,比亚迪,,,
+unmatched,unmatched_sales,唐l,唐L,30724.0,sg30724,比亚迪,,,
+unmatched,unmatched_sales,海狮06dmi,海狮06DM-i,30842.0,sg30842,比亚迪,,,
+unmatched,unmatched_sales,至境e7,至境E7,30857.0,sg30857,别克,,,
+unmatched,unmatched_sales,大唐,大唐,30861.0,sg30861,比亚迪,,,
+unmatched,unmatched_sales,五菱星光560新能源,五菱星光560新能源,30926.0,sg30926,五菱,,,
+unmatched,unmatched_sales,星海x5,星海X5,30999.0,sg30999,东风风行,,,
+unmatched,unmatched_sales,五菱星光560,五菱星光560,31134.0,sg31134,五菱,,,
+unmatched,unmatched_sales,宋ultra,宋Ultra,31161.0,sg31161,比亚迪,,,
+unmatched,unmatched_sales,mg4x,MG 4X,31221.0,sg31221,MG名爵,,,
+unmatched,unmatched_sales,mg5,MG5,7195.0,sg7195,MG名爵,,,
+unmatched,unmatched_sales,桑塔纳,桑塔纳,100.0,sg100,大众,,,
+unmatched,unmatched_sales,锐程cc,锐程CC,25479.0,sg25479,长安,,,
+unmatched,unmatched_sales,启悦,启悦,10846.0,sg10846,铃木,,,
+unmatched,unmatched_sales,博瑞,博瑞,22825.0,sg22825,吉利汽车,,,
+unmatched,unmatched_sales,英菲尼迪q50l,英菲尼迪Q50L,11342.0,sg11342,英菲尼迪,,,
+unmatched,unmatched_sales,雷凌双擎e+,雷凌双擎E+,13351.0,sg13351,丰田,,,
+unmatched,unmatched_sales,领动插电混动,领动 插电混动,24680.0,sg24680,现代,,,
+unmatched,unmatched_sales,传祺ga4,传祺GA4,14221.0,sg14221,广汽传祺,,,
+unmatched,unmatched_sales,零跑s01,零跑S01,22333.0,sg22333,零跑汽车,,,
+unmatched,unmatched_sales,奥拓,奥拓,23.0,sg23,铃木,,,
+unmatched,unmatched_sales,羚羊,羚羊,25.0,sg25,铃木,,,
+unmatched,unmatched_sales,捷达,捷达,89.0,sg89,大众,,,
+unmatched,unmatched_sales,蓝鸟,蓝鸟,129.0,sg129,日产,,,
+unmatched,unmatched_sales,福美来,福美来,294.0,sg294,海马,,,
+unmatched,unmatched_sales,标致307,标致307,319.0,sg319,标致,,,
+unmatched,unmatched_sales,马自达6,马自达6,354.0,sg354,马自达,,,
+unmatched,unmatched_sales,阳光,阳光,377.0,sg377,日产,,,
+unmatched,unmatched_sales,爱迪尔,爱迪尔,419.0,sg419,北汽昌河,,,
+unmatched,unmatched_sales,花冠,花冠,487.0,sg487,丰田,,,
+unmatched,unmatched_sales,江南tt,江南TT,793.0,sg793,众泰,,,
+unmatched,unmatched_sales,尊驰,尊驰,865.0,sg865,中华,,,
+unmatched,unmatched_sales,皇冠,皇冠,933.0,sg933,丰田,,,
+unmatched,unmatched_sales,赛欧,赛欧,954.0,sg954,雪佛兰,,,
+unmatched,unmatched_sales,雨燕,雨燕,1053.0,sg1053,铃木,,,
+unmatched,unmatched_sales,锐志,锐志,1177.0,sg1177,丰田,,,
+unmatched,unmatched_sales,爱唯欧,爱唯欧,1376.0,sg1376,雪佛兰,,,
+unmatched,unmatched_sales,迈锐宝,迈锐宝,1397.0,sg1397,雪佛兰,,,
+unmatched,unmatched_sales,普锐斯,普锐斯,1564.0,sg1564,丰田,,,
+unmatched,unmatched_sales,利亚纳,利亚纳,1583.0,sg1583,铃木,,,
+unmatched,unmatched_sales,骏捷,骏捷,1584.0,sg1584,中华,,,
+unmatched,unmatched_sales,力帆520,力帆520,1623.0,sg1623,力帆,,,
+unmatched,unmatched_sales,马自达3,马自达3,1649.0,sg1649,马自达,,,
+unmatched,unmatched_sales,蓝瑟,蓝瑟,1884.0,sg1884,三菱,,,
+unmatched,unmatched_sales,新金刚,新金刚,1893.0,sg1893,吉利汽车,,,
+unmatched,unmatched_sales,荣威750,荣威750,1984.0,sg1984,荣威,,,
+unmatched,unmatched_sales,远景,远景,2063.0,sg2063,吉利汽车,,,
+unmatched,unmatched_sales,雪铁龙c2,雪铁龙C2,2064.0,sg2064,雪铁龙,,,
+unmatched,unmatched_sales,威志,威志,2113.0,sg2113,一汽,,,
+unmatched,unmatched_sales,戈蓝,戈蓝,2173.0,sg2173,三菱,,,
+unmatched,unmatched_sales,天语sx4,天语SX4,2203.0,sg2203,铃木,,,
+unmatched,unmatched_sales,锐欧,锐欧,2323.0,sg2323,起亚,,,
+unmatched,unmatched_sales,奇瑞a1,奇瑞A1,2443.0,sg2443,奇瑞,,,
+unmatched,unmatched_sales,林荫大道,林荫大道,2514.0,sg2514,别克,,,
+unmatched,unmatched_sales,骊威,骊威,2543.0,sg2543,日产,,,
+unmatched,unmatched_sales,自由舰,自由舰,3001.0,sg3001,吉利汽车,,,
+unmatched,unmatched_sales,景逸,景逸,3044.0,sg3044,东风风行,,,
+unmatched,unmatched_sales,赛拉图,赛拉图,3094.0,sg3094,起亚,,,
+unmatched,unmatched_sales,马自达2,马自达2,3124.0,sg3124,马自达,,,
+unmatched,unmatched_sales,乐驰,乐驰,3182.0,sg3182,宝骏,,,
+unmatched,unmatched_sales,骏捷frv,骏捷FRV,3184.0,sg3184,中华,,,
+unmatched,unmatched_sales,凯越,凯越,3188.0,sg3188,别克,,,
+unmatched,unmatched_sales,力帆520i,力帆520i,3192.0,sg3192,力帆,,,
+unmatched,unmatched_sales,荣威550,荣威550,3234.0,sg3234,荣威,,,
+unmatched,unmatched_sales,经典世嘉,经典世嘉,3254.0,sg3254,雪铁龙,,,
+unmatched,unmatched_sales,比亚迪f0,比亚迪F0,3264.0,sg3264,比亚迪,,,
+unmatched,unmatched_sales,奇瑞a3,奇瑞A3,3275.0,sg3275,奇瑞,,,
+unmatched,unmatched_sales,经典熊猫,经典熊猫,3295.0,sg3295,吉利汽车,,,
+unmatched,unmatched_sales,力帆320,力帆320,3314.0,sg3314,力帆,,,
+unmatched,unmatched_sales,力帆620,力帆620,3315.0,sg3315,力帆,,,
+unmatched,unmatched_sales,和悦a13,和悦A13,3324.0,sg3324,江淮,,,
+unmatched,unmatched_sales,v3菱悦,V3菱悦,3337.0,sg3337,东南,,,
+unmatched,unmatched_sales,睿翼,睿翼,3374.0,sg3374,马自达,,,
+unmatched,unmatched_sales,晶锐,晶锐,3474.0,sg3474,斯柯达,,,
+unmatched,unmatched_sales,锋范,锋范,3539.0,sg3539,本田,,,
+unmatched,unmatched_sales,秀尔,秀尔,3540.0,sg3540,起亚,,,
+unmatched,unmatched_sales,嘉年华,嘉年华,3542.0,sg3542,福特,,,
+unmatched,unmatched_sales,科鲁兹,科鲁兹,3544.0,sg3544,雪佛兰,,,
+unmatched,unmatched_sales,奔腾b50,奔腾B50,3624.0,sg3624,奔腾,,,
+unmatched,unmatched_sales,理念s1,理念S1,3626.0,sg3626,理念,,,
+unmatched,unmatched_sales,沃尔沃s80l,沃尔沃S80L,3725.0,sg3725,沃尔沃,,,
+unmatched,unmatched_sales,骏捷fsv,骏捷FSV,3785.0,sg3785,中华,,,
+unmatched,unmatched_sales,东风风神s30,东风风神S30,3904.0,sg3904,东风风神,,,
+unmatched,unmatched_sales,吉利英伦tx4,吉利英伦TX4,3945.0,sg3945,吉利汽车,,,
+unmatched,unmatched_sales,瑞麒g6,瑞麒G6,3954.0,sg3954,瑞麒,,,
+unmatched,unmatched_sales,比亚迪g3,比亚迪G3,3976.0,sg3976,比亚迪,,,
+unmatched,unmatched_sales,和悦,和悦,3985.0,sg3985,江淮,,,
+unmatched,unmatched_sales,悦悦,悦悦,3986.0,sg3986,江淮,,,
+unmatched,unmatched_sales,瑞麒m1,瑞麒M1,4004.0,sg4004,瑞麒,,,
+unmatched,unmatched_sales,长城c20r,长城C20R,4015.0,sg4015,长城,,,
+unmatched,unmatched_sales,丘比特,丘比特,4018.0,sg4018,海马,,,
+unmatched,unmatched_sales,吉利ec8,吉利EC8,4021.0,sg4021,吉利汽车,,,
+unmatched,unmatched_sales,荣威350,荣威350,4083.0,sg4083,荣威,,,
+unmatched,unmatched_sales,风云2,风云2,4100.0,sg4100,奇瑞,,,
+unmatched,unmatched_sales,雪铁龙c5,雪铁龙C5,4125.0,sg4125,雪铁龙,,,
+unmatched,unmatched_sales,翼神,翼神,4127.0,sg4127,三菱,,,
+unmatched,unmatched_sales,思铂睿,思铂睿,4132.0,sg4132,本田,,,
+unmatched,unmatched_sales,王子,王子,4265.0,sg4265,海马郑州,,,
+unmatched,unmatched_sales,名驭,名驭,4266.0,sg4266,现代,,,
+unmatched,unmatched_sales,夏利n5,夏利N5,4275.0,sg4275,一汽,,,
+unmatched,unmatched_sales,莲花l3,莲花L3,4347.0,sg4347,莲花汽车,,,
+unmatched,unmatched_sales,景程,景程,4350.0,sg4350,雪佛兰,,,
+unmatched,unmatched_sales,东风风神h30,东风风神H30,4445.0,sg4445,东风风神,,,
+unmatched,unmatched_sales,歌诗图,歌诗图,4491.0,sg4491,本田,,,
+unmatched,unmatched_sales,玛驰,玛驰,4503.0,sg4503,日产,,,
+unmatched,unmatched_sales,派喜,派喜,4504.0,sg4504,铃木,,,
+unmatched,unmatched_sales,凯迪拉克xts,凯迪拉克XTS,4512.0,sg4512,凯迪拉克,,,
+unmatched,unmatched_sales,比亚迪l3,比亚迪L3,4514.0,sg4514,比亚迪,,,
+unmatched,unmatched_sales,路盛e70,路盛E70,4564.0,sg4564,华泰,,,
+unmatched,unmatched_sales,长城c30,长城C30,4581.0,sg4581,长城,,,
+unmatched,unmatched_sales,长安cx20,长安CX20,4585.0,sg4585,长安,,,
+unmatched,unmatched_sales,北斗星,北斗星,4591.0,sg4591,铃木,,,
+unmatched,unmatched_sales,瑞纳,瑞纳,4611.0,sg4611,现代,,,
+unmatched,unmatched_sales,奔腾b30,奔腾B30,4640.0,sg4640,奔腾,,,
+unmatched,unmatched_sales,莲花l5,莲花L5,4650.0,sg4650,莲花汽车,,,
+unmatched,unmatched_sales,荣威950,荣威950,4664.0,sg4664,荣威,,,
+unmatched,unmatched_sales,荣威e50,荣威e50,4670.0,sg4670,荣威,,,
+unmatched,unmatched_sales,长城c50,长城C50,4674.0,sg4674,长城,,,
+unmatched,unmatched_sales,传祺ga5,传祺GA5,4680.0,sg4680,广汽传祺,,,
+unmatched,unmatched_sales,旗云3,旗云3,4704.0,sg4704,奇瑞,,,
+unmatched,unmatched_sales,旗云2,旗云2,4705.0,sg4705,奇瑞,,,
+unmatched,unmatched_sales,比亚迪g6,比亚迪G6,4718.0,sg4718,比亚迪,,,
+unmatched,unmatched_sales,夏利,夏利,5005.0,sg5005,一汽,,,
+unmatched,unmatched_sales,致胜,致胜,5025.0,sg5025,福特,,,
+unmatched,unmatched_sales,奔奔mini,奔奔Mini,5054.0,sg5054,长安,,,
+unmatched,unmatched_sales,威志v2,威志V2,5067.0,sg5067,一汽,,,
+unmatched,unmatched_sales,奔腾b90,奔腾B90,7085.0,sg7085,奔腾,,,
+unmatched,unmatched_sales,华泰b11,华泰B11,7086.0,sg7086,华泰,,,
+unmatched,unmatched_sales,天语尚悦,天语·尚悦,7099.0,sg7099,铃木,,,
+unmatched,unmatched_sales,起亚k2,起亚K2,7130.0,sg7130,起亚,,,
+unmatched,unmatched_sales,北京汽车e系列,北京汽车E系列,7169.0,sg7169,北京汽车,,,
+unmatched,unmatched_sales,逸动经典,逸动经典,7201.0,sg7201,长安,,,
+unmatched,unmatched_sales,欧力威,欧力威,7229.0,sg7229,长安欧尚,,,
+unmatched,unmatched_sales,奇瑞e5,奇瑞E5,7272.0,sg7272,奇瑞,,,
+unmatched,unmatched_sales,中华h530,中华H530,7280.0,sg7280,中华,,,
+unmatched,unmatched_sales,力帆720,力帆720,7291.0,sg7291,力帆,,,
+unmatched,unmatched_sales,海马爱尚,海马爱尚,7322.0,sg7322,海马郑州,,,
+unmatched,unmatched_sales,海马m3,海马M3,7324.0,sg7324,海马郑州,,,
+unmatched,unmatched_sales,夏利n7,夏利N7,7331.0,sg7331,一汽,,,
+unmatched,unmatched_sales,众泰z360,众泰Z360,7538.0,sg7538,众泰,,,
+unmatched,unmatched_sales,v5菱致,V5菱致,7542.0,sg7542,东南,,,
+unmatched,unmatched_sales,马自达3星骋,马自达3星骋,7565.0,sg7565,马自达,,,
+unmatched,unmatched_sales,野马e系,野马E系,7571.0,sg7571,野马汽车,,,
+unmatched,unmatched_sales,启辰d50,启辰D50,7669.0,sg7669,启辰,,,
+unmatched,unmatched_sales,绅宝d70,绅宝D70,7681.0,sg7681,北京汽车,,,
+unmatched,unmatched_sales,悦翔v3,悦翔V3,7742.0,sg7742,长安,,,
+unmatched,unmatched_sales,欧朗,欧朗,7819.0,sg7819,欧朗,,,
+unmatched,unmatched_sales,威志v5,威志V5,7999.0,sg7999,一汽,,,
+unmatched,unmatched_sales,思铭,思铭,8001.0,sg8001,思铭,,,
+unmatched,unmatched_sales,中华h230,中华H230,8019.0,sg8019,中华,,,
+unmatched,unmatched_sales,朗动,朗动,8049.0,sg8049,现代,,,
+unmatched,unmatched_sales,菲翔,菲翔,8059.0,sg8059,菲亚特,,,
+unmatched,unmatched_sales,腾势经典,腾势经典,8089.0,sg8089,腾势,,,
+unmatched,unmatched_sales,纳5,纳5,8099.0,sg8099,纳智捷,,,
+unmatched,unmatched_sales,v6菱仕,V6菱仕,8129.0,sg8129,东南,,,
+unmatched,unmatched_sales,雪铁龙c4l,雪铁龙C4L,8331.0,sg8331,雪铁龙,,,
+unmatched,unmatched_sales,启辰r50,启辰R50,8390.0,sg8390,启辰,,,
+unmatched,unmatched_sales,速锐,速锐,8440.0,sg8440,比亚迪,,,
+unmatched,unmatched_sales,中华h320,中华H320,8470.0,sg8470,中华,,,
+unmatched,unmatched_sales,思锐,思锐,8550.0,sg8550,比亚迪,,,
+unmatched,unmatched_sales,力帆530,力帆530,8572.0,sg8572,力帆,,,
+unmatched,unmatched_sales,奇瑞e3,奇瑞E3,8580.0,sg8580,奇瑞,,,
+unmatched,unmatched_sales,晨风,晨风,8710.0,sg8710,启辰,,,
+unmatched,unmatched_sales,和悦a30,和悦A30,8711.0,sg8711,江淮,,,
+unmatched,unmatched_sales,海马m8,海马M8,8760.0,sg8760,海马,,,
+unmatched,unmatched_sales,观致3,观致3,8840.0,sg8840,观致,,,
+unmatched,unmatched_sales,海马m6,海马M6,8910.0,sg8910,海马郑州,,,
+unmatched,unmatched_sales,传祺ga3,传祺GA3,9090.0,sg9090,广汽传祺,,,
+unmatched,unmatched_sales,众泰z100,众泰Z100,9181.0,sg9181,众泰,,,
+unmatched,unmatched_sales,朗逸两厢,朗逸两厢,9191.0,sg9191,大众,,,
+unmatched,unmatched_sales,中华h330,中华H330,9192.0,sg9192,中华,,,
+unmatched,unmatched_sales,逸动xt,逸动XT,9200.0,sg9200,长安,,,
+unmatched,unmatched_sales,艾瑞泽7,艾瑞泽7,9313.0,sg9313,奇瑞,,,
+unmatched,unmatched_sales,力帆330,力帆330,9318.0,sg9318,力帆,,,
+unmatched,unmatched_sales,力帆630,力帆630,9319.0,sg9319,力帆,,,
+unmatched,unmatched_sales,杰德,杰德,9322.0,sg9322,本田,,,
+unmatched,unmatched_sales,中华h220,中华H220,9327.0,sg9327,中华,,,
+unmatched,unmatched_sales,红旗国礼,红旗国礼,9488.0,sg9488,红旗,,,
+unmatched,unmatched_sales,ds5,DS 5,9656.0,sg9656,DS,,,
+unmatched,unmatched_sales,艾瑞泽3,艾瑞泽3,9809.0,sg9809,奇瑞,,,
+unmatched,unmatched_sales,力帆820,力帆820,9887.0,sg9887,力帆,,,
+unmatched,unmatched_sales,起亚k4,起亚K4,10018.0,sg10018,起亚,,,
+unmatched,unmatched_sales,利亚纳a6,利亚纳A6,10048.0,sg10048,铃木,,,
+unmatched,unmatched_sales,ottimo致悦,Ottimo致悦,10069.0,sg10069,菲亚特,,,
+unmatched,unmatched_sales,奔奔,奔奔,10109.0,sg10109,长安,,,
+unmatched,unmatched_sales,ds5ls,DS 5LS,10199.0,sg10199,DS,,,
+unmatched,unmatched_sales,起亚k3s,起亚K3S,10331.0,sg10331,起亚,,,
+unmatched,unmatched_sales,比亚迪g5,比亚迪G5,10370.0,sg10370,比亚迪,,,
+unmatched,unmatched_sales,江淮iev,江淮iEV,10460.0,sg10460,江淮,,,
+unmatched,unmatched_sales,众泰z560,众泰Z560,10500.0,sg10500,众泰,,,
+unmatched,unmatched_sales,悦翔v7,悦翔V7,10640.0,sg10640,长安,,,
+unmatched,unmatched_sales,东风a9,东风A9,10821.0,sg10821,东风风神,,,
+unmatched,unmatched_sales,东风风神l60,东风风神L60,10856.0,sg10856,东风风神,,,
+unmatched,unmatched_sales,启辰r30,启辰R30,10871.0,sg10871,启辰,,,
+unmatched,unmatched_sales,瑞风a60,瑞风A60,10902.0,sg10902,江淮,,,
+unmatched,unmatched_sales,众泰e20,众泰E20,10921.0,sg10921,众泰,,,
+unmatched,unmatched_sales,凯迪拉克atsl,凯迪拉克ATS-L,10951.0,sg10951,凯迪拉克,,,
+unmatched,unmatched_sales,知豆,知豆,10981.0,sg10981,知豆,,,
+unmatched,unmatched_sales,东风风神a30,东风风神A30,11021.0,sg11021,东风风神,,,
+unmatched,unmatched_sales,名爵gt锐行,名爵GT 锐行,11161.0,sg11161,MG名爵,,,
+unmatched,unmatched_sales,传祺ga3s视界,传祺GA3S视界,11231.0,sg11231,广汽传祺,,,
+unmatched,unmatched_sales,绅宝d60,绅宝D60,11292.0,sg11292,北京汽车,,,
+unmatched,unmatched_sales,凯翼c3,凯翼C3,11372.0,sg11372,凯翼,,,
+unmatched,unmatched_sales,凯翼c3r,凯翼C3R,11373.0,sg11373,凯翼,,,
+unmatched,unmatched_sales,绅宝d20,绅宝D20,11483.0,sg11483,北京汽车,,,
+unmatched,unmatched_sales,云100,云100,11577.0,sg11577,众泰,,,
+unmatched,unmatched_sales,奇瑞eq,奇瑞eQ,11697.0,sg11697,奇瑞新能源,,,
+unmatched,unmatched_sales,东风风神e30,东风风神E30,11747.0,sg11747,东风风神,,,
+unmatched,unmatched_sales,标致308s,标致308S,11748.0,sg11748,标致,,,
+unmatched,unmatched_sales,绅宝d80,绅宝D80,11759.0,sg11759,北京汽车,,,
+unmatched,unmatched_sales,绅宝cc,绅宝 - CC,11807.0,sg11807,北京汽车,,,
+unmatched,unmatched_sales,ev系列,EV系列,11889.0,sg11889,北汽新能源,,,
+unmatched,unmatched_sales,es210,ES210,11899.0,sg11899,北汽新能源,,,
+unmatched,unmatched_sales,众泰z700,众泰Z700,12001.0,sg12001,众泰,,,
+unmatched,unmatched_sales,知豆d1,知豆D1,12071.0,sg12071,知豆,,,
+unmatched,unmatched_sales,荣威e550,荣威e550,12331.0,sg12331,荣威,,,
+unmatched,unmatched_sales,众泰e200,众泰E200,12572.0,sg12572,众泰,,,
+unmatched,unmatched_sales,桑塔纳浩纳,桑塔纳·浩纳,12583.0,sg12583,大众,,,
+unmatched,unmatched_sales,芝麻,芝麻,12585.0,sg12585,众泰,,,
+unmatched,unmatched_sales,力帆x70,力帆X70,12603.0,sg12603,力帆,,,
+unmatched,unmatched_sales,v5plus,V5 plus,12764.0,sg12764,东南,,,
+unmatched,unmatched_sales,荣威360,荣威360,12774.0,sg12774,荣威,,,
+unmatched,unmatched_sales,知豆d2,知豆D2,12794.0,sg12794,知豆,,,
+unmatched,unmatched_sales,全球鹰k10,全球鹰K10,12875.0,sg12875,全球鹰,,,
+unmatched,unmatched_sales,全球鹰k11,全球鹰K11,12876.0,sg12876,全球鹰,,,
+unmatched,unmatched_sales,哥瑞,哥瑞,12884.0,sg12884,本田,,,
+unmatched,unmatched_sales,c4世嘉,C4世嘉,13018.0,sg13018,雪铁龙,,,
+unmatched,unmatched_sales,奇瑞qq3ev,奇瑞QQ3EV,13168.0,sg13168,奇瑞新能源,,,
+unmatched,unmatched_sales,乐风rv,乐风RV,13278.0,sg13278,雪佛兰,,,
+unmatched,unmatched_sales,北汽新能源eu,北汽新能源EU,13388.0,sg13388,北汽新能源,,,
+unmatched,unmatched_sales,西玛,西玛,13397.0,sg13397,日产,,,
+unmatched,unmatched_sales,领动,领动,13398.0,sg13398,现代,,,
+unmatched,unmatched_sales,荣威e950,荣威e950,13520.0,sg13520,荣威,,,
+unmatched,unmatched_sales,宝骏e100,宝骏E100,13625.0,sg13625,宝骏,,,
+unmatched,unmatched_sales,锐3,锐3,13745.0,sg13745,纳智捷,,,
+unmatched,unmatched_sales,中华h3,中华H3,13746.0,sg13746,中华,,,
+unmatched,unmatched_sales,帝豪gl,帝豪GL,13867.0,sg13867,吉利汽车,,,
+unmatched,unmatched_sales,江南t11,江南T11,13908.0,sg13908,众泰,,,
+unmatched,unmatched_sales,比亚迪e5,比亚迪e5,14091.0,sg14091,比亚迪,,,
+unmatched,unmatched_sales,江淮iev7,江淮iEV7,14191.0,sg14191,江淮,,,
+unmatched,unmatched_sales,江淮iev6e,江淮iEV6E,14194.0,sg14194,江淮,,,
+unmatched,unmatched_sales,骏派a70,骏派A70,14265.0,sg14265,一汽,,,
+unmatched,unmatched_sales,江铃e200l,江铃E200L,20454.0,sg20454,江铃集团新能源,,,
+unmatched,unmatched_sales,全球鹰k12,全球鹰K12,20522.0,sg20522,全球鹰,,,
+unmatched,unmatched_sales,全球鹰k17,全球鹰K17,20524.0,sg20524,全球鹰,,,
+unmatched,unmatched_sales,路盛e80,路盛E80,20642.0,sg20642,华泰,,,
+unmatched,unmatched_sales,竞瑞,竞瑞,20652.0,sg20652,本田,,,
+unmatched,unmatched_sales,海马e3,海马E3,20762.0,sg20762,海马新能源,,,
+unmatched,unmatched_sales,江铃e100,江铃E100,20892.0,sg20892,江铃集团新能源,,,
+unmatched,unmatched_sales,悦纳rv,悦纳RV,20912.0,sg20912,现代,,,
+unmatched,unmatched_sales,velite5,VELITE 5,21072.0,sg21072,别克,,,
+unmatched,unmatched_sales,力帆650,力帆650,21086.0,sg21086,力帆,,,
+unmatched,unmatched_sales,中华h230ev,中华H230EV,21332.0,sg21332,中华,,,
+unmatched,unmatched_sales,众泰z500ev,众泰Z500EV,21434.0,sg21434,众泰,,,
+unmatched,unmatched_sales,奔奔ev,奔奔EV,21435.0,sg21435,长安,,,
+unmatched,unmatched_sales,起亚k5新能源,起亚K5新能源,21439.0,sg21439,起亚,,,
+unmatched,unmatched_sales,传祺ga5新能源,传祺GA5新能源,21446.0,sg21446,广汽传祺,,,
+unmatched,unmatched_sales,力帆620新能源,力帆620新能源,21457.0,sg21457,力帆,,,
+unmatched,unmatched_sales,骏派cx65,骏派CX65,21587.0,sg21587,一汽,,,
+unmatched,unmatched_sales,骏派a50,骏派A50,21613.0,sg21613,一汽,,,
+unmatched,unmatched_sales,传祺ga3sphev,传祺GA3S PHEV,21623.0,sg21623,广汽传祺,,,
+unmatched,unmatched_sales,讴歌tlxl,讴歌TLX-L,21647.0,sg21647,讴歌,,,
+unmatched,unmatched_sales,力帆820新能源,力帆820新能源,21657.0,sg21657,力帆,,,
+unmatched,unmatched_sales,江铃e160,江铃E160,21703.0,sg21703,江铃集团新能源,,,
+unmatched,unmatched_sales,睿骋cc,睿骋CC,21704.0,sg21704,长安,,,
+unmatched,unmatched_sales,长城c30新能源,长城C30新能源,21764.0,sg21764,长城,,,
+unmatched,unmatched_sales,北斗星x5e,北斗星X5E,21923.0,sg21923,北汽昌河,,,
+unmatched,unmatched_sales,众泰z300,众泰Z300,21924.0,sg21924,众泰,,,
+unmatched,unmatched_sales,众泰z500,众泰Z500,21925.0,sg21925,众泰,,,
+unmatched,unmatched_sales,欧力威ev,欧力威EV,21933.0,sg21933,长安欧尚,,,
+unmatched,unmatched_sales,骏派a70e,骏派A70E,21943.0,sg21943,一汽,,,
+unmatched,unmatched_sales,华泰ev160r,华泰EV160R,21955.0,sg21955,华泰新能源,,,
+unmatched,unmatched_sales,起亚kxcross,起亚KX CROSS,21964.0,sg21964,起亚,,,
+unmatched,unmatched_sales,凯绅,凯绅,22063.0,sg22063,起亚,,,
+unmatched,unmatched_sales,华骐300e,华骐300E,22113.0,sg22113,华骐,,,
+unmatched,unmatched_sales,lite,LITE,22189.0,sg22189,LITE,,,
+unmatched,unmatched_sales,裕路ev2,裕路EV2,22243.0,sg22243,裕路,,,
+unmatched,unmatched_sales,御捷e行,御捷E行,22293.0,sg22293,御捷,,,
+unmatched,unmatched_sales,知豆d3,知豆D3,22317.0,sg22317,知豆,,,
+unmatched,unmatched_sales,电咖ev10,电咖·EV10,22318.0,sg22318,电咖,,,
+unmatched,unmatched_sales,凯翼e3,凯翼E3,22326.0,sg22326,凯翼,,,
+unmatched,unmatched_sales,风行s500ev,风行S500EV,22354.0,sg22354,东风风行,,,
+unmatched,unmatched_sales,圣达菲2,圣达菲2,22411.0,sg22411,华泰新能源,,,
+unmatched,unmatched_sales,路盛s1,路盛S1,22413.0,sg22413,华泰新能源,,,
+unmatched,unmatched_sales,帝豪gl新能源,帝豪GL新能源,22633.0,sg22633,吉利汽车,,,
+unmatched,unmatched_sales,江淮ieva50,江淮iEVA50,22723.0,sg22723,江淮,,,
+unmatched,unmatched_sales,逸动dt,逸动DT,22734.0,sg22734,长安,,,
+unmatched,unmatched_sales,力帆650新能源,力帆650新能源,22853.0,sg22853,力帆,,,
+unmatched,unmatched_sales,艾瑞泽gx,艾瑞泽GX,22938.0,sg22938,奇瑞,,,
+unmatched,unmatched_sales,逸行,逸行,22987.0,sg22987,现代,,,
+unmatched,unmatched_sales,欧拉iq,欧拉iQ,22991.0,sg22991,欧拉,,,
+unmatched,unmatched_sales,朗逸纯电,朗逸纯电,23325.0,sg23325,大众,,,
+unmatched,unmatched_sales,秦pro,秦Pro,23433.0,sg23433,比亚迪,,,
+unmatched,unmatched_sales,秦pro新能源,秦Pro新能源,23683.0,sg23683,比亚迪,,,
+unmatched,unmatched_sales,富康es500,富康ES500,23803.0,sg23803,东风富康,,,
+unmatched,unmatched_sales,尼欧ii,尼欧Ⅱ,23823.0,sg23823,长安欧尚,,,
+unmatched,unmatched_sales,高尔夫纯电,高尔夫·纯电,23893.0,sg23893,大众,,,
+unmatched,unmatched_sales,领途e骋,领途E骋,23993.0,sg23993,领途,,,
+unmatched,unmatched_sales,比亚迪e1,比亚迪e1,24143.0,sg24143,比亚迪,,,
+unmatched,unmatched_sales,北京eu7,北京EU7,24453.0,sg24453,北京汽车,,,
+unmatched,unmatched_sales,睿行es30,睿行ES30,24855.0,sg24855,长安凯程,,,
+unmatched,unmatched_sales,宝骏rc6,宝骏RC-6,24895.0,sg24895,宝骏,,,
+unmatched,unmatched_sales,雷丁i3,雷丁i3,24965.0,sg24965,雷丁,,,
+unmatched,unmatched_sales,雷丁i5,雷丁i5,24995.0,sg24995,雷丁,,,
+unmatched,unmatched_sales,秦,秦,25279.0,sg25279,比亚迪,,,
+unmatched,unmatched_sales,嘉悦a5,嘉悦A5,25291.0,sg25291,江淮,,,
+unmatched,unmatched_sales,江淮ic5,江淮iC5,25732.0,sg25732,江淮,,,
+unmatched,unmatched_sales,宝骏e300,宝骏E300,25833.0,sg25833,宝骏,,,
+unmatched,unmatched_sales,荣威i6max,荣威i6 MAX,26504.0,sg26504,荣威,,,
+unmatched,unmatched_sales,凯翼e5ev,凯翼E5 EV,26691.0,sg26691,凯翼,,,
+unmatched,unmatched_sales,mgcyberster,MG Cyberster,27404.0,sg27404,MG名爵,,,
+unmatched,unmatched_sales,红旗国雅,红旗国雅,27631.0,sg27631,红旗,,,
+unmatched,unmatched_sales,思皓爱跑,思皓爱跑,28725.0,sg28725,思皓,,,
+unmatched,unmatched_sales,无界pro,无界PRO,28726.0,sg28726,奇瑞新能源,,,
+unmatched,unmatched_sales,东南dx8plus,东南DX8 PLUS,28964.0,sg28964,东南,,,
+unmatched,unmatched_sales,极越07,极越07,29412.0,sg29412,极越,,,
+unmatched,unmatched_sales,智界s7,智界S7,30083.0,sg30083,鸿蒙智行,,,
+unmatched,unmatched_sales,仰望u7,仰望U7,30352.0,sg30352,仰望,,,
+unmatched,unmatched_sales,享界s9,享界S9,30392.0,sg30392,鸿蒙智行,,,
+unmatched,unmatched_sales,腾势z9gt,腾势Z9GT,30414.0,sg30414,腾势,,,
+unmatched,unmatched_sales,吉利星愿,吉利星愿,30536.0,sg30536,吉利银河,,,
+unmatched,unmatched_sales,宝骏享境,宝骏享境,30548.0,sg30548,宝骏,,,
+unmatched,unmatched_sales,尊界s800,尊界S800,30647.0,sg30647,鸿蒙智行,,,
+unmatched,unmatched_sales,海豹05dmi,海豹05DM-i,30705.0,sg30705,比亚迪,,,
+unmatched,unmatched_sales,极氪007gt,极氪007 GT,30726.0,sg30726,极氪,,,
+unmatched,unmatched_sales,汉l,汉L,30736.0,sg30736,比亚迪,,,
+unmatched,unmatched_sales,银河星耀8,银河星耀8,30795.0,sg30795,吉利银河,,,
+unmatched,unmatched_sales,悦意08,悦意08,30840.0,sg30840,奔腾,,,
+unmatched,unmatched_sales,至境l7,至境L7,30856.0,sg30856,别克,,,
+unmatched,unmatched_sales,海豹06dmi旅行版,海豹06DM-i旅行版,30860.0,sg30860,比亚迪,,,
+unmatched,unmatched_sales,银河a7,银河A7,30889.0,sg30889,吉利银河,,,
+unmatched,unmatched_sales,荣威m7,荣威M7,30897.0,sg30897,荣威,,,
+unmatched,unmatched_sales,五菱缤果s,五菱缤果S,30916.0,sg30916,五菱,,,
+unmatched,unmatched_sales,享界s9t,享界S9T,30923.0,sg30923,鸿蒙智行,,,
+unmatched,unmatched_sales,睿蓝蓝气球,睿蓝蓝气球,30949.0,sg30949,睿蓝汽车,,,
+unmatched,unmatched_sales,昊铂a800,昊铂A800,30957.0,sg30957,昊铂,,,
+unmatched,unmatched_sales,smart精灵#6ehd,smart精灵#6 EHD,31114.0,sg31114,smart,,,
+unmatched,unmatched_sales,五菱缤果pro,五菱缤果Pro,31120.0,sg31120,五菱,,,
+unmatched,unmatched_sales,尚界z7,尚界Z7,31153.0,sg31153,鸿蒙智行,,,
+unmatched,unmatched_sales,尚界z7t,尚界Z7T,31193.0,sg31193,鸿蒙智行,,,
+unmatched,unmatched_sales,红旗h7phev,红旗H7 PHEV,31265.0,sg31265,红旗,,,
+unmatched,unmatched_config,五菱荣光,,,,,五菱荣光,1291,五菱汽车
+unmatched,unmatched_config,五菱之光,,,,,五菱之光,1292,五菱汽车
+unmatched,unmatched_config,五菱荣光v,,,,,五菱荣光V,1293,五菱汽车
+unmatched,unmatched_config,长安uniz,,,,,长安UNI-Z,24540,长安
+unmatched,unmatched_config,五菱之光ev,,,,,五菱之光EV,24927,五菱汽车
+unmatched,unmatched_config,风云x3,,,,,风云X3,25544,奇瑞风云
+unmatched,unmatched_config,华境s,,,,,华境S,25695,华境
+unmatched,unmatched_config,北汽l6h,,,,,北汽L6H,25741,北京汽车制造厂
+unmatched,unmatched_config,长安之星9ev,,,,,长安之星9 EV,3022,长安凯程
+unmatched,unmatched_config,五菱宏光v,,,,,五菱宏光V,3192,五菱汽车
+unmatched,unmatched_config,五菱荣光ev,,,,,五菱荣光EV,4320,五菱汽车
+unmatched,unmatched_config,polestar3,,,,,Polestar 3,5356,Polestar极星
+unmatched,unmatched_config,新龙马汽车启腾m70,,,,,新龙马汽车启腾M70,558,新龙马汽车
+unmatched,unmatched_config,江豚,,,,,江豚,5855,开瑞
+unmatched,unmatched_config,瑞驰ec75,,,,,瑞驰EC75,9255,瑞驰
+unmatched,unmatched_config,标致2008,,,,,标致2008,sg10059,标致
+unmatched,unmatched_config,创酷,,,,,创酷,1357,雪佛兰
+unmatched,unmatched_config,北京bj80,,,,,北京BJ80,sg10858,北京越野
+unmatched,unmatched_config,沃尔沃xc60,,,,,沃尔沃XC60,1282,沃尔沃
+unmatched,unmatched_config,揽胜极光,,,,,揽胜极光,993,路虎
+unmatched,unmatched_config,英菲尼迪qx50,,,,,英菲尼迪QX50,1423,英菲尼迪
+unmatched,unmatched_config,撼路者,,,,,撼路者,sg11717,福特
+unmatched,unmatched_config,传祺gs4,,,,,传祺GS4,616,广汽传祺
+unmatched,unmatched_config,奔驰gla,,,,,奔驰GLA,215,奔驰
+unmatched,unmatched_config,途睿欧,,,,,途睿欧,573,福特
+unmatched,unmatched_config,博越,,,,,博越,741,吉利汽车
+unmatched,unmatched_config,凯迪拉克ct6,,,,,凯迪拉克CT6,859,凯迪拉克
+unmatched,unmatched_config,森雅r7,,,,,森雅R7,sg13489,一汽
+unmatched,unmatched_config,雪铁龙c6,,,,,雪铁龙C6,sg13624,雪铁龙
+unmatched,unmatched_config,风光580,,,,,风光580,436,东风风光
+unmatched,unmatched_config,辉昂,,,,,辉昂,sg13918,大众
+unmatched,unmatched_config,荣威rx5,,,,,荣威RX5,1182,荣威
+unmatched,unmatched_config,传祺gs8,,,,,传祺GS8,617,广汽传祺
+unmatched,unmatched_config,红旗hs7,,,,,红旗HS7,2151,红旗
+unmatched,unmatched_config,宝骏510,,,,,宝骏510,sg20563,宝骏
+unmatched,unmatched_config,领克01,,,,,领克01,1622,领克
+unmatched,unmatched_config,传祺gs3,,,,,传祺GS3,1621,广汽传祺
+unmatched,unmatched_config,小蚂蚁,,,,,小蚂蚁,sg20982,奇瑞新能源
+unmatched,unmatched_config,名爵zs,,,,,名爵ZS,sg21032,MG名爵
+unmatched,unmatched_config,柯迪亚克,,,,,柯迪亚克,1245,斯柯达
+unmatched,unmatched_config,荣威i6,,,,,荣威i6,25925,荣威
+unmatched,unmatched_config,天逸c5aircross,,,,,天逸 C5 AIRCROSS,1642,雪铁龙
+unmatched,unmatched_config,帝豪新能源,,,,,帝豪新能源,sg21432,吉利汽车
+unmatched,unmatched_config,沃尔沃s60新能源,,,,,沃尔沃S60新能源,sg21436,沃尔沃
+unmatched,unmatched_config,宝马x1新能源,,,,,宝马X1新能源,sg21443,宝马
+unmatched,unmatched_config,逸动新能源,,,,,逸动新能源,sg21444,长安
+unmatched,unmatched_config,劲客,,,,,劲客,1579,日产
+unmatched,unmatched_config,艾瑞泽5e,,,,,艾瑞泽5e,sg21512,奇瑞新能源
+unmatched,unmatched_config,嘉际,,,,,嘉际,sg21584,吉利汽车
+unmatched,unmatched_config,红旗h5经典,,,,,红旗H5经典,sg21585,红旗
+unmatched,unmatched_config,东风风神e70,,,,,东风风神E70,1655,东风风神
+unmatched,unmatched_config,蔚来es8,,,,,蔚来ES8,1616,蔚来
+unmatched,unmatched_config,风行s50ev,,,,,风行S50 EV,1810,东风风行
+unmatched,unmatched_config,菱智m5新能源,,,,,菱智M5新能源,sg21687,东风风行
+unmatched,unmatched_config,风光s560,,,,,风光S560,1712,东风风光
+unmatched,unmatched_config,哈弗m6,,,,,哈弗M6,sg21903,哈弗
+unmatched,unmatched_config,丰田chr,,,,,丰田C-HR,sg22014,丰田
+unmatched,unmatched_config,柯珞克,,,,,柯珞克,1661,斯柯达
+unmatched,unmatched_config,荣威ei5,,,,,荣威Ei5,sg22193,荣威
+unmatched,unmatched_config,沃尔沃xc60新能源,,,,,沃尔沃XC60新能源,sg22373,沃尔沃
+unmatched,unmatched_config,ds7,,,,,DS 7,sg22395,DS
+unmatched,unmatched_config,捷途x70,,,,,捷途X70,1938,捷途
+unmatched,unmatched_config,途达,,,,,途达,sg22673,日产
+unmatched,unmatched_config,宋max新能源,,,,,宋MAX新能源,sg22703,比亚迪
+unmatched,unmatched_config,swm斯威g01,,,,,SWM斯威G01,sg22755,SWM斯威汽车
+unmatched,unmatched_config,柯米克,,,,,柯米克,2826,斯柯达
+unmatched,unmatched_config,长安欧尚a600,,,,,长安欧尚A600,sg22843,长安凯程
+unmatched,unmatched_config,风光ix5,,,,,风光ix5,2813,东风风光
+unmatched,unmatched_config,捷豹epace,,,,,捷豹E-PACE,2816,捷豹
+unmatched,unmatched_config,风行t5,,,,,风行T5,2820,东风风行
+unmatched,unmatched_config,捷途x90,,,,,捷途X90,sg22941,捷途
+unmatched,unmatched_config,lafesta菲斯塔,,,,,LA FESTA菲斯塔,sg22970,现代
+unmatched,unmatched_config,星途追风,,,,,星途追风,3083,星途
+unmatched,unmatched_config,凯迪拉克xt4,,,,,凯迪拉克XT4,2971,凯迪拉克
+unmatched,unmatched_config,长安cs85coupe,,,,,长安CS85 COUPE,sg23273,长安
+unmatched,unmatched_config,蔚来es6,,,,,蔚来ES6,2843,蔚来
+unmatched,unmatched_config,领界,,,,,领界,sg23384,福特
+unmatched,unmatched_config,易至ev3,,,,,易至EV3,3028,江铃集团新能源
+unmatched,unmatched_config,吉利几何a,,,,,吉利几何A,3157,吉利几何
+unmatched,unmatched_config,长安cs35plus,,,,,长安CS35 PLUS,3052,长安
+unmatched,unmatched_config,途铠,,,,,途铠,sg23723,大众
+unmatched,unmatched_config,广汽本田ve1,,,,,广汽本田VE-1,sg23870,理念
+unmatched,unmatched_config,探岳phev,,,,,探岳PHEV,sg23974,大众
+unmatched,unmatched_config,风光ix7,,,,,风光ix7,sg24043,东风风光
+unmatched,unmatched_config,开拓者,,,,,开拓者,4196,雪佛兰
+unmatched,unmatched_config,polestar2,,,,,Polestar 2,3166,Polestar极星
+unmatched,unmatched_config,捷途x70sev,,,,,捷途X70S EV,sg24263,捷途
+unmatched,unmatched_config,捷达vs5,,,,,捷达VS5,3171,捷达
+unmatched,unmatched_config,捷达vs7,,,,,捷达VS7,3276,捷达
+unmatched,unmatched_config,奥迪q2letron,,,,,奥迪Q2L e-tron,sg24354,奥迪
+unmatched,unmatched_config,启辰d60ev,,,,,启辰D60 EV,3351,启辰
+unmatched,unmatched_config,沃尔沃xc40,,,,,沃尔沃XC40,3355,沃尔沃
+unmatched,unmatched_config,领克05,,,,,领克05,3463,领克
+unmatched,unmatched_config,零跑c11,,,,,零跑C11,4731,零跑汽车
+unmatched,unmatched_config,明锐,,,,,明锐,1241,斯柯达
+unmatched,unmatched_config,aionlx,,,,,AION LX,3503,埃安
+unmatched,unmatched_config,启辰t60ev,,,,,启辰T60 EV,3453,启辰
+unmatched,unmatched_config,宝骏rc5,,,,,宝骏RC-5,sg24583,宝骏
+unmatched,unmatched_config,风光e3,,,,,风光E3,sg24618,东风风光
+unmatched,unmatched_config,比亚迪e2,,,,,比亚迪e2,3455,比亚迪
+unmatched,unmatched_config,奕泽izoae进擎,,,,,奕泽IZOA E进擎,sg24630,丰田
+unmatched,unmatched_config,奔驰a级amg,,,,,奔驰A级AMG,3360,奔驰
+unmatched,unmatched_config,星途揽月,,,,,星途揽月,3720,星途
+unmatched,unmatched_config,swm斯威g05,,,,,SWM斯威G05,sg24774,SWM斯威汽车
+unmatched,unmatched_config,风景g5,,,,,风景G5,3742,福田
+unmatched,unmatched_config,奔腾t99,,,,,奔腾T99,sg25019,奔腾
+unmatched,unmatched_config,宝骏rs3,,,,,宝骏RS-3,sg25039,宝骏
+unmatched,unmatched_config,冒险家,,,,,冒险家,3981,林肯
+unmatched,unmatched_config,比亚迪e3,,,,,比亚迪e3,4076,比亚迪
+unmatched,unmatched_config,探影,,,,,探影,sg25149,大众
+unmatched,unmatched_config,畅巡,,,,,畅巡,sg25151,雪佛兰
+unmatched,unmatched_config,ds9新能源,,,,,DS 9新能源,sg25390,DS
+unmatched,unmatched_config,凯迪拉克ct4,,,,,凯迪拉克CT4,4182,凯迪拉克
+unmatched,unmatched_config,启辰星,,,,,启辰星,4276,启辰
+unmatched,unmatched_config,海马7x,,,,,海马7X,4201,海马
+unmatched,unmatched_config,炫界,,,,,炫界,4311,凯翼
+unmatched,unmatched_config,合创007,,,,,合创007,sg25872,合创汽车
+unmatched,unmatched_config,蔚来ec6,,,,,蔚来EC6,4357,蔚来
+unmatched,unmatched_config,发现运动版,,,,,发现运动版,sg25891,路虎
+unmatched,unmatched_config,大蚂蚁,,,,,大蚂蚁,sg25902,奇瑞新能源
+unmatched,unmatched_config,微蓝7,,,,,微蓝7,sg25971,别克
+unmatched,unmatched_config,极狐阿尔法tarcfoxαt,,,,,极狐 阿尔法T(ARCFOX αT),sg25982,ARCFOX极狐
+unmatched,unmatched_config,领克06,,,,,领克06,4342,领克
+unmatched,unmatched_config,领克06新能源,,,,,领克06新能源,sg25992,领克
+unmatched,unmatched_config,aionv,,,,,AION V,4426,埃安
+unmatched,unmatched_config,北京x7,,,,,北京X7,4422,北京汽车
+unmatched,unmatched_config,科莱威clever,,,,,科莱威CLEVER,sg26043,荣威
+unmatched,unmatched_config,上汽大通maxusd90pro,,,,,上汽大通MAXUS D90 Pro,sg26242,大通
+unmatched,unmatched_config,马自达cx30,,,,,马自达CX-30,4381,马自达
+unmatched,unmatched_config,航海家,,,,,航海家,4537,林肯
+unmatched,unmatched_config,奥迪etron,,,,,奥迪e-tron,sg26404,奥迪
+unmatched,unmatched_config,五菱凯捷,,,,,五菱凯捷,sg26411,五菱
+unmatched,unmatched_config,哈弗大狗,,,,,哈弗大狗,4563,哈弗
+unmatched,unmatched_config,飞行家,,,,,飞行家,4339,林肯
+unmatched,unmatched_config,坦克300,,,,,坦克300,4615,坦克
+unmatched,unmatched_config,本田life,,,,,本田LIFE,4663,本田
+unmatched,unmatched_config,岚图追光,,,,,岚图追光,sg26593,岚图汽车
+unmatched,unmatched_config,枫叶80v,,,,,枫叶80v,4688,睿蓝汽车
+unmatched,unmatched_config,极狐阿尔法sarcfoxαs,,,,,极狐 阿尔法S(ARCFOX αS),sg26664,ARCFOX极狐
+unmatched,unmatched_config,风行t5evo,,,,,风行T5 EVO,4654,东风风行
+unmatched,unmatched_config,发现运动版新能源,,,,,发现运动版新能源,sg26741,路虎
+unmatched,unmatched_config,悦虎,,,,,悦虎,4388,大运
+unmatched,unmatched_config,远志m1,,,,,远志M1,4542,大运
+unmatched,unmatched_config,本田crv新能源,,,,,本田CR-V新能源,sg26774,本田
+unmatched,unmatched_config,沃尔沃xc40新能源,,,,,沃尔沃XC40新能源,sg26811,沃尔沃
+unmatched,unmatched_config,领裕,,,,,领裕,4759,福特
+unmatched,unmatched_config,风光500,,,,,风光500,4703,东风风光
+unmatched,unmatched_config,岚图free,,,,,岚图FREE,sg26835,岚图
+unmatched,unmatched_config,星途凌云,,,,,星途凌云,4792,星途
+unmatched,unmatched_config,比亚迪d1,,,,,比亚迪D1,4638,比亚迪
+unmatched,unmatched_config,思皓a5,,,,,思皓A5,4755,思皓
+unmatched,unmatched_config,威兰达新能源,,,,,威兰达新能源,sg27029,丰田
+unmatched,unmatched_config,aiony,,,,,AION Y,4814,埃安
+unmatched,unmatched_config,思皓花仙子,,,,,思皓花仙子,4819,思皓
+unmatched,unmatched_config,rav4荣放双擎e+,,,,,RAV4荣放双擎E+,sg27091,丰田
+unmatched,unmatched_config,奔腾nat,,,,,奔腾NAT,sg27172,奔腾
+unmatched,unmatched_config,羿,,,,,羿,4858,江铃集团新能源
+unmatched,unmatched_config,智己ls7,,,,,智己LS7,4869,智己汽车
+unmatched,unmatched_config,魏牌摩卡新能源,,,,,魏牌 摩卡新能源,sg27202,魏牌
+unmatched,unmatched_config,福特电马,,,,,福特电马,sg27231,福特
+unmatched,unmatched_config,id6x,,,,,ID.6 X,4894,大众
+unmatched,unmatched_config,哈弗赤兔,,,,,哈弗赤兔,sg27301,哈弗
+unmatched,unmatched_config,起亚ev6,,,,,起亚EV6,4943,起亚
+unmatched,unmatched_config,飞凡r7,,,,,飞凡R7,4980,飞凡汽车
+unmatched,unmatched_config,元pro,,,,,元Pro,sg27403,比亚迪
+unmatched,unmatched_config,五菱星辰,,,,,五菱星辰,sg27453,五菱汽车
+unmatched,unmatched_config,轩度,,,,,轩度,5033,凯翼
+unmatched,unmatched_config,长安欧尚x7plus,,,,,长安欧尚X7 PLUS,sg27472,长安欧尚
+unmatched,unmatched_config,马自达cx30ev,,,,,马自达CX-30 EV,sg27501,马自达
+unmatched,unmatched_config,领克09,,,,,领克09,5081,领克
+unmatched,unmatched_config,哪吒s,,,,,哪吒S,sg27503,哪吒汽车
+unmatched,unmatched_config,星途瑶光,,,,,星途瑶光,5953,星途
+unmatched,unmatched_config,捷途x90plus,,,,,捷途X90 PLUS,5082,捷途
+unmatched,unmatched_config,坦克700新能源,,,,,坦克700新能源,sg27514,坦克
+unmatched,unmatched_config,合创z03,,,,,合创Z03,sg27516,合创汽车
+unmatched,unmatched_config,北京u5plus,,,,,北京U5 PLUS,5101,北京汽车
+unmatched,unmatched_config,风行游艇,,,,,风行游艇,sg27582,东风风行
+unmatched,unmatched_config,奔驰eqb,,,,,奔驰EQB,3932,奔驰
+unmatched,unmatched_config,启辰大v,,,,,启辰大V,5153,启辰
+unmatched,unmatched_config,传祺gs4plus,,,,,传祺GS4 PLUS,sg27745,广汽传祺
+unmatched,unmatched_config,奔驰eqa,,,,,奔驰EQA,1729,奔驰
+unmatched,unmatched_config,哈弗神兽,,,,,哈弗神兽,sg27804,哈弗
+unmatched,unmatched_config,mgone,,,,,MG ONE,sg27805,MG名爵
+unmatched,unmatched_config,金海狮,,,,,金海狮,sg27814,SRM鑫源
+unmatched,unmatched_config,坦克500,,,,,坦克500,5238,坦克
+unmatched,unmatched_config,领克09新能源,,,,,领克09新能源,sg27872,领克
+unmatched,unmatched_config,英菲尼迪qx60,,,,,英菲尼迪QX60,5294,英菲尼迪
+unmatched,unmatched_config,欧拉芭蕾猫,,,,,欧拉芭蕾猫,5297,欧拉
+unmatched,unmatched_config,欧萌达,,,,,欧萌达,5162,奇瑞
+unmatched,unmatched_config,坦克400,,,,,坦克400,5312,坦克
+unmatched,unmatched_config,smart精灵#1,,,,,smart精灵#1,5322,smart
+unmatched,unmatched_config,炫界proev,,,,,炫界Pro EV,5367,凯翼
+unmatched,unmatched_config,e:np1极湃1,,,,,e:NP1 极湃1,sg28131,本田
+unmatched,unmatched_config,领睿,,,,,领睿,5388,福特
+unmatched,unmatched_config,长安欧尚z6,,,,,长安欧尚Z6,5439,长安欧尚
+unmatched,unmatched_config,阿维塔11,,,,,阿维塔 11,5308,阿维塔
+unmatched,unmatched_config,奔腾b70s,,,,,奔腾B70S,sg28313,奔腾
+unmatched,unmatched_config,小鹏g9,,,,,小鹏G9,sg28341,小鹏汽车
+unmatched,unmatched_config,影酷,,,,,影酷,5468,广汽传祺
+unmatched,unmatched_config,问界m5,,,,,问界M5,sg28441,鸿蒙智行
+unmatched,unmatched_config,捷途大圣,,,,,捷途大圣,5244,捷途
+unmatched,unmatched_config,皓极,,,,,皓极,5557,东风风神
+unmatched,unmatched_config,捷途旅行者,,,,,捷途旅行者,5563,捷途
+unmatched,unmatched_config,星途追风cdm,,,,,星途追风C-DM,5567,星途
+unmatched,unmatched_config,元宝,,,,,元宝,sg28594,北汽制造
+unmatched,unmatched_config,风光miniev,,,,,风光MINIEV,5389,东风风光
+unmatched,unmatched_config,零跑c01,,,,,零跑C01,sg28614,零跑汽车
+unmatched,unmatched_config,凌宝uni,,,,,凌宝Uni,5385,凌宝汽车
+unmatched,unmatched_config,几何e萤火虫,,,,,几何E萤火虫,sg28637,吉利几何
+unmatched,unmatched_config,奥迪q6,,,,,奥迪Q6,5364,奥迪
+unmatched,unmatched_config,奔驰eqe,,,,,奔驰EQE,5813,奔驰
+unmatched,unmatched_config,蔚来es7,,,,,蔚来ES7,sg28661,蔚来
+unmatched,unmatched_config,理想l9,,,,,理想L9,5227,理想汽车
+unmatched,unmatched_config,问界m7,,,,,问界M7,sg28721,鸿蒙智行
+unmatched,unmatched_config,北京bj60,,,,,北京BJ60,sg28722,北京越野
+unmatched,unmatched_config,创维hti,,,,,创维HT-i,5871,创维汽车
+unmatched,unmatched_config,vgvu70pro,,,,,VGV U70 PRO,sg28741,中国重汽VGV
+unmatched,unmatched_config,荣威rx9,,,,,荣威RX9,sg28747,荣威
+unmatched,unmatched_config,五菱airev晴空,,,,,五菱Air ev晴空,sg28748,五菱汽车
+unmatched,unmatched_config,星迈罗,,,,,星迈罗,5897,雪佛兰
+unmatched,unmatched_config,理想l8,,,,,理想L8,6095,理想汽车
+unmatched,unmatched_config,smart精灵#3,,,,,smart精灵#3,6272,smart
+unmatched,unmatched_config,zrv致在,,,,,ZR-V 致在,sg28782,本田
+unmatched,unmatched_config,长安univ智电idd,,,,,长安UNI-V 智电iDD,5923,长安
+unmatched,unmatched_config,睿蓝汽车x3pro,,,,,睿蓝汽车X3 PRO,sg28791,睿蓝汽车
+unmatched,unmatched_config,别克e5,,,,,别克E5,6271,别克
+unmatched,unmatched_config,纳米box,,,,,纳米BOX,sg28843,东风纳米
+unmatched,unmatched_config,昂扬,,,,,昂扬,sg28863,别克
+unmatched,unmatched_config,奔腾m9,,,,,奔腾M9,sg28868,奔腾
+unmatched,unmatched_config,睿蓝9,,,,,睿蓝9,6003,睿蓝汽车
+unmatched,unmatched_config,睿蓝7,,,,,睿蓝7,5997,睿蓝汽车
+unmatched,unmatched_config,大家5,,,,,大家5,sg28894,大通
+unmatched,unmatched_config,博越l,,,,,博越L,6025,吉利汽车
+unmatched,unmatched_config,深蓝s07,,,,,深蓝S07,6027,深蓝汽车
+unmatched,unmatched_config,长安欧尚x5plus,,,,,长安欧尚X5 PLUS,sg28954,长安欧尚
+unmatched,unmatched_config,吉利几何g6,,,,,吉利几何G6,6080,吉利几何
+unmatched,unmatched_config,吉利几何m6,,,,,吉利几何M6,6081,吉利几何
+unmatched,unmatched_config,坦克500新能源,,,,,坦克500新能源,sg29113,坦克
+unmatched,unmatched_config,哈弗大狗plus新能源,,,,,哈弗大狗PLUS新能源,sg29114,哈弗
+unmatched,unmatched_config,领地,,,,,领地,6044,大通
+unmatched,unmatched_config,腾势n7,,,,,腾势N7,6360,腾势
+unmatched,unmatched_config,思皓x8plus,,,,,思皓X8 PLUS,6120,思皓
+unmatched,unmatched_config,理想l6,,,,,理想L6,5845,理想汽车
+unmatched,unmatched_config,理想l7,,,,,理想L7,sg29163,理想汽车
+unmatched,unmatched_config,奔驰eqesuv,,,,,奔驰EQE SUV,6208,奔驰
+unmatched,unmatched_config,哈弗大狗plus,,,,,哈弗大狗PLUS,6149,哈弗
+unmatched,unmatched_config,逸达,,,,,逸达,6209,长安
+unmatched,unmatched_config,魏牌蓝山,,,,,魏牌 蓝山,sg29218,魏牌
+unmatched,unmatched_config,蔚来ec7,,,,,蔚来EC7,6224,蔚来
+unmatched,unmatched_config,易至ev2,,,,,易至EV2,5898,江铃集团新能源
+unmatched,unmatched_config,奔腾b70,,,,,奔腾B70,267,奔腾
+unmatched,unmatched_config,极氪x,,,,,极氪X,sg29261,极氪
+unmatched,unmatched_config,仰望u8,,,,,仰望U8,6235,仰望
+unmatched,unmatched_config,长安cs75plus智电idd,,,,,长安CS75 PLUS 智电iDD,sg29302,长安
+unmatched,unmatched_config,五菱缤果,,,,,五菱缤果,sg29303,五菱汽车
+unmatched,unmatched_config,凯迪拉克gt4,,,,,凯迪拉克GT4,5978,凯迪拉克
+unmatched,unmatched_config,风行雷霆,,,,,风行雷霆,5802,东风风行
+unmatched,unmatched_config,极氪007,,,,,极氪007,sg29306,极氪
+unmatched,unmatched_config,探索06cdm,,,,,探索06 C-DM,8974,奇瑞
+unmatched,unmatched_config,小鹏g6,,,,,小鹏G6,sg29372,小鹏汽车
+unmatched,unmatched_config,马自达cx50行也,,,,,马自达CX-50行也,6313,马自达
+unmatched,unmatched_config,启辰大vddi,,,,,启辰大V DD-i,6336,启辰
+unmatched,unmatched_config,启辰vx6,,,,,启辰VX6,6328,启辰
+unmatched,unmatched_config,极狐阿尔法t5,,,,,极狐 阿尔法T5,6363,ARCFOX极狐
+unmatched,unmatched_config,领克08,,,,,领克08,sg29439,领克
+unmatched,unmatched_config,雅阁新能源,,,,,雅阁新能源,sg29442,本田
+unmatched,unmatched_config,宝骏悦也,,,,,宝骏悦也,sg29461,宝骏
+unmatched,unmatched_config,奔腾t90,,,,,奔腾T90,8803,奔腾
+unmatched,unmatched_config,银河l6,,,,,银河L6,8859,吉利银河
+unmatched,unmatched_config,银河l7,,,,,银河L7,sg29484,吉利银河
+unmatched,unmatched_config,银河m9,,,,,银河M9,25521,吉利银河
+unmatched,unmatched_config,哈弗h5,,,,,哈弗H5,6321,哈弗
+unmatched,unmatched_config,英仕派新能源,,,,,英仕派新能源,sg29503,本田
+unmatched,unmatched_config,皓瀚,,,,,皓瀚,8788,东风风神
+unmatched,unmatched_config,蓝电e5,,,,,蓝电E5,6204,蓝电
+unmatched,unmatched_config,哈弗枭龙,,,,,哈弗枭龙,sg29581,哈弗
+unmatched,unmatched_config,星纪元et,,,,,星纪元ET,8966,星途
+unmatched,unmatched_config,id7vizzion,,,,,ID.7 VIZZION,8946,大众
+unmatched,unmatched_config,坦克400新能源,,,,,坦克400新能源,sg29654,坦克
+unmatched,unmatched_config,星途瑶光cdm,,,,,星途瑶光C-DM,8967,星途
+unmatched,unmatched_config,星途揽月cdm,,,,,星途揽月C-DM,24925,星途
+unmatched,unmatched_config,沃尔沃ex90,,,,,沃尔沃EX90,6172,沃尔沃
+unmatched,unmatched_config,瑞虎9cdm,,,,,瑞虎9 C-DM,8973,奇瑞
+unmatched,unmatched_config,风云a8,,,,,风云A8,8808,奇瑞风云
+unmatched,unmatched_config,捷途旅行者cdm,,,,,捷途旅行者C-DM,sg29731,捷途
+unmatched,unmatched_config,问界m9,,,,,问界M9,sg29744,鸿蒙智行
+unmatched,unmatched_config,东风风神l7新能源,,,,,东风风神L7新能源,sg29781,东风风神
+unmatched,unmatched_config,沃尔沃ex30,,,,,沃尔沃EX30,9028,沃尔沃
+unmatched,unmatched_config,豹5,,,,,豹5,8884,方程豹
+unmatched,unmatched_config,智己ls6,,,,,智己LS6,9118,智己汽车
+unmatched,unmatched_config,极石01,,,,,极石01,sg29992,极石汽车
+unmatched,unmatched_config,长安启源a05,,,,,长安启源A05,9129,长安启源
+unmatched,unmatched_config,长安启源a06,,,,,长安启源A06,25486,长安启源
+unmatched,unmatched_config,传祺es9,,,,,传祺ES9,sg30050,广汽传祺
+unmatched,unmatched_config,哈弗猛龙新能源,,,,,哈弗猛龙新能源,sg30055,哈弗
+unmatched,unmatched_config,钛3,,,,,钛3,9249,方程豹
+unmatched,unmatched_config,豹8,,,,,豹8,9246,方程豹
+unmatched,unmatched_config,零跑c10,,,,,零跑C10,9307,零跑汽车
+unmatched,unmatched_config,福特烈马,,,,,福特烈马,9350,福特
+unmatched,unmatched_config,探界者plus,,,,,探界者Plus,9693,雪佛兰
+unmatched,unmatched_config,昊铂ht,,,,,昊铂HT,sg30131,昊铂
+unmatched,unmatched_config,江淮x8plus,,,,,江淮X8 PLUS,sg30195,江淮汽车
+unmatched,unmatched_config,风云t11,,,,,风云T11,9436,奇瑞风云
+unmatched,unmatched_config,长安x7plus,,,,,长安X7 PLUS,9684,长安
+unmatched,unmatched_config,深蓝g318,,,,,深蓝G318,9211,深蓝汽车
+unmatched,unmatched_config,五菱缤果plus,,,,,五菱缤果PLUS,sg30353,五菱汽车
+unmatched,unmatched_config,宝骏悦也plus,,,,,宝骏悦也Plus,sg30354,宝骏
+unmatched,unmatched_config,长安启源e07,,,,,长安启源E07,9642,长安启源
+unmatched,unmatched_config,风云t9,,,,,风云T9,9500,奇瑞风云
+unmatched,unmatched_config,eπ008,,,,,eπ008,sg30367,东风奕派
+unmatched,unmatched_config,风云t10,,,,,风云T10,9950,奇瑞风云
+unmatched,unmatched_config,知豆彩虹,,,,,知豆彩虹,9794,知豆
+unmatched,unmatched_config,银河e5,,,,,银河E5,10026,吉利银河
+unmatched,unmatched_config,icar超级v23,,,,,iCAR超级V23,10040,iCAR
+unmatched,unmatched_config,索奈,,,,,索奈,9494,起亚
+unmatched,unmatched_config,零跑c16,,,,,零跑C16,10125,零跑汽车
+unmatched,unmatched_config,smart精灵#5,,,,,smart精灵#5,10136,smart
+unmatched,unmatched_config,马自达ez60,,,,,马自达EZ-60,25345,马自达
+unmatched,unmatched_config,阿维塔07,,,,,阿维塔 07,10033,阿维塔
+unmatched,unmatched_config,乐道l60,,,,,乐道L60,9833,乐道
+unmatched,unmatched_config,深蓝s05,,,,,深蓝S05,10213,深蓝汽车
+unmatched,unmatched_config,岚图知音,,,,,岚图知音,sg30475,岚图
+unmatched,unmatched_config,瑞虎8l,,,,,瑞虎8L,20032,奇瑞
+unmatched,unmatched_config,小米yu7,,,,,小米YU7,20041,小米汽车
+unmatched,unmatched_config,领克z20,,,,,领克Z20,24535,领克
+unmatched,unmatched_config,捷途自由者,,,,,捷途自由者,24612,捷途
+unmatched,unmatched_config,蓝电e5plus,,,,,蓝电E5 PLUS,24659,蓝电
+unmatched,unmatched_config,江淮x8e家,,,,,江淮X8 E家,sg30567,江淮汽车
+unmatched,unmatched_config,领途em8,,,,,领途E-M8,sg30568,领途汽车
+unmatched,unmatched_config,零跑b10,,,,,零跑B10,9268,零跑汽车
+unmatched,unmatched_config,瑞虎8pluscdm,,,,,瑞虎8 PLUS C-DM,24756,奇瑞
+unmatched,unmatched_config,风云t8,,,,,风云T8,24934,奇瑞风云
+unmatched,unmatched_config,传祺向往s7,,,,,传祺向往S7,25071,广汽传祺
+unmatched,unmatched_config,帕拉丁,,,,,帕拉丁,9181,东风风度
+unmatched,unmatched_config,小鹏g7,,,,,小鹏G7,sg30708,小鹏汽车
+unmatched,unmatched_config,长安启源q07,,,,,长安启源Q07,25132,长安启源
+unmatched,unmatched_config,深蓝s09,,,,,深蓝S09,25136,深蓝汽车
+unmatched,unmatched_config,领途m8,,,,,领途M8,sg30717,领途汽车
+unmatched,unmatched_config,领克900,,,,,领克900,25161,领克
+unmatched,unmatched_config,纵横g700,,,,,纵横G700,25211,纵横
+unmatched,unmatched_config,乐道l90,,,,,乐道L90,25234,乐道
+unmatched,unmatched_config,理想i8,,,,,理想i8,10178,理想汽车
+unmatched,unmatched_config,示界06,,,,,示界06,25239,示界
+unmatched,unmatched_config,传祺向往s9,,,,,传祺向往S9,25288,广汽传祺
+unmatched,unmatched_config,捷途x90cdm,,,,,捷途X90 C-DM,25349,捷途
+unmatched,unmatched_config,仰望u8l,,,,,仰望U8L,25717,仰望
+unmatched,unmatched_config,猛士m817,,,,,猛士M817,25412,猛士
+unmatched,unmatched_config,icarv27,,,,,iCAR V27,25620,iCAR
+unmatched,unmatched_config,捷达vs8,,,,,捷达VS8,9264,捷达
+unmatched,unmatched_config,小鹏gx,,,,,小鹏GX,sg30908,小鹏汽车
+unmatched,unmatched_config,理想i6,,,,,理想i6,25557,理想汽车
+unmatched,unmatched_config,智己ls9,,,,,智己LS9,25607,智己汽车
+unmatched,unmatched_config,福特智趣烈马,,,,,福特智趣烈马,25603,福特
+unmatched,unmatched_config,羿驰05s,,,,,羿驰05S,25612,江铃集团新能源
+unmatched,unmatched_config,星途et5,,,,,星途ET5,25601,星途
+unmatched,unmatched_config,风云x3l,,,,,风云X3L,25545,奇瑞风云
+unmatched,unmatched_config,aioni60,,,,,AION i60,25643,埃安
+unmatched,unmatched_config,零跑d19,,,,,零跑D19,25718,零跑汽车
+unmatched,unmatched_config,红旗hs6phev,,,,,红旗HS6 PHEV,25598,红旗
+unmatched,unmatched_config,长安启源q05,,,,,长安启源Q05,25634,长安启源
+unmatched,unmatched_config,零跑a10,,,,,零跑A10,9267,零跑汽车
+unmatched,unmatched_config,星途ex7,,,,,星途EX7,25816,星途
+unmatched,unmatched_config,风云t9l,,,,,风云T9L,25828,奇瑞风云
+unmatched,unmatched_config,奥迪e7x,,,,,奥迪E7X,25846,奥迪AUDI
+unmatched,unmatched_config,aionn60,,,,,AION N60,25878,埃安
+unmatched,unmatched_config,智己ls8,,,,,智己LS8,25877,智己汽车
+unmatched,unmatched_config,银河m7,,,,,银河M7,25871,吉利银河
+unmatched,unmatched_config,蔚来es9,,,,,蔚来ES9,25904,蔚来
+unmatched,unmatched_config,乐道l80,,,,,乐道L80,25565,乐道
+unmatched,unmatched_config,威驰,,,,,威驰,sg3163,丰田
+unmatched,unmatched_config,飞度,,,,,飞度,sg3224,本田
+unmatched,unmatched_config,福克斯,,,,,福克斯,sg3404,福特
+unmatched,unmatched_config,比亚迪e6,,,,,比亚迪e6,sg3755,比亚迪
+unmatched,unmatched_config,汉兰达,,,,,汉兰达,536,丰田
+unmatched,unmatched_config,北京bj40,,,,,北京BJ40,sg4505,北京越野
+unmatched,unmatched_config,哈弗h6,,,,,哈弗H6,649,哈弗
+unmatched,unmatched_config,速派,,,,,速派,1243,斯柯达
+unmatched,unmatched_config,楼兰,,,,,楼兰,sg7129,日产
+unmatched,unmatched_config,红旗h7,,,,,红旗H7,sg7543,红旗
+unmatched,unmatched_config,昂科拉,,,,,昂科拉,sg7891,别克
+unmatched,unmatched_config,名图,,,,,名图,sg9281,现代
+unmatched,unmatched_config,凌派,,,,,凌派,sg9301,本田
+unmatched,unmatched_config,马自达cx5,,,,,马自达CX-5,1016,马自达
+unmatched,unmatched_config,长安cs95,,,,,长安CS95,1463,长安
+unmatched,unmatched_config,哈弗h9,,,,,哈弗H9,653,哈弗
+unmatched,unmatched_config,yarisl致炫,,,,,YARiS L 致炫,sg9666,丰田
+unmatched,unmatched_config,长安cs75,,,,,长安CS75,1462,长安

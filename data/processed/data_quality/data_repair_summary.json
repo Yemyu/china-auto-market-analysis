@@ -1,0 +1,28 @@
+{
+  "schema_version": "v1",
+  "source_rows": {
+    "sales": 54918,
+    "config": 2084
+  },
+  "source_series": {
+    "sales": 1017,
+    "config": 766
+  },
+  "mapping": {
+    "exact": 371,
+    "safe_normalized": 8,
+    "total_safe_matches": 379,
+    "unmatched_sales": 638,
+    "unmatched_config": 387
+  },
+  "sales_zero_audit": {
+    "zero_rows": 38752,
+    "zero_row_share": 0.7056338541097636,
+    "never_positive_series": 532,
+    "positive_run_lt24_series": 717,
+    "no_positive_before_forecast_series": 565,
+    "all_zero_test_series": 613,
+    "high_2024_then_zero_test_series": 9
+  },
+  "decision": "Do not reinterpret zero rows automatically. Cross-source verification and lifecycle labels are required before rebuilding the forecast cohort."
+}

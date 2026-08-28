@@ -151,6 +151,16 @@ Test features for the primary experiment are frozen before `2026-01-01`. Rolling
 
 ## 5. Analysis artifacts
 
+### Data quality and repair: `processed/data_quality/`
+
+| Artifact | Contents |
+|---|---|
+| `data_repair_summary.json` | Phase summary for sales zeros and cross-source series mapping |
+| `sales_zero_audit.csv` | Per-series positive-month coverage, positive runs, test zeros, and audit flags |
+| `series_mapping_audit.csv` | Exact, safely normalized, and unmatched sales/config names |
+
+Phase one accepts only exact names and unambiguous one-to-one normalized matches; it does not use fuzzy matching. The safe overlap grows from 371 to 379 series. The remaining mappings and 38,752 zero-sales rows require cross-source verification. The headline 38.64% result remains frozen until real zeros, pre-launch periods, post-discontinuation periods, and source gaps can be distinguished.
+
 ### Sales forecasting: `processed/forecast/`
 
 | Artifact | Contents |
