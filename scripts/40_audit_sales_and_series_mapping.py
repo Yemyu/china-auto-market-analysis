@@ -179,8 +179,8 @@ def main() -> None:
         },
         "decision": (
             "Apply only same-source verified corrections through the overlay. Do not mutate the raw "
-            "snapshot or rerun the headline model until historical gaps and remaining lifecycle labels "
-            "are resolved."
+            "snapshot or rerun the headline model until remaining high-priority source and lifecycle "
+            "risks are resolved."
         ),
     }
     (OUT / "data_repair_summary.json").write_text(

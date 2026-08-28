@@ -27,14 +27,14 @@
   },
   "series_risk_scan": {
     "never_positive_series": 532,
-    "internal_gap_ge3_series": 31,
+    "internal_gap_ge3_series": 29,
     "recent_trailing_cutoff_series": 19,
-    "high_volume_cutoff_series": 17,
+    "high_volume_cutoff_series": 15,
     "priority_counts": {
       "low": 959,
       "medium": 33,
       "high": 22,
-      "critical": 2,
+      "reviewed_repaired": 2,
       "reviewed_keep": 1
     }
   },

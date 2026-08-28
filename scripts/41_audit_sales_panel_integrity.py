@@ -126,7 +126,8 @@ def build_series_audit(
     priority.columns = ["verification_priority", "risk_score", "verification_reason"]
     audit = pd.concat([audit, priority], axis=1)
     order = pd.CategoricalDtype(
-        ["critical", "high", "medium", "reviewed_keep", "low"], ordered=True
+        ["critical", "high", "medium", "reviewed_repaired", "reviewed_keep", "low"],
+        ordered=True,
     )
     audit["verification_priority"] = audit["verification_priority"].astype(order)
     return audit.sort_values(
@@ -142,6 +143,8 @@ def classify_priority(row: pd.Series) -> tuple[str, int, str]:
 
     if status == "confirmed_post_discontinuation":
         return "reviewed_keep", 0, "same-source discontinuation already verified"
+    if status == "confirmed_source_gap_repaired":
+        return "reviewed_repaired", 0, "same-source gap fully repaired through overlay"
     if status == "confirmed_source_gap":
         reasons.append("same-source gap confirmed")
         score += 100

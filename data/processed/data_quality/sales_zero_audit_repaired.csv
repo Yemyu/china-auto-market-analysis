@@ -30,8 +30,8 @@
 1983,MG7,MG名爵,轿车,54,39,15,0.2777777777777778,39,33,6,4445.0,2123.3333333333335,MG7,exact_name,False,False,False,False,False
 27044,MG领航新能源,MG名爵,SUV,54,7,47,0.8703703703703703,5,7,0,0.0,0.0,,unmatched,False,True,False,True,False
 22634,Mattu,猎豹汽车,SUV,54,0,54,1.0,0,0,0,0.0,0.0,,unmatched,True,True,True,True,False
-24824,Model 3,特斯拉,轿车,54,33,21,0.3888888888888889,18,27,6,66442.0,4362.416666666667,Model 3,exact_name,False,True,False,False,False
-26651,Model Y,特斯拉,SUV,54,32,22,0.4074074074074074,18,26,6,172513.0,13892.25,Model Y,exact_name,False,True,False,False,False
+24824,Model 3,特斯拉,轿车,54,54,0,0.0,54,48,6,66442.0,14732.75,Model 3,exact_name,False,False,False,False,False
+26651,Model Y,特斯拉,SUV,54,54,0,0.0,54,48,6,172513.0,40025.75,Model Y,exact_name,False,False,False,False,False
 10069,Ottimo致悦,菲亚特,轿车,54,0,54,1.0,0,0,0,0.0,0.0,,unmatched,True,True,True,True,False
 30130,PATHFINDER探陆,日产,SUV,54,30,24,0.4444444444444444,30,24,6,1338.0,1015.5,PATHFINDER探陆,exact_name,False,False,False,False,False
 29652,Polestar 4,Polestar极星,SUV,54,1,53,0.9814814814814815,1,1,0,0.0,0.0,Polestar 4,exact_name,False,True,False,True,False
