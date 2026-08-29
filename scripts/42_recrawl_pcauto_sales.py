@@ -308,7 +308,16 @@ def build_diff(
     selected = selected[
         ["series_name", "series_id", "source_series_id", "brand", "date", "monthly_sales"]
     ].rename(columns={"monthly_sales": "raw_sales"})
+    positive_span = (
+        selected[selected["raw_sales"].gt(0)]
+        .groupby("series_name", as_index=False)
+        .agg(
+            raw_first_positive_date=("date", "min"),
+            raw_last_positive_date=("date", "max"),
+        )
+    )
     diff = selected.merge(collapsed, on=["series_name", "date"], how="left")
+    diff = diff.merge(positive_span, on="series_name", how="left")
     diff["source_value_count"] = diff["source_value_count"].fillna(0).astype(int)
 
     def classify(row: pd.Series) -> str:
@@ -332,6 +341,19 @@ def build_diff(
         return "other_mismatch"
 
     diff["comparison_status"] = diff.apply(classify, axis=1)
+
+    def locate_source_missing(row: pd.Series) -> str:
+        if row["comparison_status"] != "source_missing":
+            return ""
+        if pd.isna(row["raw_first_positive_date"]):
+            return "no_positive_reference"
+        if row["date"] < row["raw_first_positive_date"]:
+            return "before_first_positive"
+        if row["date"] > row["raw_last_positive_date"]:
+            return "after_last_positive"
+        return "inside_positive_span"
+
+    diff["source_missing_position"] = diff.apply(locate_source_missing, axis=1)
     diff["sales_delta"] = pd.to_numeric(diff["source_sales"], errors="coerce") - diff[
         "raw_sales"
     ]
@@ -345,6 +367,7 @@ def write_outputs(
     diff: pd.DataFrame,
     start: pd.Timestamp,
     end: pd.Timestamp,
+    output_prefix: str,
 ) -> dict[str, object]:
     QUALITY.mkdir(parents=True, exist_ok=True)
     manifest = pd.DataFrame(manifests)
@@ -360,16 +383,25 @@ def write_outputs(
         "content_sha256",
     ]
     observation_frame = pd.DataFrame(observations, columns=observation_columns)
-    roster.to_csv(QUALITY / "pcauto_recrawl_pilot_roster.csv", index=False, encoding="utf-8-sig")
+    roster.to_csv(
+        QUALITY / f"{output_prefix}_roster.csv", index=False, encoding="utf-8-sig"
+    )
     manifest.to_csv(
-        QUALITY / "pcauto_recrawl_pilot_manifest.csv", index=False, encoding="utf-8-sig"
+        QUALITY / f"{output_prefix}_manifest.csv", index=False, encoding="utf-8-sig"
     )
     observation_frame.to_csv(
-        QUALITY / "pcauto_recrawl_pilot_observations.csv", index=False, encoding="utf-8-sig"
+        QUALITY / f"{output_prefix}_observations.csv", index=False, encoding="utf-8-sig"
     )
-    diff.to_csv(QUALITY / "pcauto_recrawl_pilot_diff.csv", index=False, encoding="utf-8-sig")
+    diff.to_csv(
+        QUALITY / f"{output_prefix}_diff.csv", index=False, encoding="utf-8-sig"
+    )
     page_counts = manifest["fetch_status"].value_counts().to_dict() if len(manifest) else {}
     comparison_counts = diff["comparison_status"].value_counts().to_dict()
+    missing_position_counts = (
+        diff.loc[diff["source_missing_position"].ne(""), "source_missing_position"]
+        .value_counts()
+        .to_dict()
+    )
     successful_pages = int(sum(page_counts.get(key, 0) for key in ("ok", "cached")))
     summary = {
         "schema_version": "v1",
@@ -383,15 +415,20 @@ def write_outputs(
         "comparison_status_counts": {
             str(k): int(v) for k, v in comparison_counts.items()
         },
+        "source_missing_position_counts": {
+            str(k): int(v) for k, v in missing_position_counts.items()
+        },
         "acquisition_status": (
             "ok" if successful_pages else "blocked_no_successful_pages"
         ),
         "decision": (
-            "Review identity mismatches, source conflicts, and changed values before creating any "
-            "correction overlay. Never overwrite data/raw/monthly_sales.csv."
+            "A source dash means no numeric value was supplied; it is not a confirmed zero. "
+            "Keep not-retrieved pages separate from source dashes, and review identity mismatches, "
+            "source conflicts, and changed values before creating any correction overlay. Never "
+            "overwrite data/raw/monthly_sales.csv."
         ),
     }
-    (QUALITY / "pcauto_recrawl_pilot_summary.json").write_text(
+    (QUALITY / f"{output_prefix}_summary.json").write_text(
         json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8"
     )
     return summary
@@ -410,6 +447,11 @@ def main() -> None:
     parser.add_argument("--proxy", default=None, help="Optional explicit HTTP/SOCKS proxy URL.")
     parser.add_argument("--refresh", action="store_true")
     parser.add_argument(
+        "--output-prefix",
+        default="pcauto_recrawl_pilot",
+        help="Filename prefix under processed/data_quality (letters, numbers, underscores).",
+    )
+    parser.add_argument(
         "--preflight-only",
         action="store_true",
         help="Request only the latest anchor for the first selected series.",
@@ -419,6 +461,8 @@ def main() -> None:
         raise ValueError("Series limit and timeout must be positive; retries cannot be negative")
     if args.delay_min < 0 or args.delay_max < args.delay_min:
         raise ValueError("Invalid delay range")
+    if not re.fullmatch(r"[A-Za-z0-9_]+", args.output_prefix):
+        raise ValueError("--output-prefix may contain only letters, numbers, and underscores")
 
     start, end = parse_month(args.start), parse_month(args.end)
     raw = pd.read_csv(RAW_SALES, low_memory=False)
@@ -499,7 +543,15 @@ def main() -> None:
     observation_frame = pd.DataFrame(observations)
     collapsed = collapse_observations(observation_frame)
     diff = build_diff(raw, roster, collapsed, start, end)
-    summary = write_outputs(roster, manifests, observations, diff, start, end)
+    summary = write_outputs(
+        roster,
+        manifests,
+        observations,
+        diff,
+        start,
+        end,
+        args.output_prefix,
+    )
     print(json.dumps(summary, ensure_ascii=False, indent=2))
 
 

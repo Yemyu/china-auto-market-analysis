@@ -17,6 +17,12 @@
     "exact_match": 186,
     "raw_zero_source_positive": 1
   },
+  "source_missing_position_counts": {
+    "before_first_positive": 120,
+    "no_positive_reference": 107,
+    "after_last_positive": 96,
+    "inside_positive_span": 30
+  },
   "acquisition_status": "ok",
   "decision": "Review identity mismatches, source conflicts, and changed values before creating any correction overlay. Never overwrite data/raw/monthly_sales.csv."
 }

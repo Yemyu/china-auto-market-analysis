@@ -1,0 +1,20 @@
+{
+  "schema_version": "v1",
+  "source": "PCauto sales series pages",
+  "period": {
+    "start": "2022-01",
+    "end": "2026-06"
+  },
+  "selected_series": 12,
+  "requested_pages": 108,
+  "successful_pages": 0,
+  "fetch_status_counts": {
+    "error": 108
+  },
+  "parsed_observations": 0,
+  "comparison_status_counts": {
+    "not_retrieved": 648
+  },
+  "acquisition_status": "blocked_no_successful_pages",
+  "decision": "Review identity mismatches, source conflicts, and changed values before creating any correction overlay. Never overwrite data/raw/monthly_sales.csv."
+}

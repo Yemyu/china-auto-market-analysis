@@ -169,6 +169,8 @@ Test features for the primary experiment are frozen before `2026-01-01`. Rolling
 | `pcauto_recrawl_pilot_manifest.csv` | Request, identity, and parse audit for 90 six-month anchor pages across ten series |
 | `pcauto_recrawl_pilot_diff.csv` | Row-level comparison for 540 recollected series-months against the frozen snapshot |
 | `pcauto_recrawl_pilot_summary.json` | Coverage and difference summary for the batch-recollection pilot |
+| `pcauto_recrawl_high_remaining_manifest.csv` | Connection-failure and retry audit for the 108-page second batch |
+| `pcauto_recrawl_high_remaining_summary.json` | Current `blocked_no_successful_pages` state for the second batch |
 
 Phase one accepts only exact names and unambiguous one-to-one normalized matches; it does not use fuzzy matching. The safe overlap grows from 371 to 379 series.
 
@@ -179,6 +181,10 @@ The known Model Y and Model 3 history gaps are now complete, but the overlay rem
 Phase three scans all 54,918 rows and 1,017 series locally. Hard structural checks find no duplicate series-month keys, negative sales, name/ID conflicts, or missing calendar rows, but this does not establish source truth. Annual cumulative sales, brand-month totals, positive-series counts, zero labels, and rank availability all reproduce `monthly_sales` deterministically and therefore cannot serve as independent validation.
 
 Phase four uses `scripts/42_recrawl_pcauto_sales.py` to recollect pages by exact source ID. June and December serve as six-month anchors, raw HTML is cached in a Git-ignored directory, and no source file is overwritten. The first ten-series pilot requests 90 pages successfully and parses 540 series-months: 186 exactly match the snapshot, 353 are shown as “—” by the source and are also zero in the snapshot, and the only definite difference is Wuling Hongguang S in June 2026—2,215 on the source versus zero in the snapshot. Exact ID, page-name, and manufacturer-table checks support adding that row to the overlay. The overlay now repairs 60 rows and restores a net 1,357,487 units; external review contains 21 high- and 33 medium-priority series.
+
+A source dash is not automatically interpreted as a true zero. The 353 pilot dashes are positioned against the raw positive-sales span: 120 before the first positive month, 96 after the last positive month, 30 inside the positive span, and 107 with no positive reference anywhere. Boundary cases remain launch/discontinuation or source-coverage candidates, internal cases receive priority review, and no-reference series do not enter a normal history model automatically. The collector also separates a successful page containing a dash from a page that was never retrieved; the latter is labeled `not_retrieved` and cannot support a data conclusion.
+
+The second batch targets the other twelve high-priority series and 108 pages. Every request in this run failed at the TLS connection layer, producing `blocked_no_successful_pages`; no new sales, differences, or corrections were inferred. The frozen roster can be retried when source connectivity returns.
 
 The scan also confirms that the previous “at least 24 consecutive months” rule counts padded panel rows rather than positive-sales history. Every one of the 1,017 series has the same 54 rows from January 2022 through June 2026, so every series passes before the configuration join. The raw 371-series cohort contains two series with no positive sales anywhere; the Wuling Hongguang S repair reduces that count to one, while 32 still have no positive sales before the training cutoff. Eligibility must be rebuilt with lifecycle-aware positive-history rules after source gaps are resolved; rows should not be deleted and models rerun prematurely.
 
