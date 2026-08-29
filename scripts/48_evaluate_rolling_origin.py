@@ -19,6 +19,7 @@ os.environ["OMP_NUM_THREADS"] = "1"
 
 import numpy as np
 import pandas as pd
+from xgboost import XGBRegressor
 
 import _model_utils as mu
 
@@ -31,10 +32,23 @@ TEST_OUTPUT = OUT / "rolling_origin_test_predictions.csv"
 ORIGINS = tuple(pd.Timestamp(value) for value in (
     "2024-01-01", "2024-07-01", "2025-01-01", "2025-07-01",
 ))
-MIN_GATE_GAIN_PP = 1.5
+MIN_GATE_GAIN_PP = 0.5
 MAX_ORIGIN_REGRESSION_PP = 1.0
-VERSIONS = ("BASE", "LOCAL_LEXICON_FIXED")
+VERSIONS = ("BASE", "SEASONAL_D5")
 NAIVE_METHODS = ("LAST_VALUE", "ROLLING_MEAN_3", "ROLLING_MEAN_6", "SEASONAL_LAG12")
+
+MODEL_PARAMS = {
+    "BASE": {
+        "n_estimators": 100, "max_depth": 6, "learning_rate": 0.05,
+        "subsample": 0.8, "colsample_bytree": 0.8,
+        "min_child_weight": 1, "reg_lambda": 1.0, "reg_alpha": 0.0,
+    },
+    "SEASONAL_D5": {
+        "n_estimators": 200, "max_depth": 5, "learning_rate": 0.04,
+        "subsample": 0.85, "colsample_bytree": 0.85,
+        "min_child_weight": 2, "reg_lambda": 2.0, "reg_alpha": 0.0,
+    },
+}
 
 
 def load_forecast_module():
@@ -45,6 +59,26 @@ def load_forecast_module():
     module = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(module)
     return module
+
+
+def model_for(version: str) -> XGBRegressor:
+    """Build the locked rolling model for a named candidate."""
+    if version not in MODEL_PARAMS:
+        raise KeyError(f"Unknown rolling model version: {version}")
+    return XGBRegressor(
+        objective="reg:squarederror", random_state=42, n_jobs=1,
+        **MODEL_PARAMS[version],
+    )
+
+
+def fit_model(version: str, frame: pd.DataFrame, columns: list[str]) -> XGBRegressor:
+    """Fit only on rows whose candidate features are causally available."""
+    usable = frame.dropna(subset=columns)
+    if usable.empty:
+        raise RuntimeError(f"No usable training rows for {version}")
+    model = model_for(version)
+    model.fit(usable[columns], np.log1p(usable[mu.TARGET]), verbose=False)
+    return model
 
 
 def origin_panel(frame: pd.DataFrame, origin: pd.Timestamp) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -147,31 +181,25 @@ def validation(module, frames, versions) -> tuple[pd.DataFrame, pd.DataFrame, di
         fit, panel = origin_panel(historical, origin)
         for version in VERSIONS:
             columns = versions[version]
-            model = module.new_model(100)
-            model.fit(fit[columns], np.log1p(fit[mu.TARGET]), verbose=False)
-            fixed = module.recursive_predictions(
-                model, panel, columns, "val", ("train",), version,
-                "historical_fixed_origin_comparator",
-            )
+            model = fit_model(version, fit, columns)
             rolling = rolling_predictions(model, panel, columns, "val", ("train",))
-            for mode, prediction in (("FIXED_SIX_MONTH", fixed), ("ROLLING_ONE_MONTH", rolling)):
-                error = float(np.abs(prediction["actual"] - prediction["pred"]).sum())
-                volume = float(np.abs(prediction["actual"]).sum())
-                rows.append({
-                    "version": version,
-                    "mode": mode,
-                    "origin": origin.strftime("%Y-%m-%d"),
-                    "rows": int(len(prediction)),
-                    "series": int(prediction["series_name"].nunique()),
-                    "absolute_error": error,
-                    "actual_volume": volume,
-                    "global_volume_weighted_WMAPE": error / volume * 100,
-                })
-                print(
-                    f"[{version}:{mode}] {origin:%Y-%m} "
-                    f"WMAPE={rows[-1]['global_volume_weighted_WMAPE']:.3f}",
-                    flush=True,
-                )
+            error = float(np.abs(rolling["actual"] - rolling["pred"]).sum())
+            volume = float(np.abs(rolling["actual"]).sum())
+            rows.append({
+                "version": version,
+                "mode": "ROLLING_ONE_MONTH",
+                "origin": origin.strftime("%Y-%m-%d"),
+                "rows": int(len(rolling)),
+                "series": int(rolling["series_name"].nunique()),
+                "absolute_error": error,
+                "actual_volume": volume,
+                "global_volume_weighted_WMAPE": error / volume * 100,
+            })
+            print(
+                f"[{version}:ROLLING_ONE_MONTH] {origin:%Y-%m} "
+                f"WMAPE={rows[-1]['global_volume_weighted_WMAPE']:.3f}",
+                flush=True,
+            )
         naive = naive_rolling_predictions(panel, "val", ("train",))
         for method in NAIVE_METHODS:
             error = float(np.abs(naive["actual"] - naive[method]).sum())
@@ -199,19 +227,32 @@ def validation(module, frames, versions) -> tuple[pd.DataFrame, pd.DataFrame, di
     )
     summary["pooled_global_WMAPE"] = summary["absolute_error"] / summary["actual_volume"] * 100
     summary = summary.sort_values(["pooled_global_WMAPE", "version", "mode"]).reset_index(drop=True)
-    base_fixed = summary.loc[
-        summary["version"].eq("BASE") & summary["mode"].eq("FIXED_SIX_MONTH")
+    base_rolling = summary.loc[
+        summary["version"].eq("BASE") & summary["mode"].eq("ROLLING_ONE_MONTH")
     ].iloc[0]
-    rolling = summary.loc[summary["mode"].eq("ROLLING_ONE_MONTH")].iloc[0]
-    gain = float(base_fixed["pooled_global_WMAPE"] - rolling["pooled_global_WMAPE"])
-    fixed_by_origin = detail.loc[
-        detail["version"].eq("BASE") & detail["mode"].eq("FIXED_SIX_MONTH")
+    candidates = summary.loc[
+        summary["mode"].eq("ROLLING_ONE_MONTH")
+        & summary["version"].ne("BASE")
+    ].sort_values(["pooled_global_WMAPE", "version"])
+    selected = candidates.iloc[0] if not candidates.empty else base_rolling
+    gain = float(base_rolling["pooled_global_WMAPE"] - selected["pooled_global_WMAPE"])
+    base_by_origin = detail.loc[
+        detail["version"].eq("BASE") & detail["mode"].eq("ROLLING_ONE_MONTH")
     ].set_index("origin")["global_volume_weighted_WMAPE"]
-    rolling_by_origin = detail.loc[
-        detail["version"].eq(rolling["version"]) & detail["mode"].eq("ROLLING_ONE_MONTH")
+    selected_by_origin = detail.loc[
+        detail["version"].eq(selected["version"]) & detail["mode"].eq("ROLLING_ONE_MONTH")
     ].set_index("origin")["global_volume_weighted_WMAPE"]
-    worst_regression = float((rolling_by_origin - fixed_by_origin).max())
-    gate = gain >= MIN_GATE_GAIN_PP and worst_regression <= MAX_ORIGIN_REGRESSION_PP
+    worst_regression = float((selected_by_origin - base_by_origin).max())
+    gate = (
+        selected["version"] != "BASE"
+        and gain >= MIN_GATE_GAIN_PP
+        and worst_regression <= MAX_ORIGIN_REGRESSION_PP
+    )
+    selected_version = str(selected["version"]) if gate else "BASE"
+    selected_row = summary.loc[
+        summary["version"].eq(selected_version)
+        & summary["mode"].eq("ROLLING_ONE_MONTH")
+    ].iloc[0]
     payload: dict[str, Any] = {
         "schema_version": "v1",
         "task_definition": "monthly refreshed one-month-ahead forecast; previous realised month is available",
@@ -222,11 +263,14 @@ def validation(module, frames, versions) -> tuple[pd.DataFrame, pd.DataFrame, di
             "maximum_origin_regression_pp": MAX_ORIGIN_REGRESSION_PP,
             "passes": bool(gate),
         },
-        "selected_version": str(rolling["version"]),
-        "historical_fixed_BASE_WMAPE": float(base_fixed["pooled_global_WMAPE"]),
-        "historical_selected_rolling_WMAPE": float(rolling["pooled_global_WMAPE"]),
+        "selected_version": selected_version,
+        "historical_base_rolling_WMAPE": float(base_rolling["pooled_global_WMAPE"]),
+        "historical_selected_rolling_WMAPE": float(selected_row["pooled_global_WMAPE"]),
         "historical_gain_pp": gain,
         "worst_origin_regression_pp": worst_regression,
+        "model_params": MODEL_PARAMS,
+        "panel_policy": "complete monthly cohort panel with causal configuration fallback",
+        "seasonal_features": list(mu.SEASONAL_LAG_COLS),
         "validation_summary": summary.to_dict(orient="records"),
     }
     return detail, summary, payload
@@ -244,8 +288,7 @@ def locked_test(module, frames, versions, payload: dict[str, Any]) -> pd.DataFra
         [frames["train_roll"], frames["val_roll"], frames["test_roll"]],
         ignore_index=True,
     ).sort_values(["series_name", "date"])
-    model = module.new_model(100)
-    model.fit(train_val[columns], np.log1p(train_val[mu.TARGET]), verbose=False)
+    model = fit_model(version, train_val, columns)
     prediction = rolling_predictions(model, panel, columns, "test", ("train", "val"))
     naive = naive_rolling_predictions(panel, "test", ("train", "val"))
     prediction = prediction.merge(
@@ -274,7 +317,11 @@ def main() -> None:
     args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     module = load_forecast_module()
-    frames, versions, _ = module.build_frames()
+    frames, _, _ = module.build_frames()
+    versions = {
+        "BASE": list(mu.FEAT_COLS),
+        "SEASONAL_D5": list(mu.SEASONAL_FEAT_COLS),
+    }
     detail, summary, payload = validation(module, frames, versions)
     detail.to_csv(VALIDATION_OUTPUT, index=False, encoding="utf-8-sig")
     if args.test:

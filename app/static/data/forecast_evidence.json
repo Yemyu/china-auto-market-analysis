@@ -20,32 +20,32 @@
       }
     ],
     "sig_rates": [
-      0.9806,
-      0.9346,
-      0.8904,
-      0.8566
+      0.9264,
+      0.5292,
+      0.3544,
+      0.021
     ]
   },
   "fusion": [
     {
       "version": "销量基线（XGBoost）",
       "version_en": "Sales baseline (XGBoost)",
-      "wmape_vol": 40.01
+      "wmape_vol": 39.096
     },
     {
       "version": "平台评分增强（XGBoost）",
       "version_en": "Platform-rating enhanced (XGBoost)",
-      "wmape_vol": 38.803
+      "wmape_vol": 38.399
     },
     {
       "version": "文本情感增强（XGBoost）",
       "version_en": "Text-sentiment enhanced (XGBoost)",
-      "wmape_vol": 38.944
+      "wmape_vol": 39.273
     },
     {
       "version": "用户口碑增强（XGBoost）",
       "version_en": "User-review enhanced (XGBoost)",
-      "wmape_vol": 39.313
+      "wmape_vol": 40.213
     }
   ],
   "correlation": [
@@ -53,7 +53,7 @@
       "key": "appearance",
       "name_zh": "外观",
       "name_en": "Appearance",
-      "corr": 0.026
+      "corr": 0.025
     },
     {
       "key": "interior",
@@ -65,7 +65,7 @@
       "key": "space",
       "name_zh": "空间",
       "name_en": "Space",
-      "corr": 0.064
+      "corr": 0.067
     },
     {
       "key": "power",
@@ -77,46 +77,43 @@
       "key": "control",
       "name_zh": "操控",
       "name_en": "Control",
-      "corr": -0.009
+      "corr": -0.011
     },
     {
       "key": "comfort",
       "name_zh": "舒适",
       "name_en": "Comfort",
-      "corr": -0.085
+      "corr": -0.082
     },
     {
       "key": "fuel_consumption",
       "name_zh": "能耗/油耗",
       "name_en": "Energy/Fuel",
-      "corr": 0.121
+      "corr": 0.116
     },
     {
       "key": "configuration",
       "name_zh": "配置",
       "name_en": "Configuration",
-      "corr": -0.014
+      "corr": -0.009
     },
     {
       "key": "intelligence",
       "name_zh": "智能化",
       "name_en": "Intelligence",
-      "corr": 0.013
+      "corr": 0.012
     },
     {
       "key": "value",
       "name_zh": "性价比",
       "name_en": "Value",
-      "corr": 0.087
+      "corr": 0.091
     }
   ],
   "timeseries": {
     "brand": "全市场",
     "brand_en": "Market",
     "months": [
-      "2022-04",
-      "2022-05",
-      "2022-06",
       "2022-07",
       "2022-08",
       "2022-09",
@@ -167,45 +164,42 @@
       "2026-06"
     ],
     "sales": [
-      626128.0,
-      807116.0,
-      1067168.0,
-      1031117.0,
-      1226290.0,
-      1281673.0,
-      1160389.0,
-      1105694.0,
-      1258033.0,
-      831918.0,
-      812052.0,
-      1061340.0,
-      1025329.0,
-      1179692.0,
-      1221092.0,
-      966529.0,
-      1175295.0,
-      1181047.0,
-      1319345.0,
-      1152905.0,
-      1552618.0,
-      1287862.0,
-      680475.0,
-      1018727.0,
-      866674.0,
-      1062573.0,
-      1031629.0,
-      1081344.0,
-      1284965.0,
-      1331798.0,
-      1249056.0,
-      1491524.0,
-      1501331.0,
-      1119348.0,
-      916988.0,
-      1289010.0,
-      1016609.0,
-      883275.0,
-      1250036.0,
+      1261498.0,
+      1338523.0,
+      1410613.0,
+      1317964.0,
+      1209457.0,
+      1589794.0,
+      938754.0,
+      1016927.0,
+      1185418.0,
+      1190276.0,
+      1291626.0,
+      1416889.0,
+      1293960.0,
+      1416468.0,
+      1461045.0,
+      1440335.0,
+      1487930.0,
+      1722420.0,
+      1470292.0,
+      785599.0,
+      1264525.0,
+      1143975.0,
+      1268639.0,
+      1294578.0,
+      1251539.0,
+      1378581.0,
+      1503838.0,
+      1597186.0,
+      1712324.0,
+      1853726.0,
+      1279973.0,
+      985813.0,
+      1403848.0,
+      1203428.0,
+      1303027.0,
+      1430122.0,
       1240709.0,
       1340720.0,
       1487037.0,
@@ -220,49 +214,46 @@
       911717.0
     ],
     "sentiment": [
-      0.338,
-      0.337,
-      0.336,
-      0.331,
-      0.338,
-      0.333,
+      0.334,
+      0.34,
+      0.34,
       0.342,
       0.351,
-      0.363,
+      0.361,
+      0.365,
       0.368,
-      0.353,
-      0.375,
-      0.382,
-      0.359,
-      0.347,
-      0.339,
-      0.334,
+      0.377,
+      0.371,
+      0.358,
+      0.349,
+      0.344,
+      0.338,
+      0.322,
       0.33,
-      0.325,
-      0.334,
-      0.33,
-      0.291,
-      0.281,
-      0.272,
-      0.256,
-      0.258,
-      0.234,
-      0.249,
-      0.286,
-      0.271,
+      0.333,
+      0.319,
+      0.293,
       0.28,
       0.278,
-      0.294,
-      0.292,
+      0.264,
+      0.252,
+      0.248,
+      0.261,
+      0.278,
+      0.277,
+      0.273,
+      0.275,
       0.283,
-      0.298,
-      0.315,
+      0.288,
+      0.276,
+      0.289,
       0.325,
-      0.314,
+      0.328,
+      0.325,
       0.316,
       0.309,
-      0.289,
-      0.265,
+      0.29,
+      0.266,
       0.269,
       0.263,
       0.257,
@@ -274,7 +265,7 @@
     ]
   },
   "conclusion": {
-    "zh": "固定六个月压力测试中，选定的口碑增强相对销量基线改善0.884个百分点；5,000次车系聚类Bootstrap胜出概率为93.46%，95%区间为-0.28至2.11个百分点，稳定增益证据不足，定位为辅助信息。",
-    "en": "In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by 0.884 pp; it wins 93.46% of 5,000 series-cluster bootstrap samples, with a 95% interval from -0.28 to 2.11 pp. Evidence for a stable gain is insufficient, so it is classified as supporting information."
+    "zh": "固定六个月压力测试中，选定的口碑增强相对销量基线改善0.697个百分点；5,000次车系聚类Bootstrap胜出概率为92.64%，95%区间为-0.23至1.87个百分点，稳定增益证据不足，定位为辅助信息。",
+    "en": "In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by 0.697 pp; it wins 92.64% of 5,000 series-cluster bootstrap samples, with a 95% interval from -0.23 to 1.87 pp. Evidence for a stable gain is insufficient, so it is classified as supporting information."
   }
 }

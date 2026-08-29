@@ -264,7 +264,11 @@ def recursive_predictions(
 ) -> pd.DataFrame:
     rows: list[dict[str, Any]] = []
     for name, series in panel.groupby("series_name", sort=True):
-        cold_start = not series["split"].isin(history_splits).any()
+        # A retained all-zero pre-launch history is informative for lag
+        # features, but it is still a cold-start case for lifecycle handling.
+        # Classify by prior positive sales rather than row presence.
+        history_rows = series.loc[series["split"].isin(history_splits)]
+        cold_start = not history_rows[mu.TARGET].astype(float).gt(0).any()
         forecast = recursive_forecast_allow_cold_start(
             model, series, columns, forecast_split, history_splits,
         )

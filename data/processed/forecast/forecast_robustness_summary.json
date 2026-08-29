@@ -1,51 +1,51 @@
 {
   "schema_version": "v1",
-  "validation_selected_feedback_version": "LOCAL_LEXICON_FIXED",
+  "validation_selected_feedback_version": "PLATFORM_RATING_FIXED",
   "series_cluster_bootstrap_replicates": 5000,
-  "selected_feedback_vs_base_improvement_pp": 0.8843998977814707,
+  "selected_feedback_vs_base_improvement_pp": 0.6973553615232504,
   "selected_feedback_vs_base_bootstrap_95pct_ci_pp": [
-    -0.28397119251796266,
-    2.107969713037331
+    -0.23400283984277034,
+    1.8733860490731498
   ],
-  "selected_feedback_vs_base_probability_better": 0.9346,
+  "selected_feedback_vs_base_probability_better": 0.9264,
   "test_months_selected_feedback_better_than_base": 6,
   "test_months_total": 6,
   "top_10_features_by_mean_abs_shap": [
     "lag_1",
+    "roll_mean_3",
     "lag_2",
-    "lag_3",
+    "roll_mean_6",
     "month_sin",
     "month_cos",
+    "sentiment_review_count_180d",
     "sentiment_review_count_prior_all",
-    "roll_mean_6",
     "trunk_volume_l",
-    "height_mm",
-    "roll_mean_3"
+    "height_mm"
   ],
   "top_10_selected_feedback_features_by_mean_abs_shap": [
-    "sentiment_review_count_prior_all",
-    "text_comfort_mentioned_180d_count",
-    "text_power_mentioned_180d_count",
-    "text_comfort_polarity_180d_mean",
     "sentiment_review_count_180d",
-    "text_power_polarity_180d_mean",
-    "text_interior_mentioned_180d_count",
-    "text_global_polarity_180d_mean",
-    "text_interior_polarity_180d_mean",
-    "text_space_polarity_180d_mean"
+    "sentiment_review_count_prior_all",
+    "platform_rating_configuration_sentiment_180d_mean",
+    "platform_rating_appearance_sentiment_180d_mean",
+    "platform_rating_interior_sentiment_180d_mean",
+    "platform_rating_power_sentiment_180d_mean",
+    "platform_rating_overall_sentiment_180d_mean",
+    "platform_rating_space_sentiment_180d_mean",
+    "sentiment_available_prior",
+    "platform_rating_overall_polarity_180d_mean"
   ],
   "top_10_error_contributing_series": [
-    "秦PLUS",
     "小米SU7",
-    "轩逸",
+    "秦PLUS",
     "宏光MINIEV",
-    "驱逐舰05",
-    "元UP",
+    "轩逸",
     "Model Y",
-    "海鸥",
-    "雅阁",
-    "MG4"
+    "元UP",
+    "长安CS75 PLUS",
+    "MG4",
+    "Model 3",
+    "长安Lumin"
   ],
-  "cold_start_series": 9,
+  "cold_start_series": 13,
   "external_api_calls": 0
 }

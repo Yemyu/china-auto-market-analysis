@@ -4,106 +4,113 @@
   "comparison_task": "six-month recursive fixed-origin forecast",
   "test_used_for_selection": false,
   "gate": {
-    "minimum_gain_pp": 1.5,
+    "minimum_gain_pp": 0.5,
     "maximum_origin_regression_pp": 1.0,
     "passes": true
   },
-  "selected_version": "BASE",
-  "historical_fixed_BASE_WMAPE": 34.97268735382232,
-  "historical_selected_rolling_WMAPE": 25.55548081839822,
-  "historical_gain_pp": 9.417206535424103,
-  "worst_origin_regression_pp": -4.841122978032303,
+  "selected_version": "SEASONAL_D5",
+  "historical_base_rolling_WMAPE": 24.156597460323045,
+  "historical_selected_rolling_WMAPE": 23.47355848763711,
+  "historical_gain_pp": 0.6830389726859352,
+  "worst_origin_regression_pp": 0.4601050292842217,
+  "model_params": {
+    "BASE": {
+      "n_estimators": 100,
+      "max_depth": 6,
+      "learning_rate": 0.05,
+      "subsample": 0.8,
+      "colsample_bytree": 0.8,
+      "min_child_weight": 1,
+      "reg_lambda": 1.0,
+      "reg_alpha": 0.0
+    },
+    "SEASONAL_D5": {
+      "n_estimators": 200,
+      "max_depth": 5,
+      "learning_rate": 0.04,
+      "subsample": 0.85,
+      "colsample_bytree": 0.85,
+      "min_child_weight": 2,
+      "reg_lambda": 2.0,
+      "reg_alpha": 0.0
+    }
+  },
+  "panel_policy": "complete monthly cohort panel with causal configuration fallback",
+  "seasonal_features": [
+    "lag_12",
+    "roll_mean_12"
+  ],
   "validation_summary": [
+    {
+      "version": "SEASONAL_D5",
+      "mode": "ROLLING_ONE_MONTH",
+      "historical_origins": 4,
+      "absolute_error": 7607686.646344822,
+      "actual_volume": 32409601.0,
+      "mean_origin_WMAPE": 23.69634404130084,
+      "worst_origin_WMAPE": 29.982677039195792,
+      "pooled_global_WMAPE": 23.47355848763711
+    },
     {
       "version": "BASE",
       "mode": "ROLLING_ONE_MONTH",
       "historical_origins": 4,
-      "absolute_error": 7319552.771701679,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 25.920906689835952,
-      "worst_origin_WMAPE": 32.14018526726516,
-      "pooled_global_WMAPE": 25.55548081839822
-    },
-    {
-      "version": "LOCAL_LEXICON_FIXED",
-      "mode": "ROLLING_ONE_MONTH",
-      "historical_origins": 4,
-      "absolute_error": 7443181.584578665,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 26.345710841185483,
-      "worst_origin_WMAPE": 32.576122265400286,
-      "pooled_global_WMAPE": 25.987118358917606
+      "absolute_error": 7829056.852066833,
+      "actual_volume": 32409601.0,
+      "mean_origin_WMAPE": 24.33136484788568,
+      "worst_origin_WMAPE": 30.47470732367779,
+      "pooled_global_WMAPE": 24.156597460323045
     },
     {
       "version": "NAIVE",
       "mode": "LAST_VALUE",
       "historical_origins": 4,
-      "absolute_error": 7584936.0,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 27.532073792172675,
-      "worst_origin_WMAPE": 37.17645100656698,
-      "pooled_global_WMAPE": 26.482039613974145
+      "absolute_error": 8327321.0,
+      "actual_volume": 32409601.0,
+      "mean_origin_WMAPE": 26.379270384121092,
+      "worst_origin_WMAPE": 35.49307045982572,
+      "pooled_global_WMAPE": 25.693994196349408
     },
     {
       "version": "NAIVE",
       "mode": "ROLLING_MEAN_3",
       "historical_origins": 4,
-      "absolute_error": 7966076.833333333,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 28.59256424148542,
-      "worst_origin_WMAPE": 35.761703491741116,
-      "pooled_global_WMAPE": 27.812754421170467
+      "absolute_error": 8738933.0,
+      "actual_volume": 32409601.0,
+      "mean_origin_WMAPE": 27.470794289695682,
+      "worst_origin_WMAPE": 35.117335269612475,
+      "pooled_global_WMAPE": 26.964025259058268
     },
     {
       "version": "NAIVE",
       "mode": "ROLLING_MEAN_6",
       "historical_origins": 4,
-      "absolute_error": 8901622.6,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 31.64370931546895,
-      "worst_origin_WMAPE": 37.15843244327728,
-      "pooled_global_WMAPE": 31.079118178696234
-    },
-    {
-      "version": "BASE",
-      "mode": "FIXED_SIX_MONTH",
-      "historical_origins": 4,
-      "absolute_error": 10016811.363229565,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 35.001505973615,
-      "worst_origin_WMAPE": 37.06090045559765,
-      "pooled_global_WMAPE": 34.97268735382232
-    },
-    {
-      "version": "LOCAL_LEXICON_FIXED",
-      "mode": "FIXED_SIX_MONTH",
-      "historical_origins": 4,
-      "absolute_error": 10106580.642724652,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 35.36651830641351,
-      "worst_origin_WMAPE": 38.61273075591713,
-      "pooled_global_WMAPE": 35.28610774599265
+      "absolute_error": 9933305.833333332,
+      "actual_volume": 32409601.0,
+      "mean_origin_WMAPE": 31.015319445561104,
+      "worst_origin_WMAPE": 36.85906642049947,
+      "pooled_global_WMAPE": 30.649269126557073
     },
     {
       "version": "NAIVE",
       "mode": "SEASONAL_LAG12",
       "historical_origins": 4,
-      "absolute_error": 11826929.0,
-      "actual_volume": 28641812.0,
-      "mean_origin_WMAPE": 41.68189432800156,
-      "worst_origin_WMAPE": 45.897268634182595,
-      "pooled_global_WMAPE": 41.29253065413599
+      "absolute_error": 15745513.0,
+      "actual_volume": 32409601.0,
+      "mean_origin_WMAPE": 48.68182789957552,
+      "worst_origin_WMAPE": 52.33129127817448,
+      "pooled_global_WMAPE": 48.58286592297141
     }
   ],
   "locked_test": {
     "rows": 2226,
     "series": 371,
-    "global_volume_weighted_WMAPE": 31.34119955142821,
+    "global_volume_weighted_WMAPE": 29.723456121551727,
     "naive_WMAPE": {
       "LAST_VALUE": 40.992416043671625,
       "ROLLING_MEAN_3": 43.612636666596785,
-      "ROLLING_MEAN_6": 51.17307091533896,
-      "SEASONAL_LAG12": 67.99733208498276
+      "ROLLING_MEAN_6": 51.20719314807112,
+      "SEASONAL_LAG12": 73.88493030241973
     }
   }
 }

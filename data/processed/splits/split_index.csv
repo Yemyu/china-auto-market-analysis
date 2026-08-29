@@ -1,4 +1,28 @@
 series_name,date,split
+AION RT,2022-01-01,train
+AION RT,2022-02-01,train
+AION RT,2022-03-01,train
+AION RT,2022-04-01,train
+AION RT,2022-05-01,train
+AION RT,2022-06-01,train
+AION RT,2022-07-01,train
+AION RT,2022-08-01,train
+AION RT,2022-09-01,train
+AION RT,2022-10-01,train
+AION RT,2022-11-01,train
+AION RT,2022-12-01,train
+AION RT,2023-01-01,train
+AION RT,2023-02-01,train
+AION RT,2023-03-01,train
+AION RT,2023-04-01,train
+AION RT,2023-05-01,train
+AION RT,2023-06-01,train
+AION RT,2023-07-01,train
+AION RT,2023-08-01,train
+AION RT,2023-09-01,train
+AION RT,2023-10-01,train
+AION RT,2023-11-01,train
+AION RT,2023-12-01,train
 AION RT,2024-01-01,train
 AION RT,2024-02-01,train
 AION RT,2024-03-01,train
@@ -83,6 +107,42 @@ AION S,2026-03-01,test
 AION S,2026-04-01,test
 AION S,2026-05-01,test
 AION S,2026-06-01,test
+AION UT,2022-01-01,train
+AION UT,2022-02-01,train
+AION UT,2022-03-01,train
+AION UT,2022-04-01,train
+AION UT,2022-05-01,train
+AION UT,2022-06-01,train
+AION UT,2022-07-01,train
+AION UT,2022-08-01,train
+AION UT,2022-09-01,train
+AION UT,2022-10-01,train
+AION UT,2022-11-01,train
+AION UT,2022-12-01,train
+AION UT,2023-01-01,train
+AION UT,2023-02-01,train
+AION UT,2023-03-01,train
+AION UT,2023-04-01,train
+AION UT,2023-05-01,train
+AION UT,2023-06-01,train
+AION UT,2023-07-01,train
+AION UT,2023-08-01,train
+AION UT,2023-09-01,train
+AION UT,2023-10-01,train
+AION UT,2023-11-01,train
+AION UT,2023-12-01,train
+AION UT,2024-01-01,train
+AION UT,2024-02-01,train
+AION UT,2024-03-01,train
+AION UT,2024-04-01,train
+AION UT,2024-05-01,train
+AION UT,2024-06-01,train
+AION UT,2024-07-01,train
+AION UT,2024-08-01,train
+AION UT,2024-09-01,train
+AION UT,2024-10-01,train
+AION UT,2024-11-01,train
+AION UT,2024-12-01,train
 AION UT,2025-01-01,train
 AION UT,2025-02-01,train
 AION UT,2025-03-01,train
@@ -101,6 +161,42 @@ AION UT,2026-03-01,test
 AION UT,2026-04-01,test
 AION UT,2026-05-01,test
 AION UT,2026-06-01,test
+EO 羿欧,2022-01-01,train
+EO 羿欧,2022-02-01,train
+EO 羿欧,2022-03-01,train
+EO 羿欧,2022-04-01,train
+EO 羿欧,2022-05-01,train
+EO 羿欧,2022-06-01,train
+EO 羿欧,2022-07-01,train
+EO 羿欧,2022-08-01,train
+EO 羿欧,2022-09-01,train
+EO 羿欧,2022-10-01,train
+EO 羿欧,2022-11-01,train
+EO 羿欧,2022-12-01,train
+EO 羿欧,2023-01-01,train
+EO 羿欧,2023-02-01,train
+EO 羿欧,2023-03-01,train
+EO 羿欧,2023-04-01,train
+EO 羿欧,2023-05-01,train
+EO 羿欧,2023-06-01,train
+EO 羿欧,2023-07-01,train
+EO 羿欧,2023-08-01,train
+EO 羿欧,2023-09-01,train
+EO 羿欧,2023-10-01,train
+EO 羿欧,2023-11-01,train
+EO 羿欧,2023-12-01,train
+EO 羿欧,2024-01-01,train
+EO 羿欧,2024-02-01,train
+EO 羿欧,2024-03-01,train
+EO 羿欧,2024-04-01,train
+EO 羿欧,2024-05-01,train
+EO 羿欧,2024-06-01,train
+EO 羿欧,2024-07-01,train
+EO 羿欧,2024-08-01,train
+EO 羿欧,2024-09-01,train
+EO 羿欧,2024-10-01,train
+EO 羿欧,2024-11-01,train
+EO 羿欧,2024-12-01,train
 EO 羿欧,2025-01-01,train
 EO 羿欧,2025-02-01,train
 EO 羿欧,2025-03-01,train
@@ -335,6 +431,30 @@ ID.6 CROZZ,2026-03-01,test
 ID.6 CROZZ,2026-04-01,test
 ID.6 CROZZ,2026-05-01,test
 ID.6 CROZZ,2026-06-01,test
+IQ傲歌,2022-01-01,train
+IQ傲歌,2022-02-01,train
+IQ傲歌,2022-03-01,train
+IQ傲歌,2022-04-01,train
+IQ傲歌,2022-05-01,train
+IQ傲歌,2022-06-01,train
+IQ傲歌,2022-07-01,train
+IQ傲歌,2022-08-01,train
+IQ傲歌,2022-09-01,train
+IQ傲歌,2022-10-01,train
+IQ傲歌,2022-11-01,train
+IQ傲歌,2022-12-01,train
+IQ傲歌,2023-01-01,train
+IQ傲歌,2023-02-01,train
+IQ傲歌,2023-03-01,train
+IQ傲歌,2023-04-01,train
+IQ傲歌,2023-05-01,train
+IQ傲歌,2023-06-01,train
+IQ傲歌,2023-07-01,train
+IQ傲歌,2023-08-01,train
+IQ傲歌,2023-09-01,train
+IQ傲歌,2023-10-01,train
+IQ傲歌,2023-11-01,train
+IQ傲歌,2023-12-01,train
 IQ傲歌,2024-01-01,train
 IQ傲歌,2024-02-01,train
 IQ傲歌,2024-03-01,train
@@ -527,6 +647,18 @@ MG6,2026-03-01,test
 MG6,2026-04-01,test
 MG6,2026-05-01,test
 MG6,2026-06-01,test
+MG7,2022-01-01,train
+MG7,2022-02-01,train
+MG7,2022-03-01,train
+MG7,2022-04-01,train
+MG7,2022-05-01,train
+MG7,2022-06-01,train
+MG7,2022-07-01,train
+MG7,2022-08-01,train
+MG7,2022-09-01,train
+MG7,2022-10-01,train
+MG7,2022-11-01,train
+MG7,2022-12-01,train
 MG7,2023-01-01,train
 MG7,2023-02-01,train
 MG7,2023-03-01,train
@@ -677,6 +809,30 @@ Model Y,2026-03-01,test
 Model Y,2026-04-01,test
 Model Y,2026-05-01,test
 Model Y,2026-06-01,test
+PATHFINDER探陆,2022-01-01,train
+PATHFINDER探陆,2022-02-01,train
+PATHFINDER探陆,2022-03-01,train
+PATHFINDER探陆,2022-04-01,train
+PATHFINDER探陆,2022-05-01,train
+PATHFINDER探陆,2022-06-01,train
+PATHFINDER探陆,2022-07-01,train
+PATHFINDER探陆,2022-08-01,train
+PATHFINDER探陆,2022-09-01,train
+PATHFINDER探陆,2022-10-01,train
+PATHFINDER探陆,2022-11-01,train
+PATHFINDER探陆,2022-12-01,train
+PATHFINDER探陆,2023-01-01,train
+PATHFINDER探陆,2023-02-01,train
+PATHFINDER探陆,2023-03-01,train
+PATHFINDER探陆,2023-04-01,train
+PATHFINDER探陆,2023-05-01,train
+PATHFINDER探陆,2023-06-01,train
+PATHFINDER探陆,2023-07-01,train
+PATHFINDER探陆,2023-08-01,train
+PATHFINDER探陆,2023-09-01,train
+PATHFINDER探陆,2023-10-01,train
+PATHFINDER探陆,2023-11-01,train
+PATHFINDER探陆,2023-12-01,train
 PATHFINDER探陆,2024-01-01,train
 PATHFINDER探陆,2024-02-01,train
 PATHFINDER探陆,2024-03-01,train
@@ -707,6 +863,42 @@ PATHFINDER探陆,2026-03-01,test
 PATHFINDER探陆,2026-04-01,test
 PATHFINDER探陆,2026-05-01,test
 PATHFINDER探陆,2026-06-01,test
+Polestar 4,2022-01-01,train
+Polestar 4,2022-02-01,train
+Polestar 4,2022-03-01,train
+Polestar 4,2022-04-01,train
+Polestar 4,2022-05-01,train
+Polestar 4,2022-06-01,train
+Polestar 4,2022-07-01,train
+Polestar 4,2022-08-01,train
+Polestar 4,2022-09-01,train
+Polestar 4,2022-10-01,train
+Polestar 4,2022-11-01,train
+Polestar 4,2022-12-01,train
+Polestar 4,2023-01-01,train
+Polestar 4,2023-02-01,train
+Polestar 4,2023-03-01,train
+Polestar 4,2023-04-01,train
+Polestar 4,2023-05-01,train
+Polestar 4,2023-06-01,train
+Polestar 4,2023-07-01,train
+Polestar 4,2023-08-01,train
+Polestar 4,2023-09-01,train
+Polestar 4,2023-10-01,train
+Polestar 4,2023-11-01,train
+Polestar 4,2023-12-01,train
+Polestar 4,2024-01-01,train
+Polestar 4,2024-02-01,train
+Polestar 4,2024-03-01,train
+Polestar 4,2024-04-01,train
+Polestar 4,2024-05-01,train
+Polestar 4,2024-06-01,train
+Polestar 4,2024-07-01,train
+Polestar 4,2024-08-01,train
+Polestar 4,2024-09-01,train
+Polestar 4,2024-10-01,train
+Polestar 4,2024-11-01,train
+Polestar 4,2024-12-01,train
 Polestar 4,2025-01-01,train
 Polestar 4,2025-02-01,train
 Polestar 4,2025-03-01,train
@@ -887,6 +1079,30 @@ T-ROC探歌,2026-03-01,test
 T-ROC探歌,2026-04-01,test
 T-ROC探歌,2026-05-01,test
 T-ROC探歌,2026-06-01,test
+eπ007,2022-01-01,train
+eπ007,2022-02-01,train
+eπ007,2022-03-01,train
+eπ007,2022-04-01,train
+eπ007,2022-05-01,train
+eπ007,2022-06-01,train
+eπ007,2022-07-01,train
+eπ007,2022-08-01,train
+eπ007,2022-09-01,train
+eπ007,2022-10-01,train
+eπ007,2022-11-01,train
+eπ007,2022-12-01,train
+eπ007,2023-01-01,train
+eπ007,2023-02-01,train
+eπ007,2023-03-01,train
+eπ007,2023-04-01,train
+eπ007,2023-05-01,train
+eπ007,2023-06-01,train
+eπ007,2023-07-01,train
+eπ007,2023-08-01,train
+eπ007,2023-09-01,train
+eπ007,2023-10-01,train
+eπ007,2023-11-01,train
+eπ007,2023-12-01,train
 eπ007,2024-01-01,train
 eπ007,2024-02-01,train
 eπ007,2024-03-01,train
@@ -971,6 +1187,42 @@ e爱丽舍,2026-03-01,test
 e爱丽舍,2026-04-01,test
 e爱丽舍,2026-05-01,test
 e爱丽舍,2026-06-01,test
+firefly萤火虫,2022-01-01,train
+firefly萤火虫,2022-02-01,train
+firefly萤火虫,2022-03-01,train
+firefly萤火虫,2022-04-01,train
+firefly萤火虫,2022-05-01,train
+firefly萤火虫,2022-06-01,train
+firefly萤火虫,2022-07-01,train
+firefly萤火虫,2022-08-01,train
+firefly萤火虫,2022-09-01,train
+firefly萤火虫,2022-10-01,train
+firefly萤火虫,2022-11-01,train
+firefly萤火虫,2022-12-01,train
+firefly萤火虫,2023-01-01,train
+firefly萤火虫,2023-02-01,train
+firefly萤火虫,2023-03-01,train
+firefly萤火虫,2023-04-01,train
+firefly萤火虫,2023-05-01,train
+firefly萤火虫,2023-06-01,train
+firefly萤火虫,2023-07-01,train
+firefly萤火虫,2023-08-01,train
+firefly萤火虫,2023-09-01,train
+firefly萤火虫,2023-10-01,train
+firefly萤火虫,2023-11-01,train
+firefly萤火虫,2023-12-01,train
+firefly萤火虫,2024-01-01,train
+firefly萤火虫,2024-02-01,train
+firefly萤火虫,2024-03-01,train
+firefly萤火虫,2024-04-01,train
+firefly萤火虫,2024-05-01,train
+firefly萤火虫,2024-06-01,train
+firefly萤火虫,2024-07-01,train
+firefly萤火虫,2024-08-01,train
+firefly萤火虫,2024-09-01,train
+firefly萤火虫,2024-10-01,train
+firefly萤火虫,2024-11-01,train
+firefly萤火虫,2024-12-01,train
 firefly萤火虫,2025-01-01,train
 firefly萤火虫,2025-02-01,train
 firefly萤火虫,2025-03-01,train
@@ -989,6 +1241,18 @@ firefly萤火虫,2026-03-01,test
 firefly萤火虫,2026-04-01,test
 firefly萤火虫,2026-05-01,test
 firefly萤火虫,2026-06-01,test
+iCAR 03,2022-01-01,train
+iCAR 03,2022-02-01,train
+iCAR 03,2022-03-01,train
+iCAR 03,2022-04-01,train
+iCAR 03,2022-05-01,train
+iCAR 03,2022-06-01,train
+iCAR 03,2022-07-01,train
+iCAR 03,2022-08-01,train
+iCAR 03,2022-09-01,train
+iCAR 03,2022-10-01,train
+iCAR 03,2022-11-01,train
+iCAR 03,2022-12-01,train
 iCAR 03,2023-01-01,train
 iCAR 03,2023-02-01,train
 iCAR 03,2023-03-01,train
@@ -1085,6 +1349,42 @@ iCAR 03,2026-06-01,test
 世纪,2026-04-01,test
 世纪,2026-05-01,test
 世纪,2026-06-01,test
+东风本田S7,2022-01-01,train
+东风本田S7,2022-02-01,train
+东风本田S7,2022-03-01,train
+东风本田S7,2022-04-01,train
+东风本田S7,2022-05-01,train
+东风本田S7,2022-06-01,train
+东风本田S7,2022-07-01,train
+东风本田S7,2022-08-01,train
+东风本田S7,2022-09-01,train
+东风本田S7,2022-10-01,train
+东风本田S7,2022-11-01,train
+东风本田S7,2022-12-01,train
+东风本田S7,2023-01-01,train
+东风本田S7,2023-02-01,train
+东风本田S7,2023-03-01,train
+东风本田S7,2023-04-01,train
+东风本田S7,2023-05-01,train
+东风本田S7,2023-06-01,train
+东风本田S7,2023-07-01,train
+东风本田S7,2023-08-01,train
+东风本田S7,2023-09-01,train
+东风本田S7,2023-10-01,train
+东风本田S7,2023-11-01,train
+东风本田S7,2023-12-01,train
+东风本田S7,2024-01-01,train
+东风本田S7,2024-02-01,train
+东风本田S7,2024-03-01,train
+东风本田S7,2024-04-01,train
+东风本田S7,2024-05-01,train
+东风本田S7,2024-06-01,train
+东风本田S7,2024-07-01,train
+东风本田S7,2024-08-01,train
+东风本田S7,2024-09-01,train
+东风本田S7,2024-10-01,train
+东风本田S7,2024-11-01,train
+东风本田S7,2024-12-01,train
 东风本田S7,2025-01-01,train
 东风本田S7,2025-02-01,train
 东风本田S7,2025-03-01,train
@@ -1103,6 +1403,18 @@ iCAR 03,2026-06-01,test
 东风本田S7,2026-04-01,test
 东风本田S7,2026-05-01,test
 东风本田S7,2026-06-01,test
+丰田bZ3,2022-01-01,train
+丰田bZ3,2022-02-01,train
+丰田bZ3,2022-03-01,train
+丰田bZ3,2022-04-01,train
+丰田bZ3,2022-05-01,train
+丰田bZ3,2022-06-01,train
+丰田bZ3,2022-07-01,train
+丰田bZ3,2022-08-01,train
+丰田bZ3,2022-09-01,train
+丰田bZ3,2022-10-01,train
+丰田bZ3,2022-11-01,train
+丰田bZ3,2022-12-01,train
 丰田bZ3,2023-01-01,train
 丰田bZ3,2023-02-01,train
 丰田bZ3,2023-03-01,train
@@ -1145,6 +1457,42 @@ iCAR 03,2026-06-01,test
 丰田bZ3,2026-04-01,test
 丰田bZ3,2026-05-01,test
 丰田bZ3,2026-06-01,test
+丰田bZ5,2022-01-01,train
+丰田bZ5,2022-02-01,train
+丰田bZ5,2022-03-01,train
+丰田bZ5,2022-04-01,train
+丰田bZ5,2022-05-01,train
+丰田bZ5,2022-06-01,train
+丰田bZ5,2022-07-01,train
+丰田bZ5,2022-08-01,train
+丰田bZ5,2022-09-01,train
+丰田bZ5,2022-10-01,train
+丰田bZ5,2022-11-01,train
+丰田bZ5,2022-12-01,train
+丰田bZ5,2023-01-01,train
+丰田bZ5,2023-02-01,train
+丰田bZ5,2023-03-01,train
+丰田bZ5,2023-04-01,train
+丰田bZ5,2023-05-01,train
+丰田bZ5,2023-06-01,train
+丰田bZ5,2023-07-01,train
+丰田bZ5,2023-08-01,train
+丰田bZ5,2023-09-01,train
+丰田bZ5,2023-10-01,train
+丰田bZ5,2023-11-01,train
+丰田bZ5,2023-12-01,train
+丰田bZ5,2024-01-01,train
+丰田bZ5,2024-02-01,train
+丰田bZ5,2024-03-01,train
+丰田bZ5,2024-04-01,train
+丰田bZ5,2024-05-01,train
+丰田bZ5,2024-06-01,train
+丰田bZ5,2024-07-01,train
+丰田bZ5,2024-08-01,train
+丰田bZ5,2024-09-01,train
+丰田bZ5,2024-10-01,train
+丰田bZ5,2024-11-01,train
+丰田bZ5,2024-12-01,train
 丰田bZ5,2025-01-01,train
 丰田bZ5,2025-02-01,train
 丰田bZ5,2025-03-01,train
@@ -1217,6 +1565,42 @@ iCAR 03,2026-06-01,test
 五菱佳辰,2026-04-01,test
 五菱佳辰,2026-05-01,test
 五菱佳辰,2026-06-01,test
+五菱宏光,2022-01-01,train
+五菱宏光,2022-02-01,train
+五菱宏光,2022-03-01,train
+五菱宏光,2022-04-01,train
+五菱宏光,2022-05-01,train
+五菱宏光,2022-06-01,train
+五菱宏光,2022-07-01,train
+五菱宏光,2022-08-01,train
+五菱宏光,2022-09-01,train
+五菱宏光,2022-10-01,train
+五菱宏光,2022-11-01,train
+五菱宏光,2022-12-01,train
+五菱宏光,2023-01-01,train
+五菱宏光,2023-02-01,train
+五菱宏光,2023-03-01,train
+五菱宏光,2023-04-01,train
+五菱宏光,2023-05-01,train
+五菱宏光,2023-06-01,train
+五菱宏光,2023-07-01,train
+五菱宏光,2023-08-01,train
+五菱宏光,2023-09-01,train
+五菱宏光,2023-10-01,train
+五菱宏光,2023-11-01,train
+五菱宏光,2023-12-01,train
+五菱宏光,2024-01-01,train
+五菱宏光,2024-02-01,train
+五菱宏光,2024-03-01,train
+五菱宏光,2024-04-01,train
+五菱宏光,2024-05-01,train
+五菱宏光,2024-06-01,train
+五菱宏光,2024-07-01,train
+五菱宏光,2024-08-01,train
+五菱宏光,2024-09-01,train
+五菱宏光,2024-10-01,train
+五菱宏光,2024-11-01,train
+五菱宏光,2024-12-01,train
 五菱宏光,2025-01-01,train
 五菱宏光,2025-02-01,train
 五菱宏光,2025-03-01,train
@@ -1343,6 +1727,18 @@ iCAR 03,2026-06-01,test
 五菱征程,2026-04-01,test
 五菱征程,2026-05-01,test
 五菱征程,2026-06-01,test
+五菱星云,2022-01-01,train
+五菱星云,2022-02-01,train
+五菱星云,2022-03-01,train
+五菱星云,2022-04-01,train
+五菱星云,2022-05-01,train
+五菱星云,2022-06-01,train
+五菱星云,2022-07-01,train
+五菱星云,2022-08-01,train
+五菱星云,2022-09-01,train
+五菱星云,2022-10-01,train
+五菱星云,2022-11-01,train
+五菱星云,2022-12-01,train
 五菱星云,2023-01-01,train
 五菱星云,2023-02-01,train
 五菱星云,2023-03-01,train
@@ -1385,6 +1781,18 @@ iCAR 03,2026-06-01,test
 五菱星云,2026-04-01,test
 五菱星云,2026-05-01,test
 五菱星云,2026-06-01,test
+五菱星光,2022-01-01,train
+五菱星光,2022-02-01,train
+五菱星光,2022-03-01,train
+五菱星光,2022-04-01,train
+五菱星光,2022-05-01,train
+五菱星光,2022-06-01,train
+五菱星光,2022-07-01,train
+五菱星光,2022-08-01,train
+五菱星光,2022-09-01,train
+五菱星光,2022-10-01,train
+五菱星光,2022-11-01,train
+五菱星光,2022-12-01,train
 五菱星光,2023-01-01,train
 五菱星光,2023-02-01,train
 五菱星光,2023-03-01,train
@@ -1697,6 +2105,18 @@ iCAR 03,2026-06-01,test
 伊兰特,2026-04-01,test
 伊兰特,2026-05-01,test
 伊兰特,2026-06-01,test
+传祺E8新能源,2022-01-01,train
+传祺E8新能源,2022-02-01,train
+传祺E8新能源,2022-03-01,train
+传祺E8新能源,2022-04-01,train
+传祺E8新能源,2022-05-01,train
+传祺E8新能源,2022-06-01,train
+传祺E8新能源,2022-07-01,train
+传祺E8新能源,2022-08-01,train
+传祺E8新能源,2022-09-01,train
+传祺E8新能源,2022-10-01,train
+传祺E8新能源,2022-11-01,train
+传祺E8新能源,2022-12-01,train
 传祺E8新能源,2023-01-01,train
 传祺E8新能源,2023-02-01,train
 传祺E8新能源,2023-03-01,train
@@ -1955,6 +2375,30 @@ iCAR 03,2026-06-01,test
 元PLUS,2026-04-01,test
 元PLUS,2026-05-01,test
 元PLUS,2026-06-01,test
+元UP,2022-01-01,train
+元UP,2022-02-01,train
+元UP,2022-03-01,train
+元UP,2022-04-01,train
+元UP,2022-05-01,train
+元UP,2022-06-01,train
+元UP,2022-07-01,train
+元UP,2022-08-01,train
+元UP,2022-09-01,train
+元UP,2022-10-01,train
+元UP,2022-11-01,train
+元UP,2022-12-01,train
+元UP,2023-01-01,train
+元UP,2023-02-01,train
+元UP,2023-03-01,train
+元UP,2023-04-01,train
+元UP,2023-05-01,train
+元UP,2023-06-01,train
+元UP,2023-07-01,train
+元UP,2023-08-01,train
+元UP,2023-09-01,train
+元UP,2023-10-01,train
+元UP,2023-11-01,train
+元UP,2023-12-01,train
 元UP,2024-01-01,train
 元UP,2024-02-01,train
 元UP,2024-03-01,train
@@ -2309,6 +2753,54 @@ iCAR 03,2026-06-01,test
 凡尔赛C5 X,2026-04-01,test
 凡尔赛C5 X,2026-05-01,test
 凡尔赛C5 X,2026-06-01,test
+凯威德,2022-01-01,train
+凯威德,2022-02-01,train
+凯威德,2022-03-01,train
+凯威德,2022-04-01,train
+凯威德,2022-05-01,train
+凯威德,2022-06-01,train
+凯威德,2022-07-01,train
+凯威德,2022-08-01,train
+凯威德,2022-09-01,train
+凯威德,2022-10-01,train
+凯威德,2022-11-01,train
+凯威德,2022-12-01,train
+凯威德,2023-01-01,train
+凯威德,2023-02-01,train
+凯威德,2023-03-01,train
+凯威德,2023-04-01,train
+凯威德,2023-05-01,train
+凯威德,2023-06-01,train
+凯威德,2023-07-01,train
+凯威德,2023-08-01,train
+凯威德,2023-09-01,train
+凯威德,2023-10-01,train
+凯威德,2023-11-01,train
+凯威德,2023-12-01,train
+凯威德,2024-01-01,train
+凯威德,2024-02-01,train
+凯威德,2024-03-01,train
+凯威德,2024-04-01,train
+凯威德,2024-05-01,train
+凯威德,2024-06-01,train
+凯威德,2024-07-01,train
+凯威德,2024-08-01,train
+凯威德,2024-09-01,train
+凯威德,2024-10-01,train
+凯威德,2024-11-01,train
+凯威德,2024-12-01,train
+凯威德,2025-01-01,train
+凯威德,2025-02-01,train
+凯威德,2025-03-01,train
+凯威德,2025-04-01,train
+凯威德,2025-05-01,train
+凯威德,2025-06-01,train
+凯威德,2025-07-01,val
+凯威德,2025-08-01,val
+凯威德,2025-09-01,val
+凯威德,2025-10-01,val
+凯威德,2025-11-01,val
+凯威德,2025-12-01,val
 凯威德,2026-01-01,test
 凯威德,2026-02-01,test
 凯威德,2026-03-01,test
@@ -2369,6 +2861,18 @@ iCAR 03,2026-06-01,test
 凯美瑞,2026-04-01,test
 凯美瑞,2026-05-01,test
 凯美瑞,2026-06-01,test
+凯翼拾月,2022-01-01,train
+凯翼拾月,2022-02-01,train
+凯翼拾月,2022-03-01,train
+凯翼拾月,2022-04-01,train
+凯翼拾月,2022-05-01,train
+凯翼拾月,2022-06-01,train
+凯翼拾月,2022-07-01,train
+凯翼拾月,2022-08-01,train
+凯翼拾月,2022-09-01,train
+凯翼拾月,2022-10-01,train
+凯翼拾月,2022-11-01,train
+凯翼拾月,2022-12-01,train
 凯翼拾月,2023-01-01,train
 凯翼拾月,2023-02-01,train
 凯翼拾月,2023-03-01,train
@@ -2573,6 +3077,18 @@ iCAR 03,2026-06-01,test
 凯迪拉克XT6,2026-04-01,test
 凯迪拉克XT6,2026-05-01,test
 凯迪拉克XT6,2026-06-01,test
+别克E4,2022-01-01,train
+别克E4,2022-02-01,train
+别克E4,2022-03-01,train
+别克E4,2022-04-01,train
+别克E4,2022-05-01,train
+别克E4,2022-06-01,train
+别克E4,2022-07-01,train
+别克E4,2022-08-01,train
+别克E4,2022-09-01,train
+别克E4,2022-10-01,train
+别克E4,2022-11-01,train
+别克E4,2022-12-01,train
 别克E4,2023-01-01,train
 别克E4,2023-02-01,train
 别克E4,2023-03-01,train
@@ -2723,6 +3239,30 @@ iCAR 03,2026-06-01,test
 别克GL8,2026-04-01,test
 别克GL8,2026-05-01,test
 别克GL8,2026-06-01,test
+别克GL8新能源,2022-01-01,train
+别克GL8新能源,2022-02-01,train
+别克GL8新能源,2022-03-01,train
+别克GL8新能源,2022-04-01,train
+别克GL8新能源,2022-05-01,train
+别克GL8新能源,2022-06-01,train
+别克GL8新能源,2022-07-01,train
+别克GL8新能源,2022-08-01,train
+别克GL8新能源,2022-09-01,train
+别克GL8新能源,2022-10-01,train
+别克GL8新能源,2022-11-01,train
+别克GL8新能源,2022-12-01,train
+别克GL8新能源,2023-01-01,train
+别克GL8新能源,2023-02-01,train
+别克GL8新能源,2023-03-01,train
+别克GL8新能源,2023-04-01,train
+别克GL8新能源,2023-05-01,train
+别克GL8新能源,2023-06-01,train
+别克GL8新能源,2023-07-01,train
+别克GL8新能源,2023-08-01,train
+别克GL8新能源,2023-09-01,train
+别克GL8新能源,2023-10-01,train
+别克GL8新能源,2023-11-01,train
+别克GL8新能源,2023-12-01,train
 别克GL8新能源,2024-01-01,train
 别克GL8新能源,2024-02-01,train
 别克GL8新能源,2024-03-01,train
@@ -2915,6 +3455,54 @@ iCAR 03,2026-06-01,test
 北京现代ix35,2026-04-01,test
 北京现代ix35,2026-05-01,test
 北京现代ix35,2026-06-01,test
+博越REV,2022-01-01,train
+博越REV,2022-02-01,train
+博越REV,2022-03-01,train
+博越REV,2022-04-01,train
+博越REV,2022-05-01,train
+博越REV,2022-06-01,train
+博越REV,2022-07-01,train
+博越REV,2022-08-01,train
+博越REV,2022-09-01,train
+博越REV,2022-10-01,train
+博越REV,2022-11-01,train
+博越REV,2022-12-01,train
+博越REV,2023-01-01,train
+博越REV,2023-02-01,train
+博越REV,2023-03-01,train
+博越REV,2023-04-01,train
+博越REV,2023-05-01,train
+博越REV,2023-06-01,train
+博越REV,2023-07-01,train
+博越REV,2023-08-01,train
+博越REV,2023-09-01,train
+博越REV,2023-10-01,train
+博越REV,2023-11-01,train
+博越REV,2023-12-01,train
+博越REV,2024-01-01,train
+博越REV,2024-02-01,train
+博越REV,2024-03-01,train
+博越REV,2024-04-01,train
+博越REV,2024-05-01,train
+博越REV,2024-06-01,train
+博越REV,2024-07-01,train
+博越REV,2024-08-01,train
+博越REV,2024-09-01,train
+博越REV,2024-10-01,train
+博越REV,2024-11-01,train
+博越REV,2024-12-01,train
+博越REV,2025-01-01,train
+博越REV,2025-02-01,train
+博越REV,2025-03-01,train
+博越REV,2025-04-01,train
+博越REV,2025-05-01,train
+博越REV,2025-06-01,train
+博越REV,2025-07-01,val
+博越REV,2025-08-01,val
+博越REV,2025-09-01,val
+博越REV,2025-10-01,val
+博越REV,2025-11-01,val
+博越REV,2025-12-01,val
 博越REV,2026-01-01,test
 博越REV,2026-02-01,test
 博越REV,2026-03-01,test
@@ -3191,6 +3779,18 @@ iCAR 03,2026-06-01,test
 吉利ICON,2026-04-01,test
 吉利ICON,2026-05-01,test
 吉利ICON,2026-06-01,test
+吉利熊猫,2022-01-01,train
+吉利熊猫,2022-02-01,train
+吉利熊猫,2022-03-01,train
+吉利熊猫,2022-04-01,train
+吉利熊猫,2022-05-01,train
+吉利熊猫,2022-06-01,train
+吉利熊猫,2022-07-01,train
+吉利熊猫,2022-08-01,train
+吉利熊猫,2022-09-01,train
+吉利熊猫,2022-10-01,train
+吉利熊猫,2022-11-01,train
+吉利熊猫,2022-12-01,train
 吉利熊猫,2023-01-01,train
 吉利熊猫,2023-02-01,train
 吉利熊猫,2023-03-01,train
@@ -3611,12 +4211,96 @@ iCAR 03,2026-06-01,test
 型格,2026-04-01,test
 型格,2026-05-01,test
 型格,2026-06-01,test
+埃尚,2022-01-01,train
+埃尚,2022-02-01,train
+埃尚,2022-03-01,train
+埃尚,2022-04-01,train
+埃尚,2022-05-01,train
+埃尚,2022-06-01,train
+埃尚,2022-07-01,train
+埃尚,2022-08-01,train
+埃尚,2022-09-01,train
+埃尚,2022-10-01,train
+埃尚,2022-11-01,train
+埃尚,2022-12-01,train
+埃尚,2023-01-01,train
+埃尚,2023-02-01,train
+埃尚,2023-03-01,train
+埃尚,2023-04-01,train
+埃尚,2023-05-01,train
+埃尚,2023-06-01,train
+埃尚,2023-07-01,train
+埃尚,2023-08-01,train
+埃尚,2023-09-01,train
+埃尚,2023-10-01,train
+埃尚,2023-11-01,train
+埃尚,2023-12-01,train
+埃尚,2024-01-01,train
+埃尚,2024-02-01,train
+埃尚,2024-03-01,train
+埃尚,2024-04-01,train
+埃尚,2024-05-01,train
+埃尚,2024-06-01,train
+埃尚,2024-07-01,train
+埃尚,2024-08-01,train
+埃尚,2024-09-01,train
+埃尚,2024-10-01,train
+埃尚,2024-11-01,train
+埃尚,2024-12-01,train
+埃尚,2025-01-01,train
+埃尚,2025-02-01,train
+埃尚,2025-03-01,train
+埃尚,2025-04-01,train
+埃尚,2025-05-01,train
+埃尚,2025-06-01,train
+埃尚,2025-07-01,val
+埃尚,2025-08-01,val
+埃尚,2025-09-01,val
+埃尚,2025-10-01,val
+埃尚,2025-11-01,val
+埃尚,2025-12-01,val
 埃尚,2026-01-01,test
 埃尚,2026-02-01,test
 埃尚,2026-03-01,test
 埃尚,2026-04-01,test
 埃尚,2026-05-01,test
 埃尚,2026-06-01,test
+夏,2022-01-01,train
+夏,2022-02-01,train
+夏,2022-03-01,train
+夏,2022-04-01,train
+夏,2022-05-01,train
+夏,2022-06-01,train
+夏,2022-07-01,train
+夏,2022-08-01,train
+夏,2022-09-01,train
+夏,2022-10-01,train
+夏,2022-11-01,train
+夏,2022-12-01,train
+夏,2023-01-01,train
+夏,2023-02-01,train
+夏,2023-03-01,train
+夏,2023-04-01,train
+夏,2023-05-01,train
+夏,2023-06-01,train
+夏,2023-07-01,train
+夏,2023-08-01,train
+夏,2023-09-01,train
+夏,2023-10-01,train
+夏,2023-11-01,train
+夏,2023-12-01,train
+夏,2024-01-01,train
+夏,2024-02-01,train
+夏,2024-03-01,train
+夏,2024-04-01,train
+夏,2024-05-01,train
+夏,2024-06-01,train
+夏,2024-07-01,train
+夏,2024-08-01,train
+夏,2024-09-01,train
+夏,2024-10-01,train
+夏,2024-11-01,train
+夏,2024-12-01,train
 夏,2025-01-01,train
 夏,2025-02-01,train
 夏,2025-03-01,train
@@ -3743,6 +4427,30 @@ iCAR 03,2026-06-01,test
 大众ID.3,2026-04-01,test
 大众ID.3,2026-05-01,test
 大众ID.3,2026-06-01,test
+大家7,2022-01-01,train
+大家7,2022-02-01,train
+大家7,2022-03-01,train
+大家7,2022-04-01,train
+大家7,2022-05-01,train
+大家7,2022-06-01,train
+大家7,2022-07-01,train
+大家7,2022-08-01,train
+大家7,2022-09-01,train
+大家7,2022-10-01,train
+大家7,2022-11-01,train
+大家7,2022-12-01,train
+大家7,2023-01-01,train
+大家7,2023-02-01,train
+大家7,2023-03-01,train
+大家7,2023-04-01,train
+大家7,2023-05-01,train
+大家7,2023-06-01,train
+大家7,2023-07-01,train
+大家7,2023-08-01,train
+大家7,2023-09-01,train
+大家7,2023-10-01,train
+大家7,2023-11-01,train
+大家7,2023-12-01,train
 大家7,2024-01-01,train
 大家7,2024-02-01,train
 大家7,2024-03-01,train
@@ -3935,6 +4643,30 @@ iCAR 03,2026-06-01,test
 大通G50,2026-04-01,test
 大通G50,2026-05-01,test
 大通G50,2026-06-01,test
+大通G70,2022-01-01,train
+大通G70,2022-02-01,train
+大通G70,2022-03-01,train
+大通G70,2022-04-01,train
+大通G70,2022-05-01,train
+大通G70,2022-06-01,train
+大通G70,2022-07-01,train
+大通G70,2022-08-01,train
+大通G70,2022-09-01,train
+大通G70,2022-10-01,train
+大通G70,2022-11-01,train
+大通G70,2022-12-01,train
+大通G70,2023-01-01,train
+大通G70,2023-02-01,train
+大通G70,2023-03-01,train
+大通G70,2023-04-01,train
+大通G70,2023-05-01,train
+大通G70,2023-06-01,train
+大通G70,2023-07-01,train
+大通G70,2023-08-01,train
+大通G70,2023-09-01,train
+大通G70,2023-10-01,train
+大通G70,2023-11-01,train
+大通G70,2023-12-01,train
 大通G70,2024-01-01,train
 大通G70,2024-02-01,train
 大通G70,2024-03-01,train
@@ -4181,6 +4913,30 @@ iCAR 03,2026-06-01,test
 奔奔E-Star,2026-04-01,test
 奔奔E-Star,2026-05-01,test
 奔奔E-Star,2026-06-01,test
+奔腾小马,2022-01-01,train
+奔腾小马,2022-02-01,train
+奔腾小马,2022-03-01,train
+奔腾小马,2022-04-01,train
+奔腾小马,2022-05-01,train
+奔腾小马,2022-06-01,train
+奔腾小马,2022-07-01,train
+奔腾小马,2022-08-01,train
+奔腾小马,2022-09-01,train
+奔腾小马,2022-10-01,train
+奔腾小马,2022-11-01,train
+奔腾小马,2022-12-01,train
+奔腾小马,2023-01-01,train
+奔腾小马,2023-02-01,train
+奔腾小马,2023-03-01,train
+奔腾小马,2023-04-01,train
+奔腾小马,2023-05-01,train
+奔腾小马,2023-06-01,train
+奔腾小马,2023-07-01,train
+奔腾小马,2023-08-01,train
+奔腾小马,2023-09-01,train
+奔腾小马,2023-10-01,train
+奔腾小马,2023-11-01,train
+奔腾小马,2023-12-01,train
 奔腾小马,2024-01-01,train
 奔腾小马,2024-02-01,train
 奔腾小马,2024-03-01,train
@@ -4805,6 +5561,42 @@ iCAR 03,2026-06-01,test
 奥迪A4L,2026-04-01,test
 奥迪A4L,2026-05-01,test
 奥迪A4L,2026-06-01,test
+奥迪A5L,2022-01-01,train
+奥迪A5L,2022-02-01,train
+奥迪A5L,2022-03-01,train
+奥迪A5L,2022-04-01,train
+奥迪A5L,2022-05-01,train
+奥迪A5L,2022-06-01,train
+奥迪A5L,2022-07-01,train
+奥迪A5L,2022-08-01,train
+奥迪A5L,2022-09-01,train
+奥迪A5L,2022-10-01,train
+奥迪A5L,2022-11-01,train
+奥迪A5L,2022-12-01,train
+奥迪A5L,2023-01-01,train
+奥迪A5L,2023-02-01,train
+奥迪A5L,2023-03-01,train
+奥迪A5L,2023-04-01,train
+奥迪A5L,2023-05-01,train
+奥迪A5L,2023-06-01,train
+奥迪A5L,2023-07-01,train
+奥迪A5L,2023-08-01,train
+奥迪A5L,2023-09-01,train
+奥迪A5L,2023-10-01,train
+奥迪A5L,2023-11-01,train
+奥迪A5L,2023-12-01,train
+奥迪A5L,2024-01-01,train
+奥迪A5L,2024-02-01,train
+奥迪A5L,2024-03-01,train
+奥迪A5L,2024-04-01,train
+奥迪A5L,2024-05-01,train
+奥迪A5L,2024-06-01,train
+奥迪A5L,2024-07-01,train
+奥迪A5L,2024-08-01,train
+奥迪A5L,2024-09-01,train
+奥迪A5L,2024-10-01,train
+奥迪A5L,2024-11-01,train
+奥迪A5L,2024-12-01,train
 奥迪A5L,2025-01-01,train
 奥迪A5L,2025-02-01,train
 奥迪A5L,2025-03-01,train
@@ -4823,6 +5615,42 @@ iCAR 03,2026-06-01,test
 奥迪A5L,2026-04-01,test
 奥迪A5L,2026-05-01,test
 奥迪A5L,2026-06-01,test
+奥迪A5L Sportback,2022-01-01,train
+奥迪A5L Sportback,2022-02-01,train
+奥迪A5L Sportback,2022-03-01,train
+奥迪A5L Sportback,2022-04-01,train
+奥迪A5L Sportback,2022-05-01,train
+奥迪A5L Sportback,2022-06-01,train
+奥迪A5L Sportback,2022-07-01,train
+奥迪A5L Sportback,2022-08-01,train
+奥迪A5L Sportback,2022-09-01,train
+奥迪A5L Sportback,2022-10-01,train
+奥迪A5L Sportback,2022-11-01,train
+奥迪A5L Sportback,2022-12-01,train
+奥迪A5L Sportback,2023-01-01,train
+奥迪A5L Sportback,2023-02-01,train
+奥迪A5L Sportback,2023-03-01,train
+奥迪A5L Sportback,2023-04-01,train
+奥迪A5L Sportback,2023-05-01,train
+奥迪A5L Sportback,2023-06-01,train
+奥迪A5L Sportback,2023-07-01,train
+奥迪A5L Sportback,2023-08-01,train
+奥迪A5L Sportback,2023-09-01,train
+奥迪A5L Sportback,2023-10-01,train
+奥迪A5L Sportback,2023-11-01,train
+奥迪A5L Sportback,2023-12-01,train
+奥迪A5L Sportback,2024-01-01,train
+奥迪A5L Sportback,2024-02-01,train
+奥迪A5L Sportback,2024-03-01,train
+奥迪A5L Sportback,2024-04-01,train
+奥迪A5L Sportback,2024-05-01,train
+奥迪A5L Sportback,2024-06-01,train
+奥迪A5L Sportback,2024-07-01,train
+奥迪A5L Sportback,2024-08-01,train
+奥迪A5L Sportback,2024-09-01,train
+奥迪A5L Sportback,2024-10-01,train
+奥迪A5L Sportback,2024-11-01,train
+奥迪A5L Sportback,2024-12-01,train
 奥迪A5L Sportback,2025-01-01,train
 奥迪A5L Sportback,2025-02-01,train
 奥迪A5L Sportback,2025-03-01,train
@@ -5003,6 +5831,42 @@ iCAR 03,2026-06-01,test
 奥迪A7L,2026-04-01,test
 奥迪A7L,2026-05-01,test
 奥迪A7L,2026-06-01,test
+奥迪E5 Sportback,2022-01-01,train
+奥迪E5 Sportback,2022-02-01,train
+奥迪E5 Sportback,2022-03-01,train
+奥迪E5 Sportback,2022-04-01,train
+奥迪E5 Sportback,2022-05-01,train
+奥迪E5 Sportback,2022-06-01,train
+奥迪E5 Sportback,2022-07-01,train
+奥迪E5 Sportback,2022-08-01,train
+奥迪E5 Sportback,2022-09-01,train
+奥迪E5 Sportback,2022-10-01,train
+奥迪E5 Sportback,2022-11-01,train
+奥迪E5 Sportback,2022-12-01,train
+奥迪E5 Sportback,2023-01-01,train
+奥迪E5 Sportback,2023-02-01,train
+奥迪E5 Sportback,2023-03-01,train
+奥迪E5 Sportback,2023-04-01,train
+奥迪E5 Sportback,2023-05-01,train
+奥迪E5 Sportback,2023-06-01,train
+奥迪E5 Sportback,2023-07-01,train
+奥迪E5 Sportback,2023-08-01,train
+奥迪E5 Sportback,2023-09-01,train
+奥迪E5 Sportback,2023-10-01,train
+奥迪E5 Sportback,2023-11-01,train
+奥迪E5 Sportback,2023-12-01,train
+奥迪E5 Sportback,2024-01-01,train
+奥迪E5 Sportback,2024-02-01,train
+奥迪E5 Sportback,2024-03-01,train
+奥迪E5 Sportback,2024-04-01,train
+奥迪E5 Sportback,2024-05-01,train
+奥迪E5 Sportback,2024-06-01,train
+奥迪E5 Sportback,2024-07-01,train
+奥迪E5 Sportback,2024-08-01,train
+奥迪E5 Sportback,2024-09-01,train
+奥迪E5 Sportback,2024-10-01,train
+奥迪E5 Sportback,2024-11-01,train
+奥迪E5 Sportback,2024-12-01,train
 奥迪E5 Sportback,2025-01-01,train
 奥迪E5 Sportback,2025-02-01,train
 奥迪E5 Sportback,2025-03-01,train
@@ -5399,6 +6263,42 @@ iCAR 03,2026-06-01,test
 奥迪Q5L Sportback,2026-04-01,test
 奥迪Q5L Sportback,2026-05-01,test
 奥迪Q5L Sportback,2026-06-01,test
+奥迪Q6L Sportback e-tron,2022-01-01,train
+奥迪Q6L Sportback e-tron,2022-02-01,train
+奥迪Q6L Sportback e-tron,2022-03-01,train
+奥迪Q6L Sportback e-tron,2022-04-01,train
+奥迪Q6L Sportback e-tron,2022-05-01,train
+奥迪Q6L Sportback e-tron,2022-06-01,train
+奥迪Q6L Sportback e-tron,2022-07-01,train
+奥迪Q6L Sportback e-tron,2022-08-01,train
+奥迪Q6L Sportback e-tron,2022-09-01,train
+奥迪Q6L Sportback e-tron,2022-10-01,train
+奥迪Q6L Sportback e-tron,2022-11-01,train
+奥迪Q6L Sportback e-tron,2022-12-01,train
+奥迪Q6L Sportback e-tron,2023-01-01,train
+奥迪Q6L Sportback e-tron,2023-02-01,train
+奥迪Q6L Sportback e-tron,2023-03-01,train
+奥迪Q6L Sportback e-tron,2023-04-01,train
+奥迪Q6L Sportback e-tron,2023-05-01,train
+奥迪Q6L Sportback e-tron,2023-06-01,train
+奥迪Q6L Sportback e-tron,2023-07-01,train
+奥迪Q6L Sportback e-tron,2023-08-01,train
+奥迪Q6L Sportback e-tron,2023-09-01,train
+奥迪Q6L Sportback e-tron,2023-10-01,train
+奥迪Q6L Sportback e-tron,2023-11-01,train
+奥迪Q6L Sportback e-tron,2023-12-01,train
+奥迪Q6L Sportback e-tron,2024-01-01,train
+奥迪Q6L Sportback e-tron,2024-02-01,train
+奥迪Q6L Sportback e-tron,2024-03-01,train
+奥迪Q6L Sportback e-tron,2024-04-01,train
+奥迪Q6L Sportback e-tron,2024-05-01,train
+奥迪Q6L Sportback e-tron,2024-06-01,train
+奥迪Q6L Sportback e-tron,2024-07-01,train
+奥迪Q6L Sportback e-tron,2024-08-01,train
+奥迪Q6L Sportback e-tron,2024-09-01,train
+奥迪Q6L Sportback e-tron,2024-10-01,train
+奥迪Q6L Sportback e-tron,2024-11-01,train
+奥迪Q6L Sportback e-tron,2024-12-01,train
 奥迪Q6L Sportback e-tron,2025-01-01,train
 奥迪Q6L Sportback e-tron,2025-02-01,train
 奥迪Q6L Sportback e-tron,2025-03-01,train
@@ -5417,6 +6317,42 @@ iCAR 03,2026-06-01,test
 奥迪Q6L Sportback e-tron,2026-04-01,test
 奥迪Q6L Sportback e-tron,2026-05-01,test
 奥迪Q6L Sportback e-tron,2026-06-01,test
+奥迪Q6L e-tron,2022-01-01,train
+奥迪Q6L e-tron,2022-02-01,train
+奥迪Q6L e-tron,2022-03-01,train
+奥迪Q6L e-tron,2022-04-01,train
+奥迪Q6L e-tron,2022-05-01,train
+奥迪Q6L e-tron,2022-06-01,train
+奥迪Q6L e-tron,2022-07-01,train
+奥迪Q6L e-tron,2022-08-01,train
+奥迪Q6L e-tron,2022-09-01,train
+奥迪Q6L e-tron,2022-10-01,train
+奥迪Q6L e-tron,2022-11-01,train
+奥迪Q6L e-tron,2022-12-01,train
+奥迪Q6L e-tron,2023-01-01,train
+奥迪Q6L e-tron,2023-02-01,train
+奥迪Q6L e-tron,2023-03-01,train
+奥迪Q6L e-tron,2023-04-01,train
+奥迪Q6L e-tron,2023-05-01,train
+奥迪Q6L e-tron,2023-06-01,train
+奥迪Q6L e-tron,2023-07-01,train
+奥迪Q6L e-tron,2023-08-01,train
+奥迪Q6L e-tron,2023-09-01,train
+奥迪Q6L e-tron,2023-10-01,train
+奥迪Q6L e-tron,2023-11-01,train
+奥迪Q6L e-tron,2023-12-01,train
+奥迪Q6L e-tron,2024-01-01,train
+奥迪Q6L e-tron,2024-02-01,train
+奥迪Q6L e-tron,2024-03-01,train
+奥迪Q6L e-tron,2024-04-01,train
+奥迪Q6L e-tron,2024-05-01,train
+奥迪Q6L e-tron,2024-06-01,train
+奥迪Q6L e-tron,2024-07-01,train
+奥迪Q6L e-tron,2024-08-01,train
+奥迪Q6L e-tron,2024-09-01,train
+奥迪Q6L e-tron,2024-10-01,train
+奥迪Q6L e-tron,2024-11-01,train
+奥迪Q6L e-tron,2024-12-01,train
 奥迪Q6L e-tron,2025-01-01,train
 奥迪Q6L e-tron,2025-02-01,train
 奥迪Q6L e-tron,2025-03-01,train
@@ -5705,6 +6641,18 @@ iCAR 03,2026-06-01,test
 威飒,2026-04-01,test
 威飒,2026-05-01,test
 威飒,2026-06-01,test
+宋L EV,2022-01-01,train
+宋L EV,2022-02-01,train
+宋L EV,2022-03-01,train
+宋L EV,2022-04-01,train
+宋L EV,2022-05-01,train
+宋L EV,2022-06-01,train
+宋L EV,2022-07-01,train
+宋L EV,2022-08-01,train
+宋L EV,2022-09-01,train
+宋L EV,2022-10-01,train
+宋L EV,2022-11-01,train
+宋L EV,2022-12-01,train
 宋L EV,2023-01-01,train
 宋L EV,2023-02-01,train
 宋L EV,2023-03-01,train
@@ -6017,6 +6965,42 @@ iCAR 03,2026-06-01,test
 宝马1系,2026-04-01,test
 宝马1系,2026-05-01,test
 宝马1系,2026-06-01,test
+宝马2系,2022-01-01,train
+宝马2系,2022-02-01,train
+宝马2系,2022-03-01,train
+宝马2系,2022-04-01,train
+宝马2系,2022-05-01,train
+宝马2系,2022-06-01,train
+宝马2系,2022-07-01,train
+宝马2系,2022-08-01,train
+宝马2系,2022-09-01,train
+宝马2系,2022-10-01,train
+宝马2系,2022-11-01,train
+宝马2系,2022-12-01,train
+宝马2系,2023-01-01,train
+宝马2系,2023-02-01,train
+宝马2系,2023-03-01,train
+宝马2系,2023-04-01,train
+宝马2系,2023-05-01,train
+宝马2系,2023-06-01,train
+宝马2系,2023-07-01,train
+宝马2系,2023-08-01,train
+宝马2系,2023-09-01,train
+宝马2系,2023-10-01,train
+宝马2系,2023-11-01,train
+宝马2系,2023-12-01,train
+宝马2系,2024-01-01,train
+宝马2系,2024-02-01,train
+宝马2系,2024-03-01,train
+宝马2系,2024-04-01,train
+宝马2系,2024-05-01,train
+宝马2系,2024-06-01,train
+宝马2系,2024-07-01,train
+宝马2系,2024-08-01,train
+宝马2系,2024-09-01,train
+宝马2系,2024-10-01,train
+宝马2系,2024-11-01,train
+宝马2系,2024-12-01,train
 宝马2系,2025-01-01,train
 宝马2系,2025-02-01,train
 宝马2系,2025-03-01,train
@@ -6413,6 +7397,30 @@ iCAR 03,2026-06-01,test
 宝马i3,2026-04-01,test
 宝马i3,2026-05-01,test
 宝马i3,2026-06-01,test
+宝马i5,2022-01-01,train
+宝马i5,2022-02-01,train
+宝马i5,2022-03-01,train
+宝马i5,2022-04-01,train
+宝马i5,2022-05-01,train
+宝马i5,2022-06-01,train
+宝马i5,2022-07-01,train
+宝马i5,2022-08-01,train
+宝马i5,2022-09-01,train
+宝马i5,2022-10-01,train
+宝马i5,2022-11-01,train
+宝马i5,2022-12-01,train
+宝马i5,2023-01-01,train
+宝马i5,2023-02-01,train
+宝马i5,2023-03-01,train
+宝马i5,2023-04-01,train
+宝马i5,2023-05-01,train
+宝马i5,2023-06-01,train
+宝马i5,2023-07-01,train
+宝马i5,2023-08-01,train
+宝马i5,2023-09-01,train
+宝马i5,2023-10-01,train
+宝马i5,2023-11-01,train
+宝马i5,2023-12-01,train
 宝马i5,2024-01-01,train
 宝马i5,2024-02-01,train
 宝马i5,2024-03-01,train
@@ -6443,6 +7451,18 @@ iCAR 03,2026-06-01,test
 宝马i5,2026-04-01,test
 宝马i5,2026-05-01,test
 宝马i5,2026-06-01,test
+宝马iX1,2022-01-01,train
+宝马iX1,2022-02-01,train
+宝马iX1,2022-03-01,train
+宝马iX1,2022-04-01,train
+宝马iX1,2022-05-01,train
+宝马iX1,2022-06-01,train
+宝马iX1,2022-07-01,train
+宝马iX1,2022-08-01,train
+宝马iX1,2022-09-01,train
+宝马iX1,2022-10-01,train
+宝马iX1,2022-11-01,train
+宝马iX1,2022-12-01,train
 宝马iX1,2023-01-01,train
 宝马iX1,2023-02-01,train
 宝马iX1,2023-03-01,train
@@ -6593,6 +7613,30 @@ iCAR 03,2026-06-01,test
 宝骏KiWi EV,2026-04-01,test
 宝骏KiWi EV,2026-05-01,test
 宝骏KiWi EV,2026-06-01,test
+小米SU7,2022-01-01,train
+小米SU7,2022-02-01,train
+小米SU7,2022-03-01,train
+小米SU7,2022-04-01,train
+小米SU7,2022-05-01,train
+小米SU7,2022-06-01,train
+小米SU7,2022-07-01,train
+小米SU7,2022-08-01,train
+小米SU7,2022-09-01,train
+小米SU7,2022-10-01,train
+小米SU7,2022-11-01,train
+小米SU7,2022-12-01,train
+小米SU7,2023-01-01,train
+小米SU7,2023-02-01,train
+小米SU7,2023-03-01,train
+小米SU7,2023-04-01,train
+小米SU7,2023-05-01,train
+小米SU7,2023-06-01,train
+小米SU7,2023-07-01,train
+小米SU7,2023-08-01,train
+小米SU7,2023-09-01,train
+小米SU7,2023-10-01,train
+小米SU7,2023-11-01,train
+小米SU7,2023-12-01,train
 小米SU7,2024-01-01,train
 小米SU7,2024-02-01,train
 小米SU7,2024-03-01,train
@@ -6731,6 +7775,30 @@ iCAR 03,2026-06-01,test
 小鹏G3,2026-04-01,test
 小鹏G3,2026-05-01,test
 小鹏G3,2026-06-01,test
+小鹏MONA M03,2022-01-01,train
+小鹏MONA M03,2022-02-01,train
+小鹏MONA M03,2022-03-01,train
+小鹏MONA M03,2022-04-01,train
+小鹏MONA M03,2022-05-01,train
+小鹏MONA M03,2022-06-01,train
+小鹏MONA M03,2022-07-01,train
+小鹏MONA M03,2022-08-01,train
+小鹏MONA M03,2022-09-01,train
+小鹏MONA M03,2022-10-01,train
+小鹏MONA M03,2022-11-01,train
+小鹏MONA M03,2022-12-01,train
+小鹏MONA M03,2023-01-01,train
+小鹏MONA M03,2023-02-01,train
+小鹏MONA M03,2023-03-01,train
+小鹏MONA M03,2023-04-01,train
+小鹏MONA M03,2023-05-01,train
+小鹏MONA M03,2023-06-01,train
+小鹏MONA M03,2023-07-01,train
+小鹏MONA M03,2023-08-01,train
+小鹏MONA M03,2023-09-01,train
+小鹏MONA M03,2023-10-01,train
+小鹏MONA M03,2023-11-01,train
+小鹏MONA M03,2023-12-01,train
 小鹏MONA M03,2024-01-01,train
 小鹏MONA M03,2024-02-01,train
 小鹏MONA M03,2024-03-01,train
@@ -6869,6 +7937,30 @@ iCAR 03,2026-06-01,test
 小鹏P7,2026-04-01,test
 小鹏P7,2026-05-01,test
 小鹏P7,2026-06-01,test
+小鹏P7+,2022-01-01,train
+小鹏P7+,2022-02-01,train
+小鹏P7+,2022-03-01,train
+小鹏P7+,2022-04-01,train
+小鹏P7+,2022-05-01,train
+小鹏P7+,2022-06-01,train
+小鹏P7+,2022-07-01,train
+小鹏P7+,2022-08-01,train
+小鹏P7+,2022-09-01,train
+小鹏P7+,2022-10-01,train
+小鹏P7+,2022-11-01,train
+小鹏P7+,2022-12-01,train
+小鹏P7+,2023-01-01,train
+小鹏P7+,2023-02-01,train
+小鹏P7+,2023-03-01,train
+小鹏P7+,2023-04-01,train
+小鹏P7+,2023-05-01,train
+小鹏P7+,2023-06-01,train
+小鹏P7+,2023-07-01,train
+小鹏P7+,2023-08-01,train
+小鹏P7+,2023-09-01,train
+小鹏P7+,2023-10-01,train
+小鹏P7+,2023-11-01,train
+小鹏P7+,2023-12-01,train
 小鹏P7+,2024-01-01,train
 小鹏P7+,2024-02-01,train
 小鹏P7+,2024-03-01,train
@@ -6899,6 +7991,30 @@ iCAR 03,2026-06-01,test
 小鹏P7+,2026-04-01,test
 小鹏P7+,2026-05-01,test
 小鹏P7+,2026-06-01,test
+小鹏X9,2022-01-01,train
+小鹏X9,2022-02-01,train
+小鹏X9,2022-03-01,train
+小鹏X9,2022-04-01,train
+小鹏X9,2022-05-01,train
+小鹏X9,2022-06-01,train
+小鹏X9,2022-07-01,train
+小鹏X9,2022-08-01,train
+小鹏X9,2022-09-01,train
+小鹏X9,2022-10-01,train
+小鹏X9,2022-11-01,train
+小鹏X9,2022-12-01,train
+小鹏X9,2023-01-01,train
+小鹏X9,2023-02-01,train
+小鹏X9,2023-03-01,train
+小鹏X9,2023-04-01,train
+小鹏X9,2023-05-01,train
+小鹏X9,2023-06-01,train
+小鹏X9,2023-07-01,train
+小鹏X9,2023-08-01,train
+小鹏X9,2023-09-01,train
+小鹏X9,2023-10-01,train
+小鹏X9,2023-11-01,train
+小鹏X9,2023-12-01,train
 小鹏X9,2024-01-01,train
 小鹏X9,2024-02-01,train
 小鹏X9,2024-03-01,train
@@ -6983,6 +8099,54 @@ iCAR 03,2026-06-01,test
 岚图梦想家,2026-04-01,test
 岚图梦想家,2026-05-01,test
 岚图梦想家,2026-06-01,test
+岚图追光L,2022-01-01,train
+岚图追光L,2022-02-01,train
+岚图追光L,2022-03-01,train
+岚图追光L,2022-04-01,train
+岚图追光L,2022-05-01,train
+岚图追光L,2022-06-01,train
+岚图追光L,2022-07-01,train
+岚图追光L,2022-08-01,train
+岚图追光L,2022-09-01,train
+岚图追光L,2022-10-01,train
+岚图追光L,2022-11-01,train
+岚图追光L,2022-12-01,train
+岚图追光L,2023-01-01,train
+岚图追光L,2023-02-01,train
+岚图追光L,2023-03-01,train
+岚图追光L,2023-04-01,train
+岚图追光L,2023-05-01,train
+岚图追光L,2023-06-01,train
+岚图追光L,2023-07-01,train
+岚图追光L,2023-08-01,train
+岚图追光L,2023-09-01,train
+岚图追光L,2023-10-01,train
+岚图追光L,2023-11-01,train
+岚图追光L,2023-12-01,train
+岚图追光L,2024-01-01,train
+岚图追光L,2024-02-01,train
+岚图追光L,2024-03-01,train
+岚图追光L,2024-04-01,train
+岚图追光L,2024-05-01,train
+岚图追光L,2024-06-01,train
+岚图追光L,2024-07-01,train
+岚图追光L,2024-08-01,train
+岚图追光L,2024-09-01,train
+岚图追光L,2024-10-01,train
+岚图追光L,2024-11-01,train
+岚图追光L,2024-12-01,train
+岚图追光L,2025-01-01,train
+岚图追光L,2025-02-01,train
+岚图追光L,2025-03-01,train
+岚图追光L,2025-04-01,train
+岚图追光L,2025-05-01,train
+岚图追光L,2025-06-01,train
+岚图追光L,2025-07-01,val
+岚图追光L,2025-08-01,val
+岚图追光L,2025-09-01,val
+岚图追光L,2025-10-01,val
+岚图追光L,2025-11-01,val
+岚图追光L,2025-12-01,val
 岚图追光L,2026-01-01,test
 岚图追光L,2026-02-01,test
 岚图追光L,2026-03-01,test
@@ -7097,6 +8261,42 @@ iCAR 03,2026-06-01,test
 帕萨特新能源,2026-04-01,test
 帕萨特新能源,2026-05-01,test
 帕萨特新能源,2026-06-01,test
+广汽本田P7,2022-01-01,train
+广汽本田P7,2022-02-01,train
+广汽本田P7,2022-03-01,train
+广汽本田P7,2022-04-01,train
+广汽本田P7,2022-05-01,train
+广汽本田P7,2022-06-01,train
+广汽本田P7,2022-07-01,train
+广汽本田P7,2022-08-01,train
+广汽本田P7,2022-09-01,train
+广汽本田P7,2022-10-01,train
+广汽本田P7,2022-11-01,train
+广汽本田P7,2022-12-01,train
+广汽本田P7,2023-01-01,train
+广汽本田P7,2023-02-01,train
+广汽本田P7,2023-03-01,train
+广汽本田P7,2023-04-01,train
+广汽本田P7,2023-05-01,train
+广汽本田P7,2023-06-01,train
+广汽本田P7,2023-07-01,train
+广汽本田P7,2023-08-01,train
+广汽本田P7,2023-09-01,train
+广汽本田P7,2023-10-01,train
+广汽本田P7,2023-11-01,train
+广汽本田P7,2023-12-01,train
+广汽本田P7,2024-01-01,train
+广汽本田P7,2024-02-01,train
+广汽本田P7,2024-03-01,train
+广汽本田P7,2024-04-01,train
+广汽本田P7,2024-05-01,train
+广汽本田P7,2024-06-01,train
+广汽本田P7,2024-07-01,train
+广汽本田P7,2024-08-01,train
+广汽本田P7,2024-09-01,train
+广汽本田P7,2024-10-01,train
+广汽本田P7,2024-11-01,train
+广汽本田P7,2024-12-01,train
 广汽本田P7,2025-01-01,train
 广汽本田P7,2025-02-01,train
 广汽本田P7,2025-03-01,train
@@ -7331,6 +8531,42 @@ iCAR 03,2026-06-01,test
 思域,2026-04-01,test
 思域,2026-05-01,test
 思域,2026-06-01,test
+悦意03,2022-01-01,train
+悦意03,2022-02-01,train
+悦意03,2022-03-01,train
+悦意03,2022-04-01,train
+悦意03,2022-05-01,train
+悦意03,2022-06-01,train
+悦意03,2022-07-01,train
+悦意03,2022-08-01,train
+悦意03,2022-09-01,train
+悦意03,2022-10-01,train
+悦意03,2022-11-01,train
+悦意03,2022-12-01,train
+悦意03,2023-01-01,train
+悦意03,2023-02-01,train
+悦意03,2023-03-01,train
+悦意03,2023-04-01,train
+悦意03,2023-05-01,train
+悦意03,2023-06-01,train
+悦意03,2023-07-01,train
+悦意03,2023-08-01,train
+悦意03,2023-09-01,train
+悦意03,2023-10-01,train
+悦意03,2023-11-01,train
+悦意03,2023-12-01,train
+悦意03,2024-01-01,train
+悦意03,2024-02-01,train
+悦意03,2024-03-01,train
+悦意03,2024-04-01,train
+悦意03,2024-05-01,train
+悦意03,2024-06-01,train
+悦意03,2024-07-01,train
+悦意03,2024-08-01,train
+悦意03,2024-09-01,train
+悦意03,2024-10-01,train
+悦意03,2024-11-01,train
+悦意03,2024-12-01,train
 悦意03,2025-01-01,train
 悦意03,2025-02-01,train
 悦意03,2025-03-01,train
@@ -7349,6 +8585,42 @@ iCAR 03,2026-06-01,test
 悦意03,2026-04-01,test
 悦意03,2026-05-01,test
 悦意03,2026-06-01,test
+悦意07,2022-01-01,train
+悦意07,2022-02-01,train
+悦意07,2022-03-01,train
+悦意07,2022-04-01,train
+悦意07,2022-05-01,train
+悦意07,2022-06-01,train
+悦意07,2022-07-01,train
+悦意07,2022-08-01,train
+悦意07,2022-09-01,train
+悦意07,2022-10-01,train
+悦意07,2022-11-01,train
+悦意07,2022-12-01,train
+悦意07,2023-01-01,train
+悦意07,2023-02-01,train
+悦意07,2023-03-01,train
+悦意07,2023-04-01,train
+悦意07,2023-05-01,train
+悦意07,2023-06-01,train
+悦意07,2023-07-01,train
+悦意07,2023-08-01,train
+悦意07,2023-09-01,train
+悦意07,2023-10-01,train
+悦意07,2023-11-01,train
+悦意07,2023-12-01,train
+悦意07,2024-01-01,train
+悦意07,2024-02-01,train
+悦意07,2024-03-01,train
+悦意07,2024-04-01,train
+悦意07,2024-05-01,train
+悦意07,2024-06-01,train
+悦意07,2024-07-01,train
+悦意07,2024-08-01,train
+悦意07,2024-09-01,train
+悦意07,2024-10-01,train
+悦意07,2024-11-01,train
+悦意07,2024-12-01,train
 悦意07,2025-01-01,train
 悦意07,2025-02-01,train
 悦意07,2025-03-01,train
@@ -7583,6 +8855,30 @@ iCAR 03,2026-06-01,test
 捷达VA3,2026-04-01,test
 捷达VA3,2026-05-01,test
 捷达VA3,2026-06-01,test
+捷达VA7,2022-01-01,train
+捷达VA7,2022-02-01,train
+捷达VA7,2022-03-01,train
+捷达VA7,2022-04-01,train
+捷达VA7,2022-05-01,train
+捷达VA7,2022-06-01,train
+捷达VA7,2022-07-01,train
+捷达VA7,2022-08-01,train
+捷达VA7,2022-09-01,train
+捷达VA7,2022-10-01,train
+捷达VA7,2022-11-01,train
+捷达VA7,2022-12-01,train
+捷达VA7,2023-01-01,train
+捷达VA7,2023-02-01,train
+捷达VA7,2023-03-01,train
+捷达VA7,2023-04-01,train
+捷达VA7,2023-05-01,train
+捷达VA7,2023-06-01,train
+捷达VA7,2023-07-01,train
+捷达VA7,2023-08-01,train
+捷达VA7,2023-09-01,train
+捷达VA7,2023-10-01,train
+捷达VA7,2023-11-01,train
+捷达VA7,2023-12-01,train
 捷达VA7,2024-01-01,train
 捷达VA7,2024-02-01,train
 捷达VA7,2024-03-01,train
@@ -8045,6 +9341,42 @@ iCAR 03,2026-06-01,test
 新帝豪,2026-04-01,test
 新帝豪,2026-05-01,test
 新帝豪,2026-06-01,test
+日产N6,2022-01-01,train
+日产N6,2022-02-01,train
+日产N6,2022-03-01,train
+日产N6,2022-04-01,train
+日产N6,2022-05-01,train
+日产N6,2022-06-01,train
+日产N6,2022-07-01,train
+日产N6,2022-08-01,train
+日产N6,2022-09-01,train
+日产N6,2022-10-01,train
+日产N6,2022-11-01,train
+日产N6,2022-12-01,train
+日产N6,2023-01-01,train
+日产N6,2023-02-01,train
+日产N6,2023-03-01,train
+日产N6,2023-04-01,train
+日产N6,2023-05-01,train
+日产N6,2023-06-01,train
+日产N6,2023-07-01,train
+日产N6,2023-08-01,train
+日产N6,2023-09-01,train
+日产N6,2023-10-01,train
+日产N6,2023-11-01,train
+日产N6,2023-12-01,train
+日产N6,2024-01-01,train
+日产N6,2024-02-01,train
+日产N6,2024-03-01,train
+日产N6,2024-04-01,train
+日产N6,2024-05-01,train
+日产N6,2024-06-01,train
+日产N6,2024-07-01,train
+日产N6,2024-08-01,train
+日产N6,2024-09-01,train
+日产N6,2024-10-01,train
+日产N6,2024-11-01,train
+日产N6,2024-12-01,train
 日产N6,2025-01-01,train
 日产N6,2025-02-01,train
 日产N6,2025-03-01,train
@@ -8063,6 +9395,42 @@ iCAR 03,2026-06-01,test
 日产N6,2026-04-01,test
 日产N6,2026-05-01,test
 日产N6,2026-06-01,test
+日产N7,2022-01-01,train
+日产N7,2022-02-01,train
+日产N7,2022-03-01,train
+日产N7,2022-04-01,train
+日产N7,2022-05-01,train
+日产N7,2022-06-01,train
+日产N7,2022-07-01,train
+日产N7,2022-08-01,train
+日产N7,2022-09-01,train
+日产N7,2022-10-01,train
+日产N7,2022-11-01,train
+日产N7,2022-12-01,train
+日产N7,2023-01-01,train
+日产N7,2023-02-01,train
+日产N7,2023-03-01,train
+日产N7,2023-04-01,train
+日产N7,2023-05-01,train
+日产N7,2023-06-01,train
+日产N7,2023-07-01,train
+日产N7,2023-08-01,train
+日产N7,2023-09-01,train
+日产N7,2023-10-01,train
+日产N7,2023-11-01,train
+日产N7,2023-12-01,train
+日产N7,2024-01-01,train
+日产N7,2024-02-01,train
+日产N7,2024-03-01,train
+日产N7,2024-04-01,train
+日产N7,2024-05-01,train
+日产N7,2024-06-01,train
+日产N7,2024-07-01,train
+日产N7,2024-08-01,train
+日产N7,2024-09-01,train
+日产N7,2024-10-01,train
+日产N7,2024-11-01,train
+日产N7,2024-12-01,train
 日产N7,2025-01-01,train
 日产N7,2025-02-01,train
 日产N7,2025-03-01,train
@@ -8081,6 +9449,54 @@ iCAR 03,2026-06-01,test
 日产N7,2026-04-01,test
 日产N7,2026-05-01,test
 日产N7,2026-06-01,test
+日产NX8,2022-01-01,train
+日产NX8,2022-02-01,train
+日产NX8,2022-03-01,train
+日产NX8,2022-04-01,train
+日产NX8,2022-05-01,train
+日产NX8,2022-06-01,train
+日产NX8,2022-07-01,train
+日产NX8,2022-08-01,train
+日产NX8,2022-09-01,train
+日产NX8,2022-10-01,train
+日产NX8,2022-11-01,train
+日产NX8,2022-12-01,train
+日产NX8,2023-01-01,train
+日产NX8,2023-02-01,train
+日产NX8,2023-03-01,train
+日产NX8,2023-04-01,train
+日产NX8,2023-05-01,train
+日产NX8,2023-06-01,train
+日产NX8,2023-07-01,train
+日产NX8,2023-08-01,train
+日产NX8,2023-09-01,train
+日产NX8,2023-10-01,train
+日产NX8,2023-11-01,train
+日产NX8,2023-12-01,train
+日产NX8,2024-01-01,train
+日产NX8,2024-02-01,train
+日产NX8,2024-03-01,train
+日产NX8,2024-04-01,train
+日产NX8,2024-05-01,train
+日产NX8,2024-06-01,train
+日产NX8,2024-07-01,train
+日产NX8,2024-08-01,train
+日产NX8,2024-09-01,train
+日产NX8,2024-10-01,train
+日产NX8,2024-11-01,train
+日产NX8,2024-12-01,train
+日产NX8,2025-01-01,train
+日产NX8,2025-02-01,train
+日产NX8,2025-03-01,train
+日产NX8,2025-04-01,train
+日产NX8,2025-05-01,train
+日产NX8,2025-06-01,train
+日产NX8,2025-07-01,val
+日产NX8,2025-08-01,val
+日产NX8,2025-09-01,val
+日产NX8,2025-10-01,val
+日产NX8,2025-11-01,val
+日产NX8,2025-12-01,val
 日产NX8,2026-01-01,test
 日产NX8,2026-02-01,test
 日产NX8,2026-03-01,test
@@ -8141,6 +9557,18 @@ iCAR 03,2026-06-01,test
 昂科威,2026-04-01,test
 昂科威,2026-05-01,test
 昂科威,2026-06-01,test
+昊铂GT,2022-01-01,train
+昊铂GT,2022-02-01,train
+昊铂GT,2022-03-01,train
+昊铂GT,2022-04-01,train
+昊铂GT,2022-05-01,train
+昊铂GT,2022-06-01,train
+昊铂GT,2022-07-01,train
+昊铂GT,2022-08-01,train
+昊铂GT,2022-09-01,train
+昊铂GT,2022-10-01,train
+昊铂GT,2022-11-01,train
+昊铂GT,2022-12-01,train
 昊铂GT,2023-01-01,train
 昊铂GT,2023-02-01,train
 昊铂GT,2023-03-01,train
@@ -8183,6 +9611,30 @@ iCAR 03,2026-06-01,test
 昊铂GT,2026-04-01,test
 昊铂GT,2026-05-01,test
 昊铂GT,2026-06-01,test
+星海S7,2022-01-01,train
+星海S7,2022-02-01,train
+星海S7,2022-03-01,train
+星海S7,2022-04-01,train
+星海S7,2022-05-01,train
+星海S7,2022-06-01,train
+星海S7,2022-07-01,train
+星海S7,2022-08-01,train
+星海S7,2022-09-01,train
+星海S7,2022-10-01,train
+星海S7,2022-11-01,train
+星海S7,2022-12-01,train
+星海S7,2023-01-01,train
+星海S7,2023-02-01,train
+星海S7,2023-03-01,train
+星海S7,2023-04-01,train
+星海S7,2023-05-01,train
+星海S7,2023-06-01,train
+星海S7,2023-07-01,train
+星海S7,2023-08-01,train
+星海S7,2023-09-01,train
+星海S7,2023-10-01,train
+星海S7,2023-11-01,train
+星海S7,2023-12-01,train
 星海S7,2024-01-01,train
 星海S7,2024-02-01,train
 星海S7,2024-03-01,train
@@ -8213,6 +9665,42 @@ iCAR 03,2026-06-01,test
 星海S7,2026-04-01,test
 星海S7,2026-05-01,test
 星海S7,2026-06-01,test
+星海T5,2022-01-01,train
+星海T5,2022-02-01,train
+星海T5,2022-03-01,train
+星海T5,2022-04-01,train
+星海T5,2022-05-01,train
+星海T5,2022-06-01,train
+星海T5,2022-07-01,train
+星海T5,2022-08-01,train
+星海T5,2022-09-01,train
+星海T5,2022-10-01,train
+星海T5,2022-11-01,train
+星海T5,2022-12-01,train
+星海T5,2023-01-01,train
+星海T5,2023-02-01,train
+星海T5,2023-03-01,train
+星海T5,2023-04-01,train
+星海T5,2023-05-01,train
+星海T5,2023-06-01,train
+星海T5,2023-07-01,train
+星海T5,2023-08-01,train
+星海T5,2023-09-01,train
+星海T5,2023-10-01,train
+星海T5,2023-11-01,train
+星海T5,2023-12-01,train
+星海T5,2024-01-01,train
+星海T5,2024-02-01,train
+星海T5,2024-03-01,train
+星海T5,2024-04-01,train
+星海T5,2024-05-01,train
+星海T5,2024-06-01,train
+星海T5,2024-07-01,train
+星海T5,2024-08-01,train
+星海T5,2024-09-01,train
+星海T5,2024-10-01,train
+星海T5,2024-11-01,train
+星海T5,2024-12-01,train
 星海T5,2025-01-01,train
 星海T5,2025-02-01,train
 星海T5,2025-03-01,train
@@ -8231,6 +9719,30 @@ iCAR 03,2026-06-01,test
 星海T5,2026-04-01,test
 星海T5,2026-05-01,test
 星海T5,2026-06-01,test
+星海V9,2022-01-01,train
+星海V9,2022-02-01,train
+星海V9,2022-03-01,train
+星海V9,2022-04-01,train
+星海V9,2022-05-01,train
+星海V9,2022-06-01,train
+星海V9,2022-07-01,train
+星海V9,2022-08-01,train
+星海V9,2022-09-01,train
+星海V9,2022-10-01,train
+星海V9,2022-11-01,train
+星海V9,2022-12-01,train
+星海V9,2023-01-01,train
+星海V9,2023-02-01,train
+星海V9,2023-03-01,train
+星海V9,2023-04-01,train
+星海V9,2023-05-01,train
+星海V9,2023-06-01,train
+星海V9,2023-07-01,train
+星海V9,2023-08-01,train
+星海V9,2023-09-01,train
+星海V9,2023-10-01,train
+星海V9,2023-11-01,train
+星海V9,2023-12-01,train
 星海V9,2024-01-01,train
 星海V9,2024-02-01,train
 星海V9,2024-03-01,train
@@ -8315,6 +9827,18 @@ iCAR 03,2026-06-01,test
 星瑞,2026-04-01,test
 星瑞,2026-05-01,test
 星瑞,2026-06-01,test
+星瑞L,2022-01-01,train
+星瑞L,2022-02-01,train
+星瑞L,2022-03-01,train
+星瑞L,2022-04-01,train
+星瑞L,2022-05-01,train
+星瑞L,2022-06-01,train
+星瑞L,2022-07-01,train
+星瑞L,2022-08-01,train
+星瑞L,2022-09-01,train
+星瑞L,2022-10-01,train
+星瑞L,2022-11-01,train
+星瑞L,2022-12-01,train
 星瑞L,2023-01-01,train
 星瑞L,2023-02-01,train
 星瑞L,2023-03-01,train
@@ -8411,6 +9935,30 @@ iCAR 03,2026-06-01,test
 星越L,2026-04-01,test
 星越L,2026-05-01,test
 星越L,2026-06-01,test
+星越L 智擎,2022-01-01,train
+星越L 智擎,2022-02-01,train
+星越L 智擎,2022-03-01,train
+星越L 智擎,2022-04-01,train
+星越L 智擎,2022-05-01,train
+星越L 智擎,2022-06-01,train
+星越L 智擎,2022-07-01,train
+星越L 智擎,2022-08-01,train
+星越L 智擎,2022-09-01,train
+星越L 智擎,2022-10-01,train
+星越L 智擎,2022-11-01,train
+星越L 智擎,2022-12-01,train
+星越L 智擎,2023-01-01,train
+星越L 智擎,2023-02-01,train
+星越L 智擎,2023-03-01,train
+星越L 智擎,2023-04-01,train
+星越L 智擎,2023-05-01,train
+星越L 智擎,2023-06-01,train
+星越L 智擎,2023-07-01,train
+星越L 智擎,2023-08-01,train
+星越L 智擎,2023-09-01,train
+星越L 智擎,2023-10-01,train
+星越L 智擎,2023-11-01,train
+星越L 智擎,2023-12-01,train
 星越L 智擎,2024-01-01,train
 星越L 智擎,2024-02-01,train
 星越L 智擎,2024-03-01,train
@@ -8441,6 +9989,18 @@ iCAR 03,2026-06-01,test
 星越L 智擎,2026-04-01,test
 星越L 智擎,2026-05-01,test
 星越L 智擎,2026-06-01,test
+星途ES,2022-01-01,train
+星途ES,2022-02-01,train
+星途ES,2022-03-01,train
+星途ES,2022-04-01,train
+星途ES,2022-05-01,train
+星途ES,2022-06-01,train
+星途ES,2022-07-01,train
+星途ES,2022-08-01,train
+星途ES,2022-09-01,train
+星途ES,2022-10-01,train
+星途ES,2022-11-01,train
+星途ES,2022-12-01,train
 星途ES,2023-01-01,train
 星途ES,2023-02-01,train
 星途ES,2023-03-01,train
@@ -8483,6 +10043,30 @@ iCAR 03,2026-06-01,test
 星途ES,2026-04-01,test
 星途ES,2026-05-01,test
 星途ES,2026-06-01,test
+普拉多,2022-01-01,train
+普拉多,2022-02-01,train
+普拉多,2022-03-01,train
+普拉多,2022-04-01,train
+普拉多,2022-05-01,train
+普拉多,2022-06-01,train
+普拉多,2022-07-01,train
+普拉多,2022-08-01,train
+普拉多,2022-09-01,train
+普拉多,2022-10-01,train
+普拉多,2022-11-01,train
+普拉多,2022-12-01,train
+普拉多,2023-01-01,train
+普拉多,2023-02-01,train
+普拉多,2023-03-01,train
+普拉多,2023-04-01,train
+普拉多,2023-05-01,train
+普拉多,2023-06-01,train
+普拉多,2023-07-01,train
+普拉多,2023-08-01,train
+普拉多,2023-09-01,train
+普拉多,2023-10-01,train
+普拉多,2023-11-01,train
+普拉多,2023-12-01,train
 普拉多,2024-01-01,train
 普拉多,2024-02-01,train
 普拉多,2024-03-01,train
@@ -8513,6 +10097,30 @@ iCAR 03,2026-06-01,test
 普拉多,2026-04-01,test
 普拉多,2026-05-01,test
 普拉多,2026-06-01,test
+智己L6,2022-01-01,train
+智己L6,2022-02-01,train
+智己L6,2022-03-01,train
+智己L6,2022-04-01,train
+智己L6,2022-05-01,train
+智己L6,2022-06-01,train
+智己L6,2022-07-01,train
+智己L6,2022-08-01,train
+智己L6,2022-09-01,train
+智己L6,2022-10-01,train
+智己L6,2022-11-01,train
+智己L6,2022-12-01,train
+智己L6,2023-01-01,train
+智己L6,2023-02-01,train
+智己L6,2023-03-01,train
+智己L6,2023-04-01,train
+智己L6,2023-05-01,train
+智己L6,2023-06-01,train
+智己L6,2023-07-01,train
+智己L6,2023-08-01,train
+智己L6,2023-09-01,train
+智己L6,2023-10-01,train
+智己L6,2023-11-01,train
+智己L6,2023-12-01,train
 智己L6,2024-01-01,train
 智己L6,2024-02-01,train
 智己L6,2024-03-01,train
@@ -8651,6 +10259,18 @@ iCAR 03,2026-06-01,test
 智跑,2026-04-01,test
 智跑,2026-05-01,test
 智跑,2026-06-01,test
+曹操60,2022-01-01,train
+曹操60,2022-02-01,train
+曹操60,2022-03-01,train
+曹操60,2022-04-01,train
+曹操60,2022-05-01,train
+曹操60,2022-06-01,train
+曹操60,2022-07-01,train
+曹操60,2022-08-01,train
+曹操60,2022-09-01,train
+曹操60,2022-10-01,train
+曹操60,2022-11-01,train
+曹操60,2022-12-01,train
 曹操60,2023-01-01,train
 曹操60,2023-02-01,train
 曹操60,2023-03-01,train
@@ -8801,6 +10421,18 @@ iCAR 03,2026-06-01,test
 本田CR-V,2026-04-01,test
 本田CR-V,2026-05-01,test
 本田CR-V,2026-06-01,test
+本田HR-V,2022-01-01,train
+本田HR-V,2022-02-01,train
+本田HR-V,2022-03-01,train
+本田HR-V,2022-04-01,train
+本田HR-V,2022-05-01,train
+本田HR-V,2022-06-01,train
+本田HR-V,2022-07-01,train
+本田HR-V,2022-08-01,train
+本田HR-V,2022-09-01,train
+本田HR-V,2022-10-01,train
+本田HR-V,2022-11-01,train
+本田HR-V,2022-12-01,train
 本田HR-V,2023-01-01,train
 本田HR-V,2023-02-01,train
 本田HR-V,2023-03-01,train
@@ -9005,6 +10637,18 @@ iCAR 03,2026-06-01,test
 极氪001,2026-04-01,test
 极氪001,2026-05-01,test
 极氪001,2026-06-01,test
+极氪009,2022-01-01,train
+极氪009,2022-02-01,train
+极氪009,2022-03-01,train
+极氪009,2022-04-01,train
+极氪009,2022-05-01,train
+极氪009,2022-06-01,train
+极氪009,2022-07-01,train
+极氪009,2022-08-01,train
+极氪009,2022-09-01,train
+极氪009,2022-10-01,train
+极氪009,2022-11-01,train
+极氪009,2022-12-01,train
 极氪009,2023-01-01,train
 极氪009,2023-02-01,train
 极氪009,2023-03-01,train
@@ -9047,6 +10691,30 @@ iCAR 03,2026-06-01,test
 极氪009,2026-04-01,test
 极氪009,2026-05-01,test
 极氪009,2026-06-01,test
+极狐 阿尔法S5,2022-01-01,train
+极狐 阿尔法S5,2022-02-01,train
+极狐 阿尔法S5,2022-03-01,train
+极狐 阿尔法S5,2022-04-01,train
+极狐 阿尔法S5,2022-05-01,train
+极狐 阿尔法S5,2022-06-01,train
+极狐 阿尔法S5,2022-07-01,train
+极狐 阿尔法S5,2022-08-01,train
+极狐 阿尔法S5,2022-09-01,train
+极狐 阿尔法S5,2022-10-01,train
+极狐 阿尔法S5,2022-11-01,train
+极狐 阿尔法S5,2022-12-01,train
+极狐 阿尔法S5,2023-01-01,train
+极狐 阿尔法S5,2023-02-01,train
+极狐 阿尔法S5,2023-03-01,train
+极狐 阿尔法S5,2023-04-01,train
+极狐 阿尔法S5,2023-05-01,train
+极狐 阿尔法S5,2023-06-01,train
+极狐 阿尔法S5,2023-07-01,train
+极狐 阿尔法S5,2023-08-01,train
+极狐 阿尔法S5,2023-09-01,train
+极狐 阿尔法S5,2023-10-01,train
+极狐 阿尔法S5,2023-11-01,train
+极狐 阿尔法S5,2023-12-01,train
 极狐 阿尔法S5,2024-01-01,train
 极狐 阿尔法S5,2024-02-01,train
 极狐 阿尔法S5,2024-03-01,train
@@ -9077,6 +10745,18 @@ iCAR 03,2026-06-01,test
 极狐 阿尔法S5,2026-04-01,test
 极狐 阿尔法S5,2026-05-01,test
 极狐 阿尔法S5,2026-06-01,test
+极狐考拉,2022-01-01,train
+极狐考拉,2022-02-01,train
+极狐考拉,2022-03-01,train
+极狐考拉,2022-04-01,train
+极狐考拉,2022-05-01,train
+极狐考拉,2022-06-01,train
+极狐考拉,2022-07-01,train
+极狐考拉,2022-08-01,train
+极狐考拉,2022-09-01,train
+极狐考拉,2022-10-01,train
+极狐考拉,2022-11-01,train
+极狐考拉,2022-12-01,train
 极狐考拉,2023-01-01,train
 极狐考拉,2023-02-01,train
 极狐考拉,2023-03-01,train
@@ -9335,6 +11015,18 @@ iCAR 03,2026-06-01,test
 标致408,2026-04-01,test
 标致408,2026-05-01,test
 标致408,2026-06-01,test
+标致408X,2022-01-01,train
+标致408X,2022-02-01,train
+标致408X,2022-03-01,train
+标致408X,2022-04-01,train
+标致408X,2022-05-01,train
+标致408X,2022-06-01,train
+标致408X,2022-07-01,train
+标致408X,2022-08-01,train
+标致408X,2022-09-01,train
+标致408X,2022-10-01,train
+标致408X,2022-11-01,train
+标致408X,2022-12-01,train
 标致408X,2023-01-01,train
 标致408X,2023-02-01,train
 标致408X,2023-03-01,train
@@ -9701,6 +11393,42 @@ iCAR 03,2026-06-01,test
 欧诺S,2026-04-01,test
 欧诺S,2026-05-01,test
 欧诺S,2026-06-01,test
+比亚迪M9,2022-01-01,train
+比亚迪M9,2022-02-01,train
+比亚迪M9,2022-03-01,train
+比亚迪M9,2022-04-01,train
+比亚迪M9,2022-05-01,train
+比亚迪M9,2022-06-01,train
+比亚迪M9,2022-07-01,train
+比亚迪M9,2022-08-01,train
+比亚迪M9,2022-09-01,train
+比亚迪M9,2022-10-01,train
+比亚迪M9,2022-11-01,train
+比亚迪M9,2022-12-01,train
+比亚迪M9,2023-01-01,train
+比亚迪M9,2023-02-01,train
+比亚迪M9,2023-03-01,train
+比亚迪M9,2023-04-01,train
+比亚迪M9,2023-05-01,train
+比亚迪M9,2023-06-01,train
+比亚迪M9,2023-07-01,train
+比亚迪M9,2023-08-01,train
+比亚迪M9,2023-09-01,train
+比亚迪M9,2023-10-01,train
+比亚迪M9,2023-11-01,train
+比亚迪M9,2023-12-01,train
+比亚迪M9,2024-01-01,train
+比亚迪M9,2024-02-01,train
+比亚迪M9,2024-03-01,train
+比亚迪M9,2024-04-01,train
+比亚迪M9,2024-05-01,train
+比亚迪M9,2024-06-01,train
+比亚迪M9,2024-07-01,train
+比亚迪M9,2024-08-01,train
+比亚迪M9,2024-09-01,train
+比亚迪M9,2024-10-01,train
+比亚迪M9,2024-11-01,train
+比亚迪M9,2024-12-01,train
 比亚迪M9,2025-01-01,train
 比亚迪M9,2025-02-01,train
 比亚迪M9,2025-03-01,train
@@ -9719,6 +11447,42 @@ iCAR 03,2026-06-01,test
 比亚迪M9,2026-04-01,test
 比亚迪M9,2026-05-01,test
 比亚迪M9,2026-06-01,test
+比亚迪e7,2022-01-01,train
+比亚迪e7,2022-02-01,train
+比亚迪e7,2022-03-01,train
+比亚迪e7,2022-04-01,train
+比亚迪e7,2022-05-01,train
+比亚迪e7,2022-06-01,train
+比亚迪e7,2022-07-01,train
+比亚迪e7,2022-08-01,train
+比亚迪e7,2022-09-01,train
+比亚迪e7,2022-10-01,train
+比亚迪e7,2022-11-01,train
+比亚迪e7,2022-12-01,train
+比亚迪e7,2023-01-01,train
+比亚迪e7,2023-02-01,train
+比亚迪e7,2023-03-01,train
+比亚迪e7,2023-04-01,train
+比亚迪e7,2023-05-01,train
+比亚迪e7,2023-06-01,train
+比亚迪e7,2023-07-01,train
+比亚迪e7,2023-08-01,train
+比亚迪e7,2023-09-01,train
+比亚迪e7,2023-10-01,train
+比亚迪e7,2023-11-01,train
+比亚迪e7,2023-12-01,train
+比亚迪e7,2024-01-01,train
+比亚迪e7,2024-02-01,train
+比亚迪e7,2024-03-01,train
+比亚迪e7,2024-04-01,train
+比亚迪e7,2024-05-01,train
+比亚迪e7,2024-06-01,train
+比亚迪e7,2024-07-01,train
+比亚迪e7,2024-08-01,train
+比亚迪e7,2024-09-01,train
+比亚迪e7,2024-10-01,train
+比亚迪e7,2024-11-01,train
+比亚迪e7,2024-12-01,train
 比亚迪e7,2025-01-01,train
 比亚迪e7,2025-02-01,train
 比亚迪e7,2025-03-01,train
@@ -9737,6 +11501,42 @@ iCAR 03,2026-06-01,test
 比亚迪e7,2026-04-01,test
 比亚迪e7,2026-05-01,test
 比亚迪e7,2026-06-01,test
+比亚迪e9,2022-01-01,train
+比亚迪e9,2022-02-01,train
+比亚迪e9,2022-03-01,train
+比亚迪e9,2022-04-01,train
+比亚迪e9,2022-05-01,train
+比亚迪e9,2022-06-01,train
+比亚迪e9,2022-07-01,train
+比亚迪e9,2022-08-01,train
+比亚迪e9,2022-09-01,train
+比亚迪e9,2022-10-01,train
+比亚迪e9,2022-11-01,train
+比亚迪e9,2022-12-01,train
+比亚迪e9,2023-01-01,train
+比亚迪e9,2023-02-01,train
+比亚迪e9,2023-03-01,train
+比亚迪e9,2023-04-01,train
+比亚迪e9,2023-05-01,train
+比亚迪e9,2023-06-01,train
+比亚迪e9,2023-07-01,train
+比亚迪e9,2023-08-01,train
+比亚迪e9,2023-09-01,train
+比亚迪e9,2023-10-01,train
+比亚迪e9,2023-11-01,train
+比亚迪e9,2023-12-01,train
+比亚迪e9,2024-01-01,train
+比亚迪e9,2024-02-01,train
+比亚迪e9,2024-03-01,train
+比亚迪e9,2024-04-01,train
+比亚迪e9,2024-05-01,train
+比亚迪e9,2024-06-01,train
+比亚迪e9,2024-07-01,train
+比亚迪e9,2024-08-01,train
+比亚迪e9,2024-09-01,train
+比亚迪e9,2024-10-01,train
+比亚迪e9,2024-11-01,train
+比亚迪e9,2024-12-01,train
 比亚迪e9,2025-01-01,train
 比亚迪e9,2025-02-01,train
 比亚迪e9,2025-03-01,train
@@ -9809,6 +11609,18 @@ iCAR 03,2026-06-01,test
 汉,2026-04-01,test
 汉,2026-05-01,test
 汉,2026-06-01,test
+江淮A5 PLUS,2022-01-01,train
+江淮A5 PLUS,2022-02-01,train
+江淮A5 PLUS,2022-03-01,train
+江淮A5 PLUS,2022-04-01,train
+江淮A5 PLUS,2022-05-01,train
+江淮A5 PLUS,2022-06-01,train
+江淮A5 PLUS,2022-07-01,train
+江淮A5 PLUS,2022-08-01,train
+江淮A5 PLUS,2022-09-01,train
+江淮A5 PLUS,2022-10-01,train
+江淮A5 PLUS,2022-11-01,train
+江淮A5 PLUS,2022-12-01,train
 江淮A5 PLUS,2023-01-01,train
 江淮A5 PLUS,2023-02-01,train
 江淮A5 PLUS,2023-03-01,train
@@ -9851,6 +11663,18 @@ iCAR 03,2026-06-01,test
 江淮A5 PLUS,2026-04-01,test
 江淮A5 PLUS,2026-05-01,test
 江淮A5 PLUS,2026-06-01,test
+江淮QX PHEV,2022-01-01,train
+江淮QX PHEV,2022-02-01,train
+江淮QX PHEV,2022-03-01,train
+江淮QX PHEV,2022-04-01,train
+江淮QX PHEV,2022-05-01,train
+江淮QX PHEV,2022-06-01,train
+江淮QX PHEV,2022-07-01,train
+江淮QX PHEV,2022-08-01,train
+江淮QX PHEV,2022-09-01,train
+江淮QX PHEV,2022-10-01,train
+江淮QX PHEV,2022-11-01,train
+江淮QX PHEV,2022-12-01,train
 江淮QX PHEV,2023-01-01,train
 江淮QX PHEV,2023-02-01,train
 江淮QX PHEV,2023-03-01,train
@@ -10001,6 +11825,30 @@ iCAR 03,2026-06-01,test
 沃尔沃C40,2026-04-01,test
 沃尔沃C40,2026-05-01,test
 沃尔沃C40,2026-06-01,test
+沃尔沃EM90,2022-01-01,train
+沃尔沃EM90,2022-02-01,train
+沃尔沃EM90,2022-03-01,train
+沃尔沃EM90,2022-04-01,train
+沃尔沃EM90,2022-05-01,train
+沃尔沃EM90,2022-06-01,train
+沃尔沃EM90,2022-07-01,train
+沃尔沃EM90,2022-08-01,train
+沃尔沃EM90,2022-09-01,train
+沃尔沃EM90,2022-10-01,train
+沃尔沃EM90,2022-11-01,train
+沃尔沃EM90,2022-12-01,train
+沃尔沃EM90,2023-01-01,train
+沃尔沃EM90,2023-02-01,train
+沃尔沃EM90,2023-03-01,train
+沃尔沃EM90,2023-04-01,train
+沃尔沃EM90,2023-05-01,train
+沃尔沃EM90,2023-06-01,train
+沃尔沃EM90,2023-07-01,train
+沃尔沃EM90,2023-08-01,train
+沃尔沃EM90,2023-09-01,train
+沃尔沃EM90,2023-10-01,train
+沃尔沃EM90,2023-11-01,train
+沃尔沃EM90,2023-12-01,train
 沃尔沃EM90,2024-01-01,train
 沃尔沃EM90,2024-02-01,train
 沃尔沃EM90,2024-03-01,train
@@ -10031,6 +11879,54 @@ iCAR 03,2026-06-01,test
 沃尔沃EM90,2026-04-01,test
 沃尔沃EM90,2026-05-01,test
 沃尔沃EM90,2026-06-01,test
+沃尔沃ES90,2022-01-01,train
+沃尔沃ES90,2022-02-01,train
+沃尔沃ES90,2022-03-01,train
+沃尔沃ES90,2022-04-01,train
+沃尔沃ES90,2022-05-01,train
+沃尔沃ES90,2022-06-01,train
+沃尔沃ES90,2022-07-01,train
+沃尔沃ES90,2022-08-01,train
+沃尔沃ES90,2022-09-01,train
+沃尔沃ES90,2022-10-01,train
+沃尔沃ES90,2022-11-01,train
+沃尔沃ES90,2022-12-01,train
+沃尔沃ES90,2023-01-01,train
+沃尔沃ES90,2023-02-01,train
+沃尔沃ES90,2023-03-01,train
+沃尔沃ES90,2023-04-01,train
+沃尔沃ES90,2023-05-01,train
+沃尔沃ES90,2023-06-01,train
+沃尔沃ES90,2023-07-01,train
+沃尔沃ES90,2023-08-01,train
+沃尔沃ES90,2023-09-01,train
+沃尔沃ES90,2023-10-01,train
+沃尔沃ES90,2023-11-01,train
+沃尔沃ES90,2023-12-01,train
+沃尔沃ES90,2024-01-01,train
+沃尔沃ES90,2024-02-01,train
+沃尔沃ES90,2024-03-01,train
+沃尔沃ES90,2024-04-01,train
+沃尔沃ES90,2024-05-01,train
+沃尔沃ES90,2024-06-01,train
+沃尔沃ES90,2024-07-01,train
+沃尔沃ES90,2024-08-01,train
+沃尔沃ES90,2024-09-01,train
+沃尔沃ES90,2024-10-01,train
+沃尔沃ES90,2024-11-01,train
+沃尔沃ES90,2024-12-01,train
+沃尔沃ES90,2025-01-01,train
+沃尔沃ES90,2025-02-01,train
+沃尔沃ES90,2025-03-01,train
+沃尔沃ES90,2025-04-01,train
+沃尔沃ES90,2025-05-01,train
+沃尔沃ES90,2025-06-01,train
+沃尔沃ES90,2025-07-01,val
+沃尔沃ES90,2025-08-01,val
+沃尔沃ES90,2025-09-01,val
+沃尔沃ES90,2025-10-01,val
+沃尔沃ES90,2025-11-01,val
+沃尔沃ES90,2025-12-01,val
 沃尔沃ES90,2026-01-01,test
 沃尔沃ES90,2026-02-01,test
 沃尔沃ES90,2026-03-01,test
@@ -10199,6 +12095,42 @@ iCAR 03,2026-06-01,test
 沃尔沃S90新能源,2026-04-01,test
 沃尔沃S90新能源,2026-05-01,test
 沃尔沃S90新能源,2026-06-01,test
+海狮05EV,2022-01-01,train
+海狮05EV,2022-02-01,train
+海狮05EV,2022-03-01,train
+海狮05EV,2022-04-01,train
+海狮05EV,2022-05-01,train
+海狮05EV,2022-06-01,train
+海狮05EV,2022-07-01,train
+海狮05EV,2022-08-01,train
+海狮05EV,2022-09-01,train
+海狮05EV,2022-10-01,train
+海狮05EV,2022-11-01,train
+海狮05EV,2022-12-01,train
+海狮05EV,2023-01-01,train
+海狮05EV,2023-02-01,train
+海狮05EV,2023-03-01,train
+海狮05EV,2023-04-01,train
+海狮05EV,2023-05-01,train
+海狮05EV,2023-06-01,train
+海狮05EV,2023-07-01,train
+海狮05EV,2023-08-01,train
+海狮05EV,2023-09-01,train
+海狮05EV,2023-10-01,train
+海狮05EV,2023-11-01,train
+海狮05EV,2023-12-01,train
+海狮05EV,2024-01-01,train
+海狮05EV,2024-02-01,train
+海狮05EV,2024-03-01,train
+海狮05EV,2024-04-01,train
+海狮05EV,2024-05-01,train
+海狮05EV,2024-06-01,train
+海狮05EV,2024-07-01,train
+海狮05EV,2024-08-01,train
+海狮05EV,2024-09-01,train
+海狮05EV,2024-10-01,train
+海狮05EV,2024-11-01,train
+海狮05EV,2024-12-01,train
 海狮05EV,2025-01-01,train
 海狮05EV,2025-02-01,train
 海狮05EV,2025-03-01,train
@@ -10217,6 +12149,42 @@ iCAR 03,2026-06-01,test
 海狮05EV,2026-04-01,test
 海狮05EV,2026-05-01,test
 海狮05EV,2026-06-01,test
+海狮06EV,2022-01-01,train
+海狮06EV,2022-02-01,train
+海狮06EV,2022-03-01,train
+海狮06EV,2022-04-01,train
+海狮06EV,2022-05-01,train
+海狮06EV,2022-06-01,train
+海狮06EV,2022-07-01,train
+海狮06EV,2022-08-01,train
+海狮06EV,2022-09-01,train
+海狮06EV,2022-10-01,train
+海狮06EV,2022-11-01,train
+海狮06EV,2022-12-01,train
+海狮06EV,2023-01-01,train
+海狮06EV,2023-02-01,train
+海狮06EV,2023-03-01,train
+海狮06EV,2023-04-01,train
+海狮06EV,2023-05-01,train
+海狮06EV,2023-06-01,train
+海狮06EV,2023-07-01,train
+海狮06EV,2023-08-01,train
+海狮06EV,2023-09-01,train
+海狮06EV,2023-10-01,train
+海狮06EV,2023-11-01,train
+海狮06EV,2023-12-01,train
+海狮06EV,2024-01-01,train
+海狮06EV,2024-02-01,train
+海狮06EV,2024-03-01,train
+海狮06EV,2024-04-01,train
+海狮06EV,2024-05-01,train
+海狮06EV,2024-06-01,train
+海狮06EV,2024-07-01,train
+海狮06EV,2024-08-01,train
+海狮06EV,2024-09-01,train
+海狮06EV,2024-10-01,train
+海狮06EV,2024-11-01,train
+海狮06EV,2024-12-01,train
 海狮06EV,2025-01-01,train
 海狮06EV,2025-02-01,train
 海狮06EV,2025-03-01,train
@@ -10235,6 +12203,30 @@ iCAR 03,2026-06-01,test
 海狮06EV,2026-04-01,test
 海狮06EV,2026-05-01,test
 海狮06EV,2026-06-01,test
+海狮07EV,2022-01-01,train
+海狮07EV,2022-02-01,train
+海狮07EV,2022-03-01,train
+海狮07EV,2022-04-01,train
+海狮07EV,2022-05-01,train
+海狮07EV,2022-06-01,train
+海狮07EV,2022-07-01,train
+海狮07EV,2022-08-01,train
+海狮07EV,2022-09-01,train
+海狮07EV,2022-10-01,train
+海狮07EV,2022-11-01,train
+海狮07EV,2022-12-01,train
+海狮07EV,2023-01-01,train
+海狮07EV,2023-02-01,train
+海狮07EV,2023-03-01,train
+海狮07EV,2023-04-01,train
+海狮07EV,2023-05-01,train
+海狮07EV,2023-06-01,train
+海狮07EV,2023-07-01,train
+海狮07EV,2023-08-01,train
+海狮07EV,2023-09-01,train
+海狮07EV,2023-10-01,train
+海狮07EV,2023-11-01,train
+海狮07EV,2023-12-01,train
 海狮07EV,2024-01-01,train
 海狮07EV,2024-02-01,train
 海狮07EV,2024-03-01,train
@@ -10373,6 +12365,30 @@ iCAR 03,2026-06-01,test
 海豹,2026-04-01,test
 海豹,2026-05-01,test
 海豹,2026-06-01,test
+海豹06DM-i,2022-01-01,train
+海豹06DM-i,2022-02-01,train
+海豹06DM-i,2022-03-01,train
+海豹06DM-i,2022-04-01,train
+海豹06DM-i,2022-05-01,train
+海豹06DM-i,2022-06-01,train
+海豹06DM-i,2022-07-01,train
+海豹06DM-i,2022-08-01,train
+海豹06DM-i,2022-09-01,train
+海豹06DM-i,2022-10-01,train
+海豹06DM-i,2022-11-01,train
+海豹06DM-i,2022-12-01,train
+海豹06DM-i,2023-01-01,train
+海豹06DM-i,2023-02-01,train
+海豹06DM-i,2023-03-01,train
+海豹06DM-i,2023-04-01,train
+海豹06DM-i,2023-05-01,train
+海豹06DM-i,2023-06-01,train
+海豹06DM-i,2023-07-01,train
+海豹06DM-i,2023-08-01,train
+海豹06DM-i,2023-09-01,train
+海豹06DM-i,2023-10-01,train
+海豹06DM-i,2023-11-01,train
+海豹06DM-i,2023-12-01,train
 海豹06DM-i,2024-01-01,train
 海豹06DM-i,2024-02-01,train
 海豹06DM-i,2024-03-01,train
@@ -10403,6 +12419,42 @@ iCAR 03,2026-06-01,test
 海豹06DM-i,2026-04-01,test
 海豹06DM-i,2026-05-01,test
 海豹06DM-i,2026-06-01,test
+海豹06EV,2022-01-01,train
+海豹06EV,2022-02-01,train
+海豹06EV,2022-03-01,train
+海豹06EV,2022-04-01,train
+海豹06EV,2022-05-01,train
+海豹06EV,2022-06-01,train
+海豹06EV,2022-07-01,train
+海豹06EV,2022-08-01,train
+海豹06EV,2022-09-01,train
+海豹06EV,2022-10-01,train
+海豹06EV,2022-11-01,train
+海豹06EV,2022-12-01,train
+海豹06EV,2023-01-01,train
+海豹06EV,2023-02-01,train
+海豹06EV,2023-03-01,train
+海豹06EV,2023-04-01,train
+海豹06EV,2023-05-01,train
+海豹06EV,2023-06-01,train
+海豹06EV,2023-07-01,train
+海豹06EV,2023-08-01,train
+海豹06EV,2023-09-01,train
+海豹06EV,2023-10-01,train
+海豹06EV,2023-11-01,train
+海豹06EV,2023-12-01,train
+海豹06EV,2024-01-01,train
+海豹06EV,2024-02-01,train
+海豹06EV,2024-03-01,train
+海豹06EV,2024-04-01,train
+海豹06EV,2024-05-01,train
+海豹06EV,2024-06-01,train
+海豹06EV,2024-07-01,train
+海豹06EV,2024-08-01,train
+海豹06EV,2024-09-01,train
+海豹06EV,2024-10-01,train
+海豹06EV,2024-11-01,train
+海豹06EV,2024-12-01,train
 海豹06EV,2025-01-01,train
 海豹06EV,2025-02-01,train
 海豹06EV,2025-03-01,train
@@ -10421,6 +12473,30 @@ iCAR 03,2026-06-01,test
 海豹06EV,2026-04-01,test
 海豹06EV,2026-05-01,test
 海豹06EV,2026-06-01,test
+海豹06GT,2022-01-01,train
+海豹06GT,2022-02-01,train
+海豹06GT,2022-03-01,train
+海豹06GT,2022-04-01,train
+海豹06GT,2022-05-01,train
+海豹06GT,2022-06-01,train
+海豹06GT,2022-07-01,train
+海豹06GT,2022-08-01,train
+海豹06GT,2022-09-01,train
+海豹06GT,2022-10-01,train
+海豹06GT,2022-11-01,train
+海豹06GT,2022-12-01,train
+海豹06GT,2023-01-01,train
+海豹06GT,2023-02-01,train
+海豹06GT,2023-03-01,train
+海豹06GT,2023-04-01,train
+海豹06GT,2023-05-01,train
+海豹06GT,2023-06-01,train
+海豹06GT,2023-07-01,train
+海豹06GT,2023-08-01,train
+海豹06GT,2023-09-01,train
+海豹06GT,2023-10-01,train
+海豹06GT,2023-11-01,train
+海豹06GT,2023-12-01,train
 海豹06GT,2024-01-01,train
 海豹06GT,2024-02-01,train
 海豹06GT,2024-03-01,train
@@ -10451,6 +12527,18 @@ iCAR 03,2026-06-01,test
 海豹06GT,2026-04-01,test
 海豹06GT,2026-05-01,test
 海豹06GT,2026-06-01,test
+海豹07DM-i,2022-01-01,train
+海豹07DM-i,2022-02-01,train
+海豹07DM-i,2022-03-01,train
+海豹07DM-i,2022-04-01,train
+海豹07DM-i,2022-05-01,train
+海豹07DM-i,2022-06-01,train
+海豹07DM-i,2022-07-01,train
+海豹07DM-i,2022-08-01,train
+海豹07DM-i,2022-09-01,train
+海豹07DM-i,2022-10-01,train
+海豹07DM-i,2022-11-01,train
+海豹07DM-i,2022-12-01,train
 海豹07DM-i,2023-01-01,train
 海豹07DM-i,2023-02-01,train
 海豹07DM-i,2023-03-01,train
@@ -10493,6 +12581,54 @@ iCAR 03,2026-06-01,test
 海豹07DM-i,2026-04-01,test
 海豹07DM-i,2026-05-01,test
 海豹07DM-i,2026-06-01,test
+海豹07EV,2022-01-01,train
+海豹07EV,2022-02-01,train
+海豹07EV,2022-03-01,train
+海豹07EV,2022-04-01,train
+海豹07EV,2022-05-01,train
+海豹07EV,2022-06-01,train
+海豹07EV,2022-07-01,train
+海豹07EV,2022-08-01,train
+海豹07EV,2022-09-01,train
+海豹07EV,2022-10-01,train
+海豹07EV,2022-11-01,train
+海豹07EV,2022-12-01,train
+海豹07EV,2023-01-01,train
+海豹07EV,2023-02-01,train
+海豹07EV,2023-03-01,train
+海豹07EV,2023-04-01,train
+海豹07EV,2023-05-01,train
+海豹07EV,2023-06-01,train
+海豹07EV,2023-07-01,train
+海豹07EV,2023-08-01,train
+海豹07EV,2023-09-01,train
+海豹07EV,2023-10-01,train
+海豹07EV,2023-11-01,train
+海豹07EV,2023-12-01,train
+海豹07EV,2024-01-01,train
+海豹07EV,2024-02-01,train
+海豹07EV,2024-03-01,train
+海豹07EV,2024-04-01,train
+海豹07EV,2024-05-01,train
+海豹07EV,2024-06-01,train
+海豹07EV,2024-07-01,train
+海豹07EV,2024-08-01,train
+海豹07EV,2024-09-01,train
+海豹07EV,2024-10-01,train
+海豹07EV,2024-11-01,train
+海豹07EV,2024-12-01,train
+海豹07EV,2025-01-01,train
+海豹07EV,2025-02-01,train
+海豹07EV,2025-03-01,train
+海豹07EV,2025-04-01,train
+海豹07EV,2025-05-01,train
+海豹07EV,2025-06-01,train
+海豹07EV,2025-07-01,val
+海豹07EV,2025-08-01,val
+海豹07EV,2025-09-01,val
+海豹07EV,2025-10-01,val
+海豹07EV,2025-11-01,val
+海豹07EV,2025-12-01,val
 海豹07EV,2026-01-01,test
 海豹07EV,2026-02-01,test
 海豹07EV,2026-03-01,test
@@ -10553,6 +12689,30 @@ iCAR 03,2026-06-01,test
 海马8S,2026-04-01,test
 海马8S,2026-05-01,test
 海马8S,2026-06-01,test
+海马INJOY,2022-01-01,train
+海马INJOY,2022-02-01,train
+海马INJOY,2022-03-01,train
+海马INJOY,2022-04-01,train
+海马INJOY,2022-05-01,train
+海马INJOY,2022-06-01,train
+海马INJOY,2022-07-01,train
+海马INJOY,2022-08-01,train
+海马INJOY,2022-09-01,train
+海马INJOY,2022-10-01,train
+海马INJOY,2022-11-01,train
+海马INJOY,2022-12-01,train
+海马INJOY,2023-01-01,train
+海马INJOY,2023-02-01,train
+海马INJOY,2023-03-01,train
+海马INJOY,2023-04-01,train
+海马INJOY,2023-05-01,train
+海马INJOY,2023-06-01,train
+海马INJOY,2023-07-01,train
+海马INJOY,2023-08-01,train
+海马INJOY,2023-09-01,train
+海马INJOY,2023-10-01,train
+海马INJOY,2023-11-01,train
+海马INJOY,2023-12-01,train
 海马INJOY,2024-01-01,train
 海马INJOY,2024-02-01,train
 海马INJOY,2024-03-01,train
@@ -10583,6 +12743,18 @@ iCAR 03,2026-06-01,test
 海马INJOY,2026-04-01,test
 海马INJOY,2026-05-01,test
 海马INJOY,2026-06-01,test
+海鸥,2022-01-01,train
+海鸥,2022-02-01,train
+海鸥,2022-03-01,train
+海鸥,2022-04-01,train
+海鸥,2022-05-01,train
+海鸥,2022-06-01,train
+海鸥,2022-07-01,train
+海鸥,2022-08-01,train
+海鸥,2022-09-01,train
+海鸥,2022-10-01,train
+海鸥,2022-11-01,train
+海鸥,2022-12-01,train
 海鸥,2023-01-01,train
 海鸥,2023-02-01,train
 海鸥,2023-03-01,train
@@ -10625,6 +12797,42 @@ iCAR 03,2026-06-01,test
 海鸥,2026-04-01,test
 海鸥,2026-05-01,test
 海鸥,2026-06-01,test
+深蓝L06,2022-01-01,train
+深蓝L06,2022-02-01,train
+深蓝L06,2022-03-01,train
+深蓝L06,2022-04-01,train
+深蓝L06,2022-05-01,train
+深蓝L06,2022-06-01,train
+深蓝L06,2022-07-01,train
+深蓝L06,2022-08-01,train
+深蓝L06,2022-09-01,train
+深蓝L06,2022-10-01,train
+深蓝L06,2022-11-01,train
+深蓝L06,2022-12-01,train
+深蓝L06,2023-01-01,train
+深蓝L06,2023-02-01,train
+深蓝L06,2023-03-01,train
+深蓝L06,2023-04-01,train
+深蓝L06,2023-05-01,train
+深蓝L06,2023-06-01,train
+深蓝L06,2023-07-01,train
+深蓝L06,2023-08-01,train
+深蓝L06,2023-09-01,train
+深蓝L06,2023-10-01,train
+深蓝L06,2023-11-01,train
+深蓝L06,2023-12-01,train
+深蓝L06,2024-01-01,train
+深蓝L06,2024-02-01,train
+深蓝L06,2024-03-01,train
+深蓝L06,2024-04-01,train
+深蓝L06,2024-05-01,train
+深蓝L06,2024-06-01,train
+深蓝L06,2024-07-01,train
+深蓝L06,2024-08-01,train
+深蓝L06,2024-09-01,train
+深蓝L06,2024-10-01,train
+深蓝L06,2024-11-01,train
+深蓝L06,2024-12-01,train
 深蓝L06,2025-01-01,train
 深蓝L06,2025-02-01,train
 深蓝L06,2025-03-01,train
@@ -10643,6 +12851,30 @@ iCAR 03,2026-06-01,test
 深蓝L06,2026-04-01,test
 深蓝L06,2026-05-01,test
 深蓝L06,2026-06-01,test
+深蓝L07,2022-01-01,train
+深蓝L07,2022-02-01,train
+深蓝L07,2022-03-01,train
+深蓝L07,2022-04-01,train
+深蓝L07,2022-05-01,train
+深蓝L07,2022-06-01,train
+深蓝L07,2022-07-01,train
+深蓝L07,2022-08-01,train
+深蓝L07,2022-09-01,train
+深蓝L07,2022-10-01,train
+深蓝L07,2022-11-01,train
+深蓝L07,2022-12-01,train
+深蓝L07,2023-01-01,train
+深蓝L07,2023-02-01,train
+深蓝L07,2023-03-01,train
+深蓝L07,2023-04-01,train
+深蓝L07,2023-05-01,train
+深蓝L07,2023-06-01,train
+深蓝L07,2023-07-01,train
+深蓝L07,2023-08-01,train
+深蓝L07,2023-09-01,train
+深蓝L07,2023-10-01,train
+深蓝L07,2023-11-01,train
+深蓝L07,2023-12-01,train
 深蓝L07,2024-01-01,train
 深蓝L07,2024-02-01,train
 深蓝L07,2024-03-01,train
@@ -10727,6 +12959,30 @@ iCAR 03,2026-06-01,test
 深蓝SL03,2026-04-01,test
 深蓝SL03,2026-05-01,test
 深蓝SL03,2026-06-01,test
+灵悉L,2022-01-01,train
+灵悉L,2022-02-01,train
+灵悉L,2022-03-01,train
+灵悉L,2022-04-01,train
+灵悉L,2022-05-01,train
+灵悉L,2022-06-01,train
+灵悉L,2022-07-01,train
+灵悉L,2022-08-01,train
+灵悉L,2022-09-01,train
+灵悉L,2022-10-01,train
+灵悉L,2022-11-01,train
+灵悉L,2022-12-01,train
+灵悉L,2023-01-01,train
+灵悉L,2023-02-01,train
+灵悉L,2023-03-01,train
+灵悉L,2023-04-01,train
+灵悉L,2023-05-01,train
+灵悉L,2023-06-01,train
+灵悉L,2023-07-01,train
+灵悉L,2023-08-01,train
+灵悉L,2023-09-01,train
+灵悉L,2023-10-01,train
+灵悉L,2023-11-01,train
+灵悉L,2023-12-01,train
 灵悉L,2024-01-01,train
 灵悉L,2024-02-01,train
 灵悉L,2024-03-01,train
@@ -10811,6 +13067,30 @@ iCAR 03,2026-06-01,test
 焕驰,2026-04-01,test
 焕驰,2026-05-01,test
 焕驰,2026-06-01,test
+爱跑,2022-01-01,train
+爱跑,2022-02-01,train
+爱跑,2022-03-01,train
+爱跑,2022-04-01,train
+爱跑,2022-05-01,train
+爱跑,2022-06-01,train
+爱跑,2022-07-01,train
+爱跑,2022-08-01,train
+爱跑,2022-09-01,train
+爱跑,2022-10-01,train
+爱跑,2022-11-01,train
+爱跑,2022-12-01,train
+爱跑,2023-01-01,train
+爱跑,2023-02-01,train
+爱跑,2023-03-01,train
+爱跑,2023-04-01,train
+爱跑,2023-05-01,train
+爱跑,2023-06-01,train
+爱跑,2023-07-01,train
+爱跑,2023-08-01,train
+爱跑,2023-09-01,train
+爱跑,2023-10-01,train
+爱跑,2023-11-01,train
+爱跑,2023-12-01,train
 爱跑,2024-01-01,train
 爱跑,2024-02-01,train
 爱跑,2024-03-01,train
@@ -10895,6 +13175,30 @@ iCAR 03,2026-06-01,test
 狮铂拓界,2026-04-01,test
 狮铂拓界,2026-05-01,test
 狮铂拓界,2026-06-01,test
+猛士917,2022-01-01,train
+猛士917,2022-02-01,train
+猛士917,2022-03-01,train
+猛士917,2022-04-01,train
+猛士917,2022-05-01,train
+猛士917,2022-06-01,train
+猛士917,2022-07-01,train
+猛士917,2022-08-01,train
+猛士917,2022-09-01,train
+猛士917,2022-10-01,train
+猛士917,2022-11-01,train
+猛士917,2022-12-01,train
+猛士917,2023-01-01,train
+猛士917,2023-02-01,train
+猛士917,2023-03-01,train
+猛士917,2023-04-01,train
+猛士917,2023-05-01,train
+猛士917,2023-06-01,train
+猛士917,2023-07-01,train
+猛士917,2023-08-01,train
+猛士917,2023-09-01,train
+猛士917,2023-10-01,train
+猛士917,2023-11-01,train
+猛士917,2023-12-01,train
 猛士917,2024-01-01,train
 猛士917,2024-02-01,train
 猛士917,2024-03-01,train
@@ -10925,6 +13229,30 @@ iCAR 03,2026-06-01,test
 猛士917,2026-04-01,test
 猛士917,2026-05-01,test
 猛士917,2026-06-01,test
+理想MEGA,2022-01-01,train
+理想MEGA,2022-02-01,train
+理想MEGA,2022-03-01,train
+理想MEGA,2022-04-01,train
+理想MEGA,2022-05-01,train
+理想MEGA,2022-06-01,train
+理想MEGA,2022-07-01,train
+理想MEGA,2022-08-01,train
+理想MEGA,2022-09-01,train
+理想MEGA,2022-10-01,train
+理想MEGA,2022-11-01,train
+理想MEGA,2022-12-01,train
+理想MEGA,2023-01-01,train
+理想MEGA,2023-02-01,train
+理想MEGA,2023-03-01,train
+理想MEGA,2023-04-01,train
+理想MEGA,2023-05-01,train
+理想MEGA,2023-06-01,train
+理想MEGA,2023-07-01,train
+理想MEGA,2023-08-01,train
+理想MEGA,2023-09-01,train
+理想MEGA,2023-10-01,train
+理想MEGA,2023-11-01,train
+理想MEGA,2023-12-01,train
 理想MEGA,2024-01-01,train
 理想MEGA,2024-02-01,train
 理想MEGA,2024-03-01,train
@@ -11171,6 +13499,18 @@ iCAR 03,2026-06-01,test
 瑞虎8,2026-04-01,test
 瑞虎8,2026-05-01,test
 瑞虎8,2026-06-01,test
+瑞虎9,2022-01-01,train
+瑞虎9,2022-02-01,train
+瑞虎9,2022-03-01,train
+瑞虎9,2022-04-01,train
+瑞虎9,2022-05-01,train
+瑞虎9,2022-06-01,train
+瑞虎9,2022-07-01,train
+瑞虎9,2022-08-01,train
+瑞虎9,2022-09-01,train
+瑞虎9,2022-10-01,train
+瑞虎9,2022-11-01,train
+瑞虎9,2022-12-01,train
 瑞虎9,2023-01-01,train
 瑞虎9,2023-02-01,train
 瑞虎9,2023-03-01,train
@@ -11321,6 +13661,30 @@ iCAR 03,2026-06-01,test
 瑞风M3,2026-04-01,test
 瑞风M3,2026-05-01,test
 瑞风M3,2026-06-01,test
+瑞风RF8,2022-01-01,train
+瑞风RF8,2022-02-01,train
+瑞风RF8,2022-03-01,train
+瑞风RF8,2022-04-01,train
+瑞风RF8,2022-05-01,train
+瑞风RF8,2022-06-01,train
+瑞风RF8,2022-07-01,train
+瑞风RF8,2022-08-01,train
+瑞风RF8,2022-09-01,train
+瑞风RF8,2022-10-01,train
+瑞风RF8,2022-11-01,train
+瑞风RF8,2022-12-01,train
+瑞风RF8,2023-01-01,train
+瑞风RF8,2023-02-01,train
+瑞风RF8,2023-03-01,train
+瑞风RF8,2023-04-01,train
+瑞风RF8,2023-05-01,train
+瑞风RF8,2023-06-01,train
+瑞风RF8,2023-07-01,train
+瑞风RF8,2023-08-01,train
+瑞风RF8,2023-09-01,train
+瑞风RF8,2023-10-01,train
+瑞风RF8,2023-11-01,train
+瑞风RF8,2023-12-01,train
 瑞风RF8,2024-01-01,train
 瑞风RF8,2024-02-01,train
 瑞风RF8,2024-03-01,train
@@ -11351,6 +13715,30 @@ iCAR 03,2026-06-01,test
 瑞风RF8,2026-04-01,test
 瑞风RF8,2026-05-01,test
 瑞风RF8,2026-06-01,test
+瑞风RF8新能源,2022-01-01,train
+瑞风RF8新能源,2022-02-01,train
+瑞风RF8新能源,2022-03-01,train
+瑞风RF8新能源,2022-04-01,train
+瑞风RF8新能源,2022-05-01,train
+瑞风RF8新能源,2022-06-01,train
+瑞风RF8新能源,2022-07-01,train
+瑞风RF8新能源,2022-08-01,train
+瑞风RF8新能源,2022-09-01,train
+瑞风RF8新能源,2022-10-01,train
+瑞风RF8新能源,2022-11-01,train
+瑞风RF8新能源,2022-12-01,train
+瑞风RF8新能源,2023-01-01,train
+瑞风RF8新能源,2023-02-01,train
+瑞风RF8新能源,2023-03-01,train
+瑞风RF8新能源,2023-04-01,train
+瑞风RF8新能源,2023-05-01,train
+瑞风RF8新能源,2023-06-01,train
+瑞风RF8新能源,2023-07-01,train
+瑞风RF8新能源,2023-08-01,train
+瑞风RF8新能源,2023-09-01,train
+瑞风RF8新能源,2023-10-01,train
+瑞风RF8新能源,2023-11-01,train
+瑞风RF8新能源,2023-12-01,train
 瑞风RF8新能源,2024-01-01,train
 瑞风RF8新能源,2024-02-01,train
 瑞风RF8新能源,2024-03-01,train
@@ -11381,6 +13769,30 @@ iCAR 03,2026-06-01,test
 瑞风RF8新能源,2026-04-01,test
 瑞风RF8新能源,2026-05-01,test
 瑞风RF8新能源,2026-06-01,test
+电动MINI ACEMAN,2022-01-01,train
+电动MINI ACEMAN,2022-02-01,train
+电动MINI ACEMAN,2022-03-01,train
+电动MINI ACEMAN,2022-04-01,train
+电动MINI ACEMAN,2022-05-01,train
+电动MINI ACEMAN,2022-06-01,train
+电动MINI ACEMAN,2022-07-01,train
+电动MINI ACEMAN,2022-08-01,train
+电动MINI ACEMAN,2022-09-01,train
+电动MINI ACEMAN,2022-10-01,train
+电动MINI ACEMAN,2022-11-01,train
+电动MINI ACEMAN,2022-12-01,train
+电动MINI ACEMAN,2023-01-01,train
+电动MINI ACEMAN,2023-02-01,train
+电动MINI ACEMAN,2023-03-01,train
+电动MINI ACEMAN,2023-04-01,train
+电动MINI ACEMAN,2023-05-01,train
+电动MINI ACEMAN,2023-06-01,train
+电动MINI ACEMAN,2023-07-01,train
+电动MINI ACEMAN,2023-08-01,train
+电动MINI ACEMAN,2023-09-01,train
+电动MINI ACEMAN,2023-10-01,train
+电动MINI ACEMAN,2023-11-01,train
+电动MINI ACEMAN,2023-12-01,train
 电动MINI ACEMAN,2024-01-01,train
 电动MINI ACEMAN,2024-02-01,train
 电动MINI ACEMAN,2024-03-01,train
@@ -11411,6 +13823,42 @@ iCAR 03,2026-06-01,test
 电动MINI ACEMAN,2026-04-01,test
 电动MINI ACEMAN,2026-05-01,test
 电动MINI ACEMAN,2026-06-01,test
+电动MINI COOPER,2022-01-01,train
+电动MINI COOPER,2022-02-01,train
+电动MINI COOPER,2022-03-01,train
+电动MINI COOPER,2022-04-01,train
+电动MINI COOPER,2022-05-01,train
+电动MINI COOPER,2022-06-01,train
+电动MINI COOPER,2022-07-01,train
+电动MINI COOPER,2022-08-01,train
+电动MINI COOPER,2022-09-01,train
+电动MINI COOPER,2022-10-01,train
+电动MINI COOPER,2022-11-01,train
+电动MINI COOPER,2022-12-01,train
+电动MINI COOPER,2023-01-01,train
+电动MINI COOPER,2023-02-01,train
+电动MINI COOPER,2023-03-01,train
+电动MINI COOPER,2023-04-01,train
+电动MINI COOPER,2023-05-01,train
+电动MINI COOPER,2023-06-01,train
+电动MINI COOPER,2023-07-01,train
+电动MINI COOPER,2023-08-01,train
+电动MINI COOPER,2023-09-01,train
+电动MINI COOPER,2023-10-01,train
+电动MINI COOPER,2023-11-01,train
+电动MINI COOPER,2023-12-01,train
+电动MINI COOPER,2024-01-01,train
+电动MINI COOPER,2024-02-01,train
+电动MINI COOPER,2024-03-01,train
+电动MINI COOPER,2024-04-01,train
+电动MINI COOPER,2024-05-01,train
+电动MINI COOPER,2024-06-01,train
+电动MINI COOPER,2024-07-01,train
+电动MINI COOPER,2024-08-01,train
+电动MINI COOPER,2024-09-01,train
+电动MINI COOPER,2024-10-01,train
+电动MINI COOPER,2024-11-01,train
+电动MINI COOPER,2024-12-01,train
 电动MINI COOPER,2025-01-01,train
 电动MINI COOPER,2025-02-01,train
 电动MINI COOPER,2025-03-01,train
@@ -11591,6 +14039,30 @@ iCAR 03,2026-06-01,test
 皓影新能源,2026-04-01,test
 皓影新能源,2026-05-01,test
 皓影新能源,2026-06-01,test
+睿蓝8,2022-01-01,train
+睿蓝8,2022-02-01,train
+睿蓝8,2022-03-01,train
+睿蓝8,2022-04-01,train
+睿蓝8,2022-05-01,train
+睿蓝8,2022-06-01,train
+睿蓝8,2022-07-01,train
+睿蓝8,2022-08-01,train
+睿蓝8,2022-09-01,train
+睿蓝8,2022-10-01,train
+睿蓝8,2022-11-01,train
+睿蓝8,2022-12-01,train
+睿蓝8,2023-01-01,train
+睿蓝8,2023-02-01,train
+睿蓝8,2023-03-01,train
+睿蓝8,2023-04-01,train
+睿蓝8,2023-05-01,train
+睿蓝8,2023-06-01,train
+睿蓝8,2023-07-01,train
+睿蓝8,2023-08-01,train
+睿蓝8,2023-09-01,train
+睿蓝8,2023-10-01,train
+睿蓝8,2023-11-01,train
+睿蓝8,2023-12-01,train
 睿蓝8,2024-01-01,train
 睿蓝8,2024-02-01,train
 睿蓝8,2024-03-01,train
@@ -11675,6 +14147,30 @@ iCAR 03,2026-06-01,test
 福瑞迪,2026-04-01,test
 福瑞迪,2026-05-01,test
 福瑞迪,2026-06-01,test
+秦L,2022-01-01,train
+秦L,2022-02-01,train
+秦L,2022-03-01,train
+秦L,2022-04-01,train
+秦L,2022-05-01,train
+秦L,2022-06-01,train
+秦L,2022-07-01,train
+秦L,2022-08-01,train
+秦L,2022-09-01,train
+秦L,2022-10-01,train
+秦L,2022-11-01,train
+秦L,2022-12-01,train
+秦L,2023-01-01,train
+秦L,2023-02-01,train
+秦L,2023-03-01,train
+秦L,2023-04-01,train
+秦L,2023-05-01,train
+秦L,2023-06-01,train
+秦L,2023-07-01,train
+秦L,2023-08-01,train
+秦L,2023-09-01,train
+秦L,2023-10-01,train
+秦L,2023-11-01,train
+秦L,2023-12-01,train
 秦L,2024-01-01,train
 秦L,2024-02-01,train
 秦L,2024-03-01,train
@@ -11867,6 +14363,18 @@ iCAR 03,2026-06-01,test
 索纳塔,2026-04-01,test
 索纳塔,2026-05-01,test
 索纳塔,2026-06-01,test
+红旗E-HS9,2022-01-01,train
+红旗E-HS9,2022-02-01,train
+红旗E-HS9,2022-03-01,train
+红旗E-HS9,2022-04-01,train
+红旗E-HS9,2022-05-01,train
+红旗E-HS9,2022-06-01,train
+红旗E-HS9,2022-07-01,train
+红旗E-HS9,2022-08-01,train
+红旗E-HS9,2022-09-01,train
+红旗E-HS9,2022-10-01,train
+红旗E-HS9,2022-11-01,train
+红旗E-HS9,2022-12-01,train
 红旗E-HS9,2023-01-01,train
 红旗E-HS9,2023-02-01,train
 红旗E-HS9,2023-03-01,train
@@ -11963,6 +14471,30 @@ iCAR 03,2026-06-01,test
 红旗E-QM5,2026-04-01,test
 红旗E-QM5,2026-05-01,test
 红旗E-QM5,2026-06-01,test
+红旗EH7,2022-01-01,train
+红旗EH7,2022-02-01,train
+红旗EH7,2022-03-01,train
+红旗EH7,2022-04-01,train
+红旗EH7,2022-05-01,train
+红旗EH7,2022-06-01,train
+红旗EH7,2022-07-01,train
+红旗EH7,2022-08-01,train
+红旗EH7,2022-09-01,train
+红旗EH7,2022-10-01,train
+红旗EH7,2022-11-01,train
+红旗EH7,2022-12-01,train
+红旗EH7,2023-01-01,train
+红旗EH7,2023-02-01,train
+红旗EH7,2023-03-01,train
+红旗EH7,2023-04-01,train
+红旗EH7,2023-05-01,train
+红旗EH7,2023-06-01,train
+红旗EH7,2023-07-01,train
+红旗EH7,2023-08-01,train
+红旗EH7,2023-09-01,train
+红旗EH7,2023-10-01,train
+红旗EH7,2023-11-01,train
+红旗EH7,2023-12-01,train
 红旗EH7,2024-01-01,train
 红旗EH7,2024-02-01,train
 红旗EH7,2024-03-01,train
@@ -12047,6 +14579,42 @@ iCAR 03,2026-06-01,test
 红旗H5,2026-04-01,test
 红旗H5,2026-05-01,test
 红旗H5,2026-06-01,test
+红旗H5 PHEV,2022-01-01,train
+红旗H5 PHEV,2022-02-01,train
+红旗H5 PHEV,2022-03-01,train
+红旗H5 PHEV,2022-04-01,train
+红旗H5 PHEV,2022-05-01,train
+红旗H5 PHEV,2022-06-01,train
+红旗H5 PHEV,2022-07-01,train
+红旗H5 PHEV,2022-08-01,train
+红旗H5 PHEV,2022-09-01,train
+红旗H5 PHEV,2022-10-01,train
+红旗H5 PHEV,2022-11-01,train
+红旗H5 PHEV,2022-12-01,train
+红旗H5 PHEV,2023-01-01,train
+红旗H5 PHEV,2023-02-01,train
+红旗H5 PHEV,2023-03-01,train
+红旗H5 PHEV,2023-04-01,train
+红旗H5 PHEV,2023-05-01,train
+红旗H5 PHEV,2023-06-01,train
+红旗H5 PHEV,2023-07-01,train
+红旗H5 PHEV,2023-08-01,train
+红旗H5 PHEV,2023-09-01,train
+红旗H5 PHEV,2023-10-01,train
+红旗H5 PHEV,2023-11-01,train
+红旗H5 PHEV,2023-12-01,train
+红旗H5 PHEV,2024-01-01,train
+红旗H5 PHEV,2024-02-01,train
+红旗H5 PHEV,2024-03-01,train
+红旗H5 PHEV,2024-04-01,train
+红旗H5 PHEV,2024-05-01,train
+红旗H5 PHEV,2024-06-01,train
+红旗H5 PHEV,2024-07-01,train
+红旗H5 PHEV,2024-08-01,train
+红旗H5 PHEV,2024-09-01,train
+红旗H5 PHEV,2024-10-01,train
+红旗H5 PHEV,2024-11-01,train
+红旗H5 PHEV,2024-12-01,train
 红旗H5 PHEV,2025-01-01,train
 红旗H5 PHEV,2025-02-01,train
 红旗H5 PHEV,2025-03-01,train
@@ -12065,6 +14633,18 @@ iCAR 03,2026-06-01,test
 红旗H5 PHEV,2026-04-01,test
 红旗H5 PHEV,2026-05-01,test
 红旗H5 PHEV,2026-06-01,test
+红旗H6,2022-01-01,train
+红旗H6,2022-02-01,train
+红旗H6,2022-03-01,train
+红旗H6,2022-04-01,train
+红旗H6,2022-05-01,train
+红旗H6,2022-06-01,train
+红旗H6,2022-07-01,train
+红旗H6,2022-08-01,train
+红旗H6,2022-09-01,train
+红旗H6,2022-10-01,train
+红旗H6,2022-11-01,train
+红旗H6,2022-12-01,train
 红旗H6,2023-01-01,train
 红旗H6,2023-02-01,train
 红旗H6,2023-03-01,train
@@ -12215,6 +14795,18 @@ iCAR 03,2026-06-01,test
 红旗HQ9,2026-04-01,test
 红旗HQ9,2026-05-01,test
 红旗HQ9,2026-06-01,test
+红旗HS3,2022-01-01,train
+红旗HS3,2022-02-01,train
+红旗HS3,2022-03-01,train
+红旗HS3,2022-04-01,train
+红旗HS3,2022-05-01,train
+红旗HS3,2022-06-01,train
+红旗HS3,2022-07-01,train
+红旗HS3,2022-08-01,train
+红旗HS3,2022-09-01,train
+红旗HS3,2022-10-01,train
+红旗HS3,2022-11-01,train
+红旗HS3,2022-12-01,train
 红旗HS3,2023-01-01,train
 红旗HS3,2023-02-01,train
 红旗HS3,2023-03-01,train
@@ -12257,6 +14849,30 @@ iCAR 03,2026-06-01,test
 红旗HS3,2026-04-01,test
 红旗HS3,2026-05-01,test
 红旗HS3,2026-06-01,test
+红旗HS3 PHEV,2022-01-01,train
+红旗HS3 PHEV,2022-02-01,train
+红旗HS3 PHEV,2022-03-01,train
+红旗HS3 PHEV,2022-04-01,train
+红旗HS3 PHEV,2022-05-01,train
+红旗HS3 PHEV,2022-06-01,train
+红旗HS3 PHEV,2022-07-01,train
+红旗HS3 PHEV,2022-08-01,train
+红旗HS3 PHEV,2022-09-01,train
+红旗HS3 PHEV,2022-10-01,train
+红旗HS3 PHEV,2022-11-01,train
+红旗HS3 PHEV,2022-12-01,train
+红旗HS3 PHEV,2023-01-01,train
+红旗HS3 PHEV,2023-02-01,train
+红旗HS3 PHEV,2023-03-01,train
+红旗HS3 PHEV,2023-04-01,train
+红旗HS3 PHEV,2023-05-01,train
+红旗HS3 PHEV,2023-06-01,train
+红旗HS3 PHEV,2023-07-01,train
+红旗HS3 PHEV,2023-08-01,train
+红旗HS3 PHEV,2023-09-01,train
+红旗HS3 PHEV,2023-10-01,train
+红旗HS3 PHEV,2023-11-01,train
+红旗HS3 PHEV,2023-12-01,train
 红旗HS3 PHEV,2024-01-01,train
 红旗HS3 PHEV,2024-02-01,train
 红旗HS3 PHEV,2024-03-01,train
@@ -12341,6 +14957,30 @@ iCAR 03,2026-06-01,test
 红旗HS5,2026-04-01,test
 红旗HS5,2026-05-01,test
 红旗HS5,2026-06-01,test
+红旗HS7 PHEV,2022-01-01,train
+红旗HS7 PHEV,2022-02-01,train
+红旗HS7 PHEV,2022-03-01,train
+红旗HS7 PHEV,2022-04-01,train
+红旗HS7 PHEV,2022-05-01,train
+红旗HS7 PHEV,2022-06-01,train
+红旗HS7 PHEV,2022-07-01,train
+红旗HS7 PHEV,2022-08-01,train
+红旗HS7 PHEV,2022-09-01,train
+红旗HS7 PHEV,2022-10-01,train
+红旗HS7 PHEV,2022-11-01,train
+红旗HS7 PHEV,2022-12-01,train
+红旗HS7 PHEV,2023-01-01,train
+红旗HS7 PHEV,2023-02-01,train
+红旗HS7 PHEV,2023-03-01,train
+红旗HS7 PHEV,2023-04-01,train
+红旗HS7 PHEV,2023-05-01,train
+红旗HS7 PHEV,2023-06-01,train
+红旗HS7 PHEV,2023-07-01,train
+红旗HS7 PHEV,2023-08-01,train
+红旗HS7 PHEV,2023-09-01,train
+红旗HS7 PHEV,2023-10-01,train
+红旗HS7 PHEV,2023-11-01,train
+红旗HS7 PHEV,2023-12-01,train
 红旗HS7 PHEV,2024-01-01,train
 红旗HS7 PHEV,2024-02-01,train
 红旗HS7 PHEV,2024-03-01,train
@@ -12425,6 +15065,42 @@ iCAR 03,2026-06-01,test
 红旗国耀,2026-04-01,test
 红旗国耀,2026-05-01,test
 红旗国耀,2026-06-01,test
+红旗天工05,2022-01-01,train
+红旗天工05,2022-02-01,train
+红旗天工05,2022-03-01,train
+红旗天工05,2022-04-01,train
+红旗天工05,2022-05-01,train
+红旗天工05,2022-06-01,train
+红旗天工05,2022-07-01,train
+红旗天工05,2022-08-01,train
+红旗天工05,2022-09-01,train
+红旗天工05,2022-10-01,train
+红旗天工05,2022-11-01,train
+红旗天工05,2022-12-01,train
+红旗天工05,2023-01-01,train
+红旗天工05,2023-02-01,train
+红旗天工05,2023-03-01,train
+红旗天工05,2023-04-01,train
+红旗天工05,2023-05-01,train
+红旗天工05,2023-06-01,train
+红旗天工05,2023-07-01,train
+红旗天工05,2023-08-01,train
+红旗天工05,2023-09-01,train
+红旗天工05,2023-10-01,train
+红旗天工05,2023-11-01,train
+红旗天工05,2023-12-01,train
+红旗天工05,2024-01-01,train
+红旗天工05,2024-02-01,train
+红旗天工05,2024-03-01,train
+红旗天工05,2024-04-01,train
+红旗天工05,2024-05-01,train
+红旗天工05,2024-06-01,train
+红旗天工05,2024-07-01,train
+红旗天工05,2024-08-01,train
+红旗天工05,2024-09-01,train
+红旗天工05,2024-10-01,train
+红旗天工05,2024-11-01,train
+红旗天工05,2024-12-01,train
 红旗天工05,2025-01-01,train
 红旗天工05,2025-02-01,train
 红旗天工05,2025-03-01,train
@@ -12443,6 +15119,42 @@ iCAR 03,2026-06-01,test
 红旗天工05,2026-04-01,test
 红旗天工05,2026-05-01,test
 红旗天工05,2026-06-01,test
+红旗天工06,2022-01-01,train
+红旗天工06,2022-02-01,train
+红旗天工06,2022-03-01,train
+红旗天工06,2022-04-01,train
+红旗天工06,2022-05-01,train
+红旗天工06,2022-06-01,train
+红旗天工06,2022-07-01,train
+红旗天工06,2022-08-01,train
+红旗天工06,2022-09-01,train
+红旗天工06,2022-10-01,train
+红旗天工06,2022-11-01,train
+红旗天工06,2022-12-01,train
+红旗天工06,2023-01-01,train
+红旗天工06,2023-02-01,train
+红旗天工06,2023-03-01,train
+红旗天工06,2023-04-01,train
+红旗天工06,2023-05-01,train
+红旗天工06,2023-06-01,train
+红旗天工06,2023-07-01,train
+红旗天工06,2023-08-01,train
+红旗天工06,2023-09-01,train
+红旗天工06,2023-10-01,train
+红旗天工06,2023-11-01,train
+红旗天工06,2023-12-01,train
+红旗天工06,2024-01-01,train
+红旗天工06,2024-02-01,train
+红旗天工06,2024-03-01,train
+红旗天工06,2024-04-01,train
+红旗天工06,2024-05-01,train
+红旗天工06,2024-06-01,train
+红旗天工06,2024-07-01,train
+红旗天工06,2024-08-01,train
+红旗天工06,2024-09-01,train
+红旗天工06,2024-10-01,train
+红旗天工06,2024-11-01,train
+红旗天工06,2024-12-01,train
 红旗天工06,2025-01-01,train
 红旗天工06,2025-02-01,train
 红旗天工06,2025-03-01,train
@@ -12461,6 +15173,30 @@ iCAR 03,2026-06-01,test
 红旗天工06,2026-04-01,test
 红旗天工06,2026-05-01,test
 红旗天工06,2026-06-01,test
+红旗天工08,2022-01-01,train
+红旗天工08,2022-02-01,train
+红旗天工08,2022-03-01,train
+红旗天工08,2022-04-01,train
+红旗天工08,2022-05-01,train
+红旗天工08,2022-06-01,train
+红旗天工08,2022-07-01,train
+红旗天工08,2022-08-01,train
+红旗天工08,2022-09-01,train
+红旗天工08,2022-10-01,train
+红旗天工08,2022-11-01,train
+红旗天工08,2022-12-01,train
+红旗天工08,2023-01-01,train
+红旗天工08,2023-02-01,train
+红旗天工08,2023-03-01,train
+红旗天工08,2023-04-01,train
+红旗天工08,2023-05-01,train
+红旗天工08,2023-06-01,train
+红旗天工08,2023-07-01,train
+红旗天工08,2023-08-01,train
+红旗天工08,2023-09-01,train
+红旗天工08,2023-10-01,train
+红旗天工08,2023-11-01,train
+红旗天工08,2023-12-01,train
 红旗天工08,2024-01-01,train
 红旗天工08,2024-02-01,train
 红旗天工08,2024-03-01,train
@@ -12491,6 +15227,30 @@ iCAR 03,2026-06-01,test
 红旗天工08,2026-04-01,test
 红旗天工08,2026-05-01,test
 红旗天工08,2026-06-01,test
+纳米01,2022-01-01,train
+纳米01,2022-02-01,train
+纳米01,2022-03-01,train
+纳米01,2022-04-01,train
+纳米01,2022-05-01,train
+纳米01,2022-06-01,train
+纳米01,2022-07-01,train
+纳米01,2022-08-01,train
+纳米01,2022-09-01,train
+纳米01,2022-10-01,train
+纳米01,2022-11-01,train
+纳米01,2022-12-01,train
+纳米01,2023-01-01,train
+纳米01,2023-02-01,train
+纳米01,2023-03-01,train
+纳米01,2023-04-01,train
+纳米01,2023-05-01,train
+纳米01,2023-06-01,train
+纳米01,2023-07-01,train
+纳米01,2023-08-01,train
+纳米01,2023-09-01,train
+纳米01,2023-10-01,train
+纳米01,2023-11-01,train
+纳米01,2023-12-01,train
 纳米01,2024-01-01,train
 纳米01,2024-02-01,train
 纳米01,2024-03-01,train
@@ -12683,6 +15443,42 @@ iCAR 03,2026-06-01,test
 缤越,2026-04-01,test
 缤越,2026-05-01,test
 缤越,2026-06-01,test
+羿驰05,2022-01-01,train
+羿驰05,2022-02-01,train
+羿驰05,2022-03-01,train
+羿驰05,2022-04-01,train
+羿驰05,2022-05-01,train
+羿驰05,2022-06-01,train
+羿驰05,2022-07-01,train
+羿驰05,2022-08-01,train
+羿驰05,2022-09-01,train
+羿驰05,2022-10-01,train
+羿驰05,2022-11-01,train
+羿驰05,2022-12-01,train
+羿驰05,2023-01-01,train
+羿驰05,2023-02-01,train
+羿驰05,2023-03-01,train
+羿驰05,2023-04-01,train
+羿驰05,2023-05-01,train
+羿驰05,2023-06-01,train
+羿驰05,2023-07-01,train
+羿驰05,2023-08-01,train
+羿驰05,2023-09-01,train
+羿驰05,2023-10-01,train
+羿驰05,2023-11-01,train
+羿驰05,2023-12-01,train
+羿驰05,2024-01-01,train
+羿驰05,2024-02-01,train
+羿驰05,2024-03-01,train
+羿驰05,2024-04-01,train
+羿驰05,2024-05-01,train
+羿驰05,2024-06-01,train
+羿驰05,2024-07-01,train
+羿驰05,2024-08-01,train
+羿驰05,2024-09-01,train
+羿驰05,2024-10-01,train
+羿驰05,2024-11-01,train
+羿驰05,2024-12-01,train
 羿驰05,2025-01-01,train
 羿驰05,2025-02-01,train
 羿驰05,2025-03-01,train
@@ -13025,6 +15821,30 @@ iCAR 03,2026-06-01,test
 英仕派,2026-04-01,test
 英仕派,2026-05-01,test
 英仕派,2026-06-01,test
+荣威D5X DMH,2022-01-01,train
+荣威D5X DMH,2022-02-01,train
+荣威D5X DMH,2022-03-01,train
+荣威D5X DMH,2022-04-01,train
+荣威D5X DMH,2022-05-01,train
+荣威D5X DMH,2022-06-01,train
+荣威D5X DMH,2022-07-01,train
+荣威D5X DMH,2022-08-01,train
+荣威D5X DMH,2022-09-01,train
+荣威D5X DMH,2022-10-01,train
+荣威D5X DMH,2022-11-01,train
+荣威D5X DMH,2022-12-01,train
+荣威D5X DMH,2023-01-01,train
+荣威D5X DMH,2023-02-01,train
+荣威D5X DMH,2023-03-01,train
+荣威D5X DMH,2023-04-01,train
+荣威D5X DMH,2023-05-01,train
+荣威D5X DMH,2023-06-01,train
+荣威D5X DMH,2023-07-01,train
+荣威D5X DMH,2023-08-01,train
+荣威D5X DMH,2023-09-01,train
+荣威D5X DMH,2023-10-01,train
+荣威D5X DMH,2023-11-01,train
+荣威D5X DMH,2023-12-01,train
 荣威D5X DMH,2024-01-01,train
 荣威D5X DMH,2024-02-01,train
 荣威D5X DMH,2024-03-01,train
@@ -13055,6 +15875,42 @@ iCAR 03,2026-06-01,test
 荣威D5X DMH,2026-04-01,test
 荣威D5X DMH,2026-05-01,test
 荣威D5X DMH,2026-06-01,test
+荣威D6,2022-01-01,train
+荣威D6,2022-02-01,train
+荣威D6,2022-03-01,train
+荣威D6,2022-04-01,train
+荣威D6,2022-05-01,train
+荣威D6,2022-06-01,train
+荣威D6,2022-07-01,train
+荣威D6,2022-08-01,train
+荣威D6,2022-09-01,train
+荣威D6,2022-10-01,train
+荣威D6,2022-11-01,train
+荣威D6,2022-12-01,train
+荣威D6,2023-01-01,train
+荣威D6,2023-02-01,train
+荣威D6,2023-03-01,train
+荣威D6,2023-04-01,train
+荣威D6,2023-05-01,train
+荣威D6,2023-06-01,train
+荣威D6,2023-07-01,train
+荣威D6,2023-08-01,train
+荣威D6,2023-09-01,train
+荣威D6,2023-10-01,train
+荣威D6,2023-11-01,train
+荣威D6,2023-12-01,train
+荣威D6,2024-01-01,train
+荣威D6,2024-02-01,train
+荣威D6,2024-03-01,train
+荣威D6,2024-04-01,train
+荣威D6,2024-05-01,train
+荣威D6,2024-06-01,train
+荣威D6,2024-07-01,train
+荣威D6,2024-08-01,train
+荣威D6,2024-09-01,train
+荣威D6,2024-10-01,train
+荣威D6,2024-11-01,train
+荣威D6,2024-12-01,train
 荣威D6,2025-01-01,train
 荣威D6,2025-02-01,train
 荣威D6,2025-03-01,train
@@ -13073,6 +15929,18 @@ iCAR 03,2026-06-01,test
 荣威D6,2026-04-01,test
 荣威D6,2026-05-01,test
 荣威D6,2026-06-01,test
+荣威D7,2022-01-01,train
+荣威D7,2022-02-01,train
+荣威D7,2022-03-01,train
+荣威D7,2022-04-01,train
+荣威D7,2022-05-01,train
+荣威D7,2022-06-01,train
+荣威D7,2022-07-01,train
+荣威D7,2022-08-01,train
+荣威D7,2022-09-01,train
+荣威D7,2022-10-01,train
+荣威D7,2022-11-01,train
+荣威D7,2022-12-01,train
 荣威D7,2023-01-01,train
 荣威D7,2023-02-01,train
 荣威D7,2023-03-01,train
@@ -13547,6 +16415,18 @@ iCAR 03,2026-06-01,test
 蔚来ET5,2026-04-01,test
 蔚来ET5,2026-05-01,test
 蔚来ET5,2026-06-01,test
+蔚来ET5T,2022-01-01,train
+蔚来ET5T,2022-02-01,train
+蔚来ET5T,2022-03-01,train
+蔚来ET5T,2022-04-01,train
+蔚来ET5T,2022-05-01,train
+蔚来ET5T,2022-06-01,train
+蔚来ET5T,2022-07-01,train
+蔚来ET5T,2022-08-01,train
+蔚来ET5T,2022-09-01,train
+蔚来ET5T,2022-10-01,train
+蔚来ET5T,2022-11-01,train
+蔚来ET5T,2022-12-01,train
 蔚来ET5T,2023-01-01,train
 蔚来ET5T,2023-02-01,train
 蔚来ET5T,2023-03-01,train
@@ -13643,6 +16523,42 @@ iCAR 03,2026-06-01,test
 蔚来ET7,2026-04-01,test
 蔚来ET7,2026-05-01,test
 蔚来ET7,2026-06-01,test
+蔚来ET9,2022-01-01,train
+蔚来ET9,2022-02-01,train
+蔚来ET9,2022-03-01,train
+蔚来ET9,2022-04-01,train
+蔚来ET9,2022-05-01,train
+蔚来ET9,2022-06-01,train
+蔚来ET9,2022-07-01,train
+蔚来ET9,2022-08-01,train
+蔚来ET9,2022-09-01,train
+蔚来ET9,2022-10-01,train
+蔚来ET9,2022-11-01,train
+蔚来ET9,2022-12-01,train
+蔚来ET9,2023-01-01,train
+蔚来ET9,2023-02-01,train
+蔚来ET9,2023-03-01,train
+蔚来ET9,2023-04-01,train
+蔚来ET9,2023-05-01,train
+蔚来ET9,2023-06-01,train
+蔚来ET9,2023-07-01,train
+蔚来ET9,2023-08-01,train
+蔚来ET9,2023-09-01,train
+蔚来ET9,2023-10-01,train
+蔚来ET9,2023-11-01,train
+蔚来ET9,2023-12-01,train
+蔚来ET9,2024-01-01,train
+蔚来ET9,2024-02-01,train
+蔚来ET9,2024-03-01,train
+蔚来ET9,2024-04-01,train
+蔚来ET9,2024-05-01,train
+蔚来ET9,2024-06-01,train
+蔚来ET9,2024-07-01,train
+蔚来ET9,2024-08-01,train
+蔚来ET9,2024-09-01,train
+蔚来ET9,2024-10-01,train
+蔚来ET9,2024-11-01,train
+蔚来ET9,2024-12-01,train
 蔚来ET9,2025-01-01,train
 蔚来ET9,2025-02-01,train
 蔚来ET9,2025-03-01,train
@@ -13661,6 +16577,18 @@ iCAR 03,2026-06-01,test
 蔚来ET9,2026-04-01,test
 蔚来ET9,2026-05-01,test
 蔚来ET9,2026-06-01,test
+豪越L,2022-01-01,train
+豪越L,2022-02-01,train
+豪越L,2022-03-01,train
+豪越L,2022-04-01,train
+豪越L,2022-05-01,train
+豪越L,2022-06-01,train
+豪越L,2022-07-01,train
+豪越L,2022-08-01,train
+豪越L,2022-09-01,train
+豪越L,2022-10-01,train
+豪越L,2022-11-01,train
+豪越L,2022-12-01,train
 豪越L,2023-01-01,train
 豪越L,2023-02-01,train
 豪越L,2023-03-01,train
@@ -13703,6 +16631,18 @@ iCAR 03,2026-06-01,test
 豪越L,2026-04-01,test
 豪越L,2026-05-01,test
 豪越L,2026-06-01,test
+赛图斯,2022-01-01,train
+赛图斯,2022-02-01,train
+赛图斯,2022-03-01,train
+赛图斯,2022-04-01,train
+赛图斯,2022-05-01,train
+赛图斯,2022-06-01,train
+赛图斯,2022-07-01,train
+赛图斯,2022-08-01,train
+赛图斯,2022-09-01,train
+赛图斯,2022-10-01,train
+赛图斯,2022-11-01,train
+赛图斯,2022-12-01,train
 赛图斯,2023-01-01,train
 赛图斯,2023-02-01,train
 赛图斯,2023-03-01,train
@@ -13799,6 +16739,18 @@ iCAR 03,2026-06-01,test
 赛那SIENNA,2026-04-01,test
 赛那SIENNA,2026-05-01,test
 赛那SIENNA,2026-06-01,test
+起亚EV5,2022-01-01,train
+起亚EV5,2022-02-01,train
+起亚EV5,2022-03-01,train
+起亚EV5,2022-04-01,train
+起亚EV5,2022-05-01,train
+起亚EV5,2022-06-01,train
+起亚EV5,2022-07-01,train
+起亚EV5,2022-08-01,train
+起亚EV5,2022-09-01,train
+起亚EV5,2022-10-01,train
+起亚EV5,2022-11-01,train
+起亚EV5,2022-12-01,train
 起亚EV5,2023-01-01,train
 起亚EV5,2023-02-01,train
 起亚EV5,2023-03-01,train
@@ -14003,6 +16955,30 @@ iCAR 03,2026-06-01,test
 起亚KX3傲跑,2026-04-01,test
 起亚KX3傲跑,2026-05-01,test
 起亚KX3傲跑,2026-06-01,test
+轩度EV,2022-01-01,train
+轩度EV,2022-02-01,train
+轩度EV,2022-03-01,train
+轩度EV,2022-04-01,train
+轩度EV,2022-05-01,train
+轩度EV,2022-06-01,train
+轩度EV,2022-07-01,train
+轩度EV,2022-08-01,train
+轩度EV,2022-09-01,train
+轩度EV,2022-10-01,train
+轩度EV,2022-11-01,train
+轩度EV,2022-12-01,train
+轩度EV,2023-01-01,train
+轩度EV,2023-02-01,train
+轩度EV,2023-03-01,train
+轩度EV,2023-04-01,train
+轩度EV,2023-05-01,train
+轩度EV,2023-06-01,train
+轩度EV,2023-07-01,train
+轩度EV,2023-08-01,train
+轩度EV,2023-09-01,train
+轩度EV,2023-10-01,train
+轩度EV,2023-11-01,train
+轩度EV,2023-12-01,train
 轩度EV,2024-01-01,train
 轩度EV,2024-02-01,train
 轩度EV,2024-03-01,train
@@ -14735,6 +17711,18 @@ iCAR 03,2026-06-01,test
 逸动,2026-04-01,test
 逸动,2026-05-01,test
 逸动,2026-06-01,test
+钇为3,2022-01-01,train
+钇为3,2022-02-01,train
+钇为3,2022-03-01,train
+钇为3,2022-04-01,train
+钇为3,2022-05-01,train
+钇为3,2022-06-01,train
+钇为3,2022-07-01,train
+钇为3,2022-08-01,train
+钇为3,2022-09-01,train
+钇为3,2022-10-01,train
+钇为3,2022-11-01,train
+钇为3,2022-12-01,train
 钇为3,2023-01-01,train
 钇为3,2023-02-01,train
 钇为3,2023-03-01,train
@@ -14777,6 +17765,42 @@ iCAR 03,2026-06-01,test
 钇为3,2026-04-01,test
 钇为3,2026-05-01,test
 钇为3,2026-06-01,test
+铂智3X,2022-01-01,train
+铂智3X,2022-02-01,train
+铂智3X,2022-03-01,train
+铂智3X,2022-04-01,train
+铂智3X,2022-05-01,train
+铂智3X,2022-06-01,train
+铂智3X,2022-07-01,train
+铂智3X,2022-08-01,train
+铂智3X,2022-09-01,train
+铂智3X,2022-10-01,train
+铂智3X,2022-11-01,train
+铂智3X,2022-12-01,train
+铂智3X,2023-01-01,train
+铂智3X,2023-02-01,train
+铂智3X,2023-03-01,train
+铂智3X,2023-04-01,train
+铂智3X,2023-05-01,train
+铂智3X,2023-06-01,train
+铂智3X,2023-07-01,train
+铂智3X,2023-08-01,train
+铂智3X,2023-09-01,train
+铂智3X,2023-10-01,train
+铂智3X,2023-11-01,train
+铂智3X,2023-12-01,train
+铂智3X,2024-01-01,train
+铂智3X,2024-02-01,train
+铂智3X,2024-03-01,train
+铂智3X,2024-04-01,train
+铂智3X,2024-05-01,train
+铂智3X,2024-06-01,train
+铂智3X,2024-07-01,train
+铂智3X,2024-08-01,train
+铂智3X,2024-09-01,train
+铂智3X,2024-10-01,train
+铂智3X,2024-11-01,train
+铂智3X,2024-12-01,train
 铂智3X,2025-01-01,train
 铂智3X,2025-02-01,train
 铂智3X,2025-03-01,train
@@ -14795,6 +17819,18 @@ iCAR 03,2026-06-01,test
 铂智3X,2026-04-01,test
 铂智3X,2026-05-01,test
 铂智3X,2026-06-01,test
+铂智4X,2022-01-01,train
+铂智4X,2022-02-01,train
+铂智4X,2022-03-01,train
+铂智4X,2022-04-01,train
+铂智4X,2022-05-01,train
+铂智4X,2022-06-01,train
+铂智4X,2022-07-01,train
+铂智4X,2022-08-01,train
+铂智4X,2022-09-01,train
+铂智4X,2022-10-01,train
+铂智4X,2022-11-01,train
+铂智4X,2022-12-01,train
 铂智4X,2023-01-01,train
 铂智4X,2023-02-01,train
 铂智4X,2023-03-01,train
@@ -14837,12 +17873,84 @@ iCAR 03,2026-06-01,test
 铂智4X,2026-04-01,test
 铂智4X,2026-05-01,test
 铂智4X,2026-06-01,test
+铂智7,2022-01-01,train
+铂智7,2022-02-01,train
+铂智7,2022-03-01,train
+铂智7,2022-04-01,train
+铂智7,2022-05-01,train
+铂智7,2022-06-01,train
+铂智7,2022-07-01,train
+铂智7,2022-08-01,train
+铂智7,2022-09-01,train
+铂智7,2022-10-01,train
+铂智7,2022-11-01,train
+铂智7,2022-12-01,train
+铂智7,2023-01-01,train
+铂智7,2023-02-01,train
+铂智7,2023-03-01,train
+铂智7,2023-04-01,train
+铂智7,2023-05-01,train
+铂智7,2023-06-01,train
+铂智7,2023-07-01,train
+铂智7,2023-08-01,train
+铂智7,2023-09-01,train
+铂智7,2023-10-01,train
+铂智7,2023-11-01,train
+铂智7,2023-12-01,train
+铂智7,2024-01-01,train
+铂智7,2024-02-01,train
+铂智7,2024-03-01,train
+铂智7,2024-04-01,train
+铂智7,2024-05-01,train
+铂智7,2024-06-01,train
+铂智7,2024-07-01,train
+铂智7,2024-08-01,train
+铂智7,2024-09-01,train
+铂智7,2024-10-01,train
+铂智7,2024-11-01,train
+铂智7,2024-12-01,train
+铂智7,2025-01-01,train
+铂智7,2025-02-01,train
+铂智7,2025-03-01,train
+铂智7,2025-04-01,train
+铂智7,2025-05-01,train
+铂智7,2025-06-01,train
+铂智7,2025-07-01,val
+铂智7,2025-08-01,val
+铂智7,2025-09-01,val
+铂智7,2025-10-01,val
+铂智7,2025-11-01,val
+铂智7,2025-12-01,val
 铂智7,2026-01-01,test
 铂智7,2026-02-01,test
 铂智7,2026-03-01,test
 铂智7,2026-04-01,test
 铂智7,2026-05-01,test
 铂智7,2026-06-01,test
+银河E8,2022-01-01,train
+银河E8,2022-02-01,train
+银河E8,2022-03-01,train
+银河E8,2022-04-01,train
+银河E8,2022-05-01,train
+银河E8,2022-06-01,train
+银河E8,2022-07-01,train
+银河E8,2022-08-01,train
+银河E8,2022-09-01,train
+银河E8,2022-10-01,train
+银河E8,2022-11-01,train
+银河E8,2022-12-01,train
+银河E8,2023-01-01,train
+银河E8,2023-02-01,train
+银河E8,2023-03-01,train
+银河E8,2023-04-01,train
+银河E8,2023-05-01,train
+银河E8,2023-06-01,train
+银河E8,2023-07-01,train
+银河E8,2023-08-01,train
+银河E8,2023-09-01,train
+银河E8,2023-10-01,train
+银河E8,2023-11-01,train
+银河E8,2023-12-01,train
 银河E8,2024-01-01,train
 银河E8,2024-02-01,train
 银河E8,2024-03-01,train
@@ -14873,6 +17981,42 @@ iCAR 03,2026-06-01,test
 银河E8,2026-04-01,test
 银河E8,2026-05-01,test
 银河E8,2026-06-01,test
+银河V900,2022-01-01,train
+银河V900,2022-02-01,train
+银河V900,2022-03-01,train
+银河V900,2022-04-01,train
+银河V900,2022-05-01,train
+银河V900,2022-06-01,train
+银河V900,2022-07-01,train
+银河V900,2022-08-01,train
+银河V900,2022-09-01,train
+银河V900,2022-10-01,train
+银河V900,2022-11-01,train
+银河V900,2022-12-01,train
+银河V900,2023-01-01,train
+银河V900,2023-02-01,train
+银河V900,2023-03-01,train
+银河V900,2023-04-01,train
+银河V900,2023-05-01,train
+银河V900,2023-06-01,train
+银河V900,2023-07-01,train
+银河V900,2023-08-01,train
+银河V900,2023-09-01,train
+银河V900,2023-10-01,train
+银河V900,2023-11-01,train
+银河V900,2023-12-01,train
+银河V900,2024-01-01,train
+银河V900,2024-02-01,train
+银河V900,2024-03-01,train
+银河V900,2024-04-01,train
+银河V900,2024-05-01,train
+银河V900,2024-06-01,train
+银河V900,2024-07-01,train
+银河V900,2024-08-01,train
+银河V900,2024-09-01,train
+银河V900,2024-10-01,train
+银河V900,2024-11-01,train
+银河V900,2024-12-01,train
 银河V900,2025-01-01,train
 银河V900,2025-02-01,train
 银河V900,2025-03-01,train
@@ -14891,6 +18035,42 @@ iCAR 03,2026-06-01,test
 银河V900,2026-04-01,test
 银河V900,2026-05-01,test
 银河V900,2026-06-01,test
+银河星耀6,2022-01-01,train
+银河星耀6,2022-02-01,train
+银河星耀6,2022-03-01,train
+银河星耀6,2022-04-01,train
+银河星耀6,2022-05-01,train
+银河星耀6,2022-06-01,train
+银河星耀6,2022-07-01,train
+银河星耀6,2022-08-01,train
+银河星耀6,2022-09-01,train
+银河星耀6,2022-10-01,train
+银河星耀6,2022-11-01,train
+银河星耀6,2022-12-01,train
+银河星耀6,2023-01-01,train
+银河星耀6,2023-02-01,train
+银河星耀6,2023-03-01,train
+银河星耀6,2023-04-01,train
+银河星耀6,2023-05-01,train
+银河星耀6,2023-06-01,train
+银河星耀6,2023-07-01,train
+银河星耀6,2023-08-01,train
+银河星耀6,2023-09-01,train
+银河星耀6,2023-10-01,train
+银河星耀6,2023-11-01,train
+银河星耀6,2023-12-01,train
+银河星耀6,2024-01-01,train
+银河星耀6,2024-02-01,train
+银河星耀6,2024-03-01,train
+银河星耀6,2024-04-01,train
+银河星耀6,2024-05-01,train
+银河星耀6,2024-06-01,train
+银河星耀6,2024-07-01,train
+银河星耀6,2024-08-01,train
+银河星耀6,2024-09-01,train
+银河星耀6,2024-10-01,train
+银河星耀6,2024-11-01,train
+银河星耀6,2024-12-01,train
 银河星耀6,2025-01-01,train
 银河星耀6,2025-02-01,train
 银河星耀6,2025-03-01,train
@@ -14909,6 +18089,54 @@ iCAR 03,2026-06-01,test
 银河星耀6,2026-04-01,test
 银河星耀6,2026-05-01,test
 银河星耀6,2026-06-01,test
+银河星耀7,2022-01-01,train
+银河星耀7,2022-02-01,train
+银河星耀7,2022-03-01,train
+银河星耀7,2022-04-01,train
+银河星耀7,2022-05-01,train
+银河星耀7,2022-06-01,train
+银河星耀7,2022-07-01,train
+银河星耀7,2022-08-01,train
+银河星耀7,2022-09-01,train
+银河星耀7,2022-10-01,train
+银河星耀7,2022-11-01,train
+银河星耀7,2022-12-01,train
+银河星耀7,2023-01-01,train
+银河星耀7,2023-02-01,train
+银河星耀7,2023-03-01,train
+银河星耀7,2023-04-01,train
+银河星耀7,2023-05-01,train
+银河星耀7,2023-06-01,train
+银河星耀7,2023-07-01,train
+银河星耀7,2023-08-01,train
+银河星耀7,2023-09-01,train
+银河星耀7,2023-10-01,train
+银河星耀7,2023-11-01,train
+银河星耀7,2023-12-01,train
+银河星耀7,2024-01-01,train
+银河星耀7,2024-02-01,train
+银河星耀7,2024-03-01,train
+银河星耀7,2024-04-01,train
+银河星耀7,2024-05-01,train
+银河星耀7,2024-06-01,train
+银河星耀7,2024-07-01,train
+银河星耀7,2024-08-01,train
+银河星耀7,2024-09-01,train
+银河星耀7,2024-10-01,train
+银河星耀7,2024-11-01,train
+银河星耀7,2024-12-01,train
+银河星耀7,2025-01-01,train
+银河星耀7,2025-02-01,train
+银河星耀7,2025-03-01,train
+银河星耀7,2025-04-01,train
+银河星耀7,2025-05-01,train
+银河星耀7,2025-06-01,train
+银河星耀7,2025-07-01,val
+银河星耀7,2025-08-01,val
+银河星耀7,2025-09-01,val
+银河星耀7,2025-10-01,val
+银河星耀7,2025-11-01,val
+银河星耀7,2025-12-01,val
 银河星耀7,2026-01-01,test
 银河星耀7,2026-02-01,test
 银河星耀7,2026-03-01,test
@@ -15455,6 +18683,30 @@ iCAR 03,2026-06-01,test
 长安UNI-V,2026-04-01,test
 长安UNI-V,2026-05-01,test
 长安UNI-V,2026-06-01,test
+长安UNI-Z新能源,2022-01-01,train
+长安UNI-Z新能源,2022-02-01,train
+长安UNI-Z新能源,2022-03-01,train
+长安UNI-Z新能源,2022-04-01,train
+长安UNI-Z新能源,2022-05-01,train
+长安UNI-Z新能源,2022-06-01,train
+长安UNI-Z新能源,2022-07-01,train
+长安UNI-Z新能源,2022-08-01,train
+长安UNI-Z新能源,2022-09-01,train
+长安UNI-Z新能源,2022-10-01,train
+长安UNI-Z新能源,2022-11-01,train
+长安UNI-Z新能源,2022-12-01,train
+长安UNI-Z新能源,2023-01-01,train
+长安UNI-Z新能源,2023-02-01,train
+长安UNI-Z新能源,2023-03-01,train
+长安UNI-Z新能源,2023-04-01,train
+长安UNI-Z新能源,2023-05-01,train
+长安UNI-Z新能源,2023-06-01,train
+长安UNI-Z新能源,2023-07-01,train
+长安UNI-Z新能源,2023-08-01,train
+长安UNI-Z新能源,2023-09-01,train
+长安UNI-Z新能源,2023-10-01,train
+长安UNI-Z新能源,2023-11-01,train
+长安UNI-Z新能源,2023-12-01,train
 长安UNI-Z新能源,2024-01-01,train
 长安UNI-Z新能源,2024-02-01,train
 长安UNI-Z新能源,2024-03-01,train
@@ -15485,6 +18737,42 @@ iCAR 03,2026-06-01,test
 长安UNI-Z新能源,2026-04-01,test
 长安UNI-Z新能源,2026-05-01,test
 长安UNI-Z新能源,2026-06-01,test
+长安X5 PLUS,2022-01-01,train
+长安X5 PLUS,2022-02-01,train
+长安X5 PLUS,2022-03-01,train
+长安X5 PLUS,2022-04-01,train
+长安X5 PLUS,2022-05-01,train
+长安X5 PLUS,2022-06-01,train
+长安X5 PLUS,2022-07-01,train
+长安X5 PLUS,2022-08-01,train
+长安X5 PLUS,2022-09-01,train
+长安X5 PLUS,2022-10-01,train
+长安X5 PLUS,2022-11-01,train
+长安X5 PLUS,2022-12-01,train
+长安X5 PLUS,2023-01-01,train
+长安X5 PLUS,2023-02-01,train
+长安X5 PLUS,2023-03-01,train
+长安X5 PLUS,2023-04-01,train
+长安X5 PLUS,2023-05-01,train
+长安X5 PLUS,2023-06-01,train
+长安X5 PLUS,2023-07-01,train
+长安X5 PLUS,2023-08-01,train
+长安X5 PLUS,2023-09-01,train
+长安X5 PLUS,2023-10-01,train
+长安X5 PLUS,2023-11-01,train
+长安X5 PLUS,2023-12-01,train
+长安X5 PLUS,2024-01-01,train
+长安X5 PLUS,2024-02-01,train
+长安X5 PLUS,2024-03-01,train
+长安X5 PLUS,2024-04-01,train
+长安X5 PLUS,2024-05-01,train
+长安X5 PLUS,2024-06-01,train
+长安X5 PLUS,2024-07-01,train
+长安X5 PLUS,2024-08-01,train
+长安X5 PLUS,2024-09-01,train
+长安X5 PLUS,2024-10-01,train
+长安X5 PLUS,2024-11-01,train
+长安X5 PLUS,2024-12-01,train
 长安X5 PLUS,2025-01-01,train
 长安X5 PLUS,2025-02-01,train
 长安X5 PLUS,2025-03-01,train
@@ -15503,6 +18791,18 @@ iCAR 03,2026-06-01,test
 长安X5 PLUS,2026-04-01,test
 长安X5 PLUS,2026-05-01,test
 长安X5 PLUS,2026-06-01,test
+长安启源A07,2022-01-01,train
+长安启源A07,2022-02-01,train
+长安启源A07,2022-03-01,train
+长安启源A07,2022-04-01,train
+长安启源A07,2022-05-01,train
+长安启源A07,2022-06-01,train
+长安启源A07,2022-07-01,train
+长安启源A07,2022-08-01,train
+长安启源A07,2022-09-01,train
+长安启源A07,2022-10-01,train
+长安启源A07,2022-11-01,train
+长安启源A07,2022-12-01,train
 长安启源A07,2023-01-01,train
 长安启源A07,2023-02-01,train
 长安启源A07,2023-03-01,train
@@ -15545,6 +18845,18 @@ iCAR 03,2026-06-01,test
 长安启源A07,2026-04-01,test
 长安启源A07,2026-05-01,test
 长安启源A07,2026-06-01,test
+长安启源Q05经典,2022-01-01,train
+长安启源Q05经典,2022-02-01,train
+长安启源Q05经典,2022-03-01,train
+长安启源Q05经典,2022-04-01,train
+长安启源Q05经典,2022-05-01,train
+长安启源Q05经典,2022-06-01,train
+长安启源Q05经典,2022-07-01,train
+长安启源Q05经典,2022-08-01,train
+长安启源Q05经典,2022-09-01,train
+长安启源Q05经典,2022-10-01,train
+长安启源Q05经典,2022-11-01,train
+长安启源Q05经典,2022-12-01,train
 长安启源Q05经典,2023-01-01,train
 长安启源Q05经典,2023-02-01,train
 长安启源Q05经典,2023-03-01,train
@@ -15587,6 +18899,42 @@ iCAR 03,2026-06-01,test
 长安启源Q05经典,2026-04-01,test
 长安启源Q05经典,2026-05-01,test
 长安启源Q05经典,2026-06-01,test
+长安欧尚520,2022-01-01,train
+长安欧尚520,2022-02-01,train
+长安欧尚520,2022-03-01,train
+长安欧尚520,2022-04-01,train
+长安欧尚520,2022-05-01,train
+长安欧尚520,2022-06-01,train
+长安欧尚520,2022-07-01,train
+长安欧尚520,2022-08-01,train
+长安欧尚520,2022-09-01,train
+长安欧尚520,2022-10-01,train
+长安欧尚520,2022-11-01,train
+长安欧尚520,2022-12-01,train
+长安欧尚520,2023-01-01,train
+长安欧尚520,2023-02-01,train
+长安欧尚520,2023-03-01,train
+长安欧尚520,2023-04-01,train
+长安欧尚520,2023-05-01,train
+长安欧尚520,2023-06-01,train
+长安欧尚520,2023-07-01,train
+长安欧尚520,2023-08-01,train
+长安欧尚520,2023-09-01,train
+长安欧尚520,2023-10-01,train
+长安欧尚520,2023-11-01,train
+长安欧尚520,2023-12-01,train
+长安欧尚520,2024-01-01,train
+长安欧尚520,2024-02-01,train
+长安欧尚520,2024-03-01,train
+长安欧尚520,2024-04-01,train
+长安欧尚520,2024-05-01,train
+长安欧尚520,2024-06-01,train
+长安欧尚520,2024-07-01,train
+长安欧尚520,2024-08-01,train
+长安欧尚520,2024-09-01,train
+长安欧尚520,2024-10-01,train
+长安欧尚520,2024-11-01,train
+长安欧尚520,2024-12-01,train
 长安欧尚520,2025-01-01,train
 长安欧尚520,2025-02-01,train
 长安欧尚520,2025-03-01,train
@@ -15659,6 +19007,42 @@ iCAR 03,2026-06-01,test
 雅阁,2026-04-01,test
 雅阁,2026-05-01,test
 雅阁,2026-06-01,test
+零跑B01,2022-01-01,train
+零跑B01,2022-02-01,train
+零跑B01,2022-03-01,train
+零跑B01,2022-04-01,train
+零跑B01,2022-05-01,train
+零跑B01,2022-06-01,train
+零跑B01,2022-07-01,train
+零跑B01,2022-08-01,train
+零跑B01,2022-09-01,train
+零跑B01,2022-10-01,train
+零跑B01,2022-11-01,train
+零跑B01,2022-12-01,train
+零跑B01,2023-01-01,train
+零跑B01,2023-02-01,train
+零跑B01,2023-03-01,train
+零跑B01,2023-04-01,train
+零跑B01,2023-05-01,train
+零跑B01,2023-06-01,train
+零跑B01,2023-07-01,train
+零跑B01,2023-08-01,train
+零跑B01,2023-09-01,train
+零跑B01,2023-10-01,train
+零跑B01,2023-11-01,train
+零跑B01,2023-12-01,train
+零跑B01,2024-01-01,train
+零跑B01,2024-02-01,train
+零跑B01,2024-03-01,train
+零跑B01,2024-04-01,train
+零跑B01,2024-05-01,train
+零跑B01,2024-06-01,train
+零跑B01,2024-07-01,train
+零跑B01,2024-08-01,train
+零跑B01,2024-09-01,train
+零跑B01,2024-10-01,train
+零跑B01,2024-11-01,train
+零跑B01,2024-12-01,train
 零跑B01,2025-01-01,train
 零跑B01,2025-02-01,train
 零跑B01,2025-03-01,train
@@ -15677,6 +19061,42 @@ iCAR 03,2026-06-01,test
 零跑B01,2026-04-01,test
 零跑B01,2026-05-01,test
 零跑B01,2026-06-01,test
+零跑Lafa5,2022-01-01,train
+零跑Lafa5,2022-02-01,train
+零跑Lafa5,2022-03-01,train
+零跑Lafa5,2022-04-01,train
+零跑Lafa5,2022-05-01,train
+零跑Lafa5,2022-06-01,train
+零跑Lafa5,2022-07-01,train
+零跑Lafa5,2022-08-01,train
+零跑Lafa5,2022-09-01,train
+零跑Lafa5,2022-10-01,train
+零跑Lafa5,2022-11-01,train
+零跑Lafa5,2022-12-01,train
+零跑Lafa5,2023-01-01,train
+零跑Lafa5,2023-02-01,train
+零跑Lafa5,2023-03-01,train
+零跑Lafa5,2023-04-01,train
+零跑Lafa5,2023-05-01,train
+零跑Lafa5,2023-06-01,train
+零跑Lafa5,2023-07-01,train
+零跑Lafa5,2023-08-01,train
+零跑Lafa5,2023-09-01,train
+零跑Lafa5,2023-10-01,train
+零跑Lafa5,2023-11-01,train
+零跑Lafa5,2023-12-01,train
+零跑Lafa5,2024-01-01,train
+零跑Lafa5,2024-02-01,train
+零跑Lafa5,2024-03-01,train
+零跑Lafa5,2024-04-01,train
+零跑Lafa5,2024-05-01,train
+零跑Lafa5,2024-06-01,train
+零跑Lafa5,2024-07-01,train
+零跑Lafa5,2024-08-01,train
+零跑Lafa5,2024-09-01,train
+零跑Lafa5,2024-10-01,train
+零跑Lafa5,2024-11-01,train
+零跑Lafa5,2024-12-01,train
 零跑Lafa5,2025-01-01,train
 零跑Lafa5,2025-02-01,train
 零跑Lafa5,2025-03-01,train
@@ -15857,6 +19277,30 @@ iCAR 03,2026-06-01,test
 领克03,2026-04-01,test
 领克03,2026-05-01,test
 领克03,2026-06-01,test
+领克07,2022-01-01,train
+领克07,2022-02-01,train
+领克07,2022-03-01,train
+领克07,2022-04-01,train
+领克07,2022-05-01,train
+领克07,2022-06-01,train
+领克07,2022-07-01,train
+领克07,2022-08-01,train
+领克07,2022-09-01,train
+领克07,2022-10-01,train
+领克07,2022-11-01,train
+领克07,2022-12-01,train
+领克07,2023-01-01,train
+领克07,2023-02-01,train
+领克07,2023-03-01,train
+领克07,2023-04-01,train
+领克07,2023-05-01,train
+领克07,2023-06-01,train
+领克07,2023-07-01,train
+领克07,2023-08-01,train
+领克07,2023-09-01,train
+领克07,2023-10-01,train
+领克07,2023-11-01,train
+领克07,2023-12-01,train
 领克07,2024-01-01,train
 领克07,2024-02-01,train
 领克07,2024-03-01,train
@@ -15887,6 +19331,42 @@ iCAR 03,2026-06-01,test
 领克07,2026-04-01,test
 领克07,2026-05-01,test
 领克07,2026-06-01,test
+领克10,2022-01-01,train
+领克10,2022-02-01,train
+领克10,2022-03-01,train
+领克10,2022-04-01,train
+领克10,2022-05-01,train
+领克10,2022-06-01,train
+领克10,2022-07-01,train
+领克10,2022-08-01,train
+领克10,2022-09-01,train
+领克10,2022-10-01,train
+领克10,2022-11-01,train
+领克10,2022-12-01,train
+领克10,2023-01-01,train
+领克10,2023-02-01,train
+领克10,2023-03-01,train
+领克10,2023-04-01,train
+领克10,2023-05-01,train
+领克10,2023-06-01,train
+领克10,2023-07-01,train
+领克10,2023-08-01,train
+领克10,2023-09-01,train
+领克10,2023-10-01,train
+领克10,2023-11-01,train
+领克10,2023-12-01,train
+领克10,2024-01-01,train
+领克10,2024-02-01,train
+领克10,2024-03-01,train
+领克10,2024-04-01,train
+领克10,2024-05-01,train
+领克10,2024-06-01,train
+领克10,2024-07-01,train
+领克10,2024-08-01,train
+领克10,2024-09-01,train
+领克10,2024-10-01,train
+领克10,2024-11-01,train
+领克10,2024-12-01,train
 领克10,2025-01-01,train
 领克10,2025-02-01,train
 领克10,2025-03-01,train
@@ -15905,6 +19385,42 @@ iCAR 03,2026-06-01,test
 领克10,2026-04-01,test
 领克10,2026-05-01,test
 领克10,2026-06-01,test
+风云A9L,2022-01-01,train
+风云A9L,2022-02-01,train
+风云A9L,2022-03-01,train
+风云A9L,2022-04-01,train
+风云A9L,2022-05-01,train
+风云A9L,2022-06-01,train
+风云A9L,2022-07-01,train
+风云A9L,2022-08-01,train
+风云A9L,2022-09-01,train
+风云A9L,2022-10-01,train
+风云A9L,2022-11-01,train
+风云A9L,2022-12-01,train
+风云A9L,2023-01-01,train
+风云A9L,2023-02-01,train
+风云A9L,2023-03-01,train
+风云A9L,2023-04-01,train
+风云A9L,2023-05-01,train
+风云A9L,2023-06-01,train
+风云A9L,2023-07-01,train
+风云A9L,2023-08-01,train
+风云A9L,2023-09-01,train
+风云A9L,2023-10-01,train
+风云A9L,2023-11-01,train
+风云A9L,2023-12-01,train
+风云A9L,2024-01-01,train
+风云A9L,2024-02-01,train
+风云A9L,2024-03-01,train
+风云A9L,2024-04-01,train
+风云A9L,2024-05-01,train
+风云A9L,2024-06-01,train
+风云A9L,2024-07-01,train
+风云A9L,2024-08-01,train
+风云A9L,2024-09-01,train
+风云A9L,2024-10-01,train
+风云A9L,2024-11-01,train
+风云A9L,2024-12-01,train
 风云A9L,2025-01-01,train
 风云A9L,2025-02-01,train
 风云A9L,2025-03-01,train
@@ -16085,6 +19601,18 @@ iCAR 03,2026-06-01,test
 风光E380,2026-04-01,test
 风光E380,2026-05-01,test
 风光E380,2026-06-01,test
+飞凡F7,2022-01-01,train
+飞凡F7,2022-02-01,train
+飞凡F7,2022-03-01,train
+飞凡F7,2022-04-01,train
+飞凡F7,2022-05-01,train
+飞凡F7,2022-06-01,train
+飞凡F7,2022-07-01,train
+飞凡F7,2022-08-01,train
+飞凡F7,2022-09-01,train
+飞凡F7,2022-10-01,train
+飞凡F7,2022-11-01,train
+飞凡F7,2022-12-01,train
 飞凡F7,2023-01-01,train
 飞凡F7,2023-02-01,train
 飞凡F7,2023-03-01,train
@@ -16181,6 +19709,30 @@ iCAR 03,2026-06-01,test
 马自达3 昂克赛拉,2026-04-01,test
 马自达3 昂克赛拉,2026-05-01,test
 马自达3 昂克赛拉,2026-06-01,test
+马自达EZ-6,2022-01-01,train
+马自达EZ-6,2022-02-01,train
+马自达EZ-6,2022-03-01,train
+马自达EZ-6,2022-04-01,train
+马自达EZ-6,2022-05-01,train
+马自达EZ-6,2022-06-01,train
+马自达EZ-6,2022-07-01,train
+马自达EZ-6,2022-08-01,train
+马自达EZ-6,2022-09-01,train
+马自达EZ-6,2022-10-01,train
+马自达EZ-6,2022-11-01,train
+马自达EZ-6,2022-12-01,train
+马自达EZ-6,2023-01-01,train
+马自达EZ-6,2023-02-01,train
+马自达EZ-6,2023-03-01,train
+马自达EZ-6,2023-04-01,train
+马自达EZ-6,2023-05-01,train
+马自达EZ-6,2023-06-01,train
+马自达EZ-6,2023-07-01,train
+马自达EZ-6,2023-08-01,train
+马自达EZ-6,2023-09-01,train
+马自达EZ-6,2023-10-01,train
+马自达EZ-6,2023-11-01,train
+马自达EZ-6,2023-12-01,train
 马自达EZ-6,2024-01-01,train
 马自达EZ-6,2024-02-01,train
 马自达EZ-6,2024-03-01,train
@@ -16373,6 +19925,42 @@ iCAR 03,2026-06-01,test
 高尔夫,2026-04-01,test
 高尔夫,2026-05-01,test
 高尔夫,2026-06-01,test
+高尔夫GTI,2022-01-01,train
+高尔夫GTI,2022-02-01,train
+高尔夫GTI,2022-03-01,train
+高尔夫GTI,2022-04-01,train
+高尔夫GTI,2022-05-01,train
+高尔夫GTI,2022-06-01,train
+高尔夫GTI,2022-07-01,train
+高尔夫GTI,2022-08-01,train
+高尔夫GTI,2022-09-01,train
+高尔夫GTI,2022-10-01,train
+高尔夫GTI,2022-11-01,train
+高尔夫GTI,2022-12-01,train
+高尔夫GTI,2023-01-01,train
+高尔夫GTI,2023-02-01,train
+高尔夫GTI,2023-03-01,train
+高尔夫GTI,2023-04-01,train
+高尔夫GTI,2023-05-01,train
+高尔夫GTI,2023-06-01,train
+高尔夫GTI,2023-07-01,train
+高尔夫GTI,2023-08-01,train
+高尔夫GTI,2023-09-01,train
+高尔夫GTI,2023-10-01,train
+高尔夫GTI,2023-11-01,train
+高尔夫GTI,2023-12-01,train
+高尔夫GTI,2024-01-01,train
+高尔夫GTI,2024-02-01,train
+高尔夫GTI,2024-03-01,train
+高尔夫GTI,2024-04-01,train
+高尔夫GTI,2024-05-01,train
+高尔夫GTI,2024-06-01,train
+高尔夫GTI,2024-07-01,train
+高尔夫GTI,2024-08-01,train
+高尔夫GTI,2024-09-01,train
+高尔夫GTI,2024-10-01,train
+高尔夫GTI,2024-11-01,train
+高尔夫GTI,2024-12-01,train
 高尔夫GTI,2025-01-01,train
 高尔夫GTI,2025-02-01,train
 高尔夫GTI,2025-03-01,train
@@ -16391,6 +19979,18 @@ iCAR 03,2026-06-01,test
 高尔夫GTI,2026-04-01,test
 高尔夫GTI,2026-05-01,test
 高尔夫GTI,2026-06-01,test
+魏牌 高山,2022-01-01,train
+魏牌 高山,2022-02-01,train
+魏牌 高山,2022-03-01,train
+魏牌 高山,2022-04-01,train
+魏牌 高山,2022-05-01,train
+魏牌 高山,2022-06-01,train
+魏牌 高山,2022-07-01,train
+魏牌 高山,2022-08-01,train
+魏牌 高山,2022-09-01,train
+魏牌 高山,2022-10-01,train
+魏牌 高山,2022-11-01,train
+魏牌 高山,2022-12-01,train
 魏牌 高山,2023-01-01,train
 魏牌 高山,2023-02-01,train
 魏牌 高山,2023-03-01,train

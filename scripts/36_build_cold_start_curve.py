@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Select a cold-start method with rolling launch-cohort backtests."""
+"""Select a guarded cold-start method with rolling launch-cohort backtests."""
 from __future__ import annotations
 
 import json
@@ -27,7 +27,8 @@ SCRIPT_DIR = Path(__file__).resolve().parent
 sys.path.insert(0, str(SCRIPT_DIR))
 import _font_setup  # noqa: F401
 import _model_utils as mu
-from _feature_join import CFG_NUM
+from _feature_join import CFG_NUM, _load_cfg_frame
+from _series_mapping import build_series_name_mapping
 
 FORECAST_DIR = BASE / "data" / "processed" / "forecast"
 SOURCE_PREDICTIONS = FORECAST_DIR / "review_feature_predictions.csv"
@@ -48,6 +49,7 @@ VALIDATION_YEARS = (2024, 2025)
 TRAIN_LAUNCH_YEAR_MIN = 2023
 FORECAST_HORIZON = 6
 RANDOM_SEED = 42
+MAX_HORIZON_MULTIPLE = 2.0
 NUMERIC_FEATURES = list(CFG_NUM)
 CATEGORICAL_FEATURES = ["category"]
 
@@ -55,7 +57,15 @@ CATEGORICAL_FEATURES = ["category"]
 def build_launch_panel() -> tuple[pd.DataFrame, pd.DataFrame]:
     train, validation, test = mu.load_splits()
     panel = pd.concat([train, validation, test], ignore_index=True).sort_values(["series_name", "date"])
-    first = panel.groupby("series_name")["date"].min().rename("first_date")
+    # The forecasting panel now keeps zero-sales months before a launch so
+    # calendar lags remain correct.  Lifecycle horizons must therefore use the
+    # first positive-sales month, not the first retained row.
+    first = (
+        panel.loc[panel[mu.TARGET].astype(float).gt(0)]
+        .groupby("series_name")["date"]
+        .min()
+        .rename("first_date")
+    )
     panel = panel.merge(first, on="series_name", how="left", validate="many_to_one")
     panel["launch_year"] = panel["first_date"].dt.year
     panel["launch_horizon"] = (
@@ -68,11 +78,38 @@ def build_launch_panel() -> tuple[pd.DataFrame, pd.DataFrame]:
     ].copy()
     if launch.duplicated(["series_name", "launch_horizon"]).any():
         raise ValueError("Launch panel contains duplicate series/horizon rows")
-    historical_series = set(train["series_name"]) | set(validation["series_name"])
-    cold_test = test.loc[~test["series_name"].isin(historical_series)].copy()
-    if cold_test["series_name"].nunique() != 9 or len(cold_test) != 54:
-        raise ValueError("Expected nine cold-start test series and 54 test rows")
-    launch_cold = launch.loc[launch["launch_year"].eq(2026)].sort_values(["series_name", "launch_horizon"])
+    historical_positive = set(
+        panel.loc[
+            panel["split"].isin(("train", "val"))
+            & panel[mu.TARGET].astype(float).gt(0),
+            "series_name",
+        ]
+    )
+    # The original cold-start supplement covered series that were absent from
+    # the pre-origin modelling panel.  The repaired complete panel now keeps
+    # zero-sales rows for every cohort series, so row presence is no longer a
+    # valid proxy for "unseen".  Retain that original boundary-case meaning by
+    # requiring both no positive historical sales and no specification dated
+    # on or before the forecast origin (2025).  Series with known historical
+    # specifications but zero sales remain in the main model's zero-history
+    # path and are not overwritten by an unvalidated launch curve.
+    cfg = _load_cfg_frame()
+    mapping = build_series_name_mapping(test["series_name"], cfg["series_name"])
+    cfg_first_year = (
+        mapping.merge(cfg, left_on="config_series_name", right_on="series_name", how="left")
+        .groupby("sales_series_name")["year"]
+        .min()
+    )
+    no_historical_sales = ~test["series_name"].isin(historical_positive)
+    no_historical_config = test["series_name"].map(cfg_first_year).fillna(np.inf).gt(2025)
+    cold_test = test.loc[no_historical_sales & no_historical_config].copy()
+    cold_series = int(cold_test["series_name"].nunique())
+    if len(cold_test) != cold_series * FORECAST_HORIZON:
+        raise ValueError("Cold-start test rows are not a complete six-month horizon")
+    launch_cold = launch.loc[
+        launch["launch_year"].eq(2026)
+        & launch["series_name"].isin(cold_test["series_name"])
+    ].sort_values(["series_name", "launch_horizon"])
     if set(launch_cold["series_name"]) != set(cold_test["series_name"]):
         raise ValueError("2026 launch cohort does not match cold-start test cohort")
     return launch, cold_test
@@ -159,13 +196,29 @@ CANDIDATES: dict[str, Callable[[pd.DataFrame, pd.DataFrame], np.ndarray]] = {
 }
 
 
+def guard_predictions(
+    train: pd.DataFrame, target: pd.DataFrame, predictions: np.ndarray
+) -> np.ndarray:
+    """Limit launch-curve extrapolation using only earlier launch cohorts.
+
+    A configuration-only model can produce implausibly large values for a
+    genuinely new series.  The cap is defined from the historical median at
+    the same launch horizon and is applied before either validation scoring or
+    the final test merge; it therefore cannot use test outcomes.
+    """
+    medians = train.groupby("launch_horizon")[mu.TARGET].median()
+    fallback = float(train[mu.TARGET].median())
+    limits = target["launch_horizon"].map(medians).fillna(fallback).to_numpy(float)
+    return np.minimum(np.maximum(np.asarray(predictions, dtype=float), 0.0), MAX_HORIZON_MULTIPLE * limits)
+
+
 def validate_candidates(launch: pd.DataFrame) -> tuple[pd.DataFrame, str]:
     prediction_rows: list[pd.DataFrame] = []
     for year in VALIDATION_YEARS:
         train = launch.loc[launch["launch_year"].between(TRAIN_LAUNCH_YEAR_MIN, year - 1)].copy()
         target = launch.loc[launch["launch_year"].eq(year)].copy()
         for method, predictor in CANDIDATES.items():
-            predictions = predictor(train, target)
+            predictions = guard_predictions(train, target, predictor(train, target))
             prediction_rows.append(pd.DataFrame({
                 "method": method,
                 "validation_launch_year": year,
@@ -195,13 +248,19 @@ def validate_candidates(launch: pd.DataFrame) -> tuple[pd.DataFrame, str]:
     return validation, str(validation.iloc[0]["method"])
 
 
-def final_predictions(launch: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, str]:
+def final_predictions(
+    launch: pd.DataFrame,
+    cold_series: set[str] | None = None,
+) -> tuple[pd.DataFrame, pd.DataFrame, str]:
     validation, selected = validate_candidates(launch)
     train = launch.loc[launch["launch_year"].between(TRAIN_LAUNCH_YEAR_MIN, 2025)].copy()
-    target = launch.loc[launch["launch_year"].eq(2026)].sort_values(["series_name", "launch_horizon"]).copy()
+    target = launch.loc[launch["launch_year"].eq(2026)].copy()
+    if cold_series is not None:
+        target = target.loc[target["series_name"].isin(cold_series)]
+    target = target.sort_values(["series_name", "launch_horizon"]).copy()
     frames: list[pd.DataFrame] = []
     for method, predictor in CANDIDATES.items():
-        predictions = predictor(train, target)
+        predictions = guard_predictions(train, target, predictor(train, target))
         frame = target[["series_name", "date", "launch_horizon", "brand", "category", mu.TARGET]].copy()
         frame = frame.rename(columns={mu.TARGET: "actual"})
         frame["method"] = method
@@ -223,8 +282,9 @@ def hybrid_results(candidates: pd.DataFrame, selected: str) -> tuple[pd.DataFram
     hybrid["cold_start_method"] = np.where(hybrid["cold_start_pred"].notna(), selected, "historical_series_model")
     hybrid["version"] = HYBRID_VERSION
 
-    cold_source = source.loc[source["cold_start_at_forecast_origin"]].copy()
-    cold_hybrid = hybrid.loc[hybrid["cold_start_at_forecast_origin"]].copy()
+    eligible_names = set(candidates["series_name"].astype(str))
+    cold_source = source.loc[source["series_name"].isin(eligible_names)].copy()
+    cold_hybrid = hybrid.loc[hybrid["series_name"].isin(eligible_names)].copy()
     series_rows: list[dict[str, float | str]] = []
     for series_name, group in cold_hybrid.groupby("series_name", sort=True):
         old = cold_source.loc[cold_source["series_name"].eq(series_name)]
@@ -263,24 +323,27 @@ def save_figure(series: pd.DataFrame) -> None:
     fig, ax = plt.subplots(figsize=(11, 6), constrained_layout=True)
     ax.barh(y - 0.25, ordered["actual_six_month_volume"], height=0.25, label="Actual", color="#4C78A8")
     ax.barh(y, ordered["original_prediction_volume"], height=0.25, label="Original zero-history model", color="#BAB0AC")
-    ax.barh(y + 0.25, ordered["cold_method_prediction_volume"], height=0.25, label="Validated launch curve", color="#54A24B")
+    ax.barh(y + 0.25, ordered["cold_method_prediction_volume"], height=0.25, label="Guarded validated launch curve", color="#54A24B")
     ax.set_yticks(y, ordered["series_name"])
     ax.set_xlabel("Six-month sales volume")
-    ax.set_title("Cold-start compromise for nine 2026 launch series")
+    ax.set_title(f"Cold-start compromise for {len(ordered)} 2026 launch series")
     ax.legend(fontsize=8)
     fig.savefig(FIGURE, dpi=150)
     plt.close(fig)
 
 
 def main() -> None:
-    launch, _ = build_launch_panel()
-    validation, candidates, selected = final_predictions(launch)
+    launch, cold_test = build_launch_panel()
+    validation, candidates, selected = final_predictions(
+        launch, set(cold_test["series_name"].astype(str))
+    )
     hybrid, series, summary = hybrid_results(candidates, selected)
     selected_validation = validation.loc[validation["method"].eq(selected)].iloc[0]
     run_summary = {
         "schema_version": "v1",
         "selection_protocol": "rolling launch-cohort backtest: 2024 and 2025 launches, earlier launch years only",
         "selection_metric": "global volume-weighted WMAPE",
+        "prediction_guard": f"non-negative and capped at {MAX_HORIZON_MULTIPLE:.1f}x the historical median volume for the same launch horizon",
         "test_targets_used_for_method_selection": False,
         "source_feedback_version": SOURCE_VERSION,
         "validation_selected_method": selected,
@@ -300,7 +363,7 @@ def main() -> None:
     print(validation.to_string(index=False, float_format=lambda value: f"{value:.3f}"), flush=True)
     print("\n===== Final cold-start and full-371 impact =====", flush=True)
     print(json.dumps(run_summary, ensure_ascii=False, indent=2), flush=True)
-    print("\n===== Nine cold-start series =====", flush=True)
+    print(f"\n===== {len(series)} eligible cold-start series =====", flush=True)
     print(series.to_string(index=False, float_format=lambda value: f"{value:.3f}"), flush=True)
     print(f"[output] {SUMMARY_OUTPUT.relative_to(BASE)}", flush=True)
     print(f"[output] {FIGURE.relative_to(BASE)}", flush=True)

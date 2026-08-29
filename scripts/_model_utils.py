@@ -11,8 +11,10 @@ BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SPLITS = os.path.join(BASE, "data", "processed", "splits")
 
 LAG_COLS = ["lag_1", "lag_2", "lag_3", "roll_mean_3", "roll_mean_6"]
+SEASONAL_LAG_COLS = ["lag_12", "roll_mean_12"]
 CAL = ["month_sin", "month_cos", "year"]
 FEAT_COLS = LAG_COLS + CAL + CFG_COLS
+SEASONAL_FEAT_COLS = FEAT_COLS + SEASONAL_LAG_COLS
 TARGET = "monthly_sales"
 
 

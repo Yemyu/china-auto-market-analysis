@@ -1,8 +1,8 @@
 {
   "schema_version": "v1",
-  "panel_rows_per_protocol": 13866,
+  "panel_rows_per_protocol": 17808,
   "series": 371,
-  "forecast_months": 51,
+  "forecast_months": 48,
   "review_rows": 24175,
   "lookback_days": 180,
   "feature_columns": [

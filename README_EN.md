@@ -18,12 +18,12 @@
 
 | Module | Sample | Question | Current protocol |
 |---|---:|---|---|
-| Rolling one-month sales forecast | 371 series | Forecast next month with the latest published sales | Headline result; strict temporal split |
+| Rolling one-month sales forecast | 371 series | Forecast next month with the latest published sales | Headline result; complete monthly panel and strict temporal split |
 | Fixed six-month stress test | Same 371 series | Recursively forecast six months from 2026-01 | Supporting scenario; evaluated separately from the headline |
 | Product-specification analysis | 736 series, 2,007 series-year records | Estimate the incremental explanatory value of year, brand, and specifications | Five-fold `GroupKFold` by series |
 | User needs and risk | 24,175 reviews across 345 series | Identify ten needs, negative concentration, and reputation anomalies | Structural checks, sampling audit, adjacent 180-day windows |
 
-Each module has its own eligibility rule: forecasting requires continuous monthly history and usable modeling fields; specification analysis requires aligned annual sales and attributes; user-needs analysis requires complete, traceable review text.
+Each module has its own eligibility rule: forecasting uses a fixed 371-series natural-month panel with causal year-based specification joins; specification analysis requires aligned annual sales and attributes; user-needs analysis requires complete, traceable review text.
 
 ## Main results
 
@@ -36,7 +36,7 @@ The evaluation window is January–June 2026: 371 series and 2,226 series-month 
 | Method | Global WMAPE ↓ | Median per-series WMAPE ↓ | Versus same-scenario naive |
 |---|---:|---:|---:|
 | Last observed value (naive) | 40.99% | 48.36% | — |
-| **Rolling one-month XGBoost (headline)** | **31.34%** | **39.47%** | **−9.65 pp (about −23.5%)** |
+| **Rolling one-month seasonal XGBoost (headline)** | **29.72%** | **36.74%** | **−11.27 pp (about −27.5%)** |
 
 At each test month, the rolling protocol uses the latest published previous-month sales. Parameters remain locked within the six-month evaluation window, so later test months do not influence model selection.
 
@@ -45,11 +45,11 @@ At each test month, the rolling protocol uses the latest published previous-mont
 | Method | Global WMAPE ↓ | Median per-series WMAPE ↓ |
 |---|---:|---:|
 | Fixed-origin trailing six-month mean (naive) | 69.31% | 89.60% |
-| Fixed six-month combined method (reviews + cold-start supplement) | **39.07%** | **49.10%** |
+| Fixed six-month combined method (reviews + guarded cold-start) | **38.38%** | **46.88%** |
 
-The fixed stress test reduces absolute error by 43.6% against its same-scenario naive comparator. Because it withholds post-origin realised sales and carries recursive lag, it is evaluated separately from the rolling headline. Review enhancement improves the point estimate by 0.884 percentage points; the 5,000-replicate series-cluster bootstrap 95% interval is −0.284 to 2.108 points, leaving evidence for a stable gain insufficient. The cold-start statistical strategy covers nine history-poor series as a boundary-case treatment and does not alter the headline model.
+The fixed stress test reduces absolute error by 44.6% against its same-scenario trailing-six-month comparator. Because it withholds post-origin realised sales and carries recursive lag, it is evaluated separately from the rolling headline. Review enhancement improves the point estimate by 0.697 percentage points; the 5,000-replicate series-cluster bootstrap 95% interval is −0.234 to 1.873 points, leaving evidence for a stable gain insufficient. The guarded cold-start supplement covers nine series with neither positive historical sales nor a pre-origin specification record and does not alter the headline model.
 
-The sales model is XGBoost. ARIMA, Prophet, LSTM, and other early candidates remain in the experiment scripts to document model selection; they are not mixed into the current headline table.
+The sales model is a seasonal XGBoost with 12-month lag and trailing-12-month mean features. ARIMA, Prophet, LSTM, and other early candidates remain in the experiment scripts to document model selection; they are not mixed into the current headline table.
 
 ### 2. Product specifications and annual sales variation
 

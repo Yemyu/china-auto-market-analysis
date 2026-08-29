@@ -45,7 +45,7 @@
           <a class="home-question" href="forecast.html">
             <span class="home-question-no">01</span>
             <h3 data-i18n="home_q1_title">下个月的车系销量能否被可靠预测？</h3>
-            <p data-i18n="home_q1_body">在371个连续月销车系上每月更新下月预测，并将固定六个月递归结果作为压力测试，严格隔离训练、验证与测试期。</p>
+            <p data-i18n="home_q1_body">在固定371个车系的完整自然月面板上每月更新下月预测，并将固定六个月递归结果作为压力测试，严格隔离训练、验证与测试期。</p>
             <span class="home-question-link" data-i18n="home_q1_link">查看销量预测 →</span>
           </a>
           <a class="home-question" href="attribution.html">
@@ -73,7 +73,7 @@
             <article class="home-cohort-row">
               <div class="home-cohort-name"><span>FORECAST</span><h3 data-i18n="home_cohort_forecast">月度销量预测</h3></div>
               <div class="home-cohort-count"><strong id="cohort-forecast">—</strong><span data-i18n="home_series_unit">个车系</span></div>
-              <p data-i18n="home_cohort_forecast_rule">保留连续月销且具备建模字段的车系；主结果为滚动单月预测，2026年1—6月固定起点结果作为压力测试。</p>
+              <p data-i18n="home_cohort_forecast_rule">固定371个车系的完整自然月面板，配置按年份因果连接并显式保留未知值；主结果为滚动单月预测，2026年1—6月固定起点结果作为压力测试。</p>
               <a href="forecast.html" data-i18n="home_read_analysis">进入分析 →</a>
             </article>
             <article class="home-cohort-row">
@@ -125,7 +125,7 @@
                 <thead><tr><th data-i18n="home_model_col">比较方案</th><th><span data-i18n="home_global_col">全局 WMAPE</span><small data-i18n="home_primary_lower">主指标 · 越低越好</small></th><th><span data-i18n="home_median_col">逐车系中位数 WMAPE</span><small data-i18n="home_supporting_lower">补充指标 · 越低越好</small></th><th data-i18n="home_change_col">相对基线</th></tr></thead>
                 <tbody>
                   <tr><td><strong data-i18n="home_model_naive">沿用上月销量（朴素基准）</strong><span data-i18n="home_model_naive_note">每次预测直接沿用最近一个已公布月份</span></td><td id="model-naive-global">—</td><td id="model-naive-median">—</td><td class="home-neutral">—</td></tr>
-                  <tr class="home-best-core"><td><strong data-i18n="home_model_baseline">滚动单月 XGBoost（主结果）</strong><span data-i18n="home_model_baseline_note">每月更新下月预测，使用销量历史、日历与产品属性</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td id="model-base-gain">—</td></tr>
+                  <tr class="home-best-core"><td><strong data-i18n="home_model_baseline">滚动单月季节增强 XGBoost（主结果）</strong><span data-i18n="home_model_baseline_note">每月更新下月预测，加入12个月季节滞后与历史均值</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td id="model-base-gain">—</td></tr>
                   <tr><td><strong data-i18n="home_model_stress">固定六个月综合方案</strong><span data-i18n="home_model_stress_note">固定起点，含口碑与冷启动补充；仅作压力测试</span></td><td id="model-core-global">—</td><td id="model-core-median">—</td><td id="model-core-gain">—</td></tr>
                   <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="home_model_stress_naive_note">固定起点下的最近6个月均值</span></td><td id="model-cold-global">—</td><td id="model-cold-median">—</td><td class="home-neutral">—</td></tr>
                 </tbody>
@@ -169,7 +169,7 @@
           </div>
           <details class="home-audit-note">
             <summary data-i18n="home_audit_summary">补充证据</summary>
-            <div><p data-i18n="home_audit_text">固定六个月压力测试中的口碑增强点估计改善0.884个百分点；5,000次车系聚类重采样的95%区间为−0.284至2.108个百分点，区间跨0，因此不把它当作滚动主结果的稳定增益。</p></div>
+            <div><p data-i18n="home_audit_text">固定六个月压力测试中的口碑增强点估计改善0.697个百分点；5,000次车系聚类重采样的95%区间为−0.234至1.873个百分点，区间跨0，因此不把它当作滚动主结果的稳定增益。</p></div>
           </details>
         </div>
       </section>

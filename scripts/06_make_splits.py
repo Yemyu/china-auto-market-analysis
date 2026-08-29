@@ -29,19 +29,31 @@ VAL_END = "2025-12"     # val:   2025-07 .. 2025-12 ; test: 2026-01 .. 2026-06
 LAG_COLS = ["lag_1", "lag_2", "lag_3", "roll_mean_3", "roll_mean_6"]
 CAL = ["month_sin", "month_cos", "year"]
 FEAT_COLS = LAG_COLS + CAL + fj.CFG_COLS
+# Optional long-memory features used by the rolling one-month candidate. They
+# are written to the shared split files but are not part of the fixed-origin
+# stress-test feature set.
+SEASONAL_COLS = ["lag_12", "roll_mean_12"]
 META_COLS = ["series_name", "series_id", "date", "year", "month",
              "brand", "category", "category_en", "monthly_sales"]
 
 
 def engineer_features(sm: pd.DataFrame) -> pd.DataFrame:
     """在完整排序面板上算日历 + lag/滚动特征 (因果: shift 只用过去)。"""
-    sm = sm.sort_values(["series_name", "date"]).copy()
-    g = sm.groupby("series_name")["monthly_sales"]
+    # Reset the index after sorting so rolling assignments align with rows.
+    # Without this, a merge-generated non-contiguous index can silently place
+    # rolling means on the wrong rows and discard otherwise valid training rows.
+    sm = sm.sort_values(["series_name", "date"]).reset_index(drop=True)
+    g = sm.groupby("series_name", sort=False)["monthly_sales"]
     sm["lag_1"] = g.shift(1)
     sm["lag_2"] = g.shift(2)
     sm["lag_3"] = g.shift(3)
-    sm["roll_mean_3"] = g.shift(1).rolling(3).mean().reset_index(level=0, drop=True)
-    sm["roll_mean_6"] = g.shift(1).rolling(6).mean().reset_index(level=0, drop=True)
+    # The rolling operation must stay grouped as well as the lag operation.
+    # Calling ``rolling`` directly on ``g.shift(...)`` would carry values over
+    # from the previous series at each group boundary.
+    sm["roll_mean_3"] = g.transform(lambda values: values.shift(1).rolling(3).mean())
+    sm["roll_mean_6"] = g.transform(lambda values: values.shift(1).rolling(6).mean())
+    sm["lag_12"] = g.shift(12)
+    sm["roll_mean_12"] = g.transform(lambda values: values.shift(1).rolling(12).mean())
     moy = sm["date"].dt.month
     sm["month_sin"] = np.sin(2 * np.pi * moy / 12)
     sm["month_cos"] = np.cos(2 * np.pi * moy / 12)
@@ -75,8 +87,12 @@ def main():
     print(f"[splits] 月度面板: {sales['series_name'].nunique()} 车系 / {len(sales)} 行")
     print(f"[splits] 时间范围: {sales['date'].min().date()} .. {sales['date'].max().date()}")
 
-    sm = fj.join_cfg(sales)
-    print(f"[splits] 限定 feature 主表(有配置)后: "
+    # Keep every monthly sales row. A missing annual specification is not a
+    # missing sales observation; dropping it creates artificial time gaps and
+    # corrupts lag features. join_cfg applies causal fallback and explicit
+    # unknown sentinels for rows before the first available specification.
+    sm = fj.join_cfg(sales, keep_unmatched=True)
+    print(f"[splits] 保留完整月度面板(配置因果连接): "
           f"{sm['series_name'].nunique()} 车系 / {len(sm)} 行")
 
     sm = engineer_features(sm)
@@ -99,7 +115,7 @@ def main():
     va_out = va.copy()
     te_out = te_df.copy()
 
-    cols = META_COLS + FEAT_COLS + ["split"]
+    cols = META_COLS + FEAT_COLS + SEASONAL_COLS + ["split"]
     tr_out[cols].to_csv(os.path.join(OUTDIR, "train.csv"), index=False)
     va_out[cols].to_csv(os.path.join(OUTDIR, "val.csv"), index=False)
     te_out[cols].to_csv(os.path.join(OUTDIR, "test.csv"), index=False)
@@ -126,7 +142,13 @@ def main():
             "val": int(len(va)), "test": int(len(te_df)),
         },
         "feature_columns": FEAT_COLS,
+        "optional_feature_columns": SEASONAL_COLS,
         "target": "monthly_sales",
+        "panel_policy": (
+            "Retain every cohort series-month. Causal specification fallback is "
+            "used; rows before a series' first available specification keep the "
+            "sales observation and receive numeric medians/categorical -1 sentinels."
+        ),
         "leakage_guarantees": [
             "切分按绝对时间 (全局切点), 非随机/非按车系打乱",
             "lag/roll 特征由 groupby(series).shift 计算, 仅用真实过去销量",
@@ -162,7 +184,7 @@ train、validation 和 test 文件，避免各模型自行定义测试区间。
 
 | 文件 | 内容 |
 |---|---|
-| `train.csv` | 滞后特征齐全的训练行 |
+| `train.csv` | 基础滞后特征齐全的训练行（季节特征在历史起始处可为空） |
 | `val.csv` | 参数与方案选择 |
 | `test.csv` | 最终评价 |
 | `split_index.csv` | `series_name, date, split` 的最小切分索引 |
@@ -185,13 +207,16 @@ train、validation 和 test 文件，避免各模型自行定义测试区间。
 - Validation：{n['val']} 行；
 - Test：{n['test']} 行。
 
+月度面板保留每个目标车系的完整自然月。若某个月没有对应年度配置，销量行仍保留；数值配置使用配置表中位数，类别编码使用 `-1` 未知标记。这样不会因配置表缺月而把两个月前的销量误当成上月销量。
+
 ## 防泄漏约束
 
-1. 销量滞后和滚动均值由车系内 `shift` 计算，只引用目标月以前的销量。
+1. 销量滞后和滚动均值由车系内 `shift` 计算，只引用目标月以前的销量；12 个月季节特征同样遵守该约束。
 2. 配置按时间因果回退：缺少当年配置时，只使用不晚于该年份的最近配置。
-3. Validation 用于选择参数和方案；Test 只报告最终结果。
-4. 固定起点压力测试从 2026-01 开始递归六个月。第二个月起需要的销量滞后来自此前预测，不能读取测试期真实销量；滚动主协议则在每月更新时使用已公布的上月真实销量。
-5. 用户评论特征在主实验中统一冻结于 2026-01-01 之前；每个预测月的可用范围由评论时间特征脚本生成并审计。
+3. 对首个可用配置年份之前的真实销量行不做删除；数值配置填充配置表中位数，类别编码使用 `-1` 未知标记。
+4. Validation 用于选择参数和方案；Test 只报告最终结果。
+5. 固定起点压力测试从 2026-01 开始递归六个月。第二个月起需要的销量滞后来自此前预测，不能读取测试期真实销量；滚动主协议则在每月更新时使用已公布的上月真实销量。
+6. 用户评论特征在主实验中统一冻结于 2026-01-01 之前；每个预测月的可用范围由评论时间特征脚本生成并审计。
 
 ## 读取示例
 

@@ -37,8 +37,17 @@ def _load_cfg_frame():
     return fk[["series_name", "year"] + CFG_COLS]
 
 
-def join_cfg(sm):
-    """Join by series and year, falling back only to an earlier specification."""
+def join_cfg(sm, keep_unmatched: bool = False):
+    """Join by series/year with a causal specification fallback.
+
+    By default this keeps the historical behaviour and drops monthly rows for
+    which no specification is available.  Forecasting panels can instead set
+    ``keep_unmatched=True``: the sales row is retained, numeric attributes use
+    the configuration-table median, and encoded categorical attributes use
+    ``-1`` as an explicit unknown sentinel.  This is important for preserving
+    the calendar spacing of the sales history; a missing configuration record
+    must not silently turn two months ago into the previous month.
+    """
     fk = _load_cfg_frame()
     mapping = build_series_name_mapping(sm["series_name"], fk["series_name"])
     name_map = mapping.set_index("sales_series_name")["config_series_name"]
@@ -65,6 +74,14 @@ def join_cfg(sm):
                 continue
             for j, c in enumerate(CFG_COLS):
                 sm.at[idx, c] = cfg_by_series[s][max(cand)][j]
-    sm = sm[sm[CFG_COLS[0]].notna()].copy()
+    if keep_unmatched:
+        for column in CFG_NUM:
+            sm[column] = pd.to_numeric(sm[column], errors="coerce")
+            sm[column] = sm[column].fillna(pd.to_numeric(fk[column], errors="coerce").median())
+        for column in CFG_COLS:
+            if column not in CFG_NUM:
+                sm[column] = pd.to_numeric(sm[column], errors="coerce").fillna(-1.0)
+    else:
+        sm = sm[sm[CFG_COLS[0]].notna()].copy()
     sm = sm.drop(columns="config_series_name")
     return sm

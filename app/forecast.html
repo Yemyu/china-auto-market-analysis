@@ -46,7 +46,7 @@
             <thead><tr><th data-i18n="home_model_col">比较方案</th><th data-i18n="home_global_col">全局 WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th><th data-i18n="home_change_col">相对基线</th></tr></thead>
             <tbody>
               <tr><td><strong data-i18n="home_model_naive">沿用上月销量（朴素基准）</strong><span data-i18n="home_model_naive_note">每次预测直接沿用最近一个已公布月份</span></td><td id="fc-score-naive-global">—</td><td id="fc-score-naive-median">—</td><td>—</td></tr>
-              <tr class="forecast-primary-row"><td><strong data-i18n="home_model_baseline">滚动单月 XGBoost（主结果）</strong><span data-i18n="fc_baseline_scope">每月更新下月预测，使用历史销量、日历与车型属性</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td id="fc-score-base-gain">—</td></tr>
+              <tr class="forecast-primary-row"><td><strong data-i18n="home_model_baseline">滚动单月季节增强 XGBoost（主结果）</strong><span data-i18n="fc_baseline_scope">每月更新下月预测，加入12个月季节滞后与历史均值</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td id="fc-score-base-gain">—</td></tr>
               <tr><td><strong data-i18n="home_model_stress">固定六个月综合方案</strong><span data-i18n="fc_review_scope">固定起点，含口碑与冷启动补充；仅作压力测试</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
               <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="fc_cold_scope">固定起点下的最近6个月均值</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td>—</td></tr>
             </tbody>
@@ -104,9 +104,9 @@
         <header class="analysis-section-head"><span>04</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">口碑消融属于固定六个月压力测试，不改变滚动单月主结果；点估计改善，但稳定增益证据不足。</p></div></header>
 
         <div class="forecast-evidence-strip">
-          <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong>0.88<small>pp</small></strong></div>
-          <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong>93.46<small>%</small></strong></div>
-          <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong>−0.28—2.11<small>pp</small></strong></div>
+          <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong>0.70<small>pp</small></strong></div>
+          <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong>92.64<small>%</small></strong></div>
+          <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong>−0.23—1.87<small>pp</small></strong></div>
           <p data-i18n="fc_evidence_plain">95%区间包含零，口碑增强的稳定增益尚未获得充分统计支持，定位为辅助信息。</p>
         </div>
 

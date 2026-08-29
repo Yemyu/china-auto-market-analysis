@@ -1,6 +1,6 @@
 {
   "schema_version": "v1",
-  "generated_at": "2026-08-29T07:44:24.503394+00:00",
+  "generated_at": "2026-08-29T16:16:50.170204+00:00",
   "source_sales": "data/processed/sales_filtered_24m.csv",
   "source_config": "data/raw/feature.csv (车系×年, 因果回退 join)",
   "population": "frozen 371-series evaluation cohort with causal configuration join",
@@ -12,9 +12,9 @@
   },
   "n_series": 371,
   "n_rows": {
-    "train_total": 12036,
-    "train_usable": 9468,
-    "val": 2172,
+    "train_total": 15582,
+    "train_usable": 13356,
+    "val": 2226,
     "test": 2226
   },
   "feature_columns": [
@@ -48,7 +48,12 @@
     "gearbox_type_enc",
     "seat_material_enc"
   ],
+  "optional_feature_columns": [
+    "lag_12",
+    "roll_mean_12"
+  ],
   "target": "monthly_sales",
+  "panel_policy": "Retain every cohort series-month. Causal specification fallback is used; rows before a series' first available specification keep the sales observation and receive numeric medians/categorical -1 sentinels.",
   "leakage_guarantees": [
     "切分按绝对时间 (全局切点), 非随机/非按车系打乱",
     "lag/roll 特征由 groupby(series).shift 计算, 仅用真实过去销量",

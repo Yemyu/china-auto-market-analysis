@@ -20,7 +20,7 @@ This directory contains source tables, temporal splits, the review corpus, model
 
 | Analysis | Final sample | Main filters |
 |---|---:|---|
-| Monthly sales forecast | 371 series | Continuous monthly sales, aligned specifications, and a complete test period |
+| Monthly sales forecast | 371 series | Complete natural-month test period with causal year-based specification joins |
 | Product-specification analysis | 736 series; 2,007 series-year records | Annual sales and specifications aligned during 2022–2026 |
 | User needs and risk | 24,175 reviews; 345 series | Complete text, valid publication time, and traceable source |
 
@@ -174,23 +174,13 @@ Fixed-origin test features are frozen before `2026-01-01` for the stress test an
 | `alternative_sales_source_map.csv` | Explicit alternative-source series, brand/manufacturer, and page mapping; conflicts are never auto-merged |
 | `alternative_sales_crosscheck_*.csv/json` | Alternative-source identity checks, monthly observations, diffs, and metric calibration |
 
-Phase one accepts only exact names and unambiguous one-to-one normalized matches; it does not use fuzzy matching. The safe overlap grows from 371 to 379 series.
+Series/configuration names use exact or unambiguous one-to-one normalized matches only; no fuzzy merge is used. All 54,918 rows across 1,017 series pass duplicate-key, negative-value, and calendar-completeness checks. Source-derived ranks and cumulative fields are not treated as independent validation.
 
-Phase two classifies the nine series with high 2024 volume and an all-zero 2026 test window. Model Y and Model 3 are confirmed same-source snapshot anomalies. Same-source year-comparison tables supply five missing 2022 rows and the 38 missing June 2024–December 2025 rows, and correct four nonzero 2022 values; monthly pages supply 12 January–June 2026 rows. Repaired 2022 and 2025 totals match the source-page annual totals for both series. The iCAR 03 test zeros are supported by a discontinued status on the same source. The other six series remain unchanged and pending manual verification; the pipeline neither infers their state nor merges them into differently named series. Raw `monthly_sales.csv` is never overwritten, and the repair helper fails closed on duplicate keys or an original-value mismatch.
+Verified cross-source differences are stored in a non-destructive overlay; the raw `monthly_sales.csv` is never overwritten. The overlay currently repairs 62 rows across five series and restores a net 1,357,467 units. The repaired Model Y and Model 3 history gaps and other independently verified months are included; unresolved targets remain in the review queue, with no automatic zero inference or cross-series merge.
 
-The known Model Y and Model 3 history gaps are now complete. After unique-key, source, and annual-total checks, the overlay is included in the reproducible panel. The remaining high-priority queue is retained as an audit item and does not change the locked test window or metric protocol. The repaired fixed stress-test combined method scores 39.07%, while the rolling one-month headline scores 31.34%; both are recomputed from saved artifacts.
+Source dashes and pages that were not retrieved are recorded separately, and neither is treated as a sales conclusion by itself. Sales rows without an annual specification are retained: the forecasting panel keeps a complete natural-month panel for all 371 target series, uses the latest specification available no later than the row year, and assigns configuration-table medians plus an explicit unknown category when no causal specification is available. This preserves calendar spacing and prevents a missing specification row from turning an older month into the apparent previous month.
 
-Phase three scans all 54,918 rows and 1,017 series locally. Hard structural checks find no duplicate series-month keys, negative sales, name/ID conflicts, or missing calendar rows, but this does not establish source truth. Annual cumulative sales, brand-month totals, positive-series counts, zero labels, and rank availability all reproduce `monthly_sales` deterministically and therefore cannot serve as independent validation.
-
-Phase four uses `scripts/42_recrawl_pcauto_sales.py` to recollect pages by exact source ID. June and December serve as six-month anchors, raw HTML is cached in a Git-ignored directory, and no source file is overwritten. The first ten-series pilot requests 90 pages successfully and parses 540 series-months: 186 exactly match the snapshot, 353 are shown as “—” by the source and are also zero in the snapshot, and the only definite difference is Wuling Hongguang S in June 2026—2,215 on the source versus zero in the snapshot. Exact ID, page-name, and manufacturer-table checks support adding that row to the overlay.
-
-Phase five uses `scripts/43_crosscheck_alternative_sales.py` with an explicit alternative-source map. A page must pass series-name and brand/manufacturer checks before its monthly values are accepted. Model Y and Model 3 provide 72 repaired overlap months for metric calibration, all of which match exactly. The first nine mapped pages yield 324 monthly observations. MG HS in September 2022 and Weltmeister W6 in September 2022 differ by 16 and 4 units respectively; a second independent source confirms both corrections before they enter the overlay. Changan CS55PLUS matches in later months but is discontinuous at a generation boundary, so its original value is retained—demonstrating why a name match alone is insufficient. The overlay now repairs 62 rows across five series and restores a net 1,357,467 units; external review contains 21 high- and 33 medium-priority series.
-
-A source dash is not automatically interpreted as a true zero. The 353 pilot dashes are positioned against the raw positive-sales span: 120 before the first positive month, 96 after the last positive month, 30 inside the positive span, and 107 with no positive reference anywhere. Boundary cases remain launch/discontinuation or source-coverage candidates, internal cases receive priority review, and no-reference series do not enter a normal history model automatically. The collector also separates a successful page containing a dash from a page that was never retrieved; the latter is labeled `not_retrieved` and cannot support a data conclusion.
-
-The second batch targets the other twelve high-priority series and 108 pages. Every request in this run failed at the TLS connection layer, producing `blocked_no_successful_pages`; no new sales, differences, or corrections were inferred. The frozen roster can be retried when source connectivity returns.
-
-The scan also confirms that the previous “at least 24 consecutive months” rule counts padded panel rows rather than positive-sales history. Every one of the 1,017 series has the same 54 rows from January 2022 through June 2026, so every series passes before the configuration join. The raw 371-series cohort contains two series with no positive sales anywhere; the Wuling Hongguang S repair reduces that count to one, while 32 still have no positive sales before the training cutoff. Eligibility must be rebuilt with lifecycle-aware positive-history rules after source gaps are resolved; rows should not be deleted and models rerun prematurely.
+The repaired fixed stress-test combined method scores 38.38%, while the rolling seasonal XGBoost headline scores 29.72%; both are recomputed from saved artifacts. Detailed row-level audits, source mappings, and unresolved queues are provided in the data-quality files listed above.
 
 ### Sales forecasting: `processed/forecast/`
 
@@ -209,11 +199,11 @@ The scan also confirms that the previous “at least 24 consecutive months” ru
 | `direct_multihorizon_validation.csv` | Rolling validation summary for direct multi-horizon candidates |
 | `direct_multihorizon_summary.json` | Locked selection protocol and rejection decision for the direct experiment |
 
-The rolling one-month headline reaches 31.34% global WMAPE versus 40.99% for the last-observed-value naive baseline, a 9.65-point (about 23.5%) reduction. In the fixed six-month stress test, the trailing-six-month mean is 69.31% and the reviews-plus-cold-start combined method is 39.07%, a 43.6% reduction; the protocols correspond to different forecast applications and are evaluated separately.
+The rolling one-month seasonal XGBoost headline reaches 29.72% global WMAPE versus 40.99% for the last-observed-value naive baseline, an 11.27-point (about 27.5%) reduction. In the fixed six-month stress test, the trailing-six-month mean is 69.31% and the reviews-plus-guarded-cold-start combined method is 38.38%, a 44.6% reduction; the protocols correspond to different forecast applications and are evaluated separately.
 
-Review enhancement in the fixed stress test improves the point estimate by 0.884 pp; the 5,000-replicate series-cluster bootstrap 95% interval is −0.284 to 2.108 pp, leaving evidence for a stable gain insufficient. The cold-start statistical strategy covers nine history-poor series as a boundary-case treatment and does not alter the 371-series rolling headline.
+Review enhancement in the fixed stress test improves the point estimate by 0.697 pp; the 5,000-replicate series-cluster bootstrap 95% interval is −0.234 to 1.873 pp, leaving evidence for a stable gain insufficient. The guarded cold-start strategy covers nine series with neither positive historical sales nor a pre-origin specification record as a boundary-case treatment and does not alter the 371-series rolling headline.
 
-The direct multi-horizon experiment selected blend weights on three earlier origins and reached 30.42% WMAPE at the July 2025 fixed-origin validation. Its locked specification then rose to 47.46% on the 362 history-bearing series in the 2026 test, underperforming the existing recursive model; it was therefore rejected under the predefined rule and does not replace the headline result. Row-level experimental predictions remain local and are ignored by Git.
+The direct multi-horizon experiment was rejected under its predefined locked-test gate and does not replace the rolling headline. Its summary artifact records that decision; row-level experimental predictions are not part of the public results.
 
 ### Product specifications: `processed/product/`
 

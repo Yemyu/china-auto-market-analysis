@@ -27,13 +27,15 @@ ASPECT_EN = {
 PALETTE = ["#2c7be5", "#00a9ae", "#34c38f", "#f6c343", "#ee5b5b", "#a55eea", "#7783f5"]
 MODEL_LABELS = {
     "BASE": ("销量基线（XGBoost）", "Sales baseline (XGBoost)"),
+    "SEASONAL_D5": ("滚动单月季节增强（XGBoost）", "Rolling one-month seasonal (XGBoost)"),
     "PLATFORM_RATING_FIXED": ("平台评分增强（XGBoost）", "Platform-rating enhanced (XGBoost)"),
     "LOCAL_LEXICON_FIXED": ("本地词典增强（XGBoost）", "Local-lexicon enhanced (XGBoost)"),
     "REVIEW_TEXT_FIXED": ("文本情感增强（XGBoost）", "Text-sentiment enhanced (XGBoost)"),
     "REVIEW_RICH_FIXED": ("用户口碑增强（XGBoost）", "User-review enhanced (XGBoost)"),
     "ALL_SENTIMENT_FIXED": ("全部口碑增强（XGBoost）", "Combined-review enhanced (XGBoost)"),
     "REVIEW_TEXT_ROLLING": ("滚动口碑增强（XGBoost）", "Rolling-review enhanced (XGBoost)"),
-    "REVIEW_RICH_COLD_START": ("口碑增强（XGBoost）＋冷启动统计补充", "Review-enhanced XGBoost + statistical cold-start"),
+    "SELECTED_FEEDBACK_COLD_START": ("平台评分增强（XGBoost）＋冷启动保护", "Platform-rating enhanced (XGBoost) + guarded cold-start"),
+    "REVIEW_RICH_COLD_START": ("平台评分增强（XGBoost）＋冷启动保护", "Platform-rating enhanced (XGBoost) + guarded cold-start"),
 }
 FEATURE_FAMILY_LABELS = {
     "sales_lag_roll": ("历史销量", "Sales history"),
@@ -97,7 +99,8 @@ def _feature_label(feature: str) -> tuple[str, str]:
     simple = {
         "lag_1": ("上月销量", "Sales lag 1"), "lag_2": ("前2月销量", "Sales lag 2"),
         "lag_3": ("前3月销量", "Sales lag 3"), "roll_mean_3": ("近3月销量均值", "3-month sales mean"),
-        "roll_mean_6": ("近6月销量均值", "6-month sales mean"), "month_sin": ("月份季节性（正弦）", "Month seasonality (sin)"),
+        "roll_mean_6": ("近6月销量均值", "6-month sales mean"), "lag_12": ("去年同期销量", "Sales lag 12"),
+        "roll_mean_12": ("近12月销量均值", "12-month sales mean"), "month_sin": ("月份季节性（正弦）", "Month seasonality (sin)"),
         "month_cos": ("月份季节性（余弦）", "Month seasonality (cos)"), "year": ("年份", "Year"),
         "review_count_prior_all": ("历史评论数量", "Prior review count"),
         "review_count_180d": ("近180天评论数量", "180-day review count"),
@@ -259,7 +262,7 @@ class DashboardData:
                 {"id": 6, "name": "看板更新", "en": "Dashboard Refresh", "status": "current"},
             ],
             "findings": [
-                {"zh": f"滚动单月XGBoost为{rolling_global:.2f}% WMAPE，比“沿用上月销量”朴素基准{last_global:.2f}%低{last_global-rolling_global:.2f}个百分点", "en": f"The rolling one-month XGBoost reaches {rolling_global:.2f}% WMAPE, {last_global-rolling_global:.2f} pp below the last-observed-value naive baseline at {last_global:.2f}%"},
+                {"zh": f"滚动单月季节增强XGBoost为{rolling_global:.2f}% WMAPE，比“沿用上月销量”朴素基准{last_global:.2f}%低{last_global-rolling_global:.2f}个百分点", "en": f"The rolling one-month seasonal XGBoost reaches {rolling_global:.2f}% WMAPE, {last_global-rolling_global:.2f} pp below the last-observed-value naive baseline at {last_global:.2f}%"},
                 {"zh": f"固定六个月压力测试的综合方案为{fixed_hybrid:.2f}%，相对同场景最近6个月均值{fixed_naive:.2f}%的绝对误差降低{(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}%；该协议与滚动单月协议分别评估", "en": f"The fixed six-month stress test scores {fixed_hybrid:.2f}% versus {fixed_naive:.2f}% for its trailing-six-month naive comparator, a {(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}% absolute-error reduction; the protocol is evaluated separately from the rolling headline"},
                 {"zh": f"固定起点口碑增强点估计改善{review_point:.3f}个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息", "en": f"Fixed-origin review enhancement shows a {review_point:.3f} pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"},
                 {"zh": f"736车系年度归因中，配置将分组交叉验证R²从{config_brand:.3f}提升到{config_full:.3f}", "en": f"Across 736 series, specifications raise grouped-CV annual-attribution R² from {config_brand:.3f} to {config_full:.3f}"},
@@ -279,7 +282,10 @@ class DashboardData:
             ("ROLLING_MEAN_3", "近3月均值（滚动朴素）", "Trailing 3-month mean (naive)", "rolling_naive_mean3"),
             ("ROLLING_MEAN_6", "近6月均值（滚动朴素）", "Trailing 6-month mean (naive)", "rolling_naive_mean6"),
             ("SEASONAL_LAG12", "去年同期销量（朴素基准）", "Same-month-last-year (naive)", "rolling_naive_seasonal"),
-            ("pred", "滚动单月销量基线（XGBoost）", "Rolling one-month sales baseline (XGBoost)", "rolling_primary"),
+            ("pred", *MODEL_LABELS.get(
+                str(rolling_test["version"].dropna().iloc[0]) if not rolling_test["version"].dropna().empty else "SEASONAL_D5",
+                ("滚动单月季节增强（XGBoost）", "Rolling one-month seasonal (XGBoost)"),
+            ), "rolling_primary"),
         ]
         models: list[dict[str, Any]] = []
         for column, zh, en, scenario in rolling_models:
@@ -302,7 +308,7 @@ class DashboardData:
                 "scenario": "fixed_origin_stress_ablation",
                 "version": str(row["version"]),
             })
-        zh, en = MODEL_LABELS["REVIEW_RICH_COLD_START"]
+        zh, en = MODEL_LABELS["SELECTED_FEEDBACK_COLD_START"]
         fixed_models.append({
             "name": zh, "name_zh": zh, "name_en": en,
             "wmape_vol": round(float(cold["hybrid_full371_global_WMAPE"]), 4),
@@ -370,8 +376,8 @@ class DashboardData:
             "scatter": [[round(float(a), 1), round(float(p), 1)] for a, p in zip(valid["actual"], valid["pred"])],
             "features": features,
             "fixed_stress": {
-                "name_zh": "固定六个月综合方案（口碑＋冷启动补充）",
-                "name_en": "Fixed six-month combined method (reviews + cold-start supplement)",
+                "name_zh": "固定六个月综合方案（口碑＋冷启动保护）",
+                "name_en": "Fixed six-month combined method (reviews + guarded cold-start)",
                 "wmape_vol": round(fixed_hybrid, 4),
                 "wmape_med": round(fixed_hybrid_median, 4),
                 "naive_wmape_vol": round(float(fixed_naive["global_volume_weighted_WMAPE"]), 4),
@@ -379,12 +385,12 @@ class DashboardData:
                 "relative_error_reduction_pct": round((float(fixed_naive["global_volume_weighted_WMAPE"]) - fixed_hybrid) / float(fixed_naive["global_volume_weighted_WMAPE"]) * 100, 2),
             },
             "conclusion": {
-                "zh": f"主结果采用每月更新的下月预测：滚动单月XGBoost为{rolling_primary['wmape_vol']:.2f}% WMAPE，较沿用上月销量的朴素基准{rolling_naive['wmape_vol']:.2f}%低{rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f}个百分点。固定六个月综合方案为{fixed_hybrid:.2f}%，作为压力测试单独报告。",
-                "en": f"The headline task refreshes each month for a one-month-ahead forecast: rolling one-month XGBoost reaches {rolling_primary['wmape_vol']:.2f}% WMAPE, {rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f} pp below the last-observed-value naive baseline at {rolling_naive['wmape_vol']:.2f}%. The fixed six-month combined method scores {fixed_hybrid:.2f}% and is reported separately as a stress test.",
+                "zh": f"主结果采用每月更新的下月预测：滚动单月季节增强XGBoost为{rolling_primary['wmape_vol']:.2f}% WMAPE，较沿用上月销量的朴素基准{rolling_naive['wmape_vol']:.2f}%低{rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f}个百分点。固定六个月综合方案为{fixed_hybrid:.2f}%，作为压力测试单独报告。",
+                "en": f"The headline task refreshes each month for a one-month-ahead forecast: rolling one-month seasonal XGBoost reaches {rolling_primary['wmape_vol']:.2f}% WMAPE, {rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f} pp below the last-observed-value naive baseline at {rolling_naive['wmape_vol']:.2f}%. The fixed six-month combined method scores {fixed_hybrid:.2f}% and is reported separately as a stress test.",
             },
             "feature_insight": {
-                "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择销量基线，该图用于描述模型依赖结构，不用于滚动主结果的因果识别。",
-                "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the sales baseline, so the chart describes model reliance and is not used for causal identification in the rolling result.",
+                "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择季节增强销量模型，该图用于描述模型依赖结构，不用于滚动主结果的因果识别。",
+                "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the seasonal sales model, so the chart describes model reliance and is not used for causal identification in the rolling result.",
             },
         }
 

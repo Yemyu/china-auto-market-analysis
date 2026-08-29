@@ -136,7 +136,9 @@ def traced_test_rows(model: Any, panel: pd.DataFrame, columns: list[str]) -> tup
     for name, series in panel.groupby("series_name", sort=True):
         ordered = series.sort_values("date")
         history = ordered.loc[ordered["split"].isin(("train", "val")), mu.TARGET].astype(float).tolist()
-        cold_start = len(history) == 0
+        # The complete panel retains known zero-sales months before launch;
+        # those rows are useful history but do not remove the cold-start flag.
+        cold_start = not np.any(np.asarray(history, dtype=float) > 0)
         for _, record in ordered.loc[ordered["split"].eq("test")].iterrows():
             row = model_row(record, history, columns)
             features = pd.DataFrame([row], columns=columns)
