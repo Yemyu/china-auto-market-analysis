@@ -4,6 +4,11 @@ Model 3,24824,2022-01_to_2026-06,confirmed_source_gap_repaired,apply_verified_hi
 iCAR 03,29436,2026-01_to_2026-06,confirmed_post_discontinuation,keep_zero,太平洋汽车,https://price.pcauto.com.cn/salescar/sg29436/,2026-08-28,同源车系页标记停售且销量序列止于2025-12
 长安启源Q05经典,30092,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车,https://price.pcauto.com.cn/salescar/sg30092/,2026-08-28,同源页面序列止于2025-12；不可与名称不同的新Q05自动合并
 奥迪Q5 e-tron,27551,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车,https://price.pcauto.com.cn/salescar/sg27551/,2026-08-28,同源页面序列止于2025-12但未见明确停售标记
+电动MINI COOPER,30347,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车 + 车主手册,https://price.pcauto.com.cn/salescar/sg30347/ | https://www.icauto.com.cn/rank/car_3583.html,2026-08-29,两个逐月历史页均止于2025-12；重叠36个月完全一致但不足以证明2026真实为零
+电动MINI ACEMAN,30388,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车 + 车主手册,https://price.pcauto.com.cn/salescar/sg30388/ | https://www.icauto.com.cn/rank/car_3655.html,2026-08-29,两个逐月历史页均止于2025-12；重叠36个月完全一致但不足以证明2026真实为零
+海马8S,22904,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车 + 车主手册,https://price.pcauto.com.cn/salescar/sg22904/ | https://www.icauto.com.cn/rank/car_576.html,2026-08-29,两个逐月历史页均止于2025-12；重叠36个月完全一致但不足以证明2026真实为零
+奔奔E-Star,26061,2026-01_to_2026-06,source_page_stops_before_period,keep_zero_pending_manual,太平洋汽车 + 车主手册,https://price.pcauto.com.cn/salescar/sg26061/ | https://www.icauto.com.cn/rank/car_1429.html,2026-08-29,两个逐月历史页均止于2025-12；重叠36个月完全一致但不足以证明2026真实为零
+五菱宏光,4613,2024-12_to_2025-12,confirmed_source_gap_repaired,apply_verified_history,车主手册 + 太平洋汽车,https://www.icauto.com.cn/rank/car_2868.html | https://m.pcauto.com.cn/x/5105/51055541.html,2026-08-29,补齐2024-12为4、2025-01为1、2025-12为86；页面均明确为五菱宏光而非五菱宏光S或宏光MINIEV
 长安欧尚Z6 智电iDD,28760,2026-01_to_2026-06,unresolved,keep_zero_pending_manual,,,2026-08-28,2025年销量降至个位数后归零；尚无足够证据区分停产后零值和来源缺失
 捷途山海L9,30133,2026-01_to_2026-06,unresolved,keep_zero_pending_manual,,,2026-08-28,2025年末仍有销量；测试期全零需继续核验
 极越01,28842,2025-01_to_2026-06,unresolved,keep_zero_pending_manual,,,2026-08-28,2024-12后全零；尚未以同口径来源确认生命周期状态

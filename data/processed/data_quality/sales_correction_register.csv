@@ -61,3 +61,6 @@ Model 3,2022-02-01,24112,4607,太平洋汽车,https://www.pcauto.com.cn/jxwd/413
 五菱宏光S,2026-06-01,0,2215,太平洋汽车,https://price.pcauto.com.cn/salescar/sg9604/y2026-m6/,verified_same_source,2026-08-28,批量回采试点命中；车系ID和页面名称均精确一致，半年页与厂商汇总页数值一致
 名爵HS,2022-09-01,63,47,车主手册 + 汽车行业关注,https://www.icauto.com.cn/rank/car_58.html | https://www.autochat.com.cn/shuju/a-25333.html,verified_cross_source_consensus,2026-08-29,替代站逐月表为47；乘联会零售全榜独立复核同为47；车系名、MG名爵品牌和上汽集团厂商一致
 威马W6,2022-09-01,358,354,车主手册 + 易车,https://www.icauto.com.cn/rank/car_1845.html | https://car.yiche.com/paihangbang/salesdetail/?serialId=6927&type=1,verified_cross_source_consensus,2026-08-29,替代站逐月表为354；易车批发量和零售量独立复核均为354；车系名和威马汽车厂商一致
+五菱宏光,2024-12-01,0,4,车主手册 + 太平洋汽车,https://www.icauto.com.cn/rank/car_2868.html | https://m.pcauto.com.cn/x/5105/51055541.html,verified_cross_source_consensus,2026-08-29,两个页面的年度同比表均为4；精确匹配五菱宏光与上汽通用五菱，不合并五菱宏光S或宏光MINIEV
+五菱宏光,2025-01-01,0,1,车主手册 + 太平洋汽车,https://www.icauto.com.cn/rank/car_2868.html | https://m.pcauto.com.cn/x/5105/51055541.html,verified_cross_source_consensus,2026-08-29,两个页面的年度同比表均为1；精确匹配五菱宏光与上汽通用五菱，不合并五菱宏光S或宏光MINIEV
+五菱宏光,2025-12-01,0,86,车主手册 + 太平洋汽车,https://www.icauto.com.cn/rank/car_2868.html | https://m.pcauto.com.cn/x/5105/51055541.html,verified_cross_source_consensus,2026-08-29,两个页面的年度同比表均为86且2025年合计87；精确匹配五菱宏光与上汽通用五菱

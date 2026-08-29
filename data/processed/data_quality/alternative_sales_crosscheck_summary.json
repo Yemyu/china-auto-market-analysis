@@ -1,14 +1,14 @@
 {
   "schema_version": "v1",
   "source": "ICAUTO historical year-by-month tables",
-  "generated_at": "2026-08-29T11:00:56+08:00",
-  "mapped_series": 9,
+  "generated_at": "2026-08-29T15:42:55+08:00",
+  "mapped_series": 16,
   "unmapped_series": 5,
-  "verified_identity_pages": 9,
+  "verified_identity_pages": 16,
   "failed_or_mismatched_pages": 0,
-  "parsed_observations": 324,
+  "parsed_observations": 576,
   "comparison_counts": {
-    "exact": 251,
+    "exact": 503,
     "outside_panel": 72,
     "source_zero_current_positive": 1
   },

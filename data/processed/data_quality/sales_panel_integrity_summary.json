@@ -26,21 +26,21 @@
     "interpretation": "These fields are deterministic restatements of monthly_sales and cannot independently validate whether a source zero is real."
   },
   "series_risk_scan": {
-    "never_positive_series": 531,
-    "internal_gap_ge3_series": 29,
-    "recent_trailing_cutoff_series": 19,
+    "never_positive_series": 530,
+    "internal_gap_ge3_series": 30,
+    "recent_trailing_cutoff_series": 20,
     "high_volume_cutoff_series": 15,
     "priority_counts": {
       "low": 959,
       "medium": 33,
-      "high": 21,
-      "reviewed_repaired": 3,
+      "high": 20,
+      "reviewed_repaired": 4,
       "reviewed_keep": 1
     }
   },
   "model_cohort_risk": {
     "series": 371,
-    "never_positive_series": 1,
+    "never_positive_series": 0,
     "no_positive_in_training_series": 32,
     "all_zero_raw_test_series": 33,
     "all_zero_repaired_test_series": 30,

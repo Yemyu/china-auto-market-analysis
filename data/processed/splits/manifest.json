@@ -1,6 +1,6 @@
 {
   "schema_version": "v1",
-  "generated_at": "2026-08-29T03:13:14.569845+00:00",
+  "generated_at": "2026-08-29T07:44:24.503394+00:00",
   "source_sales": "data/processed/sales_filtered_24m.csv",
   "source_config": "data/raw/feature.csv (车系×年, 因果回退 join)",
   "population": "frozen 371-series evaluation cohort with causal configuration join",
