@@ -165,8 +165,8 @@
     "series_year_rows": 2007,
     "cv_folds": 5,
     "wmape_is_secondary": true,
-    "wmape_note_zh": "年度截面补充误差，不与月度销量预测WMAPE直接比较。",
-    "wmape_note_en": "Supporting annual cross-sectional error; not directly comparable with monthly sales-forecast WMAPE."
+    "wmape_note_zh": "年度截面模块内辅助误差指标，与月度预测指标分别报告。",
+    "wmape_note_en": "Module-specific annual cross-sectional error; reported separately from monthly forecasting."
   },
   "wmape_baselines": {
     "GLOBAL_MEDIAN": 89.39,
@@ -184,7 +184,7 @@
   },
   "top_example": null,
   "conclusion": {
-    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.158提升至0.301（+0.143）；配置解释车系之间差异，不解释同车系短期涨跌。完整模型年度截面WMAPE为75.68%，仅作补充误差，不能与月度销量预测直接比较。",
-    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.158 to 0.301 (+0.143) after adding configuration. Configuration explains between-series differences, not short-term within-series changes. The full model's annual cross-sectional WMAPE is 75.68% and is supporting evidence, not directly comparable with monthly forecasting."
+    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.158提升至0.301（+0.143）；该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别。完整模型年度截面WMAPE为75.68%，作为模块内辅助误差指标，与月度预测指标分别报告。",
+    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.158 to 0.301 (+0.143) after adding configuration. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification. The full model's annual cross-sectional WMAPE is 75.68%, reported as a module-specific supporting metric separately from monthly forecasting."
   }
 }

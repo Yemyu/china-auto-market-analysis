@@ -55,7 +55,7 @@
           <header class="analysis-section-head"><span>02</span><div><h2 id="bd-overview-title" data-i18n="bd_overview_title">品牌销量与用户评价</h2><p data-i18n="bd_overview_lead">时间走势用于对照同期变化，维度比较用于识别品牌相对市场平均的长项与短板。</p></div></header>
           <div class="analysis-grid-2">
             <article class="analysis-panel">
-              <div class="analysis-panel-head"><div><h3 data-i18n="bd_sales_sentiment">品牌月度销量与综合评价</h3><p data-i18n="bd_sales_insight">左轴为销量，右轴为十个需求维度的平均评价；两条序列只用于同期对照，不直接说明因果关系。</p></div></div>
+              <div class="analysis-panel-head"><div><h3 data-i18n="bd_sales_sentiment">品牌月度销量与综合评价</h3><p data-i18n="bd_sales_insight">左轴为销量，右轴为十个需求维度的平均评价；两条序列用于同期描述性对照，不进行因果识别。</p></div></div>
               <div id="chartBrandTs" class="analysis-chart analysis-chart-tall"></div>
             </article>
             <article class="analysis-panel">
@@ -84,11 +84,11 @@
             <div><label for="searchInp" data-i18n="dd_search_label">搜索</label><input type="text" id="searchInp" data-i18n-placeholder="dd_search" placeholder="输入品牌或车系"></div>
             <span class="explorer-filter-meta" id="seriesMeta"></span>
           </div>
-          <div class="explorer-data-notes"><span data-i18n="dd_filtered">保留至少3个月具有可用滚动评论特征的车系</span><span data-i18n="dd_sparsity_note">热力图空白表示当月评论样本不足，不代表中性评价。</span></div>
+          <div class="explorer-data-notes"><span data-i18n="dd_filtered">保留至少3个月具有可用滚动评论特征的车系</span><span data-i18n="dd_sparsity_note">热力图空白表示当月评论样本不足，按数据不可用处理。</span></div>
         </section>
 
         <section class="analysis-section" aria-labelledby="dd-series-title">
-          <header class="analysis-section-head"><span>02</span><div><h2 id="dd-series-title" data-i18n="dd_series_title">单一车系的时间变化</h2><p data-i18n="dd_series_lead">销量与评论数据按自然月对齐，便于观察同一时期的变化，但不把同步变化直接解释为因果。</p></div></header>
+          <header class="analysis-section-head"><span>02</span><div><h2 id="dd-series-title" data-i18n="dd_series_title">单一车系的时间变化</h2><p data-i18n="dd_series_lead">销量与评论数据按自然月对齐，用于描述同一时期的变化，不进行因果识别。</p></div></header>
           <div class="analysis-grid-2">
             <article class="analysis-panel">
               <div class="analysis-panel-head"><div><h3 data-i18n="dd_sales_sentiment">月度销量与综合评价</h3><p data-i18n="dd_sales_insight">左轴为销量，右轴为综合评价；评论样本不足的月份保留为空值。</p></div></div>

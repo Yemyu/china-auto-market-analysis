@@ -53,7 +53,7 @@
           </table>
         </div>
 
-        <div class="analysis-method-note"><p data-i18n="fc_scenario_note">滚动单月与固定六个月回答的是两个不同问题：前者模拟每月拿到最新销量后的运营预测，后者检验一次性承受六个月滞后信息时的压力。两者不能直接横向排名。</p></div>
+        <div class="analysis-method-note"><p data-i18n="fc_scenario_note">滚动单月协议用于运营型下月预测，固定六个月协议用于评估递归信息受限情景；两项结果按协议分别报告。</p></div>
 
         <div class="forecast-main-grid">
           <article class="analysis-panel">
@@ -65,14 +65,14 @@
             <dl>
               <div><dt data-i18n="home_global_col">全局 WMAPE</dt><dd data-i18n="fc_global_explain">将全部车系月的绝对误差汇总后除以实际销量总和，高销量车系权重更大。</dd></div>
               <div><dt data-i18n="home_median_col">逐车系中位数 WMAPE</dt><dd data-i18n="fc_median_explain">先分别计算每个车系的误差，再取中位数，用来观察典型车系表现。</dd></div>
-              <div><dt data-i18n="fc_cold_label">固定六个月压力测试</dt><dd data-i18n="fc_cold_explain">固定起点综合方案只作为压力测试，与滚动单月主结果分开解读。</dd></div>
+              <div><dt data-i18n="fc_cold_label">固定六个月压力测试</dt><dd data-i18n="fc_cold_explain">固定起点综合方案用于压力测试，与滚动单月主结果分别评估。</dd></div>
             </dl>
           </aside>
         </div>
       </section>
 
       <section class="analysis-section" aria-labelledby="fc-signal-title">
-        <header class="analysis-section-head"><span>02</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">模型主要依赖什么信号？</h2><p data-i18n="fc_signal_lead">特征贡献用于解释模型如何形成预测，不代表这些因素对销量具有因果作用。</p></div></header>
+        <header class="analysis-section-head"><span>02</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">模型主要依赖什么信号？</h2><p data-i18n="fc_signal_lead">特征贡献用于说明模型的预测依据，不构成销量因果效应估计。</p></div></header>
         <div class="forecast-signal-grid">
           <article class="analysis-panel">
             <div class="analysis-panel-head"><div><h3 data-i18n="fc_features_public">前12项特征贡献</h3><p data-i18n="fc_features_public_note">平均绝对 SHAP 值，基于对数销量预测；数值越大，模型越依赖该特征。</p></div></div>
@@ -101,13 +101,13 @@
       </section>
 
       <section class="analysis-section" id="sentiment-value" aria-labelledby="fc-review-value-title">
-        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">口碑消融属于固定六个月压力测试，不改变滚动单月主结果；点估计有所改善，但稳定性证据有限。</p></div></header>
+        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">口碑消融属于固定六个月压力测试，不改变滚动单月主结果；点估计改善，但稳定增益证据不足。</p></div></header>
 
         <div class="forecast-evidence-strip">
           <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong>0.88<small>pp</small></strong></div>
           <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong>93.46<small>%</small></strong></div>
           <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong>−0.28—2.11<small>pp</small></strong></div>
-          <p data-i18n="fc_evidence_plain">区间包含零，表示部分重采样结果中口碑增强模型并未优于基线。当前证据支持“小幅补充信号”，不支持“稳定胜出”。</p>
+          <p data-i18n="fc_evidence_plain">95%区间包含零，口碑增强的稳定增益尚未获得充分统计支持，定位为辅助信息。</p>
         </div>
 
         <div class="analysis-grid-2">

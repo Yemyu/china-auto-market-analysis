@@ -274,7 +274,7 @@
     ]
   },
   "conclusion": {
-    "zh": "固定六个月压力测试中，选定的口碑增强相对销量基线改善0.884个百分点；5,000次车系聚类Bootstrap胜出概率93.46%，95%区间为-0.28至2.11个百分点，因此只支持小幅补充信号。",
-    "en": "In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by 0.884 pp; it wins 93.46% of 5,000 series-cluster bootstrap samples, with a 95% interval from -0.28 to 2.11 pp. This supports only a modest supporting signal."
+    "zh": "固定六个月压力测试中，选定的口碑增强相对销量基线改善0.884个百分点；5,000次车系聚类Bootstrap胜出概率为93.46%，95%区间为-0.28至2.11个百分点，稳定增益证据不足，定位为辅助信息。",
+    "en": "In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by 0.884 pp; it wins 93.46% of 5,000 series-cluster bootstrap samples, with a 95% interval from -0.28 to 2.11 pp. Evidence for a stable gain is insufficient, so it is classified as supporting information."
   }
 }

@@ -260,8 +260,8 @@ class DashboardData:
             ],
             "findings": [
                 {"zh": f"滚动单月XGBoost为{rolling_global:.2f}% WMAPE，比“沿用上月销量”朴素基准{last_global:.2f}%低{last_global-rolling_global:.2f}个百分点", "en": f"The rolling one-month XGBoost reaches {rolling_global:.2f}% WMAPE, {last_global-rolling_global:.2f} pp below the last-observed-value naive baseline at {last_global:.2f}%"},
-                {"zh": f"固定六个月压力测试的综合方案为{fixed_hybrid:.2f}%，相对同场景最近6个月均值{fixed_naive:.2f}%减少{(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}%绝对误差；它与滚动主结果不是同一任务", "en": f"The fixed six-month stress test scores {fixed_hybrid:.2f}% versus {fixed_naive:.2f}% for its trailing-six-month naive comparator; it reduces absolute error by {(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}% and is a different task from the rolling headline"},
-                {"zh": f"固定起点口碑增强点估计改善{review_point:.3f}个百分点，但Bootstrap区间跨0，因此保留为补充证据", "en": f"Fixed-origin review enhancement shows a {review_point:.3f} pp point estimate, but its bootstrap interval crosses zero, so it remains supporting evidence"},
+                {"zh": f"固定六个月压力测试的综合方案为{fixed_hybrid:.2f}%，相对同场景最近6个月均值{fixed_naive:.2f}%的绝对误差降低{(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}%；该协议与滚动单月协议分别评估", "en": f"The fixed six-month stress test scores {fixed_hybrid:.2f}% versus {fixed_naive:.2f}% for its trailing-six-month naive comparator, a {(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}% absolute-error reduction; the protocol is evaluated separately from the rolling headline"},
+                {"zh": f"固定起点口碑增强点估计改善{review_point:.3f}个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息", "en": f"Fixed-origin review enhancement shows a {review_point:.3f} pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"},
                 {"zh": f"736车系年度归因中，配置将分组交叉验证R²从{config_brand:.3f}提升到{config_full:.3f}", "en": f"Across 736 series, specifications raise grouped-CV annual-attribution R² from {config_brand:.3f} to {config_full:.3f}"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
                 {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前有效预警{needs['latest_active_alerts']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} active alert is detected"},
@@ -383,8 +383,8 @@ class DashboardData:
                 "en": f"The headline task refreshes each month for a one-month-ahead forecast: rolling one-month XGBoost reaches {rolling_primary['wmape_vol']:.2f}% WMAPE, {rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f} pp below the last-observed-value naive baseline at {rolling_naive['wmape_vol']:.2f}%. The fixed six-month combined method scores {fixed_hybrid:.2f}% and is reported separately as a stress test.",
             },
             "feature_insight": {
-                "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择的是销量基线，避免把固定场景的口碑特征贡献误读成滚动主结果的因果证据。",
-                "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the sales baseline, so the fixed-scenario review features are not presented as causal evidence for the rolling result.",
+                "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择销量基线，该图用于描述模型依赖结构，不用于滚动主结果的因果识别。",
+                "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the sales baseline, so the chart describes model reliance and is not used for causal identification in the rolling result.",
             },
         }
 
@@ -475,8 +475,8 @@ class DashboardData:
         return {
             "shap": features, "models": models, "blocks": blocks,
             "meta": {"series": 736, "series_year_rows": 2007, "cv_folds": 5, "wmape_is_secondary": True,
-                     "wmape_note_zh": "年度截面补充误差，不与月度销量预测WMAPE直接比较。",
-                     "wmape_note_en": "Supporting annual cross-sectional error; not directly comparable with monthly sales-forecast WMAPE."},
+                     "wmape_note_zh": "年度截面模块内辅助误差指标，与月度预测指标分别报告。",
+                     "wmape_note_en": "Module-specific annual cross-sectional error; reported separately from monthly forecasting."},
             "wmape_baselines": {
                 str(row["method"]): round(float(row["WMAPE_mean"]), 2)
                 for _, row in baselines.iterrows()
@@ -484,8 +484,8 @@ class DashboardData:
             "wmape_by_variant": wmape_rows,
             "comparison": {"with": None, "without": None}, "top_example": None,
             "conclusion": {
-                "zh": f"736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由{brand_r2:.3f}提升至{config_r2:.3f}（+{config_r2-brand_r2:.3f}）；配置解释车系之间差异，不解释同车系短期涨跌。完整模型年度截面WMAPE为{wmape_rows.get('+CONFIG', np.nan):.2f}%，仅作补充误差，不能与月度销量预测直接比较。",
-                "en": f"Across 736 series and 2,007 series-year rows, grouped CV R² rises from {brand_r2:.3f} to {config_r2:.3f} (+{config_r2-brand_r2:.3f}) after adding configuration. Configuration explains between-series differences, not short-term within-series changes. The full model's annual cross-sectional WMAPE is {wmape_rows.get('+CONFIG', np.nan):.2f}% and is supporting evidence, not directly comparable with monthly forecasting.",
+                "zh": f"736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由{brand_r2:.3f}提升至{config_r2:.3f}（+{config_r2-brand_r2:.3f}）；该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别。完整模型年度截面WMAPE为{wmape_rows.get('+CONFIG', np.nan):.2f}%，作为模块内辅助误差指标，与月度预测指标分别报告。",
+                "en": f"Across 736 series and 2,007 series-year rows, grouped CV R² rises from {brand_r2:.3f} to {config_r2:.3f} (+{config_r2-brand_r2:.3f}) after adding configuration. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification. The full model's annual cross-sectional WMAPE is {wmape_rows.get('+CONFIG', np.nan):.2f}%, reported as a module-specific supporting metric separately from monthly forecasting.",
             },
         }
 
@@ -536,8 +536,8 @@ class DashboardData:
                 "sentiment": [round(row["sentiment"], 3) if pd.notna(row["sentiment"]) else None for row in market_rows],
             },
             "conclusion": {
-                "zh": f"固定六个月压力测试中，选定的口碑增强相对销量基线改善{robustness['selected_feedback_vs_base_improvement_pp']:.3f}个百分点；5,000次车系聚类Bootstrap胜出概率{robustness['selected_feedback_vs_base_probability_better']:.2%}，95%区间为{robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][0]:.2f}至{robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][1]:.2f}个百分点，因此只支持小幅补充信号。",
-                "en": f"In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by {robustness['selected_feedback_vs_base_improvement_pp']:.3f} pp; it wins {robustness['selected_feedback_vs_base_probability_better']:.2%} of 5,000 series-cluster bootstrap samples, with a 95% interval from {robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][0]:.2f} to {robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][1]:.2f} pp. This supports only a modest supporting signal.",
+                "zh": f"固定六个月压力测试中，选定的口碑增强相对销量基线改善{robustness['selected_feedback_vs_base_improvement_pp']:.3f}个百分点；5,000次车系聚类Bootstrap胜出概率为{robustness['selected_feedback_vs_base_probability_better']:.2%}，95%区间为{robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][0]:.2f}至{robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][1]:.2f}个百分点，稳定增益证据不足，定位为辅助信息。",
+                "en": f"In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by {robustness['selected_feedback_vs_base_improvement_pp']:.3f} pp; it wins {robustness['selected_feedback_vs_base_probability_better']:.2%} of 5,000 series-cluster bootstrap samples, with a 95% interval from {robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][0]:.2f} to {robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][1]:.2f} pp. Evidence for a stable gain is insufficient, so it is classified as supporting information.",
             },
         }
 

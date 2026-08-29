@@ -112,7 +112,7 @@
       <section class="home-report-section home-results" aria-labelledby="results-title">
         <div class="home-section-aside">
           <h2 id="results-title"><span class="home-heading-no" aria-hidden="true">03</span><span data-i18n="home_results_title">主要结果</span></h2>
-          <p data-i18n="home_results_body">销量主结果采用滚动单月预测的全局 WMAPE，同时保留逐车系中位数；固定六个月只作为同口径压力测试。配置模块使用分组交叉验证 R²，需求模块报告维度负面率，避免用单一指标代替全部证据。</p>
+          <p data-i18n="home_results_body">销量主结果采用滚动单月预测的全局 WMAPE，逐车系中位数作为补充；固定六个月结果采用同口径压力测试。配置模块使用分组交叉验证 R²，需求模块报告维度负面率，各指标按模块分别解释。</p>
         </div>
         <div class="home-section-body">
           <article class="home-result-block home-result-primary">
@@ -133,7 +133,7 @@
             </div>
             <div class="home-metric-explain">
               <p><strong data-i18n="home_wmape_why">全局 WMAPE</strong><span data-i18n="home_wmape_answer">它按真实销量加权，更接近整体市场误差；同时展示逐车系中位数，防止高销量车系完全遮住长尾表现。</span></p>
-              <p><strong data-i18n="home_uncertainty_title">场景说明</strong><span data-i18n="home_uncertainty_body">滚动单月主结果比较的是同一场景下的上月销量基准；固定六个月压力测试另行比较，两个百分比不能直接横向排名。</span></p>
+              <p><strong data-i18n="home_uncertainty_title">场景说明</strong><span data-i18n="home_uncertainty_body">滚动单月主结果与同场景上月销量基准对照；固定六个月压力测试独立评估，两项结果分别报告。</span></p>
             </div>
           </article>
 
@@ -141,7 +141,7 @@
             <article class="home-result-block">
               <div class="home-result-heading"><div><span class="home-result-index">B</span><h3 data-i18n="home_result_attr_title">产品配置提高年度销量差异的解释力</h3></div><a href="attribution.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
               <div class="home-evidence-line"><strong>0.158</strong><span aria-hidden="true">→</span><strong class="accent">0.301</strong></div>
-              <p data-i18n="home_result_attr_body">在同一736车系口径下，加入配置后，GroupKFold验证 R² 从品牌模型的0.158提升至0.301；说明产品属性有增量解释力，但不等同于因果效应。年度截面 WMAPE 仅作补充。</p>
+              <p data-i18n="home_result_attr_body">在同一736车系口径下，加入配置后，GroupKFold验证 R² 从品牌模型的0.158提升至0.301；表明产品属性对年度跨车系差异具有增量解释力。年度截面 WMAPE 作为模块内辅助误差指标，与月度预测指标分别报告。</p>
             </article>
             <article class="home-result-block">
               <div class="home-result-heading"><div><span class="home-result-index">C</span><h3 data-i18n="home_result_need_title">用户需求：智能化与舒适性是负面反馈最集中的维度</h3></div><a href="absa.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
@@ -165,7 +165,7 @@
             <article><span>01</span><h3 data-i18n="home_method_time">严格时间切分</h3><p data-i18n="home_method_time_body">训练截至2025-06；验证为2025-07—12；测试为2026-01—06。每个预测月只使用当月第一天前已经发布的评论。</p></article>
             <article><span>02</span><h3 data-i18n="home_method_metric">主指标与补充指标</h3><p data-i18n="home_method_metric_body">主指标为全局 WMAPE：∑|实际−预测| ÷ ∑实际。补充报告逐车系中位数 WMAPE、分车型误差与不确定性。</p></article>
             <article><span>03</span><h3 data-i18n="home_method_text">评论文本分析</h3><p data-i18n="home_method_text_body">评论被拆分为10个产品维度，并区分“是否提及”与正、中、负倾向。</p></article>
-            <article><span>04</span><h3 data-i18n="home_method_limit">结果边界</h3><p data-i18n="home_method_limit_body">滚动主结果和固定六个月压力测试属于不同预测任务；产品配置分析衡量解释关联而非因果；评论覆盖不完整的车系保留为缺失，不强行填成中性。</p></article>
+            <article><span>04</span><h3 data-i18n="home_method_limit">结果边界</h3><p data-i18n="home_method_limit_body">滚动主结果与固定六个月压力测试采用不同预测协议；产品配置分析量化年度跨车系解释力，不进行因果识别；评论覆盖不足的车系保留缺失状态。</p></article>
           </div>
           <details class="home-audit-note">
             <summary data-i18n="home_audit_summary">补充证据</summary>

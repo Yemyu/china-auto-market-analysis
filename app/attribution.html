@@ -74,10 +74,10 @@
       </section>
 
       <section class="analysis-section" aria-labelledby="at-boundary-title">
-        <header class="analysis-section-head"><span>03</span><div><h2 id="at-boundary-title" data-i18n="at_boundary_title">结果的适用边界</h2><p data-i18n="at_boundary_lead">这是一项年度截面解释分析，不能直接替代因果实验或短期销量预测。</p></div></header>
+        <header class="analysis-section-head"><span>03</span><div><h2 id="at-boundary-title" data-i18n="at_boundary_title">结果的适用边界</h2><p data-i18n="at_boundary_lead">该模块用于年度截面解释分析，评估产品属性对跨车系销量差异的解释力，不承担因果识别或短期预测任务。</p></div></header>
         <div class="product-boundaries">
           <div><span>01</span><strong data-i18n="at_boundary_between">适合比较车系之间的差异</strong><p data-i18n="at_boundary_between_note">问题是“为什么不同车系的年度销量水平不同”，而不是“某车系下个月会涨还是会跌”。</p></div>
-          <div><span>02</span><strong data-i18n="at_boundary_assoc">重要性不是因果效应</strong><p data-i18n="at_boundary_assoc_note">配置可能与价格、品牌定位和目标人群共同出现，不能把模型重要性解释成单项配置的销量增量。</p></div>
+          <div><span>02</span><strong data-i18n="at_boundary_assoc">特征重要性：预测依赖而非因果估计</strong><p data-i18n="at_boundary_assoc_note">配置特征与价格、品牌定位及目标人群存在共同变动，模型重要性用于描述预测依赖程度，不作为单项配置销量增量估计。</p></div>
           <div><span>03</span><strong data-i18n="at_boundary_missing">缺失项也可能被模型利用</strong><p data-i18n="at_boundary_missing_note">部分高排名特征代表配置字段缺失，提示数据完整度本身包含市场分层信息。</p></div>
         </div>
         <details class="analysis-method-note"><summary data-i18n="at_method_summary">查看模型与数据来源</summary><p data-i18n="at_method_note">目标为年度销量的 log1p 变换；模型使用 XGBoost，按车系进行五折 GroupKFold。特征重要性采用 XGBoost gain，而不是 SHAP 值。</p><p data-i18n="at_source_metr"></p><p data-i18n="at_source_shap"></p></details>

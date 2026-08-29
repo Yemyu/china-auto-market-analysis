@@ -370,20 +370,20 @@ TEXT = {
 
         "models": """### 模型比较
 
-滚动单月主结果中，XGBoost 的全局 WMAPE 为 31.34%，沿用上月销量的朴素基准为 40.99%，绝对误差降低 9.65 个百分点（相对减少约 23.5%）。固定六个月综合方案为 39.07%，相对同场景最近 6 个月均值 69.31% 减少 43.6% 的绝对误差；这两个结果回答不同问题，不能直接横向排名。""",
+滚动单月主结果中，XGBoost 的全局 WMAPE 为 31.34%，沿用上月销量的朴素基准为 40.99%，绝对误差降低 9.65 个百分点（相对减少约 23.5%）。固定六个月综合方案为 39.07%，相对同场景最近 6 个月均值 69.31% 减少 43.6% 的绝对误差；两种协议对应不同应用场景，分别评估。""",
 
         "uncertainty": """### 改善幅度与不确定性
 
-口碑增强属于固定六个月压力测试：点估计相对销量基线改善 0.884 个百分点，按车系重采样的 95% 区间为 −0.284 至 2.108 个百分点，仍跨过零。因此它是小幅补充信号，不是滚动主结果的稳定增益。""",
+口碑增强属于固定六个月压力测试：点估计相对销量基线改善 0.884 个百分点，按车系重采样的 95% 区间为 −0.284 至 2.108 个百分点，稳定增益证据不足，因此定位为辅助信息。""",
         "importance": "### 哪些信息在起作用",
 
         "cold": """### 固定压力测试中的冷启动补充
 
-固定六个月压力测试为 9 个历史不足车系补充上市曲线；这项统计策略只处理长历史不足的边界样本，不替代 371 个车系的滚动主模型。""",
+固定六个月压力测试为 9 个历史不足车系补充上市曲线；这项统计策略用于边界样本处理，不改变 371 个车系的滚动主模型。""",
         "config": """## 3. 产品配置与年度销量差异
 
 样本为 736 个车系、2,007 条车系年记录。验证按车系分组，避免同一车系的不同年份同时出现在训练折和验证折。""",
-        "config_read": """**结果解读：** 加入品牌后 R² 从 0.089 升至 0.158；继续加入配置后达到 0.301。这个模块衡量车系间的解释关联，不用于判断单一配置是否会直接导致销量增长；年度截面 WMAPE 只是补充误差，不能与月度销量预测直接比较。""",
+        "config_read": """**结果解读：** 加入品牌后 R² 从 0.089 升至 0.158；继续加入配置后达到 0.301。该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别；年度截面 WMAPE 作为模块内辅助误差指标，与月度预测指标分别报告。""",
         "needs": """## 4. 用户需求与口碑风险
 
 严格语料包含 24,175 条评论。十个维度同时保留提及率和有效评分中的负面率，避免把“讨论很多”和“评价很差”合并成一个指标。""",
@@ -404,9 +404,9 @@ TEXT = {
         "conclusion": """## 7. 结论
 
 1. 滚动单月 XGBoost 是当前业务主结果；历史销量是主要信号，且相对同场景朴素基准有明确改善。
-2. 固定六个月综合方案保留为压力测试，不能与滚动单月的 WMAPE 直接比较。
-3. 产品配置能够提高年度销量差异的解释力，但结果属于关联分析；其 WMAPE 只是年度截面补充误差。
-4. 评论数据更适合用于需求结构、风险监测和固定压力测试的补充信号；提及率、正负倾向与样本量需要分开报告。
+2. 固定六个月综合方案保留为压力测试，与滚动单月协议分别评估。
+3. 产品配置能够提高年度销量差异的解释力；该结果属于样本外解释分析，其 WMAPE 为年度截面模块内辅助误差指标。
+4. 评论数据主要用于需求结构、风险监测和固定压力测试的辅助信息；提及率、正负倾向与样本量需要分开报告。
 5. 严格时间切分、可用信息边界和完整正文门槛是当前结果可复查的基础。""",
     },
     "en": {
@@ -429,20 +429,20 @@ Training ends in 2025-06, validation covers 2025-07—12, and testing covers 202
 
         "models": """### Model comparison
 
-In the rolling one-month headline, XGBoost reaches 31.34% global WMAPE versus 40.99% for the last-observed-value naive baseline, a 9.65-point (about 23.5%) absolute-error reduction. The fixed six-month combined method reaches 39.07% versus 69.31% for its trailing-six-month comparator, a 43.6% reduction; these are different tasks and should not be ranked directly.""",
+In the rolling one-month headline, XGBoost reaches 31.34% global WMAPE versus 40.99% for the last-observed-value naive baseline, a 9.65-point (about 23.5%) absolute-error reduction. The fixed six-month combined method reaches 39.07% versus 69.31% for its trailing-six-month comparator, a 43.6% reduction; the protocols correspond to different forecast applications and are evaluated separately.""",
 
         "uncertainty": """### Improvement and uncertainty
 
-Review enhancement belongs to the fixed six-month stress test: its point estimate improves on the sales baseline by 0.884 percentage points, while the series-cluster 95% interval is −0.284 to 2.108 points and crosses zero. It is therefore supporting evidence, not a stable gain for the rolling headline.""",
+Review enhancement belongs to the fixed six-month stress test: its point estimate improves on the sales baseline by 0.884 percentage points, while the series-cluster 95% interval is −0.284 to 2.108 points. Evidence for a stable gain is insufficient, so it is classified as supporting information.""",
         "importance": "### Information contribution",
 
         "cold": """### Cold-start supplement in the stress test
 
-The fixed six-month stress test adds a launch-curve statistical supplement for nine history-poor series. It handles boundary cases and does not replace the rolling headline model for 371 series.""",
+The fixed six-month stress test adds a launch-curve statistical supplement for nine history-poor series. It is used for boundary-case treatment and does not alter the 371-series rolling headline model.""",
         "config": """## 3. Product specifications and annual sales variation
 
 The sample contains 736 series and 2,007 series-year records. Validation groups by series so different years of one series cannot enter both training and validation folds.""",
-        "config_read": """**Interpretation:** R² rises from 0.089 to 0.158 after adding brand and reaches 0.301 after adding specifications. This is an out-of-fold explanatory association across series, not a causal estimate for an individual feature; annual cross-sectional WMAPE is supporting error and is not directly comparable with monthly forecasting.""",
+        "config_read": """**Interpretation:** R² rises from 0.089 to 0.158 after adding brand and reaches 0.301 after adding specifications. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification; annual cross-sectional WMAPE is a module-specific supporting metric reported separately from monthly forecasting.""",
         "needs": """## 4. User needs and review risk
 
 The strict corpus contains 24,175 reviews. Mention share and negative share among scored mentions remain separate, so discussion volume is not conflated with dissatisfaction.""",
@@ -463,9 +463,9 @@ Launch from the repository root:
         "conclusion": """## 7. Conclusions
 
 1. Rolling one-month XGBoost is the current operational headline; sales history is the dominant signal and clearly improves on its same-scenario naive baseline.
-2. The fixed six-month combined method is retained as a stress test and should not be compared directly with the rolling WMAPE.
-3. Product specifications improve the explanation of annual cross-series variation, but the result is associational and its WMAPE is supporting evidence only.
-4. Review data is most directly useful for demand structure, risk monitoring, and a modest stress-test supplement; mention, polarity, and sample size should be reported separately.
+2. The fixed six-month combined method is retained as a stress test and is evaluated separately from the rolling protocol.
+3. Product specifications improve the explanation of annual between-series variation; the result is an out-of-sample explanatory analysis and its WMAPE is a module-specific supporting metric.
+4. Review data is primarily used for demand structure, risk monitoring, and supporting information in the stress test; mention, polarity, and sample size should be reported separately.
 5. Strict temporal splits, information-availability boundaries, and full-text quality thresholds make the results auditable.""",
     },
 }

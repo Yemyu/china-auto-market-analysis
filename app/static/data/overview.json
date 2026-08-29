@@ -284,12 +284,12 @@
       "en": "The rolling one-month XGBoost reaches 31.34% WMAPE, 9.65 pp below the last-observed-value naive baseline at 40.99%"
     },
     {
-      "zh": "固定六个月压力测试的综合方案为39.07%，相对同场景最近6个月均值69.31%减少43.6%绝对误差；它与滚动主结果不是同一任务",
-      "en": "The fixed six-month stress test scores 39.07% versus 69.31% for its trailing-six-month naive comparator; it reduces absolute error by 43.6% and is a different task from the rolling headline"
+      "zh": "固定六个月压力测试的综合方案为39.07%，相对同场景最近6个月均值69.31%的绝对误差降低43.6%；该协议与滚动单月协议分别评估",
+      "en": "The fixed six-month stress test scores 39.07% versus 69.31% for its trailing-six-month naive comparator, a 43.6% absolute-error reduction; the protocol is evaluated separately from the rolling headline"
     },
     {
-      "zh": "固定起点口碑增强点估计改善0.884个百分点，但Bootstrap区间跨0，因此保留为补充证据",
-      "en": "Fixed-origin review enhancement shows a 0.884 pp point estimate, but its bootstrap interval crosses zero, so it remains supporting evidence"
+      "zh": "固定起点口碑增强点估计改善0.884个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息",
+      "en": "Fixed-origin review enhancement shows a 0.884 pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"
     },
     {
       "zh": "736车系年度归因中，配置将分组交叉验证R²从0.158提升到0.301",

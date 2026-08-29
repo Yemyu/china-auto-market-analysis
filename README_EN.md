@@ -19,7 +19,7 @@
 | Module | Sample | Question | Current protocol |
 |---|---:|---|---|
 | Rolling one-month sales forecast | 371 series | Forecast next month with the latest published sales | Headline result; strict temporal split |
-| Fixed six-month stress test | Same 371 series | Recursively forecast six months from 2026-01 | Supporting scenario; do not rank directly against the headline |
+| Fixed six-month stress test | Same 371 series | Recursively forecast six months from 2026-01 | Supporting scenario; evaluated separately from the headline |
 | Product-specification analysis | 736 series, 2,007 series-year records | Estimate the incremental explanatory value of year, brand, and specifications | Five-fold `GroupKFold` by series |
 | User needs and risk | 24,175 reviews across 345 series | Identify ten needs, negative concentration, and reputation anomalies | Structural checks, sampling audit, adjacent 180-day windows |
 
@@ -47,19 +47,19 @@ At each test month, the rolling protocol uses the latest published previous-mont
 | Fixed-origin trailing six-month mean (naive) | 69.31% | 89.60% |
 | Fixed six-month combined method (reviews + cold-start supplement) | **39.07%** | **49.10%** |
 
-The fixed stress test reduces absolute error by 43.6% against its same-scenario naive comparator, but it withholds post-origin realised sales and is not the same task as the rolling headline. In this fixed stress test, review enhancement improves the point estimate by 0.884 percentage points; the 5,000-replicate series-cluster bootstrap 95% interval is −0.284 to 2.108 points and crosses zero, so it remains supporting evidence. The cold-start statistical strategy handles nine history-poor series and does not replace the headline model.
+The fixed stress test reduces absolute error by 43.6% against its same-scenario naive comparator. Because it withholds post-origin realised sales and carries recursive lag, it is evaluated separately from the rolling headline. Review enhancement improves the point estimate by 0.884 percentage points; the 5,000-replicate series-cluster bootstrap 95% interval is −0.284 to 2.108 points, leaving evidence for a stable gain insufficient. The cold-start statistical strategy covers nine history-poor series as a boundary-case treatment and does not alter the headline model.
 
 The sales model is XGBoost. ARIMA, Prophet, LSTM, and other early candidates remain in the experiment scripts to document model selection; they are not mixed into the current headline table.
 
 ### 2. Product specifications and annual sales variation
 
-| Feature combination | Grouped-CV R² | Annual cross-sectional WMAPE (supporting) |
+| Feature combination | Grouped-CV R² | Annual cross-sectional WMAPE (module metric) |
 |---|---:|---:|
 | Year | 0.089 | 87.77% |
 | Year + brand | 0.158 | 83.77% |
 | Year + brand + specifications | **0.301** | **75.68%** |
 
-Adding specifications increases R² by about 0.143 over year plus brand, showing that product attributes explain part of the between-series annual variation. This is out-of-sample association, not a causal effect; annual cross-sectional WMAPE is not directly comparable with monthly forecast WMAPE.
+Adding specifications increases R² by about 0.143 over year plus brand, indicating incremental explanatory power for between-series annual variation. The module uses out-of-sample evaluation to quantify this cross-series explanatory power and does not perform causal identification; annual cross-sectional WMAPE is reported as a module-specific supporting error metric alongside, rather than against, monthly forecast WMAPE.
 
 ### 3. User needs and risk
 

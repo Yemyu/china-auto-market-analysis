@@ -86,7 +86,7 @@ Engine, motor, and battery columns contain structural missingness. A BEV has no 
 | `split_index.csv` | Full sample | Split membership by row |
 | `manifest.json` | — | Series count, row count, time boundaries, and version metadata |
 
-The headline experiment is a rolling one-month forecast: each test month predicts the next month and can use the latest published previous-month sales, with model parameters locked within the six-month window. The fixed-origin protocol remains as a stress test: it starts in January 2026 and recursively uses prior predictions as lagged sales, never actual post-origin sales. The protocols answer different questions and are not ranked directly.
+The headline experiment is a rolling one-month forecast: each test month predicts the next month and can use the latest published previous-month sales, with model parameters locked within the six-month window. The fixed-origin protocol remains as a stress test: it starts in January 2026 and recursively uses prior predictions as lagged sales, never actual post-origin sales. The protocols correspond to different applications, with metrics reported separately within each protocol.
 
 ## 3. Review corpus
 
@@ -209,9 +209,9 @@ The scan also confirms that the previous “at least 24 consecutive months” ru
 | `direct_multihorizon_validation.csv` | Rolling validation summary for direct multi-horizon candidates |
 | `direct_multihorizon_summary.json` | Locked selection protocol and rejection decision for the direct experiment |
 
-The rolling one-month headline reaches 31.34% global WMAPE versus 40.99% for the last-observed-value naive baseline, a 9.65-point (about 23.5%) reduction. In the fixed six-month stress test, the trailing-six-month mean is 69.31% and the reviews-plus-cold-start combined method is 39.07%, a 43.6% reduction; these are different forecast tasks.
+The rolling one-month headline reaches 31.34% global WMAPE versus 40.99% for the last-observed-value naive baseline, a 9.65-point (about 23.5%) reduction. In the fixed six-month stress test, the trailing-six-month mean is 69.31% and the reviews-plus-cold-start combined method is 39.07%, a 43.6% reduction; the protocols correspond to different forecast applications and are evaluated separately.
 
-Review enhancement in the fixed stress test improves the point estimate by 0.884 pp; the 5,000-replicate series-cluster bootstrap 95% interval is −0.284 to 2.108 pp and crosses zero, so review features remain supporting evidence. The cold-start statistical strategy handles nine history-poor series and does not replace the 371-series rolling headline.
+Review enhancement in the fixed stress test improves the point estimate by 0.884 pp; the 5,000-replicate series-cluster bootstrap 95% interval is −0.284 to 2.108 pp, leaving evidence for a stable gain insufficient. The cold-start statistical strategy covers nine history-poor series as a boundary-case treatment and does not alter the 371-series rolling headline.
 
 The direct multi-horizon experiment selected blend weights on three earlier origins and reached 30.42% WMAPE at the July 2025 fixed-origin validation. Its locked specification then rose to 47.46% on the 362 history-bearing series in the 2026 test, underperforming the existing recursive model; it was therefore rejected under the predefined rule and does not replace the headline result. Row-level experimental predictions remain local and are ignored by Git.
 
@@ -222,7 +222,7 @@ The direct multi-horizon experiment selected blend weights on three earlier orig
 | `config_attribution_ablation.csv` | Sequential year, brand, and specification ablation |
 | `config_importance_annual.csv` | Annual feature importance |
 
-The complete model reaches a five-fold grouped cross-validated R² of 0.301; annual cross-sectional WMAPE is supporting error and is not directly comparable with monthly sales-forecast WMAPE.
+The complete model reaches a five-fold grouped cross-validated R² of 0.301, quantifying out-of-sample explanatory power for between-series annual variation; annual cross-sectional WMAPE is reported as a module-specific supporting error metric alongside, rather than against, monthly sales-forecast WMAPE. The analysis does not perform causal identification.
 
 ### User needs and risk: `processed/user_feedback/`
 

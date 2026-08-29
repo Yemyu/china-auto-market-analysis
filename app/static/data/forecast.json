@@ -8210,7 +8210,7 @@
     "en": "The headline task refreshes each month for a one-month-ahead forecast: rolling one-month XGBoost reaches 31.34% WMAPE, 9.65 pp below the last-observed-value naive baseline at 40.99%. The fixed six-month combined method scores 39.07% and is reported separately as a stress test."
   },
   "feature_insight": {
-    "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择的是销量基线，避免把固定场景的口碑特征贡献误读成滚动主结果的因果证据。",
-    "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the sales baseline, so the fixed-scenario review features are not presented as causal evidence for the rolling result."
+    "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择销量基线，该图用于描述模型依赖结构，不用于滚动主结果的因果识别。",
+    "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the sales baseline, so the chart describes model reliance and is not used for causal identification in the rolling result."
   }
 }
