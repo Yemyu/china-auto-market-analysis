@@ -1,15 +1,29 @@
 {
   "kpis": {
     "coverage_series": 345,
-    "forecast_wmape": 38.64,
-    "core_forecast_wmape": 38.71,
-    "baseline_wmape": 40.44,
-    "naive_wmape": 70.1146,
-    "naive_median_wmape": 90.0208,
-    "relative_error_reduction_vs_naive_pct": 44.89,
-    "wmape_gain_pp": 1.8,
-    "wmape_relative_gain_pct": 4.45,
-    "forecast_horizon": 6,
+    "forecast_wmape": 31.3412,
+    "forecast_median_wmape": 39.47,
+    "baseline_wmape": 31.3412,
+    "baseline_median_wmape": 39.47,
+    "core_forecast_wmape": 39.0704,
+    "core_forecast_median_wmape": 49.0994,
+    "naive_wmape": 40.9924,
+    "naive_median_wmape": 48.3586,
+    "relative_error_reduction_vs_naive_pct": 23.54,
+    "wmape_gain_pp": 9.65,
+    "wmape_relative_gain_pct": 23.54,
+    "forecast_horizon": 1,
+    "forecast_rows": 2226,
+    "forecast_median_series": 341,
+    "fixed_stress_wmape": 39.0704,
+    "fixed_stress_median_wmape": 49.0994,
+    "fixed_stress_naive_wmape": 69.3051,
+    "fixed_stress_naive_median_wmape": 89.6016,
+    "fixed_stress_horizon": 6,
+    "fixed_stress_relative_error_reduction_pct": 43.63,
+    "review_fixed_point_gain_pp": 0.884,
+    "config_brand_r2": 0.158,
+    "config_full_r2": 0.301,
     "alert_count": 1,
     "historical_alerts": 60,
     "brand_count": 86,
@@ -43,15 +57,15 @@
     },
     {
       "month": "2022-09",
-      "sales": 1234979.0
+      "sales": 1281673.0
     },
     {
       "month": "2022-10",
-      "sales": 1143189.0
+      "sales": 1160389.0
     },
     {
       "month": "2022-11",
-      "sales": 1043201.0
+      "sales": 1105694.0
     },
     {
       "month": "2022-12",
@@ -127,103 +141,103 @@
     },
     {
       "month": "2024-06",
-      "sales": 972368.0
+      "sales": 1031629.0
     },
     {
       "month": "2024-07",
-      "sales": 1035117.0
+      "sales": 1081344.0
     },
     {
       "month": "2024-08",
-      "sales": 1221509.0
+      "sales": 1284965.0
     },
     {
       "month": "2024-09",
-      "sales": 1259598.0
+      "sales": 1331798.0
     },
     {
       "month": "2024-10",
-      "sales": 1212852.0
+      "sales": 1249056.0
     },
     {
       "month": "2024-11",
-      "sales": 1418034.0
+      "sales": 1491524.0
     },
     {
       "month": "2024-12",
-      "sales": 1418404.0
+      "sales": 1501331.0
     },
     {
       "month": "2025-01",
-      "sales": 1085645.0
+      "sales": 1119348.0
     },
     {
       "month": "2025-02",
-      "sales": 890211.0
+      "sales": 916988.0
     },
     {
       "month": "2025-03",
-      "sales": 1214883.0
+      "sales": 1289010.0
     },
     {
       "month": "2025-04",
-      "sales": 987878.0
+      "sales": 1016609.0
     },
     {
       "month": "2025-05",
-      "sales": 844687.0
+      "sales": 883275.0
     },
     {
       "month": "2025-06",
-      "sales": 1188552.0
+      "sales": 1250036.0
     },
     {
       "month": "2025-07",
-      "sales": 1200092.0
+      "sales": 1240709.0
     },
     {
       "month": "2025-08",
-      "sales": 1283568.0
+      "sales": 1340720.0
     },
     {
       "month": "2025-09",
-      "sales": 1415512.0
+      "sales": 1487037.0
     },
     {
       "month": "2025-10",
-      "sales": 1382521.0
+      "sales": 1408527.0
     },
     {
       "month": "2025-11",
-      "sales": 1311455.0
+      "sales": 1384600.0
     },
     {
       "month": "2025-12",
-      "sales": 1323066.0
+      "sales": 1416995.0
     },
     {
       "month": "2026-01",
-      "sales": 966913.0
+      "sales": 985398.0
     },
     {
       "month": "2026-02",
-      "sales": 619944.0
+      "sales": 658150.0
     },
     {
       "month": "2026-03",
-      "sales": 1001629.0
+      "sales": 1057736.0
     },
     {
       "month": "2026-04",
-      "sales": 788058.0
+      "sales": 814014.0
     },
     {
       "month": "2026-05",
-      "sales": 821225.0
+      "sales": 868506.0
     },
     {
       "month": "2026-06",
-      "sales": 856582.0
+      "sales": 911717.0
     }
   ],
   "stages": [
@@ -266,16 +280,20 @@
   ],
   "findings": [
     {
-      "zh": "最终模型全局WMAPE为38.64%，相对最佳朴素基准70.11%减少44.9%的绝对误差",
-      "en": "The final model reaches 38.64% global WMAPE and reduces absolute error by 44.9% versus the 70.11% best naive baseline"
+      "zh": "滚动单月XGBoost为31.34% WMAPE，比“沿用上月销量”朴素基准40.99%低9.65个百分点",
+      "en": "The rolling one-month XGBoost reaches 31.34% WMAPE, 9.65 pp below the last-observed-value naive baseline at 40.99%"
     },
     {
-      "zh": "用户口碑增强相对销量基线改善1.735个百分点，但Bootstrap区间跨0",
-      "en": "User-review features improve 1.735 pp over the sales baseline, but the bootstrap interval crosses zero"
+      "zh": "固定六个月压力测试的综合方案为39.07%，相对同场景最近6个月均值69.31%减少43.6%绝对误差；它与滚动主结果不是同一任务",
+      "en": "The fixed six-month stress test scores 39.07% versus 69.31% for its trailing-six-month naive comparator; it reduces absolute error by 43.6% and is a different task from the rolling headline"
     },
     {
-      "zh": "736车系年度归因中，配置将交叉验证R²从0.156提升到0.300",
-      "en": "Across 736 series, configuration raises annual-attribution CV R² from 0.156 to 0.300"
+      "zh": "固定起点口碑增强点估计改善0.884个百分点，但Bootstrap区间跨0，因此保留为补充证据",
+      "en": "Fixed-origin review enhancement shows a 0.884 pp point estimate, but its bootstrap interval crosses zero, so it remains supporting evidence"
+    },
+    {
+      "zh": "736车系年度归因中，配置将分组交叉验证R²从0.158提升到0.301",
+      "en": "Across 736 series, specifications raise grouped-CV annual-attribution R² from 0.158 to 0.301"
     },
     {
       "zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度",

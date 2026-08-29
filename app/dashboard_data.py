@@ -78,6 +78,21 @@ def _weighted_mean(values: pd.Series, weights: pd.Series) -> float:
     return float(np.average(values.loc[valid], weights=weights.loc[valid]))
 
 
+def _wmape_summary(frame: pd.DataFrame, actual: str, prediction: str) -> tuple[float, float, int]:
+    """Return pooled WMAPE, median per-series WMAPE, and valid series count."""
+    valid = frame.loc[frame[actual].notna() & frame[prediction].notna()].copy()
+    denominator = float(valid[actual].abs().sum())
+    pooled = float((valid[actual] - valid[prediction]).abs().sum() / denominator * 100) if denominator else np.nan
+    per_series = valid.groupby("series_name").apply(
+        lambda group: (
+            float((group[actual] - group[prediction]).abs().sum() / group[actual].abs().sum() * 100)
+            if group[actual].abs().sum() else np.nan
+        )
+    )
+    per_series = per_series.dropna()
+    return pooled, float(per_series.median()) if not per_series.empty else np.nan, int(per_series.size)
+
+
 def _feature_label(feature: str) -> tuple[str, str]:
     simple = {
         "lag_1": ("上月销量", "Sales lag 1"), "lag_2": ("前2月销量", "Sales lag 2"),
@@ -179,24 +194,48 @@ class DashboardData:
         cold = _read_json(self.processed / "forecast" / "cold_start_launch_curve_summary.json")
         model_summary = _read(self.processed / "forecast" / "review_feature_ablation_summary.csv")
         benchmark = _read(self.processed / "forecast" / "forecast_benchmark_comparison.csv")
-        baseline = float(model_summary.loc[model_summary["version"].eq("BASE"), "global_volume_weighted_WMAPE"].iloc[0])
-        rich = float(model_summary.loc[model_summary["version"].eq("REVIEW_RICH_FIXED"), "global_volume_weighted_WMAPE"].iloc[0])
-        hybrid = float(cold["hybrid_full371_global_WMAPE"])
-        naive_row = benchmark.loc[benchmark["method"].eq("ROLLING_MEAN_6")].iloc[0]
-        naive = float(naive_row["global_volume_weighted_WMAPE"])
+        rolling = _read_json(self.processed / "forecast" / "rolling_origin_summary.json")
+        rolling_test = _read(self.processed / "forecast" / "rolling_origin_test_predictions.csv")
+        rolling_global, rolling_median, rolling_median_series = _wmape_summary(rolling_test, "actual", "pred")
+        last_global, last_median, _ = _wmape_summary(rolling_test, "actual", "LAST_VALUE")
+        fixed_hybrid = float(cold["hybrid_full371_global_WMAPE"])
+        fixed_hybrid_median = float(cold["hybrid_full371_median_per_series_WMAPE"])
+        fixed_naive_row = benchmark.loc[benchmark["method"].eq("ROLLING_MEAN_6")].iloc[0]
+        fixed_naive = float(fixed_naive_row["global_volume_weighted_WMAPE"])
+        fixed_naive_median = float(fixed_naive_row["median_per_series_WMAPE"])
+        review_point = float(_read_json(self.processed / "forecast" / "forecast_robustness_summary.json")[
+            "selected_feedback_vs_base_improvement_pp"
+        ])
+        config_ablation = _read(self.processed / "product" / "config_attribution_ablation.csv")
+        config_brand = float(config_ablation.loc[config_ablation["variant"].eq("+BRAND"), "R2_log_mean"].iloc[0])
+        config_full = float(config_ablation.loc[config_ablation["variant"].eq("+CONFIG"), "R2_log_mean"].iloc[0])
         monthly = panel.groupby("date")["monthly_sales"].sum().sort_index()
         return {
             "kpis": {
                 "coverage_series": int(needs["review_series"]),
-                "forecast_wmape": round(hybrid, 2),
-                "core_forecast_wmape": round(rich, 2),
-                "baseline_wmape": round(baseline, 2),
-                "naive_wmape": round(naive, 4),
-                "naive_median_wmape": round(float(naive_row["median_per_series_WMAPE"]), 4),
-                "relative_error_reduction_vs_naive_pct": round((naive - hybrid) / naive * 100, 2),
-                "wmape_gain_pp": round(baseline - hybrid, 2),
-                "wmape_relative_gain_pct": round((baseline - hybrid) / baseline * 100, 2),
-                "forecast_horizon": 6,
+                "forecast_wmape": round(rolling_global, 4),
+                "forecast_median_wmape": round(rolling_median, 4),
+                "baseline_wmape": round(rolling_global, 4),
+                "baseline_median_wmape": round(rolling_median, 4),
+                "core_forecast_wmape": round(fixed_hybrid, 4),
+                "core_forecast_median_wmape": round(fixed_hybrid_median, 4),
+                "naive_wmape": round(last_global, 4),
+                "naive_median_wmape": round(last_median, 4),
+                "relative_error_reduction_vs_naive_pct": round((last_global - rolling_global) / last_global * 100, 2),
+                "wmape_gain_pp": round(last_global - rolling_global, 2),
+                "wmape_relative_gain_pct": round((last_global - rolling_global) / last_global * 100, 2),
+                "forecast_horizon": 1,
+                "forecast_rows": int(len(rolling_test)),
+                "forecast_median_series": rolling_median_series,
+                "fixed_stress_wmape": round(fixed_hybrid, 4),
+                "fixed_stress_median_wmape": round(fixed_hybrid_median, 4),
+                "fixed_stress_naive_wmape": round(fixed_naive, 4),
+                "fixed_stress_naive_median_wmape": round(fixed_naive_median, 4),
+                "fixed_stress_horizon": 6,
+                "fixed_stress_relative_error_reduction_pct": round((fixed_naive - fixed_hybrid) / fixed_naive * 100, 2),
+                "review_fixed_point_gain_pp": round(review_point, 3),
+                "config_brand_r2": round(config_brand, 3),
+                "config_full_r2": round(config_full, 3),
                 "alert_count": int(needs["latest_active_alerts"]),
                 "historical_alerts": int(needs["historical_alert_events"]),
                 "brand_count": int(panel["brand"].nunique()),
@@ -220,9 +259,10 @@ class DashboardData:
                 {"id": 6, "name": "看板更新", "en": "Dashboard Refresh", "status": "current"},
             ],
             "findings": [
-                {"zh": "最终模型全局WMAPE为38.64%，相对最佳朴素基准70.11%减少44.9%的绝对误差", "en": "The final model reaches 38.64% global WMAPE and reduces absolute error by 44.9% versus the 70.11% best naive baseline"},
-                {"zh": "用户口碑增强相对销量基线改善1.735个百分点，但Bootstrap区间跨0", "en": "User-review features improve 1.735 pp over the sales baseline, but the bootstrap interval crosses zero"},
-                {"zh": "736车系年度归因中，配置将交叉验证R²从0.156提升到0.300", "en": "Across 736 series, configuration raises annual-attribution CV R² from 0.156 to 0.300"},
+                {"zh": f"滚动单月XGBoost为{rolling_global:.2f}% WMAPE，比“沿用上月销量”朴素基准{last_global:.2f}%低{last_global-rolling_global:.2f}个百分点", "en": f"The rolling one-month XGBoost reaches {rolling_global:.2f}% WMAPE, {last_global-rolling_global:.2f} pp below the last-observed-value naive baseline at {last_global:.2f}%"},
+                {"zh": f"固定六个月压力测试的综合方案为{fixed_hybrid:.2f}%，相对同场景最近6个月均值{fixed_naive:.2f}%减少{(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}%绝对误差；它与滚动主结果不是同一任务", "en": f"The fixed six-month stress test scores {fixed_hybrid:.2f}% versus {fixed_naive:.2f}% for its trailing-six-month naive comparator; it reduces absolute error by {(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}% and is a different task from the rolling headline"},
+                {"zh": f"固定起点口碑增强点估计改善{review_point:.3f}个百分点，但Bootstrap区间跨0，因此保留为补充证据", "en": f"Fixed-origin review enhancement shows a {review_point:.3f} pp point estimate, but its bootstrap interval crosses zero, so it remains supporting evidence"},
+                {"zh": f"736车系年度归因中，配置将分组交叉验证R²从{config_brand:.3f}提升到{config_full:.3f}", "en": f"Across 736 series, specifications raise grouped-CV annual-attribution R² from {config_brand:.3f} to {config_full:.3f}"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
                 {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前有效预警{needs['latest_active_alerts']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} active alert is detected"},
             ],
@@ -231,26 +271,44 @@ class DashboardData:
     def forecast(self) -> dict[str, Any]:
         summary = _read(self.processed / "forecast" / "review_feature_ablation_summary.csv")
         shap = _read(self.processed / "forecast" / "review_feature_shap_importance.csv")
-        hybrid = _read(self.processed / "forecast" / "cold_start_hybrid_predictions.csv", parse_dates=["date"])
+        rolling_test = _read(self.processed / "forecast" / "rolling_origin_test_predictions.csv", parse_dates=["date"])
         cold = _read_json(self.processed / "forecast" / "cold_start_launch_curve_summary.json")
         benchmark = _read(self.processed / "forecast" / "forecast_benchmark_comparison.csv")
-        naive = benchmark.loc[benchmark["method"].eq("ROLLING_MEAN_6")].iloc[0]
+        rolling_models = [
+            ("LAST_VALUE", "沿用上月销量（朴素基准）", "Last observed value (naive)", "rolling_naive_last"),
+            ("ROLLING_MEAN_3", "近3月均值（滚动朴素）", "Trailing 3-month mean (naive)", "rolling_naive_mean3"),
+            ("ROLLING_MEAN_6", "近6月均值（滚动朴素）", "Trailing 6-month mean (naive)", "rolling_naive_mean6"),
+            ("SEASONAL_LAG12", "去年同期销量（朴素基准）", "Same-month-last-year (naive)", "rolling_naive_seasonal"),
+            ("pred", "滚动单月销量基线（XGBoost）", "Rolling one-month sales baseline (XGBoost)", "rolling_primary"),
+        ]
         models: list[dict[str, Any]] = []
+        for column, zh, en, scenario in rolling_models:
+            wmape_vol, wmape_med, _ = _wmape_summary(rolling_test, "actual", column)
+            models.append({
+                "name": zh, "name_zh": zh, "name_en": en,
+                "wmape_vol": round(wmape_vol, 4),
+                "wmape_med": round(wmape_med, 4),
+                "mae": None, "color": PALETTE[len(models) % len(PALETTE)],
+                "scenario": scenario, "prediction_column": column,
+            })
+        fixed_models: list[dict[str, Any]] = []
         for _, row in summary.sort_values("global_volume_weighted_WMAPE").iterrows():
             zh, en = MODEL_LABELS.get(row["version"], (row["version"], row["version"]))
-            models.append({
+            fixed_models.append({
                 "name": zh, "name_zh": zh, "name_en": en,
                 "wmape_vol": round(float(row["global_volume_weighted_WMAPE"]), 4),
                 "wmape_med": round(float(row["median_per_series_WMAPE"]), 4),
-                "mae": None, "color": PALETTE[len(models) % len(PALETTE)],
-                "scenario": str(row["scenario"]),
+                "mae": None, "color": PALETTE[len(fixed_models) % len(PALETTE)],
+                "scenario": "fixed_origin_stress_ablation",
+                "version": str(row["version"]),
             })
         zh, en = MODEL_LABELS["REVIEW_RICH_COLD_START"]
-        models.append({
+        fixed_models.append({
             "name": zh, "name_zh": zh, "name_en": en,
             "wmape_vol": round(float(cold["hybrid_full371_global_WMAPE"]), 4),
             "wmape_med": round(float(cold["hybrid_full371_median_per_series_WMAPE"]), 4),
-            "mae": None, "color": "#34c38f", "scenario": "fixed_origin_primary_cold_hybrid",
+            "mae": None, "color": "#34c38f", "scenario": "fixed_origin_stress_cold_hybrid",
+            "version": "SELECTED_FEEDBACK_COLD_START",
         })
         features = []
         for _, row in shap.sort_values("rank").head(12).iterrows():
@@ -263,7 +321,7 @@ class DashboardData:
                 "desc_zh": f"特征组：{family_zh}", "desc_en": f"Feature group: {family_en}",
                 "importance": round(float(row["mean_abs_shap_log_sales"]), 4),
             })
-        valid = hybrid.loc[hybrid["actual"].gt(0) & hybrid["pred"].notna()].copy()
+        valid = rolling_test.loc[rolling_test["actual"].gt(0) & rolling_test["pred"].notna()].copy()
         meta = self.panel().drop_duplicates("series_name").set_index("series_name")["category_en"]
         valid["category_en"] = valid["series_name"].map(meta)
         class_rows = []
@@ -275,35 +333,58 @@ class DashboardData:
                 "n_series": int(group["series_name"].nunique()),
             })
         class_rows.sort(key=lambda row: row["wmape"])
+        fixed_naive = benchmark.loc[benchmark["method"].eq("ROLLING_MEAN_6")].iloc[0]
+        fixed_hybrid = float(cold["hybrid_full371_global_WMAPE"])
+        fixed_hybrid_median = float(cold["hybrid_full371_median_per_series_WMAPE"])
+        rolling_primary = next(item for item in models if item["scenario"] == "rolling_primary")
+        rolling_naive = next(item for item in models if item["scenario"] == "rolling_naive_last")
+        _, _, median_series = _wmape_summary(rolling_test, "actual", "pred")
         return {
             "models": models,
-            "best_model": zh,
+            "primary_models": models,
+            "fixed_models": fixed_models,
+            "best_model": rolling_primary["name_zh"],
             "meta": {
                 "eval_series": 371,
                 "test_months": 6,
-                "test_rows": int(len(valid)),
+                "forecast_horizon": 1,
+                "test_rows": int(len(rolling_test)),
+                "valid_rows": int(len(valid)),
+                "median_series": median_series,
                 "train_end": "2025-06",
                 "validation_period": "2025-07~2025-12",
                 "test_period": "2026-01~2026-06",
                 "cold_start_series": int(cold["cold_start_series"]),
-                "best_naive_global_wmape": round(float(naive["global_volume_weighted_WMAPE"]), 4),
-                "best_naive_median_wmape": round(float(naive["median_per_series_WMAPE"]), 4),
+                "best_naive_global_wmape": rolling_naive["wmape_vol"],
+                "best_naive_median_wmape": rolling_naive["wmape_med"],
                 "relative_error_reduction_vs_naive_pct": round(
-                    (float(naive["global_volume_weighted_WMAPE"]) - float(cold["hybrid_full371_global_WMAPE"]))
-                    / float(naive["global_volume_weighted_WMAPE"]) * 100,
-                    2,
+                    (rolling_naive["wmape_vol"] - rolling_primary["wmape_vol"])
+                    / rolling_naive["wmape_vol"] * 100, 2,
                 ),
+                "fixed_stress_wmape": round(fixed_hybrid, 4),
+                "fixed_stress_median_wmape": round(fixed_hybrid_median, 4),
+                "fixed_stress_naive_wmape": round(float(fixed_naive["global_volume_weighted_WMAPE"]), 4),
+                "fixed_stress_naive_median_wmape": round(float(fixed_naive["median_per_series_WMAPE"]), 4),
             },
             "class_wmape": class_rows,
             "scatter": [[round(float(a), 1), round(float(p), 1)] for a, p in zip(valid["actual"], valid["pred"])],
             "features": features,
+            "fixed_stress": {
+                "name_zh": "固定六个月综合方案（口碑＋冷启动补充）",
+                "name_en": "Fixed six-month combined method (reviews + cold-start supplement)",
+                "wmape_vol": round(fixed_hybrid, 4),
+                "wmape_med": round(fixed_hybrid_median, 4),
+                "naive_wmape_vol": round(float(fixed_naive["global_volume_weighted_WMAPE"]), 4),
+                "naive_wmape_med": round(float(fixed_naive["median_per_series_WMAPE"]), 4),
+                "relative_error_reduction_pct": round((float(fixed_naive["global_volume_weighted_WMAPE"]) - fixed_hybrid) / float(fixed_naive["global_volume_weighted_WMAPE"]) * 100, 2),
+            },
             "conclusion": {
-                "zh": "371车系固定起点六个月测试中，最佳朴素基准为70.11%；销量模型为40.44%，口碑增强为38.71%，冷启动兜底后为38.64%，相对朴素基准减少44.9%的绝对误差。",
-                "en": "In the fixed-origin six-month test over 371 series, the best naive baseline is 70.11%; the sales model reaches 40.44%, user-review enhancement 38.71%, and the cold-start fallback 38.64%, reducing absolute error by 44.9% versus the naive baseline.",
+                "zh": f"主结果采用每月更新的下月预测：滚动单月XGBoost为{rolling_primary['wmape_vol']:.2f}% WMAPE，较沿用上月销量的朴素基准{rolling_naive['wmape_vol']:.2f}%低{rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f}个百分点。固定六个月综合方案为{fixed_hybrid:.2f}%，作为压力测试单独报告。",
+                "en": f"The headline task refreshes each month for a one-month-ahead forecast: rolling one-month XGBoost reaches {rolling_primary['wmape_vol']:.2f}% WMAPE, {rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f} pp below the last-observed-value naive baseline at {rolling_naive['wmape_vol']:.2f}%. The fixed six-month combined method scores {fixed_hybrid:.2f}% and is reported separately as a stress test.",
             },
             "feature_insight": {
-                "zh": "销量滞后与滚动均值占SHAP绝对重要性的80.17%；评论特征合计约9.03%，主要提供补充信息而非替代历史销量。",
-                "en": "Sales lags and rolling means contribute 80.17% of absolute SHAP importance; review features contribute about 9.03% and supplement rather than replace sales history.",
+                "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择的是销量基线，避免把固定场景的口碑特征贡献误读成滚动主结果的因果证据。",
+                "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the sales baseline, so the fixed-scenario review features are not presented as causal evidence for the rolling result.",
             },
         }
 
@@ -361,6 +442,7 @@ class DashboardData:
 
     def attribution(self) -> dict[str, Any]:
         ablation = _read(self.processed / "product" / "config_attribution_ablation.csv")
+        baselines = _read(self.processed / "product" / "config_attribution_baselines.csv")
         importance = _read(self.processed / "product" / "config_importance_annual.csv")
         features = []
         for index, (_, row) in enumerate(importance.loc[importance["block"].eq("config")].head(15).iterrows()):
@@ -373,7 +455,8 @@ class DashboardData:
             "variant": str(row["variant"]),
             "r2": round(float(row["R2_log_mean"]), 3),
             "r2_std": round(float(row["R2_log_std"]), 3),
-            "wmape": round(float(row["WMAPE_mean"]), 2),
+            "wmape": round(float(row.get("WMAPE_oof_global", row["WMAPE_mean"])), 2),
+            "wmape_fold_mean": round(float(row["WMAPE_mean"]), 2),
             "n_features": int(row["n_features"]),
         } for _, row in ablation.iterrows()]
         block = importance.groupby("block")["gain"].sum()
@@ -385,19 +468,31 @@ class DashboardData:
         } for key, value in block.sort_values(ascending=False).items()]
         brand_r2 = float(ablation.loc[ablation["variant"].eq("+BRAND"), "R2_log_mean"].iloc[0])
         config_r2 = float(ablation.loc[ablation["variant"].eq("+CONFIG"), "R2_log_mean"].iloc[0])
+        wmape_rows = {
+            str(row["variant"]): round(float(row.get("WMAPE_oof_global", row["WMAPE_mean"])), 2)
+            for _, row in ablation.iterrows()
+        }
         return {
             "shap": features, "models": models, "blocks": blocks,
-            "meta": {"series": 736, "series_year_rows": 2007, "cv_folds": 5},
+            "meta": {"series": 736, "series_year_rows": 2007, "cv_folds": 5, "wmape_is_secondary": True,
+                     "wmape_note_zh": "年度截面补充误差，不与月度销量预测WMAPE直接比较。",
+                     "wmape_note_en": "Supporting annual cross-sectional error; not directly comparable with monthly sales-forecast WMAPE."},
+            "wmape_baselines": {
+                str(row["method"]): round(float(row["WMAPE_mean"]), 2)
+                for _, row in baselines.iterrows()
+            },
+            "wmape_by_variant": wmape_rows,
             "comparison": {"with": None, "without": None}, "top_example": None,
             "conclusion": {
-                "zh": f"736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由{brand_r2:.3f}提升至{config_r2:.3f}（+{config_r2-brand_r2:.3f}）；配置解释车系之间差异，不解释同车系短期涨跌。",
-                "en": f"Across 736 series and 2,007 series-year rows, grouped CV R² rises from {brand_r2:.3f} to {config_r2:.3f} (+{config_r2-brand_r2:.3f}) after adding configuration. Configuration explains between-series differences, not short-term within-series changes.",
+                "zh": f"736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由{brand_r2:.3f}提升至{config_r2:.3f}（+{config_r2-brand_r2:.3f}）；配置解释车系之间差异，不解释同车系短期涨跌。完整模型年度截面WMAPE为{wmape_rows.get('+CONFIG', np.nan):.2f}%，仅作补充误差，不能与月度销量预测直接比较。",
+                "en": f"Across 736 series and 2,007 series-year rows, grouped CV R² rises from {brand_r2:.3f} to {config_r2:.3f} (+{config_r2-brand_r2:.3f}) after adding configuration. Configuration explains between-series differences, not short-term within-series changes. The full model's annual cross-sectional WMAPE is {wmape_rows.get('+CONFIG', np.nan):.2f}% and is supporting evidence, not directly comparable with monthly forecasting.",
             },
         }
 
     def forecast_evidence(self) -> dict[str, Any]:
         aligned = self.aligned()
         bootstrap = _read(self.processed / "forecast" / "forecast_robustness_bootstrap.csv")
+        robustness = _read_json(self.processed / "forecast" / "forecast_robustness_summary.json")
         comparison = bootstrap.loc[
             bootstrap["comparator"].eq("BASE")
             & bootstrap["candidate"].isin(["PLATFORM_RATING_FIXED", "LOCAL_LEXICON_FIXED", "REVIEW_TEXT_FIXED", "REVIEW_RICH_FIXED"])
@@ -430,6 +525,7 @@ class DashboardData:
                 "sentiment": _weighted_mean(group["overall"], group["review_count_180d"]),
             })
         return {
+            "scenario": "fixed_origin_stress",
             "granger": evidence,
             "fusion": fusion,
             "correlation": correlations,
@@ -440,8 +536,8 @@ class DashboardData:
                 "sentiment": [round(row["sentiment"], 3) if pd.notna(row["sentiment"]) else None for row in market_rows],
             },
             "conclusion": {
-                "zh": "用户口碑增强相对销量基线改善1.735个百分点，在5,000次车系聚类Bootstrap中胜出概率89.84%，但95%区间跨0；平台评分与用户口碑增强基本无法区分。",
-                "en": "User-review features improve 1.735 pp over the sales baseline and win in 89.84% of 5,000 series-cluster bootstrap samples, but the 95% interval crosses zero; platform ratings and the user-review model are effectively indistinguishable.",
+                "zh": f"固定六个月压力测试中，选定的口碑增强相对销量基线改善{robustness['selected_feedback_vs_base_improvement_pp']:.3f}个百分点；5,000次车系聚类Bootstrap胜出概率{robustness['selected_feedback_vs_base_probability_better']:.2%}，95%区间为{robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][0]:.2f}至{robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][1]:.2f}个百分点，因此只支持小幅补充信号。",
+                "en": f"In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by {robustness['selected_feedback_vs_base_improvement_pp']:.3f} pp; it wins {robustness['selected_feedback_vs_base_probability_better']:.2%} of 5,000 series-cluster bootstrap samples, with a 95% interval from {robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][0]:.2f} to {robustness['selected_feedback_vs_base_bootstrap_95pct_ci_pp'][1]:.2f} pp. This supports only a modest supporting signal.",
             },
         }
 

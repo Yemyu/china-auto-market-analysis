@@ -87,7 +87,7 @@ button, input, select { font: inherit; }
 .analysis-protocol > div { min-height: 104px; padding: 17px 16px 15px 0; }
 .analysis-protocol > div + div { padding-left: 16px; border-left: 1px solid #c4cbd2; }
 .analysis-protocol dt { color: #74808d; font-size: 9.5px; font-weight: 700; }
-.analysis-protocol dd { margin: 21px 0 0; color: #172331; font-size: 13px; font-weight: 700; white-space: nowrap; }
+.analysis-protocol dd { margin: 21px 0 0; color: #172331; font-size: 13px; font-weight: 700; white-space: normal; line-height: 1.25; }
 .analysis-protocol dd strong { font-size: 23px; line-height: 1; font-variant-numeric: tabular-nums; }
 .analysis-protocol dd span { margin-left: 4px; color: #77828e; font-size: 9px; font-weight: 600; }
 .analysis-timeline { display: grid; grid-template-columns: 2fr .75fr .75fr; margin: 22px 0 28px; border: 1px solid #cbd2d9; background: #fff; }

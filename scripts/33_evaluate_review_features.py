@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Evaluate review-feature variants on the 371-series forecast panel."""
+"""Evaluate review-feature variants for the fixed-origin six-month stress test."""
 from __future__ import annotations
 
 import os
@@ -535,7 +535,8 @@ def main() -> None:
         "baseline_global_volume_weighted_WMAPE": float(
             summary.loc[summary["version"].eq("BASE"), "global_volume_weighted_WMAPE"].iloc[0]
         ),
-        "rolling_scenario_is_supplemental": True,
+        "fixed_origin_is_stress_test": True,
+        "rolling_primary_evaluation": "scripts/48_evaluate_rolling_origin.py",
         "tree_grid": TREE_GRID,
         "model_params": MODEL_PARAMS,
         "xgboost_version": xgboost_version,

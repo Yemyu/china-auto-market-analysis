@@ -1,108 +1,108 @@
 {
   "shap": [
     {
-      "key": "engine_cylinder_arrangement_L",
-      "name_zh": "气缸排列：L",
-      "name_en": "Cylinder layout: Inline (L)",
-      "importance": 0.0348,
+      "key": "center_screen_NA",
+      "name_zh": "中控屏：缺失",
+      "name_en": "Center screen: Missing",
+      "importance": 0.0287,
       "color": "#2c7be5"
-    },
-    {
-      "key": "battery_type_NA",
-      "name_zh": "电池类型：缺失",
-      "name_en": "Battery type: Missing",
-      "importance": 0.0291,
-      "color": "#00a9ae"
-    },
-    {
-      "key": "oil_supply_直喷",
-      "name_zh": "供油方式：直喷",
-      "name_en": "Fuel supply: Direct injection",
-      "importance": 0.0265,
-      "color": "#34c38f"
-    },
-    {
-      "key": "cylinder_material_铝",
-      "name_zh": "气缸材料：铝",
-      "name_en": "Cylinder material: Aluminum",
-      "importance": 0.0213,
-      "color": "#f6c343"
-    },
-    {
-      "key": "engine_intake_type_NA",
-      "name_zh": "进气形式：缺失",
-      "name_en": "Intake type: Missing",
-      "importance": 0.0212,
-      "color": "#ee5b5b"
     },
     {
       "key": "fuel_form_插电式混合动力",
       "name_zh": "燃料形式：插电式混合动力",
       "name_en": "Fuel form: Plug-in hybrid",
-      "importance": 0.0204,
-      "color": "#a55eea"
+      "importance": 0.0256,
+      "color": "#00a9ae"
+    },
+    {
+      "key": "cylinder_material_铝",
+      "name_zh": "气缸材料：铝",
+      "name_en": "Cylinder material: Aluminum",
+      "importance": 0.0247,
+      "color": "#34c38f"
+    },
+    {
+      "key": "oil_supply_直喷",
+      "name_zh": "供油方式：直喷",
+      "name_en": "Fuel supply: Direct injection",
+      "importance": 0.0243,
+      "color": "#f6c343"
+    },
+    {
+      "key": "engine_cylinder_arrangement_L",
+      "name_zh": "气缸排列：L",
+      "name_en": "Cylinder layout: Inline (L)",
+      "importance": 0.0235,
+      "color": "#ee5b5b"
     },
     {
       "key": "steering_wheel_material_真皮",
       "name_zh": "方向盘材质：真皮",
       "name_en": "Steering-wheel material: Leather",
-      "importance": 0.0204,
-      "color": "#7783f5"
+      "importance": 0.0226,
+      "color": "#a55eea"
     },
     {
       "key": "steering_wheel_material_NA",
       "name_zh": "方向盘材质：缺失",
       "name_en": "Steering-wheel material: Missing",
-      "importance": 0.0181,
+      "importance": 0.017,
+      "color": "#7783f5"
+    },
+    {
+      "key": "engine_intake_type_自然吸气",
+      "name_zh": "进气形式：自然吸气",
+      "name_en": "Intake type: 自然吸气",
+      "importance": 0.0165,
       "color": "#2c7be5"
-    },
-    {
-      "key": "motor_type_永磁同步",
-      "name_zh": "电机类型：永磁同步",
-      "name_en": "Motor type: Permanent-magnet synchronous",
-      "importance": 0.0179,
-      "color": "#00a9ae"
-    },
-    {
-      "key": "center_screen_NA",
-      "name_zh": "中控屏：缺失",
-      "name_en": "Center screen: Missing",
-      "importance": 0.0176,
-      "color": "#34c38f"
-    },
-    {
-      "key": "fuel_form_48V轻混系统",
-      "name_zh": "燃料形式：48V轻混系统",
-      "name_en": "Fuel form: 48V mild hybrid",
-      "importance": 0.0159,
-      "color": "#f6c343"
-    },
-    {
-      "key": "manufacturer_freq",
-      "name_zh": "制造商频次",
-      "name_en": "Manufacturer frequency",
-      "importance": 0.0154,
-      "color": "#ee5b5b"
     },
     {
       "key": "fuel_grade_95#",
       "name_zh": "燃油标号：95#",
       "name_en": "Fuel grade: 95#",
-      "importance": 0.0142,
-      "color": "#a55eea"
+      "importance": 0.0154,
+      "color": "#00a9ae"
     },
     {
-      "key": "sound_brand_宝华韦健",
-      "name_zh": "音响品牌：宝华韦健",
-      "name_en": "Audio brand: Bowers & Wilkins",
-      "importance": 0.0139,
-      "color": "#7783f5"
+      "key": "battery_type_NA",
+      "name_zh": "电池类型：缺失",
+      "name_en": "Battery type: Missing",
+      "importance": 0.0147,
+      "color": "#34c38f"
+    },
+    {
+      "key": "manufacturer_freq",
+      "name_zh": "制造商频次",
+      "name_en": "Manufacturer frequency",
+      "importance": 0.0144,
+      "color": "#f6c343"
     },
     {
       "key": "oil_supply_混合喷射",
       "name_zh": "供油方式：混合喷射",
       "name_en": "Fuel supply: Combined injection",
-      "importance": 0.0118,
+      "importance": 0.012,
+      "color": "#ee5b5b"
+    },
+    {
+      "key": "center_screen_大屏",
+      "name_zh": "中控屏：大屏",
+      "name_en": "Center screen: 大屏",
+      "importance": 0.011,
+      "color": "#a55eea"
+    },
+    {
+      "key": "body_structure_客车",
+      "name_zh": "body_structure_客车",
+      "name_en": "body_structure_客车",
+      "importance": 0.0103,
+      "color": "#7783f5"
+    },
+    {
+      "key": "door_open_way_平开门",
+      "name_zh": "door_open_way_平开门",
+      "name_en": "door_open_way_平开门",
+      "importance": 0.0102,
       "color": "#2c7be5"
     }
   ],
@@ -111,28 +111,32 @@
       "variant": "YEAR-ONLY",
       "r2": 0.089,
       "r2_std": 0.016,
-      "wmape": 87.67,
+      "wmape": 87.77,
+      "wmape_fold_mean": 87.75,
       "n_features": 5
     },
     {
       "variant": "+BRAND",
-      "r2": 0.156,
-      "r2_std": 0.052,
-      "wmape": 83.92,
+      "r2": 0.158,
+      "r2_std": 0.068,
+      "wmape": 83.77,
+      "wmape_fold_mean": 83.73,
       "n_features": 131
     },
     {
       "variant": "+CONFIG",
-      "r2": 0.3,
-      "r2_std": 0.077,
-      "wmape": 75.69,
+      "r2": 0.301,
+      "r2_std": 0.073,
+      "wmape": 75.68,
+      "wmape_fold_mean": 75.73,
       "n_features": 310
     },
     {
       "variant": "CONFIG-ONLY",
-      "r2": 0.188,
-      "r2_std": 0.07,
-      "wmape": 81.12,
+      "r2": 0.168,
+      "r2_std": 0.052,
+      "wmape": 82.53,
+      "wmape_fold_mean": 82.55,
       "n_features": 179
     }
   ],
@@ -141,25 +145,38 @@
       "block": "config",
       "name_zh": "配置",
       "name_en": "Configuration",
-      "share": 0.7613
+      "share": 0.7316
     },
     {
       "block": "brand",
       "name_zh": "品牌",
       "name_en": "Brand",
-      "share": 0.2248
+      "share": 0.254
     },
     {
       "block": "year",
       "name_zh": "年份",
       "name_en": "Year",
-      "share": 0.0139
+      "share": 0.0144
     }
   ],
   "meta": {
     "series": 736,
     "series_year_rows": 2007,
-    "cv_folds": 5
+    "cv_folds": 5,
+    "wmape_is_secondary": true,
+    "wmape_note_zh": "年度截面补充误差，不与月度销量预测WMAPE直接比较。",
+    "wmape_note_en": "Supporting annual cross-sectional error; not directly comparable with monthly sales-forecast WMAPE."
+  },
+  "wmape_baselines": {
+    "GLOBAL_MEDIAN": 89.39,
+    "YEAR_MEDIAN": 87.34
+  },
+  "wmape_by_variant": {
+    "YEAR-ONLY": 87.77,
+    "+BRAND": 83.77,
+    "+CONFIG": 75.68,
+    "CONFIG-ONLY": 82.53
   },
   "comparison": {
     "with": null,
@@ -167,7 +184,7 @@
   },
   "top_example": null,
   "conclusion": {
-    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.156提升至0.300（+0.144）；配置解释车系之间差异，不解释同车系短期涨跌。",
-    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.156 to 0.300 (+0.144) after adding configuration. Configuration explains between-series differences, not short-term within-series changes."
+    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.158提升至0.301（+0.143）；配置解释车系之间差异，不解释同车系短期涨跌。完整模型年度截面WMAPE为75.68%，仅作补充误差，不能与月度销量预测直接比较。",
+    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.158 to 0.301 (+0.143) after adding configuration. Configuration explains between-series differences, not short-term within-series changes. The full model's annual cross-sectional WMAPE is 75.68% and is supporting evidence, not directly comparable with monthly forecasting."
   }
 }

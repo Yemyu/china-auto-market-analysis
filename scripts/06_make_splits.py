@@ -1,8 +1,10 @@
 #!/usr/bin/env python3
-"""Create the fixed chronological train, validation, and test splits.
+"""Create chronological train, validation, and test splits shared by two protocols.
 
 Train ends at 2025-06, validation covers 2025-07 through 2025-12, and the
-six-month test window starts at 2026-01.
+six-month evaluation window starts at 2026-01. The rolling one-month protocol
+uses these dates while revealing each previous realised month; the fixed-origin
+protocol recursively withholds post-origin realised sales as a stress test.
 """
 import os
 import json
@@ -188,7 +190,7 @@ train、validation 和 test 文件，避免各模型自行定义测试区间。
 1. 销量滞后和滚动均值由车系内 `shift` 计算，只引用目标月以前的销量。
 2. 配置按时间因果回退：缺少当年配置时，只使用不晚于该年份的最近配置。
 3. Validation 用于选择参数和方案；Test 只报告最终结果。
-4. 固定起点测试从 2026-01 开始递归六个月。第二个月起需要的销量滞后来自此前预测，不能读取测试期真实销量。
+4. 固定起点压力测试从 2026-01 开始递归六个月。第二个月起需要的销量滞后来自此前预测，不能读取测试期真实销量；滚动主协议则在每月更新时使用已公布的上月真实销量。
 5. 用户评论特征在主实验中统一冻结于 2026-01-01 之前；每个预测月的可用范围由评论时间特征脚本生成并审计。
 
 ## 读取示例

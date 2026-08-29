@@ -1,13 +1,10 @@
 {
+  "scenario": "fixed_origin_stress",
   "granger": {
     "aspects": [
       {
         "zh": "平台评分增强（XGBoost）",
         "en": "Platform-rating enhanced (XGBoost)"
-      },
-      {
-        "zh": "用户口碑增强（XGBoost）",
-        "en": "User-review enhanced (XGBoost)"
       },
       {
         "zh": "本地词典增强（XGBoost）",
@@ -16,35 +13,39 @@
       {
         "zh": "文本情感增强（XGBoost）",
         "en": "Text-sentiment enhanced (XGBoost)"
+      },
+      {
+        "zh": "用户口碑增强（XGBoost）",
+        "en": "User-review enhanced (XGBoost)"
       }
     ],
     "sig_rates": [
-      0.9692,
-      0.8984,
-      0.8836,
-      0.7956
+      0.9806,
+      0.9346,
+      0.8904,
+      0.8566
     ]
   },
   "fusion": [
     {
       "version": "销量基线（XGBoost）",
       "version_en": "Sales baseline (XGBoost)",
-      "wmape_vol": 40.44
+      "wmape_vol": 40.01
     },
     {
       "version": "平台评分增强（XGBoost）",
       "version_en": "Platform-rating enhanced (XGBoost)",
-      "wmape_vol": 38.819
+      "wmape_vol": 38.803
     },
     {
       "version": "文本情感增强（XGBoost）",
       "version_en": "Text-sentiment enhanced (XGBoost)",
-      "wmape_vol": 39.225
+      "wmape_vol": 38.944
     },
     {
       "version": "用户口碑增强（XGBoost）",
       "version_en": "User-review enhanced (XGBoost)",
-      "wmape_vol": 38.705
+      "wmape_vol": 39.313
     }
   ],
   "correlation": [
@@ -52,61 +53,61 @@
       "key": "appearance",
       "name_zh": "外观",
       "name_en": "Appearance",
-      "corr": 0.046
+      "corr": 0.026
     },
     {
       "key": "interior",
       "name_zh": "内饰",
       "name_en": "Interior",
-      "corr": -0.085
+      "corr": -0.093
     },
     {
       "key": "space",
       "name_zh": "空间",
       "name_en": "Space",
-      "corr": 0.055
+      "corr": 0.064
     },
     {
       "key": "power",
       "name_zh": "动力",
       "name_en": "Power",
-      "corr": 0.062
+      "corr": 0.06
     },
     {
       "key": "control",
       "name_zh": "操控",
       "name_en": "Control",
-      "corr": 0.0
+      "corr": -0.009
     },
     {
       "key": "comfort",
       "name_zh": "舒适",
       "name_en": "Comfort",
-      "corr": -0.072
+      "corr": -0.085
     },
     {
       "key": "fuel_consumption",
       "name_zh": "能耗/油耗",
       "name_en": "Energy/Fuel",
-      "corr": 0.113
+      "corr": 0.121
     },
     {
       "key": "configuration",
       "name_zh": "配置",
       "name_en": "Configuration",
-      "corr": -0.0
+      "corr": -0.014
     },
     {
       "key": "intelligence",
       "name_zh": "智能化",
       "name_en": "Intelligence",
-      "corr": 0.021
+      "corr": 0.013
     },
     {
       "key": "value",
       "name_zh": "性价比",
       "name_en": "Value",
-      "corr": 0.082
+      "corr": 0.087
     }
   ],
   "timeseries": {
@@ -171,9 +172,9 @@
       1067168.0,
       1031117.0,
       1226290.0,
-      1234979.0,
-      1143189.0,
-      1043201.0,
+      1281673.0,
+      1160389.0,
+      1105694.0,
       1258033.0,
       831918.0,
       812052.0,
@@ -192,31 +193,31 @@
       1018727.0,
       866674.0,
       1062573.0,
-      972368.0,
-      1035117.0,
-      1221509.0,
-      1259598.0,
-      1212852.0,
-      1418034.0,
-      1418404.0,
-      1085645.0,
-      890211.0,
-      1214883.0,
-      987878.0,
-      844687.0,
-      1188552.0,
-      1200092.0,
-      1283568.0,
-      1415512.0,
-      1382521.0,
-      1311455.0,
-      1323066.0,
-      966913.0,
-      619944.0,
-      1001629.0,
-      788058.0,
-      821225.0,
-      856582.0
+      1031629.0,
+      1081344.0,
+      1284965.0,
+      1331798.0,
+      1249056.0,
+      1491524.0,
+      1501331.0,
+      1119348.0,
+      916988.0,
+      1289010.0,
+      1016609.0,
+      883275.0,
+      1250036.0,
+      1240709.0,
+      1340720.0,
+      1487037.0,
+      1408527.0,
+      1384600.0,
+      1416995.0,
+      985398.0,
+      658150.0,
+      1057736.0,
+      814014.0,
+      868506.0,
+      911717.0
     ],
     "sentiment": [
       0.338,
@@ -273,7 +274,7 @@
     ]
   },
   "conclusion": {
-    "zh": "用户口碑增强相对销量基线改善1.735个百分点，在5,000次车系聚类Bootstrap中胜出概率89.84%，但95%区间跨0；平台评分与用户口碑增强基本无法区分。",
-    "en": "User-review features improve 1.735 pp over the sales baseline and win in 89.84% of 5,000 series-cluster bootstrap samples, but the 95% interval crosses zero; platform ratings and the user-review model are effectively indistinguishable."
+    "zh": "固定六个月压力测试中，选定的口碑增强相对销量基线改善0.884个百分点；5,000次车系聚类Bootstrap胜出概率93.46%，95%区间为-0.28至2.11个百分点，因此只支持小幅补充信号。",
+    "en": "In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by 0.884 pp; it wins 93.46% of 5,000 series-cluster bootstrap samples, with a 95% interval from -0.28 to 2.11 pp. This supports only a modest supporting signal."
   }
 }

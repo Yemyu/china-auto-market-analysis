@@ -86,7 +86,7 @@ Engine, motor, and battery columns contain structural missingness. A BEV has no 
 | `split_index.csv` | Full sample | Split membership by row |
 | `manifest.json` | — | Series count, row count, time boundaries, and version metadata |
 
-The primary experiment is a fixed-origin forecast made in January 2026 for all six test months. Recursive forecasting uses prior predictions as lagged sales and never reads actual test-period sales.
+The headline experiment is a rolling one-month forecast: each test month predicts the next month and can use the latest published previous-month sales, with model parameters locked within the six-month window. The fixed-origin protocol remains as a stress test: it starts in January 2026 and recursively uses prior predictions as lagged sales, never actual post-origin sales. The protocols answer different questions and are not ranked directly.
 
 ## 3. Review corpus
 
@@ -147,7 +147,7 @@ The [fixed-origin review feature panel](./reviews/processed/review_features_by_s
 - composite aspect score and any-positive/negative shares;
 - `information_cutoff_exclusive`, the information cutoff for that row.
 
-Test features for the primary experiment are frozen before `2026-01-01`. Rolling-origin features are stored as supplementary artifacts and do not enter the headline result.
+Fixed-origin test features are frozen before `2026-01-01` for the stress test and review ablation. The rolling headline uses sales history available at each month; rolling forecast artifacts are stored under `processed/forecast/rolling_origin_*.{json,csv}`.
 
 ## 5. Analysis artifacts
 
@@ -178,7 +178,7 @@ Phase one accepts only exact names and unambiguous one-to-one normalized matches
 
 Phase two classifies the nine series with high 2024 volume and an all-zero 2026 test window. Model Y and Model 3 are confirmed same-source snapshot anomalies. Same-source year-comparison tables supply five missing 2022 rows and the 38 missing June 2024–December 2025 rows, and correct four nonzero 2022 values; monthly pages supply 12 January–June 2026 rows. Repaired 2022 and 2025 totals match the source-page annual totals for both series. The iCAR 03 test zeros are supported by a discontinued status on the same source. The other six series remain unchanged and pending manual verification; the pipeline neither infers their state nor merges them into differently named series. Raw `monthly_sales.csv` is never overwritten, and the repair helper fails closed on duplicate keys or an original-value mismatch.
 
-The known Model Y and Model 3 history gaps are now complete, but the overlay remains an audit artifact rather than authorization to retrain or revise the headline metric. The high-priority queue is not yet empty, and cohort eligibility must be rebuilt. The existing 38.64% remains a frozen pre-repair result and must be re-evaluated from scratch after high-priority verification is complete.
+The known Model Y and Model 3 history gaps are now complete. After unique-key, source, and annual-total checks, the overlay is included in the reproducible panel. The remaining high-priority queue is retained as an audit item and does not change the locked test window or metric protocol. The repaired fixed stress-test combined method scores 39.07%, while the rolling one-month headline scores 31.34%; both are recomputed from saved artifacts.
 
 Phase three scans all 54,918 rows and 1,017 series locally. Hard structural checks find no duplicate series-month keys, negative sales, name/ID conflicts, or missing calendar rows, but this does not establish source truth. Annual cumulative sales, brand-month totals, positive-series counts, zero labels, and rank availability all reproduce `monthly_sales` deterministically and therefore cannot serve as independent validation.
 
@@ -203,10 +203,15 @@ The scan also confirms that the previous “at least 24 consecutive months” ru
 | `review_feature_shap_importance.csv` | Feature contributions |
 | `cold_start_launch_curve_summary.json` | Cold-start method and results |
 | `forecast_benchmark_comparison.csv` | Naive baselines and final models on all 371 series |
+| `rolling_origin_summary.json` | Rolling one-month headline, historical-origin validation, and locked-test summary |
+| `rolling_origin_validation.csv` | Rolling versus fixed protocol across four historical origins |
+| `rolling_origin_test_predictions.csv` | January–June 2026 rolling predictions and same-scenario naive baselines |
 | `direct_multihorizon_validation.csv` | Rolling validation summary for direct multi-horizon candidates |
 | `direct_multihorizon_summary.json` | Locked selection protocol and rejection decision for the direct experiment |
 
-The best naive baseline (trailing six-month mean) has 70.11% global WMAPE. The sales baseline reaches 40.44%, the owner-feedback model 38.71%, and the cold-start supplement 38.64%, a 44.9% relative reduction in absolute forecast error versus the best naive baseline.
+The rolling one-month headline reaches 31.34% global WMAPE versus 40.99% for the last-observed-value naive baseline, a 9.65-point (about 23.5%) reduction. In the fixed six-month stress test, the trailing-six-month mean is 69.31% and the reviews-plus-cold-start combined method is 39.07%, a 43.6% reduction; these are different forecast tasks.
+
+Review enhancement in the fixed stress test improves the point estimate by 0.884 pp; the 5,000-replicate series-cluster bootstrap 95% interval is −0.284 to 2.108 pp and crosses zero, so review features remain supporting evidence. The cold-start statistical strategy handles nine history-poor series and does not replace the 371-series rolling headline.
 
 The direct multi-horizon experiment selected blend weights on three earlier origins and reached 30.42% WMAPE at the July 2025 fixed-origin validation. Its locked specification then rose to 47.46% on the 362 history-bearing series in the 2026 test, underperforming the existing recursive model; it was therefore rejected under the predefined rule and does not replace the headline result. Row-level experimental predictions remain local and are ignored by Git.
 
@@ -217,7 +222,7 @@ The direct multi-horizon experiment selected blend weights on three earlier orig
 | `config_attribution_ablation.csv` | Sequential year, brand, and specification ablation |
 | `config_importance_annual.csv` | Annual feature importance |
 
-The complete model reaches a five-fold grouped cross-validated R² of 0.300.
+The complete model reaches a five-fold grouped cross-validated R² of 0.301; annual cross-sectional WMAPE is supporting error and is not directly comparable with monthly sales-forecast WMAPE.
 
 ### User needs and risk: `processed/user_feedback/`
 

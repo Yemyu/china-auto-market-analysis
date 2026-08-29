@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国车市分析 · 销量预测</title>
-  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
+  <link rel="stylesheet" href="static/css/style.css?v=20260829-1">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
 <body class="analysis-page forecast-page">
@@ -19,12 +19,12 @@
       <header class="analysis-header">
         <div class="analysis-header-copy">
           <p class="analysis-breadcrumb" data-i18n="fc_breadcrumb">模型评估 / 销量预测</p>
-          <h1 data-i18n="fc_title_full">六个月车系销量预测</h1>
-          <p data-i18n="fc_lead_public">以2026年1月为统一预测起点，对371个车系连续预测六个月；训练、验证和测试严格按时间隔离。</p>
+          <h1 data-i18n="fc_title_full">滚动单月车系销量预测</h1>
+          <p data-i18n="fc_lead_public">主结果按月更新、预测下一个月的销量；2026年1—6月共覆盖371个车系，并将固定起点六个月递归结果作为压力测试。</p>
         </div>
         <dl class="analysis-protocol">
           <div><dt data-i18n="fc_protocol_sample">测试对象</dt><dd><strong>371</strong><span data-i18n="home_series_unit">个车系</span></dd></div>
-          <div><dt data-i18n="fc_protocol_horizon">测试区间</dt><dd>2026-01—06</dd></div>
+          <div><dt data-i18n="fc_protocol_horizon">主任务</dt><dd data-i18n="fc_protocol_horizon_value">每月预测下月</dd></div>
           <div><dt data-i18n="fc_protocol_metric">主要指标</dt><dd>Global WMAPE</dd></div>
         </dl>
       </header>
@@ -45,13 +45,15 @@
           <table class="forecast-score-table">
             <thead><tr><th data-i18n="home_model_col">比较方案</th><th data-i18n="home_global_col">全局 WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th><th data-i18n="home_change_col">相对基线</th></tr></thead>
             <tbody>
-              <tr><td><strong data-i18n="home_model_naive">最佳朴素基准</strong><span data-i18n="home_model_naive_note">过去6个月销量均值</span></td><td id="fc-score-naive-global">—</td><td id="fc-score-naive-median">—</td><td>—</td></tr>
-              <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="fc_baseline_scope">历史销量、日历与车型属性</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td id="fc-score-base-gain">—</td></tr>
-              <tr class="forecast-primary-row"><td><strong data-i18n="home_model_review">用户口碑增强模型</strong><span data-i18n="fc_review_scope">加入预测起点前可获得的平台评分与评论特征</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
-              <tr><td><strong data-i18n="home_model_cold">冷启动补充方案</strong><span data-i18n="fc_cold_scope">为9个历史不足的新车系补充上市曲线</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td id="fc-score-cold-gain">—</td></tr>
+              <tr><td><strong data-i18n="home_model_naive">沿用上月销量（朴素基准）</strong><span data-i18n="home_model_naive_note">每次预测直接沿用最近一个已公布月份</span></td><td id="fc-score-naive-global">—</td><td id="fc-score-naive-median">—</td><td>—</td></tr>
+              <tr class="forecast-primary-row"><td><strong data-i18n="home_model_baseline">滚动单月 XGBoost（主结果）</strong><span data-i18n="fc_baseline_scope">每月更新下月预测，使用历史销量、日历与车型属性</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td id="fc-score-base-gain">—</td></tr>
+              <tr><td><strong data-i18n="home_model_stress">固定六个月综合方案</strong><span data-i18n="fc_review_scope">固定起点，含口碑与冷启动补充；仅作压力测试</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
+              <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="fc_cold_scope">固定起点下的最近6个月均值</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td>—</td></tr>
             </tbody>
           </table>
         </div>
+
+        <div class="analysis-method-note"><p data-i18n="fc_scenario_note">滚动单月与固定六个月回答的是两个不同问题：前者模拟每月拿到最新销量后的运营预测，后者检验一次性承受六个月滞后信息时的压力。两者不能直接横向排名。</p></div>
 
         <div class="forecast-main-grid">
           <article class="analysis-panel">
@@ -63,7 +65,7 @@
             <dl>
               <div><dt data-i18n="home_global_col">全局 WMAPE</dt><dd data-i18n="fc_global_explain">将全部车系月的绝对误差汇总后除以实际销量总和，高销量车系权重更大。</dd></div>
               <div><dt data-i18n="home_median_col">逐车系中位数 WMAPE</dt><dd data-i18n="fc_median_explain">先分别计算每个车系的误差，再取中位数，用来观察典型车系表现。</dd></div>
-              <div><dt data-i18n="fc_cold_label">冷启动补充</dt><dd data-i18n="fc_cold_explain">只影响9个历史不足的新车系，是补充策略，不替代371车系核心模型。</dd></div>
+              <div><dt data-i18n="fc_cold_label">固定六个月压力测试</dt><dd data-i18n="fc_cold_explain">固定起点综合方案只作为压力测试，与滚动单月主结果分开解读。</dd></div>
             </dl>
           </aside>
         </div>
@@ -85,7 +87,7 @@
       </section>
 
       <section class="analysis-section" aria-labelledby="fc-error-title">
-        <header class="analysis-section-head"><span>03</span><div><h2 id="fc-error-title" data-i18n="fc_error_title">误差分布</h2><p data-i18n="fc_error_lead">测试集包含1,951个车系月样本。散点图观察整体偏差，分车型结果用于定位误差较高的市场类别。</p></div></header>
+        <header class="analysis-section-head"><span>03</span><div><h2 id="fc-error-title" data-i18n="fc_error_title">误差分布</h2><p data-i18n="fc_error_lead">滚动测试包含2,226个车系月样本；散点图展示其中1,964个正销量样本，分车型结果用于定位误差较高的市场类别。</p></div></header>
         <div class="analysis-grid-2">
           <article class="analysis-panel">
             <div class="analysis-panel-head"><div><h3 data-i18n="fc_scatter_public">实际销量与预测销量</h3><p data-i18n="fc_scatter_public_note">点越接近对角线，预测误差越小；高销量车系的绝对偏差更明显。</p></div></div>
@@ -99,13 +101,13 @@
       </section>
 
       <section class="analysis-section" id="sentiment-value" aria-labelledby="fc-review-value-title">
-        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">用户口碑是否增加预测价值？</h2><p data-i18n="fc_review_value_lead">点估计有所改善，但稳定性证据有限，因此将用户口碑保留为补充信号。</p></div></header>
+        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">口碑消融属于固定六个月压力测试，不改变滚动单月主结果；点估计有所改善，但稳定性证据有限。</p></div></header>
 
         <div class="forecast-evidence-strip">
-          <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong>1.73<small>pp</small></strong></div>
-          <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong>89.84<small>%</small></strong></div>
-          <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong>−0.78—5.02<small>pp</small></strong></div>
-          <p data-i18n="fc_evidence_plain">区间包含零，表示部分重采样结果中口碑增强模型并未优于基线。当前证据支持“小幅改善信号”，不支持“稳定胜出”。</p>
+          <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong>0.88<small>pp</small></strong></div>
+          <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong>93.46<small>%</small></strong></div>
+          <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong>−0.28—2.11<small>pp</small></strong></div>
+          <p data-i18n="fc_evidence_plain">区间包含零，表示部分重采样结果中口碑增强模型并未优于基线。当前证据支持“小幅补充信号”，不支持“稳定胜出”。</p>
         </div>
 
         <div class="analysis-grid-2">
@@ -126,8 +128,8 @@
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js?v=20260825-3"></script>
-  <script src="static/js/i18n.js?v=20260828-1"></script>
+  <script src="static/js/common.js?v=20260829-1"></script>
+  <script src="static/js/i18n.js?v=20260829-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
@@ -162,21 +164,20 @@
     function renderForecast() {
       if (!forecastData || !evidenceData) return;
       var d = forecastData, r = evidenceData, T = window.CHINA_AUTO_MARKET;
-      var base = d.models.find(function (m) { return m.name_en === 'Sales baseline (XGBoost)'; });
-      var review = d.models.find(function (m) { return m.name_en === 'User-review enhanced (XGBoost)'; });
-      var cold = d.models.find(function (m) { return m.scenario === 'fixed_origin_primary_cold_hybrid'; });
+      var base = d.models.find(function (m) { return m.scenario === 'rolling_primary'; });
+      var naive = d.models.find(function (m) { return m.scenario === 'rolling_naive_last'; });
+      var stress = d.fixed_stress;
       var naiveGlobal = d.meta.best_naive_global_wmape;
       fcSetText('fc-score-naive-global', fcPct(naiveGlobal));
       fcSetText('fc-score-naive-median', fcPct(d.meta.best_naive_median_wmape));
       fcSetText('fc-score-base-global', fcPct(base.wmape_vol));
       fcSetText('fc-score-base-median', fcPct(base.wmape_med));
       fcSetText('fc-score-base-gain', '−' + (naiveGlobal - base.wmape_vol).toFixed(2) + ' pp');
-      fcSetText('fc-score-review-global', fcPct(review.wmape_vol));
-      fcSetText('fc-score-review-median', fcPct(review.wmape_med));
-      fcSetText('fc-score-review-gain', '−' + (naiveGlobal - review.wmape_vol).toFixed(2) + ' pp');
-      fcSetText('fc-score-cold-global', fcPct(cold.wmape_vol));
-      fcSetText('fc-score-cold-median', fcPct(cold.wmape_med));
-      fcSetText('fc-score-cold-gain', '−' + (naiveGlobal - cold.wmape_vol).toFixed(2) + ' pp');
+      fcSetText('fc-score-review-global', fcPct(stress.wmape_vol));
+      fcSetText('fc-score-review-median', fcPct(stress.wmape_med));
+      fcSetText('fc-score-review-gain', '−' + (stress.naive_wmape_vol - stress.wmape_vol).toFixed(2) + ' pp');
+      fcSetText('fc-score-cold-global', fcPct(stress.naive_wmape_vol));
+      fcSetText('fc-score-cold-median', fcPct(stress.naive_wmape_med));
 
       var models = d.models.slice().sort(function (a, b) { return b.wmape_vol - a.wmape_vol; });
       if (!chartModels) chartModels = initChart('chartModels');
@@ -184,7 +185,7 @@
         tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
         legend: { top: 2, right: 8, itemWidth: 12, itemHeight: 8, textStyle: { color: T.muted, fontSize: 10 } },
         grid: baseGrid({ left: 160, top: 42, right: 62, bottom: 38 }),
-        xAxis: Object.assign({ type: 'value', min: 30, max: 55, name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, axisStyle()),
+        xAxis: Object.assign({ type: 'value', min: 20, max: Math.ceil(Math.max.apply(null, models.map(function (m) { return Math.max(m.wmape_vol, m.wmape_med); })) + 8), name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, axisStyle()),
         yAxis: Object.assign({ type: 'category', data: models.map(publicModelName), axisLabel: { color: T.muted, fontSize: 10 } }, axisStyle()),
         series: [
           { name: window.I18N.get('home_global_col'), type: 'bar', barMaxWidth: 9, data: models.map(function (m) { return m.wmape_vol; }), itemStyle: { color: '#2a65b7' }, label: { show: true, position: 'right', color: T.text, fontSize: 9, formatter: function (p) { return p.value.toFixed(2); } } },
@@ -237,7 +238,7 @@
       chartFusion.setOption({
         tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'line' } }, tooltipStyle()),
         grid: baseGrid({ left: 110, top: 22, right: 62, bottom: 44 }),
-        xAxis: Object.assign({ type: 'value', min: 38.5, max: 40.7, name: 'WMAPE %', nameLocation: 'middle', nameGap: 28 }, axisStyle()),
+        xAxis: Object.assign({ type: 'value', min: Math.floor(Math.min.apply(null, fusion.map(function (x) { return x.wmape_vol; })) - 1), max: Math.ceil(Math.max.apply(null, fusion.map(function (x) { return x.wmape_vol; })) + 1), name: 'WMAPE %', nameLocation: 'middle', nameGap: 28 }, axisStyle()),
         yAxis: Object.assign({ type: 'category', data: fusion.map(publicReviewName) }, axisStyle()),
         series: [{ type: 'scatter', symbolSize: 12, data: fusion.map(function (x) { return { value: x.wmape_vol, itemStyle: { color: x.wmape_vol === Math.min.apply(null, fusion.map(function (v) { return v.wmape_vol; })) ? T.sentimentPos : '#2a65b7' } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 10, formatter: function (p) { return p.value.toFixed(3) + '%'; } } }]
       }, true);

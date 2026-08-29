@@ -1,11 +1,10 @@
 #!/usr/bin/env python3
-"""Evaluate an operational one-month rolling forecast without time leakage.
+"""Evaluate the operational one-month rolling forecast without time leakage.
 
-The headline experiment predicts six months recursively from one fixed origin.
-This internal experiment represents a different, common operating mode: before
-each forecast month, the previous month's realised sales and newly available
-review features are known.  Model parameters remain fixed within each six-month
-window; only the information cutoff advances month by month.
+This is the headline operating mode: before each forecast month, the previous
+month's realised sales are known. Model parameters remain fixed within each
+six-month evaluation window; only the information cutoff advances month by
+month. The fixed-origin recursive protocol is retained as a stress test.
 """
 from __future__ import annotations
 

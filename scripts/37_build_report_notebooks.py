@@ -69,6 +69,8 @@ labels = read_json(REVIEW_DIR / "review_aspect_labels_summary.json")
 temporal = read_json(REVIEW_DIR / "review_feature_temporal_summary.json")
 forecast = pd.read_csv(FORECAST_DIR / "review_feature_ablation_summary.csv", encoding="utf-8-sig")
 benchmark = pd.read_csv(FORECAST_DIR / "forecast_benchmark_comparison.csv", encoding="utf-8-sig")
+rolling_summary = read_json(FORECAST_DIR / "rolling_origin_summary.json")
+rolling_test = pd.read_csv(FORECAST_DIR / "rolling_origin_test_predictions.csv", encoding="utf-8-sig")
 robustness = read_json(FORECAST_DIR / "forecast_robustness_summary.json")
 cold = read_json(FORECAST_DIR / "cold_start_launch_curve_summary.json")
 config = pd.read_csv(PRODUCT_DIR / "config_attribution_ablation.csv")
@@ -82,7 +84,8 @@ print("Loaded analysis artifacts.")
 SAMPLES = r"""
 if ZH:
     table = pd.DataFrame([
-        ["六个月销量预测", "371 个车系", "2,226 条测试车系月", "固定起点递归预测"],
+        ["滚动单月销量预测", "371 个车系", "2,226 条测试车系月", "每月更新下月预测"],
+        ["固定六个月压力测试", "371 个车系", "2,226 条测试车系月", "固定起点递归预测"],
         ["产品配置分析", "736 个车系", "2,007 条车系年记录", "GroupKFold(5) 按车系"],
         ["用户需求与风险", "345 个车系", "24,175 条评论", "质量审计 + 180 天窗口"],
     ], columns=["分析", "样本", "观测", "验证"])
@@ -94,7 +97,9 @@ if ZH:
     ], columns=["数据底座", "规模"])
 else:
     table = pd.DataFrame([
-        ["Six-month sales forecast", "371 series", "2,226 test series-months",
+        ["Rolling one-month sales forecast", "371 series", "2,226 test series-months",
+         "Monthly refresh, one month ahead"],
+        ["Fixed six-month stress test", "371 series", "2,226 test series-months",
          "Fixed-origin recursive forecast"],
         ["Product specifications", "736 series", "2,007 series-year records",
          "Five-fold GroupKFold by series"],
@@ -125,8 +130,8 @@ for split, color in [("train", COLORS["blue"]), ("val", COLORS["orange"]), ("tes
     part = monthly[monthly["split"] == split]
     ax.plot(part["date"], part["monthly_sales"] / 1e6, color=color, lw=2.1, label=split.title())
     ax.axvspan(part["date"].min(), part["date"].max(), color=color, alpha=0.06)
-ax.set(title=("371 车系月销量与固定时间切分" if ZH else
-              "Monthly sales and fixed temporal split: 371 series"),
+ax.set(title=("371 车系月销量与两种预测协议的时间切分" if ZH else
+              "Monthly sales and the two forecast protocols: 371 series"),
        xlabel="", ylabel=("月销量（百万辆）" if ZH else "Monthly sales (million)"))
 ax.legend(frameon=False, ncol=3)
 plt.show()
@@ -137,30 +142,36 @@ MODELS = r"""
 model_name = "方案" if ZH else "Model"
 global_name = "全局 WMAPE" if ZH else "Global WMAPE"
 median_name = "逐车系中位数 WMAPE" if ZH else "Median per-series WMAPE"
-names = {
-    "BASE": "销量基线" if ZH else "Sales baseline",
-    "REVIEW_RICH_FIXED": "用户口碑增强" if ZH else "Owner-feedback enhanced",
-}
-main = forecast[forecast.version.isin(names)].copy()
-main[model_name] = main.version.map(names)
-main = main[[model_name, "global_volume_weighted_WMAPE", "median_per_series_WMAPE"]]
-main.columns = [model_name, global_name, median_name]
-naive = benchmark.loc[benchmark.method.eq("ROLLING_MEAN_6")].iloc[0]
-main.loc[-1] = [
-    "最近6个月均值（朴素）" if ZH else "Trailing six-month mean (naive)",
-    naive["global_volume_weighted_WMAPE"],
-    naive["median_per_series_WMAPE"],
+def wmape(frame, prediction):
+    return (frame["actual"] - frame[prediction]).abs().sum() / frame["actual"].abs().sum() * 100
+
+def median_wmape(frame, prediction):
+    values = frame.groupby("series_name").apply(
+        lambda x: (x["actual"] - x[prediction]).abs().sum() / x["actual"].abs().sum() * 100
+        if x["actual"].abs().sum() else np.nan
+    ).dropna()
+    return values.median()
+
+rolling_rows = [
+    ("沿用上月销量（朴素）" if ZH else "Last observed value (naive)", "LAST_VALUE"),
+    ("近3月均值（朴素）" if ZH else "Trailing 3-month mean (naive)", "ROLLING_MEAN_3"),
+    ("近6月均值（朴素）" if ZH else "Trailing 6-month mean (naive)", "ROLLING_MEAN_6"),
+    ("去年同期销量（朴素）" if ZH else "Same-month-last-year (naive)", "SEASONAL_LAG12"),
+    ("滚动单月 XGBoost（主结果）" if ZH else "Rolling one-month XGBoost (headline)", "pred"),
 ]
-main = main.sort_index().reset_index(drop=True)
-main.loc[len(main)] = [
-    "冷启动补充" if ZH else "Cold-start supplement",
-    cold["hybrid_full371_global_WMAPE"],
-    cold["hybrid_full371_median_per_series_WMAPE"],
-]
-display(main.style.format({global_name: "{:.2f}%", median_name: "{:.2f}%"}))
-ax = main.set_index(model_name).plot.bar(
+rolling_table = pd.DataFrame([
+    [label, wmape(rolling_test, column), median_wmape(rolling_test, column)]
+    for label, column in rolling_rows
+], columns=[model_name, global_name, median_name])
+display(rolling_table.style.format({global_name: "{:.2f}%", median_name: "{:.2f}%"}))
+fixed_row = pd.DataFrame([[
+    "固定六个月综合方案（压力测试）" if ZH else "Fixed six-month combined method (stress test)",
+    cold["hybrid_full371_global_WMAPE"], cold["hybrid_full371_median_per_series_WMAPE"],
+]], columns=[model_name, global_name, median_name])
+display(fixed_row.style.format({global_name: "{:.2f}%", median_name: "{:.2f}%"}))
+ax = rolling_table.set_index(model_name).plot.bar(
     color=[COLORS["blue"], COLORS["light"]], width=0.72, figsize=(10, 4.8))
-ax.set(title=("六个月测试集误差" if ZH else "Six-month test error"),
+ax.set(title=("滚动单月测试集误差" if ZH else "Rolling one-month test error"),
        xlabel="", ylabel="WMAPE (%)")
 ax.tick_params(axis="x", rotation=0)
 ax.legend(frameon=False)
@@ -171,8 +182,8 @@ plt.show()
 
 
 UNCERTAINTY = r"""
-point = robustness["review_rich_vs_base_improvement_pp"]
-low, high = robustness["review_rich_vs_base_bootstrap_95pct_ci_pp"]
+point = robustness["selected_feedback_vs_base_improvement_pp"]
+low, high = robustness["selected_feedback_vs_base_bootstrap_95pct_ci_pp"]
 fig, ax = plt.subplots(figsize=(9, 2.8))
 ax.errorbar(point, 0, xerr=np.array([[point-low], [high-point]]),
             fmt="o", markersize=8, color=COLORS["blue"], capsize=6, lw=2)
@@ -185,12 +196,12 @@ ax.text(point, .08, f"{point:.2f} pp  [95%: {low:.2f}, {high:.2f}]",
         ha="center", va="bottom")
 plt.show()
 if ZH:
-    print(f"重采样中优于基线的比例：{robustness['review_rich_vs_base_probability_better']:.1%}")
-    print(f"六个测试月中优于基线：{robustness['test_months_review_rich_better_than_base']} / 6")
+    print(f"重采样中优于基线的比例：{robustness['selected_feedback_vs_base_probability_better']:.1%}")
+    print(f"六个测试月中优于基线：{robustness['test_months_selected_feedback_better_than_base']} / 6")
 else:
     print("Share of bootstrap replicates better than baseline: "
-          f"{robustness['review_rich_vs_base_probability_better']:.1%}")
-    print(f"Test months better than baseline: {robustness['test_months_review_rich_better_than_base']} / 6")
+          f"{robustness['selected_feedback_vs_base_probability_better']:.1%}")
+    print(f"Test months better than baseline: {robustness['test_months_selected_feedback_better_than_base']} / 6")
 """
 
 
@@ -234,9 +245,10 @@ frame[name] = frame.variant.map({
     "+CONFIG": "年份 + 品牌 + 配置" if ZH else "Year + brand + specifications",
     "CONFIG-ONLY": "仅配置" if ZH else "Specifications only",
 })
-display(frame[[name, "R2_log_mean", "R2_log_std", "WMAPE_mean", "n_features"]]
+wmape_column = "WMAPE_oof_global" if "WMAPE_oof_global" in frame.columns else "WMAPE_mean"
+display(frame[[name, "R2_log_mean", "R2_log_std", wmape_column, "n_features"]]
         .style.format({"R2_log_mean": "{:.3f}", "R2_log_std": "{:.3f}",
-                       "WMAPE_mean": "{:.2f}%"}))
+                       wmape_column: "{:.2f}%"}))
 ordered = frame[frame.variant.isin(["YEAR-ONLY", "+BRAND", "+CONFIG"])]
 fig, ax = plt.subplots(figsize=(9.5, 4.5))
 bars = ax.bar(ordered[name], ordered.R2_log_mean,
@@ -312,7 +324,7 @@ if ZH:
         ["排除的列表摘要", f"{corpus['autohome_list_summary_rows_excluded_from_temporal_model']} 条",
          "无详情正文，不建模"],
         ["测试起点前有评论", f"{temporal['fixed_test_series_with_any_prior_review']} 个车系",
-         "冻结于 2026-01-01 前"],
+         "固定压力测试冻结于 2026-01-01 前"],
         ["最近 180 天有评论", f"{temporal['fixed_test_series_with_recent_180d_review']} 个车系",
          "其余保留缺失标记"],
         ["复用历史标签", f"{labels['historical_labeled_reviews']:,} 条", "保留来源与标签限制"],
@@ -325,7 +337,7 @@ else:
         ["Excluded list summaries", corpus["autohome_list_summary_rows_excluded_from_temporal_model"],
          "No full detail text; not modeled"],
         ["Review evidence before test origin", f"{temporal['fixed_test_series_with_any_prior_review']} series",
-         "Frozen before 2026-01-01"],
+         "Frozen before 2026-01-01 for the fixed stress test"],
         ["Review in prior 180 days", f"{temporal['fixed_test_series_with_recent_180d_review']} series",
          "Missingness retained elsewhere"],
         ["Reused historical labels", f"{labels['historical_labeled_reviews']:,}",
@@ -346,27 +358,32 @@ TEXT = {
 **研究期：** 2022-01—2026-07
 
 **预测测试期：** 2026-01—06
+**销量主任务：** 每月更新的下月预测；固定六个月为压力测试
 **主指标：** 全局 volume-weighted WMAPE""",
         "sample": """## 1. 三组分析样本
 
 三项分析的筛选条件不同。销量预测要求连续月度历史，产品配置分析要求年度销量与配置能够对齐，用户需求分析要求完整且可核验的评论正文。""",
+
         "forecast": """## 2. 月度销量预测
 
-训练截至 2025-06，验证期为 2025-07—12，测试期为 2026-01—06。测试采用 2026 年 1 月固定起点；评论特征同样冻结在该起点。""",
+训练截至 2025-06，验证期为 2025-07—12，测试期为 2026-01—06。主结果是每月更新的下月预测：每次预测可使用已公布的上月真实销量；固定起点六个月递归结果另作压力测试。""",
+
         "models": """### 模型比较
 
-先报告全局 WMAPE，再用逐车系中位数观察长尾。最佳朴素基准为最近 6 个月均值，最终方案相对它减少 44.9% 的绝对预测误差。两类指标的分母和聚合方式不同，不应相互替代。""",
+滚动单月主结果中，XGBoost 的全局 WMAPE 为 31.34%，沿用上月销量的朴素基准为 40.99%，绝对误差降低 9.65 个百分点（相对减少约 23.5%）。固定六个月综合方案为 39.07%，相对同场景最近 6 个月均值 69.31% 减少 43.6% 的绝对误差；这两个结果回答不同问题，不能直接横向排名。""",
+
         "uncertainty": """### 改善幅度与不确定性
 
-用户口碑增强模型相对销量基线降低 1.73 个百分点。按车系重采样的区间仍跨过零，因此结论是“小幅改善信号”，而不是“稳定优于基线”。""",
+口碑增强属于固定六个月压力测试：点估计相对销量基线改善 0.884 个百分点，按车系重采样的 95% 区间为 −0.284 至 2.108 个百分点，仍跨过零。因此它是小幅补充信号，不是滚动主结果的稳定增益。""",
         "importance": "### 哪些信息在起作用",
-        "cold": """### 冷启动
 
-9 个历史不足车系的 WMAPE 从 98.76% 降到 89.62%；它们销量体量较小，对 371 车系整体指标的进一步改善为 0.06 个百分点。""",
+        "cold": """### 固定压力测试中的冷启动补充
+
+固定六个月压力测试为 9 个历史不足车系补充上市曲线；这项统计策略只处理长历史不足的边界样本，不替代 371 个车系的滚动主模型。""",
         "config": """## 3. 产品配置与年度销量差异
 
 样本为 736 个车系、2,007 条车系年记录。验证按车系分组，避免同一车系的不同年份同时出现在训练折和验证折。""",
-        "config_read": """**结果解读：** 加入品牌后 R² 从 0.089 升至 0.156；继续加入配置后达到 0.300。这个模块衡量车系间的解释关联，不用于判断单一配置是否会直接导致销量增长。""",
+        "config_read": """**结果解读：** 加入品牌后 R² 从 0.089 升至 0.158；继续加入配置后达到 0.301。这个模块衡量车系间的解释关联，不用于判断单一配置是否会直接导致销量增长；年度截面 WMAPE 只是补充误差，不能与月度销量预测直接比较。""",
         "needs": """## 4. 用户需求与口碑风险
 
 严格语料包含 24,175 条评论。十个维度同时保留提及率和有效评分中的负面率，避免把“讨论很多”和“评价很差”合并成一个指标。""",
@@ -383,12 +400,14 @@ TEXT = {
 本地启动（在项目根目录执行）：
 
     python -m http.server 8000 --directory app""",
+
         "conclusion": """## 7. 结论
 
-1. 历史销量是六个月预测的主要信息来源；用户口碑提供小幅、但尚未稳健显著的增量。
-2. 产品配置能够提高年度销量差异的解释力，但结果属于关联分析。
-3. 评论数据更适合用于需求结构和风险监测；提及率、正负倾向与样本量需要分开报告。
-4. 固定时间切分、预测起点冻结和完整正文门槛是当前结果可复查的基础。""",
+1. 滚动单月 XGBoost 是当前业务主结果；历史销量是主要信号，且相对同场景朴素基准有明确改善。
+2. 固定六个月综合方案保留为压力测试，不能与滚动单月的 WMAPE 直接比较。
+3. 产品配置能够提高年度销量差异的解释力，但结果属于关联分析；其 WMAPE 只是年度截面补充误差。
+4. 评论数据更适合用于需求结构、风险监测和固定压力测试的补充信号；提及率、正负倾向与样本量需要分开报告。
+5. 严格时间切分、可用信息边界和完整正文门槛是当前结果可复查的基础。""",
     },
     "en": {
         "title": """# China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs
@@ -398,27 +417,32 @@ This notebook reproduces the main results and figures from saved analysis artifa
 **Study period:** 2022-01—2026-07
 
 **Forecast test:** 2026-01—06
+**Sales headline task:** monthly refreshed one-month-ahead forecast; fixed six-month stress test
 **Primary metric:** global volume-weighted WMAPE""",
         "sample": """## 1. Three analysis samples
 
 Forecasting requires continuous monthly history; the specification analysis requires aligned annual sales and product attributes; the user-needs analysis requires complete and traceable review text.""",
+
         "forecast": """## 2. Monthly sales forecasting
 
-Training ends in 2025-06, validation covers 2025-07—12, and testing covers 2026-01—06. The test uses a January 2026 fixed origin; review features are frozen at the same origin.""",
+Training ends in 2025-06, validation covers 2025-07—12, and testing covers 2026-01—06. The headline refreshes each month for a one-month-ahead forecast and can use the latest published sales; the fixed-origin six-month recursive result is reported separately as a stress test.""",
+
         "models": """### Model comparison
 
-Global WMAPE is followed by median per-series WMAPE for the long tail. The best naive baseline is the trailing six-month mean; the final method reduces absolute forecast error by 44.9% relative to it. The two metrics have different denominators and aggregation rules and should not be substituted for each other.""",
+In the rolling one-month headline, XGBoost reaches 31.34% global WMAPE versus 40.99% for the last-observed-value naive baseline, a 9.65-point (about 23.5%) absolute-error reduction. The fixed six-month combined method reaches 39.07% versus 69.31% for its trailing-six-month comparator, a 43.6% reduction; these are different tasks and should not be ranked directly.""",
+
         "uncertainty": """### Improvement and uncertainty
 
-The owner-feedback model lowers global WMAPE by 1.73 percentage points. The series-cluster bootstrap interval still crosses zero, supporting a modest improvement signal rather than a stable proven advantage.""",
+Review enhancement belongs to the fixed six-month stress test: its point estimate improves on the sales baseline by 0.884 percentage points, while the series-cluster 95% interval is −0.284 to 2.108 points and crosses zero. It is therefore supporting evidence, not a stable gain for the rolling headline.""",
         "importance": "### Information contribution",
-        "cold": """### Cold start
 
-WMAPE for nine history-poor series falls from 98.76% to 89.62%. Their limited volume means the full 371-series score improves by a further 0.06 percentage points.""",
+        "cold": """### Cold-start supplement in the stress test
+
+The fixed six-month stress test adds a launch-curve statistical supplement for nine history-poor series. It handles boundary cases and does not replace the rolling headline model for 371 series.""",
         "config": """## 3. Product specifications and annual sales variation
 
 The sample contains 736 series and 2,007 series-year records. Validation groups by series so different years of one series cannot enter both training and validation folds.""",
-        "config_read": """**Interpretation:** R² rises from 0.089 to 0.156 after adding brand and reaches 0.300 after adding specifications. This is an out-of-fold explanatory association across series, not a causal estimate for an individual feature.""",
+        "config_read": """**Interpretation:** R² rises from 0.089 to 0.158 after adding brand and reaches 0.301 after adding specifications. This is an out-of-fold explanatory association across series, not a causal estimate for an individual feature; annual cross-sectional WMAPE is supporting error and is not directly comparable with monthly forecasting.""",
         "needs": """## 4. User needs and review risk
 
 The strict corpus contains 24,175 reviews. Mention share and negative share among scored mentions remain separate, so discussion volume is not conflated with dissatisfaction.""",
@@ -435,12 +459,14 @@ The dashboard is a static site backed by pre-baked JSON in `app/static/data/`. A
 Launch from the repository root:
 
     python -m http.server 8000 --directory app""",
+
         "conclusion": """## 7. Conclusions
 
-1. Sales history remains the dominant forecasting signal; owner feedback adds a modest but not yet robustly significant increment.
-2. Product specifications improve the explanation of annual cross-series variation, but the result is associational.
-3. Review data is most directly useful for demand structure and risk monitoring; mention, polarity, and sample size should be reported separately.
-4. Fixed temporal splits, origin freezing, and full-text quality thresholds make the results auditable.""",
+1. Rolling one-month XGBoost is the current operational headline; sales history is the dominant signal and clearly improves on its same-scenario naive baseline.
+2. The fixed six-month combined method is retained as a stress test and should not be compared directly with the rolling WMAPE.
+3. Product specifications improve the explanation of annual cross-series variation, but the result is associational and its WMAPE is supporting evidence only.
+4. Review data is most directly useful for demand structure, risk monitoring, and a modest stress-test supplement; mention, polarity, and sample size should be reported separately.
+5. Strict temporal splits, information-availability boundaries, and full-text quality thresholds make the results auditable.""",
     },
 }
 

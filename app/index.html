@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="description" content="中国汽车市场分析：销量预测、产品配置与用户需求">
   <title>中国车市分析 · 决策概览</title>
-  <link rel="stylesheet" href="static/css/style.css?v=20260825-2">
+  <link rel="stylesheet" href="static/css/style.css?v=20260829-1">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
 <body class="home-page">
@@ -28,7 +28,7 @@
         <div class="home-intro-copy">
           <p class="home-label" data-i18n="home_label">独立研究项目 · 中国汽车市场</p>
           <h1 id="home-title" data-i18n="home_title">中国汽车市场分析：销量预测、产品配置与用户需求</h1>
-          <p class="home-deck" data-i18n="home_deck">基于公开月销量、车型配置与24,175条车主评论，分别完成六个月销量预测、年度产品配置分析和用户需求监测。</p>
+          <p class="home-deck" data-i18n="home_deck">基于公开月销量、车型配置与24,175条车主评论，完成滚动单月销量预测、固定六个月压力测试、年度产品配置分析和用户需求监测。</p>
           <div class="home-meta-line" aria-label="Project scope">
             <span data-i18n="home_meta_period">研究期 2022-01—2026-07</span>
             <span data-i18n="home_meta_sources">三类公开数据</span>
@@ -44,8 +44,8 @@
         <div class="home-question-grid">
           <a class="home-question" href="forecast.html">
             <span class="home-question-no">01</span>
-            <h3 data-i18n="home_q1_title">未来六个月的车系销量能否被可靠预测？</h3>
-            <p data-i18n="home_q1_body">在371个连续月销车系上进行固定起点递归预测，严格隔离训练、验证与测试期。</p>
+            <h3 data-i18n="home_q1_title">下个月的车系销量能否被可靠预测？</h3>
+            <p data-i18n="home_q1_body">在371个连续月销车系上每月更新下月预测，并将固定六个月递归结果作为压力测试，严格隔离训练、验证与测试期。</p>
             <span class="home-question-link" data-i18n="home_q1_link">查看销量预测 →</span>
           </a>
           <a class="home-question" href="attribution.html">
@@ -73,7 +73,7 @@
             <article class="home-cohort-row">
               <div class="home-cohort-name"><span>FORECAST</span><h3 data-i18n="home_cohort_forecast">月度销量预测</h3></div>
               <div class="home-cohort-count"><strong id="cohort-forecast">—</strong><span data-i18n="home_series_unit">个车系</span></div>
-              <p data-i18n="home_cohort_forecast_rule">保留连续月销且具备建模字段的车系；用于2026年1—6月固定起点递归测试。</p>
+              <p data-i18n="home_cohort_forecast_rule">保留连续月销且具备建模字段的车系；主结果为滚动单月预测，2026年1—6月固定起点结果作为压力测试。</p>
               <a href="forecast.html" data-i18n="home_read_analysis">进入分析 →</a>
             </article>
             <article class="home-cohort-row">
@@ -112,36 +112,36 @@
       <section class="home-report-section home-results" aria-labelledby="results-title">
         <div class="home-section-aside">
           <h2 id="results-title"><span class="home-heading-no" aria-hidden="true">03</span><span data-i18n="home_results_title">主要结果</span></h2>
-          <p data-i18n="home_results_body">主指标采用全局 WMAPE，同时保留逐车系中位数 WMAPE、分组交叉验证 R² 与需求维度负面率，避免用单一指标代替全部证据。</p>
+          <p data-i18n="home_results_body">销量主结果采用滚动单月预测的全局 WMAPE，同时保留逐车系中位数；固定六个月只作为同口径压力测试。配置模块使用分组交叉验证 R²，需求模块报告维度负面率，避免用单一指标代替全部证据。</p>
         </div>
         <div class="home-section-body">
           <article class="home-result-block home-result-primary">
             <div class="home-result-heading">
-              <div><span class="home-result-index">A</span><h3 data-i18n="home_result_forecast_title">销量预测：用户口碑提供小幅增量，销量历史仍是主信号</h3></div>
+              <div><span class="home-result-index">A</span><h3 data-i18n="home_result_forecast_title">销量预测：滚动单月结果明显优于朴素基准，销量历史仍是主信号</h3></div>
               <a href="forecast.html" data-i18n="home_view_detail">查看完整结果 →</a>
             </div>
             <div class="home-table-wrap">
               <table class="home-model-table">
                 <thead><tr><th data-i18n="home_model_col">比较方案</th><th><span data-i18n="home_global_col">全局 WMAPE</span><small data-i18n="home_primary_lower">主指标 · 越低越好</small></th><th><span data-i18n="home_median_col">逐车系中位数 WMAPE</span><small data-i18n="home_supporting_lower">补充指标 · 越低越好</small></th><th data-i18n="home_change_col">相对基线</th></tr></thead>
                 <tbody>
-                  <tr><td><strong data-i18n="home_model_naive">最佳朴素基准</strong><span data-i18n="home_model_naive_note">过去6个月销量均值</span></td><td id="model-naive-global">—</td><td id="model-naive-median">—</td><td class="home-neutral">—</td></tr>
-                  <tr><td><strong data-i18n="home_model_baseline">销量基线模型</strong><span data-i18n="home_model_baseline_note">历史销量、日历与产品属性</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td id="model-base-gain">—</td></tr>
-                  <tr class="home-best-core"><td><strong data-i18n="home_model_review">用户口碑增强模型</strong><span data-i18n="home_model_review_note">加入预测起点前可获得的用户评价</span></td><td id="model-core-global">—</td><td id="model-core-median">—</td><td id="model-core-gain">—</td></tr>
-                  <tr><td><strong data-i18n="home_model_cold">冷启动补充方案</strong><span data-i18n="home_model_cold_note">为历史不足的新车系补充上市曲线</span></td><td id="model-cold-global">—</td><td id="model-cold-median">—</td><td id="model-cold-gain">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_naive">沿用上月销量（朴素基准）</strong><span data-i18n="home_model_naive_note">每次预测直接沿用最近一个已公布月份</span></td><td id="model-naive-global">—</td><td id="model-naive-median">—</td><td class="home-neutral">—</td></tr>
+                  <tr class="home-best-core"><td><strong data-i18n="home_model_baseline">滚动单月 XGBoost（主结果）</strong><span data-i18n="home_model_baseline_note">每月更新下月预测，使用销量历史、日历与产品属性</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td id="model-base-gain">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_stress">固定六个月综合方案</strong><span data-i18n="home_model_stress_note">固定起点，含口碑与冷启动补充；仅作压力测试</span></td><td id="model-core-global">—</td><td id="model-core-median">—</td><td id="model-core-gain">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="home_model_stress_naive_note">固定起点下的最近6个月均值</span></td><td id="model-cold-global">—</td><td id="model-cold-median">—</td><td class="home-neutral">—</td></tr>
                 </tbody>
               </table>
             </div>
             <div class="home-metric-explain">
               <p><strong data-i18n="home_wmape_why">全局 WMAPE</strong><span data-i18n="home_wmape_answer">它按真实销量加权，更接近整体市场误差；同时展示逐车系中位数，防止高销量车系完全遮住长尾表现。</span></p>
-              <p><strong data-i18n="home_uncertainty_title">不确定性</strong><span data-i18n="home_uncertainty_body">点估计优于基线，但按车系重采样的95%区间仍包含零，因此结论是“有小幅改善信号”，不是“已证明稳定胜出”。</span></p>
+              <p><strong data-i18n="home_uncertainty_title">场景说明</strong><span data-i18n="home_uncertainty_body">滚动单月主结果比较的是同一场景下的上月销量基准；固定六个月压力测试另行比较，两个百分比不能直接横向排名。</span></p>
             </div>
           </article>
 
           <div class="home-supporting-results">
             <article class="home-result-block">
               <div class="home-result-heading"><div><span class="home-result-index">B</span><h3 data-i18n="home_result_attr_title">产品配置提高年度销量差异的解释力</h3></div><a href="attribution.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
-              <div class="home-evidence-line"><strong>0.156</strong><span aria-hidden="true">→</span><strong class="accent">0.300</strong></div>
-              <p data-i18n="home_result_attr_body">在同一736车系口径下，加入配置后，GroupKFold验证 R² 从品牌模型的0.156提升至0.300；说明产品属性有增量解释力，但不等同于因果效应。</p>
+              <div class="home-evidence-line"><strong>0.158</strong><span aria-hidden="true">→</span><strong class="accent">0.301</strong></div>
+              <p data-i18n="home_result_attr_body">在同一736车系口径下，加入配置后，GroupKFold验证 R² 从品牌模型的0.158提升至0.301；说明产品属性有增量解释力，但不等同于因果效应。年度截面 WMAPE 仅作补充。</p>
             </article>
             <article class="home-result-block">
               <div class="home-result-heading"><div><span class="home-result-index">C</span><h3 data-i18n="home_result_need_title">用户需求：智能化与舒适性是负面反馈最集中的维度</h3></div><a href="absa.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
@@ -165,11 +165,11 @@
             <article><span>01</span><h3 data-i18n="home_method_time">严格时间切分</h3><p data-i18n="home_method_time_body">训练截至2025-06；验证为2025-07—12；测试为2026-01—06。每个预测月只使用当月第一天前已经发布的评论。</p></article>
             <article><span>02</span><h3 data-i18n="home_method_metric">主指标与补充指标</h3><p data-i18n="home_method_metric_body">主指标为全局 WMAPE：∑|实际−预测| ÷ ∑实际。补充报告逐车系中位数 WMAPE、分车型误差与不确定性。</p></article>
             <article><span>03</span><h3 data-i18n="home_method_text">评论文本分析</h3><p data-i18n="home_method_text_body">评论被拆分为10个产品维度，并区分“是否提及”与正、中、负倾向。</p></article>
-            <article><span>04</span><h3 data-i18n="home_method_limit">结果边界</h3><p data-i18n="home_method_limit_body">销量预测是固定样本期的测试结果；产品配置分析衡量解释关联而非因果；评论覆盖不完整的车系保留为缺失，不强行填成中性。</p></article>
+            <article><span>04</span><h3 data-i18n="home_method_limit">结果边界</h3><p data-i18n="home_method_limit_body">滚动主结果和固定六个月压力测试属于不同预测任务；产品配置分析衡量解释关联而非因果；评论覆盖不完整的车系保留为缺失，不强行填成中性。</p></article>
           </div>
           <details class="home-audit-note">
-            <summary data-i18n="home_audit_summary">模型不确定性</summary>
-            <div><p data-i18n="home_audit_text">用户口碑增强模型相对销量基线的点改善为1.73个百分点；5,000次车系聚类重采样中胜出概率为89.84%，95%区间为−0.78至5.02个百分点。</p></div>
+            <summary data-i18n="home_audit_summary">补充证据</summary>
+            <div><p data-i18n="home_audit_text">固定六个月压力测试中的口碑增强点估计改善0.884个百分点；5,000次车系聚类重采样的95%区间为−0.284至2.108个百分点，区间跨0，因此不把它当作滚动主结果的稳定增益。</p></div>
           </details>
         </div>
       </section>
@@ -189,8 +189,8 @@
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js?v=20260825-3"></script>
-  <script src="static/js/i18n.js?v=20260828-1"></script>
+  <script src="static/js/common.js?v=20260829-1"></script>
+  <script src="static/js/i18n.js?v=20260829-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
@@ -219,19 +219,16 @@
       setText('model-naive-global', pct(k.naive_wmape));
       setText('model-naive-median', pct(k.naive_median_wmape));
       setText('model-base-global', pct(k.baseline_wmape));
-      setText('model-core-global', pct(k.core_forecast_wmape));
-      setText('model-cold-global', pct(k.forecast_wmape));
+      setText('model-core-global', pct(k.fixed_stress_wmape));
+      setText('model-core-median', pct(k.fixed_stress_median_wmape));
+      setText('model-cold-global', pct(k.fixed_stress_naive_wmape));
+      setText('model-cold-median', pct(k.fixed_stress_naive_median_wmape));
       setText('model-base-gain', '−' + (k.naive_wmape - k.baseline_wmape).toFixed(2) + ' pp');
-      setText('model-core-gain', '−' + (k.naive_wmape - k.core_forecast_wmape).toFixed(2) + ' pp');
-      setText('model-cold-gain', '−' + (k.naive_wmape - k.forecast_wmape).toFixed(2) + ' pp');
+      setText('model-core-gain', '−' + (k.fixed_stress_naive_wmape - k.fixed_stress_wmape).toFixed(2) + ' pp');
 
       if (forecastData) {
-        var base = forecastData.models.find(function (x) { return x.name_en === 'Sales baseline'; });
-        var core = forecastData.models.find(function (x) { return x.name_en === 'User-review enhanced'; });
-        var cold = forecastData.models.find(function (x) { return x.scenario === 'fixed_origin_primary_cold_hybrid'; });
+        var base = forecastData.models.find(function (x) { return x.scenario === 'rolling_primary'; });
         if (base) setText('model-base-median', pct(base.wmape_med));
-        if (core) setText('model-core-median', pct(core.wmape_med));
-        if (cold) setText('model-cold-median', pct(cold.wmape_med));
       }
 
       if (!overviewChart) overviewChart = initChart('chartTrend');

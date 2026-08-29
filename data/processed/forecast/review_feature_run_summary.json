@@ -20,7 +20,8 @@
   "best_primary_version": "LOCAL_LEXICON_FIXED",
   "best_primary_global_volume_weighted_WMAPE": 39.12548080170414,
   "baseline_global_volume_weighted_WMAPE": 40.00988069948561,
-  "rolling_scenario_is_supplemental": true,
+  "fixed_origin_is_stress_test": true,
+  "rolling_primary_evaluation": "scripts/48_evaluate_rolling_origin.py",
   "tree_grid": [
     50,
     100,
