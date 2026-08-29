@@ -162,8 +162,8 @@
     function renderForecast() {
       if (!forecastData || !evidenceData) return;
       var d = forecastData, r = evidenceData, T = window.CHINA_AUTO_MARKET;
-      var base = d.models.find(function (m) { return m.name_en === 'Sales baseline'; });
-      var review = d.models.find(function (m) { return m.name_en === 'User-review enhanced'; });
+      var base = d.models.find(function (m) { return m.name_en === 'Sales baseline (XGBoost)'; });
+      var review = d.models.find(function (m) { return m.name_en === 'User-review enhanced (XGBoost)'; });
       var cold = d.models.find(function (m) { return m.scenario === 'fixed_origin_primary_cold_hybrid'; });
       var naiveGlobal = d.meta.best_naive_global_wmape;
       fcSetText('fc-score-naive-global', fcPct(naiveGlobal));

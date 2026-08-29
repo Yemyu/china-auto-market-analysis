@@ -16,7 +16,7 @@ warnings.filterwarnings("ignore")
 import matplotlib
 import numpy as np
 import pandas as pd
-from xgboost import XGBRegressor
+from xgboost import XGBRegressor, __version__ as xgboost_version
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
@@ -503,21 +503,42 @@ def main() -> None:
     grid.to_csv(VALIDATION_GRID, index=False, encoding="utf-8-sig")
     save_figure(summary)
 
-    primary = summary.loc[summary["primary_fixed_origin_comparison"]].sort_values("global_volume_weighted_WMAPE")
+    primary = summary.loc[summary["primary_fixed_origin_comparison"]].copy()
+    validation_selected = primary.sort_values(
+        ["fixed_origin_validation_global_WMAPE", "version"]
+    ).iloc[0]
+    descriptive_test_best = primary.sort_values(
+        ["global_volume_weighted_WMAPE", "version"]
+    ).iloc[0]
     run_summary = {
         "schema_version": "v1",
         "evaluation_series": int(test_fixed["series_name"].nunique()),
         "validation_protocol": "recursive six-month fixed-origin forecast; select n_estimators by global volume-weighted WMAPE",
         "test_protocol": "refit on point-in-time train+validation rows; recursive fixed-origin 2026-01..06 forecast",
-        "primary_versions": primary["version"].tolist(),
-        "best_primary_version": primary.iloc[0]["version"],
-        "best_primary_global_volume_weighted_WMAPE": float(primary.iloc[0]["global_volume_weighted_WMAPE"]),
+        "primary_versions": primary.sort_values("version")["version"].tolist(),
+        "primary_version_selection_metric": "fixed-origin validation global volume-weighted WMAPE",
+        "validation_selected_primary_version": validation_selected["version"],
+        "validation_selected_primary_validation_WMAPE": float(
+            validation_selected["fixed_origin_validation_global_WMAPE"]
+        ),
+        "validation_selected_primary_test_WMAPE": float(
+            validation_selected["global_volume_weighted_WMAPE"]
+        ),
+        "descriptive_best_test_version": descriptive_test_best["version"],
+        "descriptive_best_test_WMAPE": float(
+            descriptive_test_best["global_volume_weighted_WMAPE"]
+        ),
+        "best_primary_version": validation_selected["version"],
+        "best_primary_global_volume_weighted_WMAPE": float(
+            validation_selected["global_volume_weighted_WMAPE"]
+        ),
         "baseline_global_volume_weighted_WMAPE": float(
             summary.loc[summary["version"].eq("BASE"), "global_volume_weighted_WMAPE"].iloc[0]
         ),
         "rolling_scenario_is_supplemental": True,
         "tree_grid": TREE_GRID,
         "model_params": MODEL_PARAMS,
+        "xgboost_version": xgboost_version,
         "external_api_calls": 0,
     }
     RUN_SUMMARY.write_text(json.dumps(run_summary, ensure_ascii=False, indent=2), encoding="utf-8")

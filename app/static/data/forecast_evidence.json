@@ -2,20 +2,20 @@
   "granger": {
     "aspects": [
       {
-        "zh": "平台评分",
-        "en": "Platform ratings"
+        "zh": "平台评分增强（XGBoost）",
+        "en": "Platform-rating enhanced (XGBoost)"
       },
       {
-        "zh": "用户口碑增强",
-        "en": "User-review enhanced"
+        "zh": "用户口碑增强（XGBoost）",
+        "en": "User-review enhanced (XGBoost)"
       },
       {
-        "zh": "本地词典",
-        "en": "Local lexicon"
+        "zh": "本地词典增强（XGBoost）",
+        "en": "Local-lexicon enhanced (XGBoost)"
       },
       {
-        "zh": "文本情感特征",
-        "en": "Text sentiment"
+        "zh": "文本情感增强（XGBoost）",
+        "en": "Text-sentiment enhanced (XGBoost)"
       }
     ],
     "sig_rates": [
@@ -27,23 +27,23 @@
   },
   "fusion": [
     {
-      "version": "销量基线",
-      "version_en": "Sales baseline",
+      "version": "销量基线（XGBoost）",
+      "version_en": "Sales baseline (XGBoost)",
       "wmape_vol": 40.44
     },
     {
-      "version": "平台评分",
-      "version_en": "Platform ratings",
+      "version": "平台评分增强（XGBoost）",
+      "version_en": "Platform-rating enhanced (XGBoost)",
       "wmape_vol": 38.819
     },
     {
-      "version": "文本情感特征",
-      "version_en": "Text sentiment",
+      "version": "文本情感增强（XGBoost）",
+      "version_en": "Text-sentiment enhanced (XGBoost)",
       "wmape_vol": 39.225
     },
     {
-      "version": "用户口碑增强",
-      "version_en": "User-review enhanced",
+      "version": "用户口碑增强（XGBoost）",
+      "version_en": "User-review enhanced (XGBoost)",
       "wmape_vol": 38.705
     }
   ],

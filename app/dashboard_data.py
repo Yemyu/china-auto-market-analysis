@@ -26,14 +26,14 @@ ASPECT_EN = {
 }
 PALETTE = ["#2c7be5", "#00a9ae", "#34c38f", "#f6c343", "#ee5b5b", "#a55eea", "#7783f5"]
 MODEL_LABELS = {
-    "BASE": ("销量基线", "Sales baseline"),
-    "PLATFORM_RATING_FIXED": ("平台评分", "Platform ratings"),
-    "LOCAL_LEXICON_FIXED": ("本地词典", "Local lexicon"),
-    "REVIEW_TEXT_FIXED": ("文本情感特征", "Text sentiment"),
-    "REVIEW_RICH_FIXED": ("用户口碑增强", "User-review enhanced"),
-    "ALL_SENTIMENT_FIXED": ("全部口碑特征", "Combined review features"),
-    "REVIEW_TEXT_ROLLING": ("滚动口碑特征", "Rolling review signals"),
-    "REVIEW_RICH_COLD_START": ("口碑增强＋冷启动", "Review enhanced + cold-start"),
+    "BASE": ("销量基线（XGBoost）", "Sales baseline (XGBoost)"),
+    "PLATFORM_RATING_FIXED": ("平台评分增强（XGBoost）", "Platform-rating enhanced (XGBoost)"),
+    "LOCAL_LEXICON_FIXED": ("本地词典增强（XGBoost）", "Local-lexicon enhanced (XGBoost)"),
+    "REVIEW_TEXT_FIXED": ("文本情感增强（XGBoost）", "Text-sentiment enhanced (XGBoost)"),
+    "REVIEW_RICH_FIXED": ("用户口碑增强（XGBoost）", "User-review enhanced (XGBoost)"),
+    "ALL_SENTIMENT_FIXED": ("全部口碑增强（XGBoost）", "Combined-review enhanced (XGBoost)"),
+    "REVIEW_TEXT_ROLLING": ("滚动口碑增强（XGBoost）", "Rolling-review enhanced (XGBoost)"),
+    "REVIEW_RICH_COLD_START": ("口碑增强（XGBoost）＋冷启动统计补充", "Review-enhanced XGBoost + statistical cold-start"),
 }
 FEATURE_FAMILY_LABELS = {
     "sales_lag_roll": ("历史销量", "Sales history"),

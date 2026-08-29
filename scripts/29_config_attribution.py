@@ -20,10 +20,16 @@ from sklearn.model_selection import GroupKFold
 from sklearn.metrics import r2_score
 from xgboost import XGBRegressor
 
+from _sales_repair import apply_verified_annual_sales_corrections
+
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 FEAT = os.path.join(BASE, "data", "raw", "feature.csv")
+SALES = os.path.join(BASE, "data", "processed", "sales_filtered_24m.csv")
 FIG = os.path.join(BASE, "assets/analysis")
 PROC = os.path.join(BASE, "data", "processed", "product")
+ANNUAL_REPAIR_AUDIT = os.path.join(
+    BASE, "data", "processed", "data_quality", "annual_sales_repair_audit.csv"
+)
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
@@ -33,7 +39,8 @@ N_SPLITS = 5
 # 排除: 标识列 / 目标 / 市场结果价(内生, 非产品属性) / 冗余文本
 DROP = {
     "pcauto_series_id", "series_id", "series_name", "car_id", "car_name",
-    "annual_sales", "official_price_str", "owner_price", "dealer_price",
+    "annual_sales", "annual_sales_raw", "annual_sales_repair_applied",
+    "official_price_str", "owner_price", "dealer_price",
     "brand_id", "pcauto_brand", "original_energy_type",
     "engine_displacement_ml",          # 与 _l 重复
     "speaker_count_original",          # 与 speaker_count 重复
@@ -150,11 +157,47 @@ def cv_eval(df, y, groups, label, block_names, num_cols, cat_cols, full_feature_
         wms.append(wmape(np.expm1(y[te]), np.maximum(np.expm1(p), 0)))
     print(f"  {label:14s} R2(log)={np.mean(r2s):6.3f}  WMAPE={np.mean(wms):7.1f}%  维度={full_feature_count}")
     return {"variant": label, "R2_log_mean": np.mean(r2s), "R2_log_std": np.std(r2s),
-            "WMAPE_mean": np.mean(wms), "n_features": full_feature_count}, oof
+            "WMAPE_mean": np.mean(wms), "WMAPE_fold_std": np.std(wms),
+            "WMAPE_oof_global": wmape(np.expm1(y), np.maximum(np.expm1(oof), 0)),
+            "n_features": full_feature_count}, oof
+
+
+def cv_naive_baselines(df, y, groups):
+    """Compute leakage-safe annual-sales baselines for WMAPE context."""
+    raw_y = np.expm1(y)
+    gkf = GroupKFold(n_splits=N_SPLITS)
+    rows = []
+    for label in ("GLOBAL_MEDIAN", "YEAR_MEDIAN"):
+        fold_scores, oof = [], np.zeros(len(y), dtype=float)
+        for tr, te in gkf.split(df, y, groups):
+            train_raw = pd.Series(raw_y[tr], index=tr)
+            if label == "GLOBAL_MEDIAN":
+                pred = np.repeat(float(train_raw.median()), len(te))
+            else:
+                train_year = df.iloc[tr][["year"]].copy()
+                train_year["target"] = raw_y[tr]
+                medians = train_year.groupby("year")["target"].median()
+                pred = df.iloc[te]["year"].map(medians).fillna(train_raw.median()).to_numpy()
+            pred = np.maximum(pred, 0.0)
+            oof[te] = pred
+            fold_scores.append(wmape(raw_y[te], pred))
+        rows.append({
+            "method": label,
+            "WMAPE_mean": float(np.mean(fold_scores)),
+            "WMAPE_fold_std": float(np.std(fold_scores)),
+            "WMAPE_oof_global": float(wmape(raw_y, oof)),
+        })
+    return pd.DataFrame(rows)
 
 
 def main():
     df = pd.read_csv(FEAT, low_memory=False)
+    sales = pd.read_csv(SALES, low_memory=False)
+    df, annual_repair_audit = apply_verified_annual_sales_corrections(df, sales)
+    annual_repair_audit.to_csv(ANNUAL_REPAIR_AUDIT, index=False, encoding="utf-8-sig")
+    print(f"[归因] 年度销量覆盖: {len(annual_repair_audit)} 行 / "
+          f"{annual_repair_audit['series_name'].nunique()} 个车系 / "
+          f"{annual_repair_audit['sales_delta'].sum():+,.0f} 辆")
     df = df[df["annual_sales"].notna() & df["year"].between(YEAR_MIN, YEAR_MAX)].copy()
     df = df.reset_index(drop=True)
     y = np.log1p(df["annual_sales"].astype(float).values)
@@ -186,6 +229,13 @@ def main():
             rows.append(res)
     abl = pd.DataFrame(rows)
     abl.to_csv(os.path.join(PROC, "config_attribution_ablation.csv"), index=False)
+
+    baselines = cv_naive_baselines(df, y, groups)
+    baselines.to_csv(os.path.join(PROC, "config_attribution_baselines.csv"), index=False)
+    print("\n===== 无模型年度基准（仅用于 WMAPE 口径参照） =====")
+    for _, row in baselines.iterrows():
+        print(f"  {row['method']:14s} WMAPE={row['WMAPE_oof_global']:7.1f}% "
+              f"(fold mean {row['WMAPE_mean']:7.1f}%)")
 
     r_b = abl.loc[abl["variant"] == "+BRAND", "R2_log_mean"].iloc[0]
     r_c = abl.loc[abl["variant"] == "+CONFIG", "R2_log_mean"].iloc[0]

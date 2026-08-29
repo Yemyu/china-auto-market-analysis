@@ -4,16 +4,22 @@
   "validation_protocol": "recursive six-month fixed-origin forecast; select n_estimators by global volume-weighted WMAPE",
   "test_protocol": "refit on point-in-time train+validation rows; recursive fixed-origin 2026-01..06 forecast",
   "primary_versions": [
-    "REVIEW_RICH_FIXED",
-    "PLATFORM_RATING_FIXED",
-    "REVIEW_TEXT_FIXED",
-    "LOCAL_LEXICON_FIXED",
     "ALL_SENTIMENT_FIXED",
-    "BASE"
+    "BASE",
+    "LOCAL_LEXICON_FIXED",
+    "PLATFORM_RATING_FIXED",
+    "REVIEW_RICH_FIXED",
+    "REVIEW_TEXT_FIXED"
   ],
-  "best_primary_version": "REVIEW_RICH_FIXED",
-  "best_primary_global_volume_weighted_WMAPE": 38.70519249287119,
-  "baseline_global_volume_weighted_WMAPE": 40.44001904314165,
+  "primary_version_selection_metric": "fixed-origin validation global volume-weighted WMAPE",
+  "validation_selected_primary_version": "PLATFORM_RATING_FIXED",
+  "validation_selected_primary_validation_WMAPE": 32.91631250911807,
+  "validation_selected_primary_test_WMAPE": 39.190359023894196,
+  "descriptive_best_test_version": "PLATFORM_RATING_FIXED",
+  "descriptive_best_test_WMAPE": 39.190359023894196,
+  "best_primary_version": "PLATFORM_RATING_FIXED",
+  "best_primary_global_volume_weighted_WMAPE": 39.190359023894196,
+  "baseline_global_volume_weighted_WMAPE": 39.93691336357637,
   "rolling_scenario_is_supplemental": true,
   "tree_grid": [
     50,
@@ -31,5 +37,6 @@
     "objective": "reg:squarederror",
     "n_jobs": 1
   },
+  "xgboost_version": "3.4.1",
   "external_api_calls": 0
 }

@@ -1,0 +1,133 @@
+{
+  "schema_version": "v1",
+  "selection_protocol": "four historical six-month recursive origins; BASE features only",
+  "selection_metric": "pooled global volume-weighted WMAPE",
+  "test_used_for_selection": false,
+  "selected_candidate": "LOG_SQUARE_REG",
+  "selected_specification": {
+    "transform": "log",
+    "objective": "reg:squarederror",
+    "params": {
+      "n_estimators": 100,
+      "max_depth": 5,
+      "learning_rate": 0.05,
+      "min_child_weight": 3,
+      "reg_lambda": 5.0,
+      "reg_alpha": 0.05,
+      "subsample": 0.9,
+      "colsample_bytree": 0.9
+    },
+    "weight": "none"
+  },
+  "validation_candidates": [
+    {
+      "candidate": "LOG_SQUARE_REG",
+      "historical_origins": 4,
+      "absolute_error": 9797110.040189074,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 34.31177011386041,
+      "worst_origin_WMAPE": 37.31779270533471,
+      "pooled_global_WMAPE": 34.205725032733966
+    },
+    {
+      "candidate": "LOG_ABSOLUTE_REG",
+      "historical_origins": 4,
+      "absolute_error": 9860408.628776018,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 34.63249133307194,
+      "worst_origin_WMAPE": 38.57871732245409,
+      "pooled_global_WMAPE": 34.42672633896441
+    },
+    {
+      "candidate": "LOG_SQUARE_CURRENT",
+      "historical_origins": 4,
+      "absolute_error": 9918518.881265027,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 34.631840224145115,
+      "worst_origin_WMAPE": 36.618426258479865,
+      "pooled_global_WMAPE": 34.62961303821225
+    },
+    {
+      "candidate": "LOG_HUBER_REG",
+      "historical_origins": 4,
+      "absolute_error": 10133369.052104434,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 35.5436817805127,
+      "worst_origin_WMAPE": 39.429520023865585,
+      "pooled_global_WMAPE": 35.37974300886907
+    },
+    {
+      "candidate": "LOG_SQUARE_LOG_WEIGHT",
+      "historical_origins": 4,
+      "absolute_error": 10135479.742516385,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 35.63183508313432,
+      "worst_origin_WMAPE": 40.0813270378639,
+      "pooled_global_WMAPE": 35.387112293848446
+    },
+    {
+      "candidate": "SQRT_SQUARE_REG",
+      "historical_origins": 4,
+      "absolute_error": 10174965.876604153,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 35.84935938028189,
+      "worst_origin_WMAPE": 40.11783768065681,
+      "pooled_global_WMAPE": 35.524974565443976
+    },
+    {
+      "candidate": "RAW_ABSOLUTE_REG",
+      "historical_origins": 4,
+      "absolute_error": 10478226.928750992,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 36.976710041095366,
+      "worst_origin_WMAPE": 41.9074865757543,
+      "pooled_global_WMAPE": 36.58378314474132
+    },
+    {
+      "candidate": "LOG_SQUARE_SQRT_WEIGHT",
+      "historical_origins": 4,
+      "absolute_error": 10518055.828922419,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 37.13253644894994,
+      "worst_origin_WMAPE": 42.90510585922274,
+      "pooled_global_WMAPE": 36.7228421531664
+    },
+    {
+      "candidate": "RAW_SQUARE_REG",
+      "historical_origins": 4,
+      "absolute_error": 11339885.18391037,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 40.056286121331915,
+      "worst_origin_WMAPE": 45.3500634552713,
+      "pooled_global_WMAPE": 39.592185135457164
+    },
+    {
+      "candidate": "RAW_HUBER_REG",
+      "historical_origins": 4,
+      "absolute_error": 24810485.008793343,
+      "actual_volume": 28641726.0,
+      "mean_origin_WMAPE": 86.82880949669516,
+      "worst_origin_WMAPE": 90.50104822596667,
+      "pooled_global_WMAPE": 86.62356803774097
+    }
+  ],
+  "locked_test_results": [
+    {
+      "candidate": "LOG_SQUARE_REG",
+      "version": "BASE",
+      "test_rows": 2226,
+      "test_series": 371,
+      "global_volume_weighted_WMAPE": 39.56417308672733,
+      "median_per_series_WMAPE": 48.0336481714723
+    },
+    {
+      "candidate": "LOG_SQUARE_REG",
+      "version": "PLATFORM_RATING_FIXED",
+      "test_rows": 2226,
+      "test_series": 371,
+      "global_volume_weighted_WMAPE": 40.44704231821506,
+      "median_per_series_WMAPE": 50.15346812459377
+    }
+  ],
+  "external_api_calls": 0
+}

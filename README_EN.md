@@ -39,13 +39,13 @@ The final test covers January–June 2026: 2,226 series-month observations acros
 | Model | Global WMAPE ↓ | Median per-series WMAPE ↓ | vs. best naive baseline |
 |---|---:|---:|---:|
 | Trailing six-month mean (best naive) | 70.11% | 90.02% | — |
-| Sales baseline | 40.44% | 49.98% | −29.67 pp |
-| Owner-feedback enhanced | 38.71% | 48.83% | −31.41 pp |
-| Cold-start supplement | **38.64%** | **48.32%** | **−31.47 pp** |
+| Sales baseline (XGBoost) | 40.44% | 49.98% | −29.67 pp |
+| Owner-feedback enhanced (XGBoost) | 38.71% | 48.83% | −31.41 pp |
+| Cold-start supplement (statistical strategy) | **38.64%** | **48.32%** | **−31.47 pp** |
 
 The final method reduces absolute forecast error by 44.9% relative to the best naive baseline. Owner feedback provides a modest incremental signal on top of the sales model but does not displace sales history. A series-cluster bootstrap gives a 95% interval of −0.78 to 5.02 percentage points, which still crosses zero. The cold-start method mainly helps nine series with insufficient history and changes the full-sample score by a further 0.06 percentage points.
 
-> Data-repair status: a full rules-based scan covers all 54,918 rows and 1,017 series; the same-source pilot checks 540 series-months and the first alternative-source pass checks another 324 monthly values. The overlay now repairs 62 series-months across five series and restores a net 1,357,467 units; these include zero-value gaps and six incorrect nonzero values. After 72 calibration months matched at 100%, independent sources also confirmed corrections for one MG HS month and one Weltmeister W6 month. Both critical risks are closed; external review now contains 21 high- and 33 medium-priority targets. The scan also finds that the prior 24-month eligibility rule counts padded rows rather than positive-sales history. The table therefore remains a frozen pre-repair benchmark; all models and comparisons will be recomputed after high-priority verification and lifecycle-aware cohort reconstruction. See the [data-repair audit](./data/README_EN.md#data-quality-and-repair-processeddat_quality).
+The sales baseline and owner-feedback variant use the same XGBoost core model; the difference is whether owner-feedback information is included. Cold start is a supplement for history-poor series, not a second main model. Earlier ARIMA, Prophet, and LSTM candidates remain in the experiment scripts.
 
 ### Product specifications
 

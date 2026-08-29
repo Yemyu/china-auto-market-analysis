@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 from pathlib import Path
+import json
 
 import numpy as np
 import pandas as pd
@@ -15,6 +16,7 @@ OUT = BASE / "data" / "processed" / "forecast"
 MODEL_PREDICTIONS = OUT / "review_feature_predictions.csv"
 COLD_START_PREDICTIONS = OUT / "cold_start_hybrid_predictions.csv"
 OUTPUT = OUT / "forecast_benchmark_comparison.csv"
+MODEL_RUN_SUMMARY = OUT / "review_feature_run_summary.json"
 
 
 def score(method: str, actual: pd.DataFrame, predictions: np.ndarray, kind: str) -> dict[str, float | str | int]:
@@ -72,11 +74,16 @@ def main() -> None:
         predictions = actual["series_name"].map(means).fillna(0).to_numpy(float)
         rows.append(score(f"ROLLING_MEAN_{window}", actual, predictions, "naive"))
 
-    for version in ("BASE", "REVIEW_RICH_FIXED"):
+    model_run = json.loads(MODEL_RUN_SUMMARY.read_text(encoding="utf-8"))
+    selected_feedback = model_run.get(
+        "validation_selected_primary_version", model_run["best_primary_version"]
+    )
+    for version in ("BASE", selected_feedback):
         predictions = aligned_model_predictions(actual, MODEL_PREDICTIONS, version)
         rows.append(score(version, actual, predictions, "model"))
-    hybrid = aligned_model_predictions(actual, COLD_START_PREDICTIONS, "REVIEW_RICH_COLD_START")
-    rows.append(score("REVIEW_RICH_COLD_START", actual, hybrid, "model"))
+    hybrid_version = "SELECTED_FEEDBACK_COLD_START"
+    hybrid = aligned_model_predictions(actual, COLD_START_PREDICTIONS, hybrid_version)
+    rows.append(score(hybrid_version, actual, hybrid, "model"))
 
     result = pd.DataFrame(rows)
     best_naive = float(

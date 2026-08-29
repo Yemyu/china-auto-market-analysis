@@ -1,9 +1,9 @@
 {
   "models": [
     {
-      "name": "用户口碑增强",
-      "name_zh": "用户口碑增强",
-      "name_en": "User-review enhanced",
+      "name": "用户口碑增强（XGBoost）",
+      "name_zh": "用户口碑增强（XGBoost）",
+      "name_en": "User-review enhanced (XGBoost)",
       "wmape_vol": 38.7052,
       "wmape_med": 48.8261,
       "mae": null,
@@ -11,9 +11,9 @@
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "平台评分",
-      "name_zh": "平台评分",
-      "name_en": "Platform ratings",
+      "name": "平台评分增强（XGBoost）",
+      "name_zh": "平台评分增强（XGBoost）",
+      "name_en": "Platform-rating enhanced (XGBoost)",
       "wmape_vol": 38.8186,
       "wmape_med": 49.5423,
       "mae": null,
@@ -21,9 +21,9 @@
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "滚动口碑特征",
-      "name_zh": "滚动口碑特征",
-      "name_en": "Rolling review signals",
+      "name": "滚动口碑增强（XGBoost）",
+      "name_zh": "滚动口碑增强（XGBoost）",
+      "name_en": "Rolling-review enhanced (XGBoost)",
       "wmape_vol": 39.0735,
       "wmape_med": 51.5588,
       "mae": null,
@@ -31,9 +31,9 @@
       "scenario": "rolling_origin_supplement"
     },
     {
-      "name": "文本情感特征",
-      "name_zh": "文本情感特征",
-      "name_en": "Text sentiment",
+      "name": "文本情感增强（XGBoost）",
+      "name_zh": "文本情感增强（XGBoost）",
+      "name_en": "Text-sentiment enhanced (XGBoost)",
       "wmape_vol": 39.2252,
       "wmape_med": 49.7137,
       "mae": null,
@@ -41,9 +41,9 @@
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "本地词典",
-      "name_zh": "本地词典",
-      "name_en": "Local lexicon",
+      "name": "本地词典增强（XGBoost）",
+      "name_zh": "本地词典增强（XGBoost）",
+      "name_en": "Local-lexicon enhanced (XGBoost)",
       "wmape_vol": 39.5368,
       "wmape_med": 48.4343,
       "mae": null,
@@ -51,9 +51,9 @@
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "全部口碑特征",
-      "name_zh": "全部口碑特征",
-      "name_en": "Combined review features",
+      "name": "全部口碑增强（XGBoost）",
+      "name_zh": "全部口碑增强（XGBoost）",
+      "name_en": "Combined-review enhanced (XGBoost)",
       "wmape_vol": 40.0449,
       "wmape_med": 50.3579,
       "mae": null,
@@ -61,9 +61,9 @@
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "销量基线",
-      "name_zh": "销量基线",
-      "name_en": "Sales baseline",
+      "name": "销量基线（XGBoost）",
+      "name_zh": "销量基线（XGBoost）",
+      "name_en": "Sales baseline (XGBoost)",
       "wmape_vol": 40.44,
       "wmape_med": 49.9837,
       "mae": null,
@@ -71,9 +71,9 @@
       "scenario": "fixed_origin_primary"
     },
     {
-      "name": "口碑增强＋冷启动",
-      "name_zh": "口碑增强＋冷启动",
-      "name_en": "Review enhanced + cold-start",
+      "name": "口碑增强（XGBoost）＋冷启动统计补充",
+      "name_zh": "口碑增强（XGBoost）＋冷启动统计补充",
+      "name_en": "Review-enhanced XGBoost + statistical cold-start",
       "wmape_vol": 38.6405,
       "wmape_med": 48.3157,
       "mae": null,

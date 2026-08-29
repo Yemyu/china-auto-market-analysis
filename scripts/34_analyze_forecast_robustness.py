@@ -35,10 +35,14 @@ SERIES_OUTPUT = FORECAST_DIR / "forecast_series_diagnostics.csv"
 SEGMENT_OUTPUT = FORECAST_DIR / "forecast_error_segments.csv"
 SUMMARY_OUTPUT = FORECAST_DIR / "forecast_robustness_summary.json"
 FIGURE = BASE / "assets/analysis" / "forecast_robustness.png"
+MODEL_RUN_SUMMARY = FORECAST_DIR / "review_feature_run_summary.json"
 
 BASE_VERSION = "BASE"
-BEST_VERSION = "REVIEW_RICH_FIXED"
 PLATFORM_VERSION = "PLATFORM_RATING_FIXED"
+model_run = json.loads(MODEL_RUN_SUMMARY.read_text(encoding="utf-8"))
+BEST_VERSION = model_run.get(
+    "validation_selected_primary_version", model_run["best_primary_version"]
+)
 BOOTSTRAP_REPLICATES = 5_000
 BOOTSTRAP_SEED = 42
 
@@ -78,9 +82,10 @@ def bootstrap_comparisons(predictions: pd.DataFrame) -> pd.DataFrame:
     comparisons = [(BASE_VERSION, version) for version in sorted(errors) if version not in (BASE_VERSION, "REVIEW_TEXT_ROLLING")]
     comparisons.extend([
         (BASE_VERSION, "REVIEW_TEXT_ROLLING"),
-        (PLATFORM_VERSION, BEST_VERSION),
         ("REVIEW_TEXT_FIXED", "REVIEW_TEXT_ROLLING"),
     ])
+    if PLATFORM_VERSION != BEST_VERSION:
+        comparisons.append((PLATFORM_VERSION, BEST_VERSION))
     rows: list[dict[str, Any]] = []
     for comparator, candidate in comparisons:
         comparator_boot = wmape_from_totals(errors[comparator][indices], sampled_volume)
@@ -155,6 +160,8 @@ def feature_family(feature: str) -> str:
         return "calendar"
     if feature in mu.CFG_COLS:
         return "configuration"
+    if feature.startswith("platform_rating_") or feature.startswith("sentiment_"):
+        return "review_observation_context"
     if feature.startswith("review_"):
         if feature in (
             "review_count_prior_all", "review_count_180d",
@@ -304,7 +311,7 @@ def series_and_segments(predictions: pd.DataFrame) -> tuple[pd.DataFrame, pd.Dat
                 "series": int(len(group)),
                 "actual_volume": volume,
                 "baseline_global_WMAPE": base_error / volume * 100 if volume else np.nan,
-                "review_rich_global_WMAPE": best_error / volume * 100 if volume else np.nan,
+                "selected_feedback_global_WMAPE": best_error / volume * 100 if volume else np.nan,
                 "improvement_pp": (base_error - best_error) / volume * 100 if volume else np.nan,
             })
     return diagnostics, pd.DataFrame(segment_rows)
@@ -370,28 +377,25 @@ def main() -> None:
     best_boot = bootstrap.loc[
         bootstrap["comparator"].eq(BASE_VERSION) & bootstrap["candidate"].eq(BEST_VERSION)
     ].iloc[0]
-    platform_boot = bootstrap.loc[
-        bootstrap["comparator"].eq(PLATFORM_VERSION) & bootstrap["candidate"].eq(BEST_VERSION)
-    ].iloc[0]
     best_monthly = monthly.loc[monthly["version"].eq(BEST_VERSION)]
-    sentiment_importance = importance.loc[importance["feature"].str.startswith("review_")]
+    feedback_importance = importance.loc[
+        importance["feature"].str.startswith(
+            ("review_", "platform_rating_", "sentiment_", "text_")
+        )
+    ]
     summary = {
         "schema_version": "v1",
+        "validation_selected_feedback_version": BEST_VERSION,
         "series_cluster_bootstrap_replicates": BOOTSTRAP_REPLICATES,
-        "review_rich_vs_base_improvement_pp": float(best_boot["point_improvement_pp"]),
-        "review_rich_vs_base_bootstrap_95pct_ci_pp": [
+        "selected_feedback_vs_base_improvement_pp": float(best_boot["point_improvement_pp"]),
+        "selected_feedback_vs_base_bootstrap_95pct_ci_pp": [
             float(best_boot["bootstrap_ci_2_5_pp"]), float(best_boot["bootstrap_ci_97_5_pp"]),
         ],
-        "review_rich_vs_base_probability_better": float(best_boot["bootstrap_probability_candidate_better"]),
-        "review_rich_vs_platform_improvement_pp": float(platform_boot["point_improvement_pp"]),
-        "review_rich_vs_platform_bootstrap_95pct_ci_pp": [
-            float(platform_boot["bootstrap_ci_2_5_pp"]), float(platform_boot["bootstrap_ci_97_5_pp"]),
-        ],
-        "review_rich_vs_platform_probability_better": float(platform_boot["bootstrap_probability_candidate_better"]),
-        "test_months_review_rich_better_than_base": int(best_monthly["improvement_vs_base_pp"].gt(0).sum()),
+        "selected_feedback_vs_base_probability_better": float(best_boot["bootstrap_probability_candidate_better"]),
+        "test_months_selected_feedback_better_than_base": int(best_monthly["improvement_vs_base_pp"].gt(0).sum()),
         "test_months_total": int(len(best_monthly)),
         "top_10_features_by_mean_abs_shap": importance.head(10)["feature"].tolist(),
-        "top_10_review_features_by_mean_abs_shap": sentiment_importance.head(10)["feature"].tolist(),
+        "top_10_selected_feedback_features_by_mean_abs_shap": feedback_importance.head(10)["feature"].tolist(),
         "top_10_error_contributing_series": diagnostics.head(10)["series_name"].tolist(),
         "cold_start_series": int(diagnostics["cold_start"].sum()),
         "external_api_calls": 0,

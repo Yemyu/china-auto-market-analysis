@@ -1,9 +1,10 @@
 {
   "schema_version": "v1",
-  "generated_at": "2026-08-25T08:35:55.670751+00:00",
+  "generated_at": "2026-08-29T03:13:14.569845+00:00",
   "source_sales": "data/processed/sales_filtered_24m.csv",
   "source_config": "data/raw/feature.csv (车系×年, 因果回退 join)",
-  "population": "feature 主表车系 (有配置), 月度面板",
+  "population": "frozen 371-series evaluation cohort with causal configuration join",
+  "source_cohort": "data/reviews/processed/target_371_review_coverage.csv",
   "time_cutoffs": {
     "train_end": "2025-06",
     "val_end": "2025-12",
@@ -52,6 +53,7 @@
     "切分按绝对时间 (全局切点), 非随机/非按车系打乱",
     "lag/roll 特征由 groupby(series).shift 计算, 仅用真实过去销量",
     "配置 join 因果回退: 只用 <= 行年份的最新规格, 不借未来年份",
+    "评估车系固定为既有371车系，避免数据修复前后因新增名称映射改变样本",
     "训练仅用 train.csv; val/test 仅供评估, 不参与训练"
   ],
   "annual_attribution_note": "年度配置归因使用按 series_name 分组的 GroupKFold(5)，与月度预测的时间切分相互独立。"

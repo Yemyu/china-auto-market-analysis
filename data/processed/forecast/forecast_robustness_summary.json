@@ -1,19 +1,14 @@
 {
   "schema_version": "v1",
+  "validation_selected_feedback_version": "PLATFORM_RATING_FIXED",
   "series_cluster_bootstrap_replicates": 5000,
-  "review_rich_vs_base_improvement_pp": 1.734826550270462,
-  "review_rich_vs_base_bootstrap_95pct_ci_pp": [
-    -0.7835501008823733,
-    5.019986642408614
+  "selected_feedback_vs_base_improvement_pp": 0.7465543396821772,
+  "selected_feedback_vs_base_bootstrap_95pct_ci_pp": [
+    -0.3355363846536056,
+    2.0158075756492413
   ],
-  "review_rich_vs_base_probability_better": 0.8984,
-  "review_rich_vs_platform_improvement_pp": 0.11340115683892549,
-  "review_rich_vs_platform_bootstrap_95pct_ci_pp": [
-    -1.4897470033820104,
-    2.114285757407519
-  ],
-  "review_rich_vs_platform_probability_better": 0.5222,
-  "test_months_review_rich_better_than_base": 5,
+  "selected_feedback_vs_base_probability_better": 0.902,
+  "test_months_selected_feedback_better_than_base": 4,
   "test_months_total": 6,
   "top_10_features_by_mean_abs_shap": [
     "lag_1",
@@ -21,35 +16,35 @@
     "lag_3",
     "month_sin",
     "month_cos",
-    "review_count_prior_all",
-    "review_value_score_prior_mean",
-    "year",
+    "sentiment_review_count_prior_all",
+    "platform_rating_configuration_sentiment_180d_mean",
+    "roll_mean_6",
     "height_mm",
-    "roll_mean_6"
+    "roll_mean_3"
   ],
-  "top_10_review_features_by_mean_abs_shap": [
-    "review_count_prior_all",
-    "review_value_score_prior_mean",
-    "review_count_180d",
-    "review_fuel_consumption_score_prior_mean",
-    "review_power_uniform_mention_180d_count",
-    "review_comfort_uniform_mention_180d_count",
-    "review_appearance_score_prior_mean",
-    "review_control_score_prior_mean",
-    "review_configuration_score_prior_mean",
-    "review_comfort_score_prior_mean"
+  "top_10_selected_feedback_features_by_mean_abs_shap": [
+    "sentiment_review_count_prior_all",
+    "platform_rating_configuration_sentiment_180d_mean",
+    "platform_rating_space_sentiment_180d_mean",
+    "sentiment_review_count_180d",
+    "platform_rating_appearance_sentiment_180d_mean",
+    "platform_rating_overall_sentiment_180d_mean",
+    "platform_rating_interior_sentiment_180d_mean",
+    "platform_rating_power_sentiment_180d_mean",
+    "platform_rating_fuel_consumption_sentiment_180d_mean",
+    "platform_rating_overall_polarity_180d_mean"
   ],
   "top_10_error_contributing_series": [
+    "秦PLUS",
     "小米SU7",
     "宏光MINIEV",
-    "元UP",
-    "星越L",
     "轩逸",
-    "秦PLUS",
-    "雅阁",
-    "海狮06EV",
+    "Model Y",
     "驱逐舰05",
-    "MG4"
+    "雅阁",
+    "元UP",
+    "海鸥",
+    "长安Lumin"
   ],
   "cold_start_series": 9,
   "external_api_calls": 0

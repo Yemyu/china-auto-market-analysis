@@ -8,6 +8,7 @@ import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
 import _font_setup
+from _sales_repair import apply_verified_sales_corrections
 from matplotlib.ticker import FuncFormatter
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -60,11 +61,17 @@ vehicles = (features.sort_values(['series_name', 'year'])
 
 sales = pd.read_csv(os.path.join(RAW, 'monthly_sales.csv'))
 sales['series_name'] = sales['series_name'].astype(str)
+sales, repair_audit = apply_verified_sales_corrections(sales)
 print(f'[04] monthly panel: {sales["series_id"].nunique()} series')
+print(f'[04] verified overlay: {len(repair_audit)} rows / '
+      f'{repair_audit["series_name"].nunique()} series / '
+      f'{repair_audit["sales_delta"].sum():+,.0f} net sales')
 
 sales['period'] = sales['year'] * 12 + (sales['month'] - 1)
 sales['date'] = pd.to_datetime(dict(year=sales.year, month=sales.month, day=1))
-sales['data_source'] = 'pcauto'
+sales['data_source'] = np.where(
+    sales['sales_repair_applied'], 'pcauto_verified_overlay', 'pcauto'
+)
 
 # English labels for Chinese categorical values (avoids font encoding issues in charts)
 CATEGORY_MAP = {'SUV': 'SUV', '轿车': 'Sedan', 'MPV': 'MPV'}

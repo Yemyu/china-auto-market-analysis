@@ -31,6 +31,7 @@ from _feature_join import CFG_NUM
 
 FORECAST_DIR = BASE / "data" / "processed" / "forecast"
 SOURCE_PREDICTIONS = FORECAST_DIR / "review_feature_predictions.csv"
+MODEL_RUN_SUMMARY = FORECAST_DIR / "review_feature_run_summary.json"
 VALIDATION_OUTPUT = FORECAST_DIR / "cold_start_launch_curve_validation.csv"
 CANDIDATE_OUTPUT = FORECAST_DIR / "cold_start_candidate_predictions.csv"
 SERIES_OUTPUT = FORECAST_DIR / "cold_start_series_results.csv"
@@ -38,8 +39,11 @@ HYBRID_OUTPUT = FORECAST_DIR / "cold_start_hybrid_predictions.csv"
 SUMMARY_OUTPUT = FORECAST_DIR / "cold_start_launch_curve_summary.json"
 FIGURE = BASE / "assets/analysis" / "cold_start_launch_curve.png"
 
-SOURCE_VERSION = "REVIEW_RICH_FIXED"
-HYBRID_VERSION = "REVIEW_RICH_COLD_START"
+model_run = json.loads(MODEL_RUN_SUMMARY.read_text(encoding="utf-8"))
+SOURCE_VERSION = model_run.get(
+    "validation_selected_primary_version", model_run["best_primary_version"]
+)
+HYBRID_VERSION = "SELECTED_FEEDBACK_COLD_START"
 VALIDATION_YEARS = (2024, 2025)
 TRAIN_LAUNCH_YEAR_MIN = 2023
 FORECAST_HORIZON = 6
@@ -278,6 +282,7 @@ def main() -> None:
         "selection_protocol": "rolling launch-cohort backtest: 2024 and 2025 launches, earlier launch years only",
         "selection_metric": "global volume-weighted WMAPE",
         "test_targets_used_for_method_selection": False,
+        "source_feedback_version": SOURCE_VERSION,
         "validation_selected_method": selected,
         "selected_validation_global_WMAPE": float(selected_validation["validation_global_volume_weighted_WMAPE"]),
         "selected_validation_median_per_series_WMAPE": float(selected_validation["validation_median_per_series_WMAPE"]),

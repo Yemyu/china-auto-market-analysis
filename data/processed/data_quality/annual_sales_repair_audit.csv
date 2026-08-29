@@ -1,0 +1,6 @@
+﻿series_name,year,original_annual_sales,corrected_annual_sales,source_name,source_url,evidence_status,verified_at,note,sales_delta
+Model 3,2022,154643.0,124456,太平洋汽车,https://www.pcauto.com.cn/jxwd/4132/41326406.html,verified_same_source,2026-08-28,同源年度表总量与已核实月度表一致；原配置表年度值与月度合计不一致,-30187.0
+Model 3,2024,52349.0,176793,太平洋汽车,https://m.pcauto.com.cn/x/5105/51055697.html,verified_same_source,2026-08-28,同源年度表总量与已核实月度表一致；原配置表年度值与月度合计不一致,124444.0
+Model 3,2025,0.0,200361,太平洋汽车,https://m.pcauto.com.cn/x/5105/51055697.html,verified_same_source,2026-08-28,同源年度表总量与已核实月度表一致；原配置表把完整年度记为零,200361.0
+Model Y,2022,232554.0,315314,太平洋汽车,https://www.pcauto.com.cn/jxwd/3714/37141783.html,verified_same_source,2026-08-28,同源年度表总量与已核实月度表一致；原配置表年度值与月度合计不一致,82760.0
+Model Y,2024,166707.0,480309,太平洋汽车,https://www.pcauto.com.cn/jxwd/5158/51588188.html,verified_same_source,2026-08-28,同源年度表总量与已核实月度表一致；原配置表年度值与月度合计不一致,313602.0

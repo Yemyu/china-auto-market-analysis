@@ -1,0 +1,75 @@
+{
+  "schema_version": "v1",
+  "selection_protocol": "four historical six-month origins; fixed-origin review features; pairwise convex blend grid",
+  "selection_metric": "pooled global volume-weighted WMAPE",
+  "test_used_for_selection": false,
+  "candidate_validation": [
+    {
+      "candidate": "REGULARIZED_BASE",
+      "historical_origins": 4,
+      "validation_rows": 7108,
+      "pooled_global_WMAPE": 34.20572503694807,
+      "mean_origin_WMAPE": 34.3117701238387,
+      "worst_origin_WMAPE": 37.317792728738326
+    },
+    {
+      "candidate": "REGULARIZED_PLATFORM",
+      "historical_origins": 4,
+      "validation_rows": 7108,
+      "pooled_global_WMAPE": 34.50849724536742,
+      "mean_origin_WMAPE": 34.664005936627504,
+      "worst_origin_WMAPE": 37.88820379316219
+    },
+    {
+      "candidate": "CURRENT_BASE",
+      "historical_origins": 4,
+      "validation_rows": 7108,
+      "pooled_global_WMAPE": 34.62961309832241,
+      "mean_origin_WMAPE": 34.63184028304582,
+      "worst_origin_WMAPE": 36.61842629988848
+    },
+    {
+      "candidate": "CURRENT_PLATFORM",
+      "historical_origins": 4,
+      "validation_rows": 7108,
+      "pooled_global_WMAPE": 34.68629178104703,
+      "mean_origin_WMAPE": 34.82793709106706,
+      "worst_origin_WMAPE": 37.43581580113516
+    }
+  ],
+  "selected_blend": {
+    "left_candidate": "CURRENT_PLATFORM",
+    "right_candidate": "REGULARIZED_BASE",
+    "left_weight": 0.30000000000000004,
+    "right_weight": 0.7,
+    "pooled_global_WMAPE": 34.07907470704283
+  },
+  "locked_test_results": [
+    {
+      "method": "CURRENT_PLATFORM",
+      "global_volume_weighted_WMAPE": 39.190359023894196,
+      "median_per_series_WMAPE": 50.168842005210955
+    },
+    {
+      "method": "BLEND_CURRENT_PLATFORM_0.3_REGULARIZED_BASE_0.7",
+      "global_volume_weighted_WMAPE": 39.214556254346974,
+      "median_per_series_WMAPE": 49.40685012014693
+    },
+    {
+      "method": "REGULARIZED_BASE",
+      "global_volume_weighted_WMAPE": 39.564173233912584,
+      "median_per_series_WMAPE": 48.03364804403352
+    },
+    {
+      "method": "CURRENT_BASE",
+      "global_volume_weighted_WMAPE": 39.93691336357637,
+      "median_per_series_WMAPE": 49.778520942914604
+    },
+    {
+      "method": "REGULARIZED_PLATFORM",
+      "global_volume_weighted_WMAPE": 40.4470422797329,
+      "median_per_series_WMAPE": 50.1534680567616
+    }
+  ],
+  "external_api_calls": 0
+}

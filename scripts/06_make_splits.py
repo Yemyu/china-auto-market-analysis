@@ -15,6 +15,9 @@ import _feature_join as fj
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SALES = os.path.join(BASE, "data", "processed", "sales_filtered_24m.csv")
+COHORT = os.path.join(
+    BASE, "data", "reviews", "processed", "target_371_review_coverage.csv"
+)
 OUTDIR = os.path.join(BASE, "data", "processed", "splits")
 SCHEMA_VERSION = "v1"
 
@@ -57,6 +60,13 @@ def main():
     sales = pd.read_csv(SALES)
     sales["date"] = pd.to_datetime(sales["date"])
     sales["series_name"] = sales["series_name"].astype(str)
+    cohort = set(pd.read_csv(COHORT, usecols=["series_name"])["series_name"].astype(str))
+    if len(cohort) != 371:
+        raise ValueError(f"Expected the frozen 371-series evaluation cohort, found {len(cohort)}")
+    sales = sales.loc[sales["series_name"].isin(cohort)].copy()
+    missing_cohort = cohort - set(sales["series_name"])
+    if missing_cohort:
+        raise ValueError(f"Frozen evaluation series missing from sales panel: {sorted(missing_cohort)}")
     sales["year"] = sales["date"].dt.year
     sales["month"] = sales["date"].dt.month
 
@@ -101,7 +111,8 @@ def main():
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sales": "data/processed/sales_filtered_24m.csv",
         "source_config": "data/raw/feature.csv (车系×年, 因果回退 join)",
-        "population": "feature 主表车系 (有配置), 月度面板",
+        "population": "frozen 371-series evaluation cohort with causal configuration join",
+        "source_cohort": "data/reviews/processed/target_371_review_coverage.csv",
         "time_cutoffs": {
             "train_end": TRAIN_END,
             "val_end": VAL_END,
@@ -118,6 +129,7 @@ def main():
             "切分按绝对时间 (全局切点), 非随机/非按车系打乱",
             "lag/roll 特征由 groupby(series).shift 计算, 仅用真实过去销量",
             "配置 join 因果回退: 只用 <= 行年份的最新规格, 不借未来年份",
+            "评估车系固定为既有371车系，避免数据修复前后因新增名称映射改变样本",
             "训练仅用 train.csv; val/test 仅供评估, 不参与训练",
         ],
         "annual_attribution_note": "年度配置归因使用按 series_name 分组的 GroupKFold(5)，与月度预测的时间切分相互独立。",
