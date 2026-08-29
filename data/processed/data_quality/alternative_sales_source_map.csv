@@ -1,0 +1,15 @@
+role,series_name,expected_source_name,expected_identity_text,source_name,source_url,mapping_status,note
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,已由同源修复完成；用于校准替代站逐月口径
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,已由同源修复完成；用于校准替代站逐月口径
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,空格是安全排版差异；厂商与连续月份仍需一致
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,精确车系名与奇瑞汽车身份
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,精确车系名与长安欧尚身份
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,精确车系名与威马汽车身份
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,精确车系名与上汽通用五菱身份
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,精确车系名与极越身份
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,精确车系名与上汽集团身份
+target,东南DX8 PLUS,东南DX8 PLUS,东南,待映射,,identity_conflict,替代站将其标为未上市且另列东南DX8/DX8S；不能按名称直接合并
+target,博骏,博骏,野马汽车,待映射,,needs_mapping,需取得可逐月下载的独立车系页
+target,启悦,启悦,铃木,待映射,,needs_mapping,需取得可逐月下载的独立车系页
+target,桑塔纳,桑塔纳,大众,待映射,,needs_mapping,已找到历史页但当前替代采集器尚未映射该站ID
+target,荣威RX5 eMAX,荣威RX5 eMAX,荣威,待映射,,needs_mapping,需取得可逐月下载的独立车系页

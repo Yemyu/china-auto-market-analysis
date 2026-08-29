@@ -1,0 +1,325 @@
+﻿role,series_name,expected_source_name,expected_identity_text,source_name,source_url,mapping_status,fetched_at,returned_source_name,date,source_sales,current_sales,difference,comparison
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-01-01,12659,12659.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-02-01,8397,8397.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-03-01,21726,21726.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-04-01,13196,13196.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-05-01,11454,11454.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-06-01,22741,22741.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-07-01,7791,7791.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-08-01,13577,13577.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-09-01,2079,2079.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-10-01,2273,2273.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-11-01,15627,15627.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2023-12-01,15750,15750.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-01-01,9969,9969.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-02-01,7604,7604.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-03-01,14481,14481.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-04-01,5065,5065.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-05-01,15230,15230.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-06-01,18151,18151.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-07-01,9928,9928.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-08-01,18126,18126.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-09-01,23998,23998.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-10-01,4281,4281.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-11-01,28914,28914.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2024-12-01,21046,21046.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-01-01,8009,8009.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-02-01,18771,18771.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-03-01,25938,25938.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-04-01,8747,8747.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-05-01,13818,13818.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-06-01,16636,16636.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-07-01,9851,9851.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-08-01,17739,17739.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-09-01,20352,20352.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-10-01,6518,6518.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-11-01,26013,26013.0,0.0,exact
+calibration,Model 3,Model 3,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_985.html,mapped,2026-08-29T11:00:56+08:00,Model 3,2025-12-01,27969,27969.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-01-01,14184,14184.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-02-01,25526,25526.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-03-01,54937,54937.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-04-01,26760,26760.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-05-01,31054,31054.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-06-01,51471,51471.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-07-01,23632,23632.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-08-01,51117,51117.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-09-01,41428,41428.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-10-01,26353,26353.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-11-01,49877,49877.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2023-12-01,60055,60055.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-01-01,29912,29912.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-02-01,22537,22537.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-03-01,47917,47917.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-04-01,26356,26356.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-05-01,39985,39985.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-06-01,41110,41110.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-07-01,36299,36299.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-08-01,45330,45330.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-09-01,48202,48202.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-10-01,36204,36204.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-11-01,44576,44576.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2024-12-01,61881,61881.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-01-01,25694,25694.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-02-01,8006,8006.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-03-01,48189,48189.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-04-01,19984,19984.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-05-01,24770,24770.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-06-01,44848,44848.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-07-01,30766,30766.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-08-01,39413,39413.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-09-01,51173,51173.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-10-01,19488,19488.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-11-01,47132,47132.0,0.0,exact
+calibration,Model Y,Model Y,特斯拉,车主手册,https://www.icauto.com.cn/rank/car_1692.html,mapped,2026-08-29T11:00:56+08:00,Model Y,2025-12-01,65874,65874.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-01-01,3530,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-02-01,1537,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-03-01,2236,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-04-01,3999,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-05-01,4802,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-06-01,1305,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-07-01,1329,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-08-01,2889,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-09-01,3827,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-10-01,8311,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-11-01,6833,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2020-12-01,4976,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-01-01,3129,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-02-01,3041,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-03-01,5127,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-04-01,3837,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-05-01,3155,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-06-01,3190,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-07-01,4313,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-08-01,5593,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-09-01,6628,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-10-01,5881,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-11-01,5347,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2021-12-01,5812,,,outside_panel
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-01-01,1148,1148.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-02-01,4316,4316.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-03-01,87,87.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-04-01,24,24.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-05-01,46,46.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-06-01,138,138.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-07-01,45,45.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-08-01,39,39.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-09-01,47,47.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-10-01,50,50.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-11-01,52,52.0,0.0,exact
+target,名爵HS,名爵HS,MG名爵,车主手册,https://www.icauto.com.cn/rank/car_58.html,mapped,2026-08-29T11:00:56+08:00,名爵HS,2022-12-01,37,37.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-01-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-02-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-03-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-04-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-05-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-06-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-07-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-08-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-09-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-10-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-11-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2020-12-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-01-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-02-01,0,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-03-01,13,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-04-01,973,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-05-01,705,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-06-01,746,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-07-01,649,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-08-01,719,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-09-01,850,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-10-01,838,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-11-01,1064,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2021-12-01,1344,,,outside_panel
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-01-01,761,761.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-02-01,415,415.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-03-01,884,884.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-04-01,540,540.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-05-01,791,791.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-06-01,500,500.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-07-01,963,963.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-08-01,740,740.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-09-01,354,354.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-10-01,395,395.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-11-01,1,1.0,0.0,exact
+target,威马W6,威马W6,威马,车主手册,https://www.icauto.com.cn/rank/car_1845.html,mapped,2026-08-29T11:00:56+08:00,威马W6,2022-12-01,20,20.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-01-01,5986,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-02-01,1768,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-03-01,3687,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-04-01,4583,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-05-01,4845,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-06-01,5473,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-07-01,3695,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-08-01,4440,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-09-01,18962,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-10-01,10963,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-11-01,12216,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2020-12-01,12810,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-01-01,8397,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-02-01,5094,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-03-01,7295,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-04-01,7977,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-05-01,7428,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-06-01,5688,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-07-01,4671,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-08-01,5698,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-09-01,14597,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-10-01,16763,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-11-01,1781,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2021-12-01,8043,,,outside_panel
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-01-01,6340,6340.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-02-01,4655,4655.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-03-01,3,3.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-04-01,0,0.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-05-01,1,1.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-06-01,10,10.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-07-01,4,4.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-08-01,3,3.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-09-01,1,1.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-10-01,0,0.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-11-01,1,1.0,0.0,exact
+target,宝骏530,宝骏530,宝骏,车主手册,https://www.icauto.com.cn/rank/car_101.html,mapped,2026-08-29T11:00:56+08:00,宝骏530,2022-12-01,6,6.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-01-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-02-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-03-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-04-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-05-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-06-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-07-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-08-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-09-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-10-01,0,0.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-11-01,496,496.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2023-12-01,826,826.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-01-01,1899,1899.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-02-01,510,510.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-03-01,729,729.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-04-01,502,502.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-05-01,920,920.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-06-01,990,990.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-07-01,1325,1325.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-08-01,1595,1595.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-09-01,1475,1475.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-10-01,1128,1128.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-11-01,867,867.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2024-12-01,951,951.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-01-01,155,155.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-02-01,53,53.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-03-01,906,906.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-04-01,720,720.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-05-01,620,620.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-06-01,529,529.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-07-01,318,318.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-08-01,156,156.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-09-01,190,190.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-10-01,60,60.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-11-01,49,49.0,0.0,exact
+target,捷途山海L9,捷途山海L9,捷途,车主手册,https://www.icauto.com.cn/rank/car_3495.html,mapped,2026-08-29T11:00:56+08:00,捷途山海L9,2025-12-01,86,86.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-01-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-02-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-03-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-04-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-05-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-06-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-07-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-08-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-09-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-10-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-11-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2022-12-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-01-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-02-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-03-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-04-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-05-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-06-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-07-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-08-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-09-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-10-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-11-01,0,0.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2023-12-01,774,774.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-01-01,218,218.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-02-01,147,147.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-03-01,511,511.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-04-01,362,362.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-05-01,1001,1001.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-06-01,461,461.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-07-01,1143,1143.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-08-01,2147,2147.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-09-01,1474,1474.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-10-01,1022,1022.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-11-01,902,902.0,0.0,exact
+target,极越01,极越01,极越,车主手册,https://www.icauto.com.cn/rank/car_3078.html,mapped,2026-08-29T11:00:56+08:00,极越01,2024-12-01,160,160.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-01-01,0,13020.0,-13020.0,source_zero_current_positive
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-02-01,0,0.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-03-01,0,0.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-04-01,0,0.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-05-01,0,0.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-06-01,0,0.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-07-01,0,0.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-08-01,7368,7368.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-09-01,8312,8312.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-10-01,8374,8374.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-11-01,7185,7185.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2023-12-01,7029,7029.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-01-01,11934,11934.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-02-01,5545,5545.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-03-01,4795,4795.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-04-01,3666,3666.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-05-01,3894,3894.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-06-01,2988,2988.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-07-01,3281,3281.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-08-01,3442,3442.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-09-01,3412,3412.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-10-01,4066,4066.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-11-01,5697,5697.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2024-12-01,6641,6641.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-01-01,5445,5445.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-02-01,2478,2478.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-03-01,3331,3331.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-04-01,5514,5514.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-05-01,7932,7932.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-06-01,7180,7180.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-07-01,5943,5943.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-08-01,4323,4323.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-09-01,5831,5831.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-10-01,4722,4722.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-11-01,4625,4625.0,0.0,exact
+target,长安CS55PLUS,长安CS55 PLUS,长安,车主手册,https://www.icauto.com.cn/rank/car_1432.html,mapped,2026-08-29T11:00:56+08:00,长安CS55 PLUS,2025-12-01,4443,4443.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-01-01,0,0.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-02-01,592,592.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-03-01,763,763.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-04-01,889,889.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-05-01,1666,1666.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-06-01,3808,3808.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-07-01,4410,4410.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-08-01,4649,4649.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-09-01,4949,4949.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-10-01,4298,4298.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-11-01,3020,3020.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2023-12-01,2858,2858.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-01-01,3952,3952.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-02-01,1891,1891.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-03-01,2195,2195.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-04-01,1586,1586.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-05-01,1485,1485.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-06-01,1135,1135.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-07-01,1016,1016.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-08-01,979,979.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-09-01,830,830.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-10-01,754,754.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-11-01,649,649.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2024-12-01,671,671.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-01-01,255,255.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-02-01,167,167.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-03-01,204,204.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-04-01,148,148.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-05-01,454,454.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-06-01,105,105.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-07-01,20,20.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-08-01,7,7.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-09-01,4,4.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-10-01,3,3.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-11-01,0,0.0,0.0,exact
+target,长安欧尚Z6 智电iDD,长安欧尚Z6 智电iDD,长安欧尚,车主手册,https://www.icauto.com.cn/rank/car_3067.html,mapped,2026-08-29T11:00:56+08:00,长安欧尚Z6 智电iDD,2025-12-01,2,2.0,0.0,exact

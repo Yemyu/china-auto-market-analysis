@@ -178,7 +178,7 @@ def main() -> None:
             ),
         },
         "decision": (
-            "Apply only same-source verified corrections through the overlay. Do not mutate the raw "
+            "Apply only same-source verification or explicit cross-source consensus through the overlay. Do not mutate the raw "
             "snapshot or rerun the headline model until remaining high-priority source and lifecycle "
             "risks are resolved."
         ),

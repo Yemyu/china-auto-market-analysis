@@ -23,7 +23,10 @@ REQUIRED_REGISTER_COLUMNS = {
     "verified_at",
     "note",
 }
-APPLICABLE_STATUS = "verified_same_source"
+APPLICABLE_STATUSES = {
+    "verified_same_source",
+    "verified_cross_source_consensus",
+}
 
 
 def load_sales_correction_register(path: Path = DEFAULT_REGISTER) -> pd.DataFrame:
@@ -54,9 +57,9 @@ def apply_verified_sales_corrections(
 ) -> tuple[pd.DataFrame, pd.DataFrame]:
     """Return a repaired copy and an applied-row audit.
 
-    Only rows marked ``verified_same_source`` are eligible. Every eligible row must
-    match exactly one raw series-month and its declared original value, otherwise
-    the function fails closed.
+    Only same-source verifications or explicit cross-source consensus rows are
+    eligible. Every eligible row must match exactly one raw series-month and its
+    declared original value, otherwise the function fails closed.
     """
     if register is None:
         register = load_sales_correction_register()
@@ -64,7 +67,9 @@ def apply_verified_sales_corrections(
         register = register.copy()
         register["date"] = pd.to_datetime(register["date"], errors="raise")
 
-    applicable = register.loc[register["evidence_status"].eq(APPLICABLE_STATUS)].copy()
+    applicable = register.loc[
+        register["evidence_status"].isin(APPLICABLE_STATUSES)
+    ].copy()
     repaired = sales.copy()
     if "date" not in repaired:
         repaired["date"] = pd.to_datetime(
