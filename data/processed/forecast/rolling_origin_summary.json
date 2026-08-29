@@ -1,0 +1,109 @@
+{
+  "schema_version": "v1",
+  "task_definition": "monthly refreshed one-month-ahead forecast; previous realised month is available",
+  "comparison_task": "six-month recursive fixed-origin forecast",
+  "test_used_for_selection": false,
+  "gate": {
+    "minimum_gain_pp": 1.5,
+    "maximum_origin_regression_pp": 1.0,
+    "passes": true
+  },
+  "selected_version": "BASE",
+  "historical_fixed_BASE_WMAPE": 34.97268735382232,
+  "historical_selected_rolling_WMAPE": 25.55548081839822,
+  "historical_gain_pp": 9.417206535424103,
+  "worst_origin_regression_pp": -4.841122978032303,
+  "validation_summary": [
+    {
+      "version": "BASE",
+      "mode": "ROLLING_ONE_MONTH",
+      "historical_origins": 4,
+      "absolute_error": 7319552.771701679,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 25.920906689835952,
+      "worst_origin_WMAPE": 32.14018526726516,
+      "pooled_global_WMAPE": 25.55548081839822
+    },
+    {
+      "version": "LOCAL_LEXICON_FIXED",
+      "mode": "ROLLING_ONE_MONTH",
+      "historical_origins": 4,
+      "absolute_error": 7443181.584578665,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 26.345710841185483,
+      "worst_origin_WMAPE": 32.576122265400286,
+      "pooled_global_WMAPE": 25.987118358917606
+    },
+    {
+      "version": "NAIVE",
+      "mode": "LAST_VALUE",
+      "historical_origins": 4,
+      "absolute_error": 7584936.0,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 27.532073792172675,
+      "worst_origin_WMAPE": 37.17645100656698,
+      "pooled_global_WMAPE": 26.482039613974145
+    },
+    {
+      "version": "NAIVE",
+      "mode": "ROLLING_MEAN_3",
+      "historical_origins": 4,
+      "absolute_error": 7966076.833333333,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 28.59256424148542,
+      "worst_origin_WMAPE": 35.761703491741116,
+      "pooled_global_WMAPE": 27.812754421170467
+    },
+    {
+      "version": "NAIVE",
+      "mode": "ROLLING_MEAN_6",
+      "historical_origins": 4,
+      "absolute_error": 8901622.6,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 31.64370931546895,
+      "worst_origin_WMAPE": 37.15843244327728,
+      "pooled_global_WMAPE": 31.079118178696234
+    },
+    {
+      "version": "BASE",
+      "mode": "FIXED_SIX_MONTH",
+      "historical_origins": 4,
+      "absolute_error": 10016811.363229565,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 35.001505973615,
+      "worst_origin_WMAPE": 37.06090045559765,
+      "pooled_global_WMAPE": 34.97268735382232
+    },
+    {
+      "version": "LOCAL_LEXICON_FIXED",
+      "mode": "FIXED_SIX_MONTH",
+      "historical_origins": 4,
+      "absolute_error": 10106580.642724652,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 35.36651830641351,
+      "worst_origin_WMAPE": 38.61273075591713,
+      "pooled_global_WMAPE": 35.28610774599265
+    },
+    {
+      "version": "NAIVE",
+      "mode": "SEASONAL_LAG12",
+      "historical_origins": 4,
+      "absolute_error": 11826929.0,
+      "actual_volume": 28641812.0,
+      "mean_origin_WMAPE": 41.68189432800156,
+      "worst_origin_WMAPE": 45.897268634182595,
+      "pooled_global_WMAPE": 41.29253065413599
+    }
+  ],
+  "locked_test": {
+    "rows": 2226,
+    "series": 371,
+    "global_volume_weighted_WMAPE": 31.34119955142821,
+    "naive_WMAPE": {
+      "LAST_VALUE": 40.992416043671625,
+      "ROLLING_MEAN_3": 43.612636666596785,
+      "ROLLING_MEAN_6": 51.17307091533896,
+      "SEASONAL_LAG12": 67.99733208498276
+    }
+  }
+}
