@@ -2,7 +2,7 @@
   <a href="./README.md">中文</a> · <a href="./README_EN.md">English</a>
 </p>
 
-<h1 align="center">China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs</h1>
+<h1 align="center">🌍 China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs</h1>
 
 <p align="center">A research project based on public monthly sales, vehicle specifications, and 24,175 owner reviews</p>
 
@@ -14,20 +14,37 @@
 
 ---
 
+> **In one sentence**　A reproducible market-analysis workflow built from public sales, vehicle specifications, and owner reviews: forecast next-month demand, explain annual product differences, and monitor changes in user needs.
+
+## Research questions
+
+1. 📈 Can next-month series sales be forecast reliably as information is refreshed each month?
+2. 🧩 Which product specifications explain annual sales differences between series?
+3. 💬 Which user needs are most visible in reviews, and which signals merit follow-up?
+
 ## Project overview
 
 | Module | Sample | Question | Current protocol |
 |---|---:|---|---|
-| Rolling one-month sales forecast | 371 series | Forecast next month with the latest published sales | Headline result; complete monthly panel and strict temporal split |
-| Fixed six-month stress test | Same 371 series | Recursively forecast six months from 2026-01 | Supporting scenario; evaluated separately from the headline |
-| Product-specification analysis | 736 series, 2,007 series-year records | Estimate the incremental explanatory value of year, brand, and specifications | Five-fold `GroupKFold` by series |
-| User needs and risk | 24,175 reviews across 345 series | Identify ten needs, negative concentration, and reputation anomalies | Structural checks, sampling audit, adjacent 180-day windows |
+| 📈 Rolling one-month sales forecast | 371 series | Forecast next month with the latest published sales | Headline result; complete monthly panel and strict temporal split |
+| 🧪 Fixed six-month stress test | Same 371 series | Recursively forecast six months from 2026-01 | Supporting scenario; evaluated separately from the headline |
+| 🧩 Product-specification analysis | 736 series, 2,007 series-year records | Estimate the incremental explanatory value of year, brand, and specifications | Five-fold `GroupKFold` by series |
+| 💬 User needs and risk | 24,175 reviews across 345 series | Identify ten needs, negative concentration, and reputation anomalies | Structural checks, sampling audit, adjacent 180-day windows |
 
 Each module has its own eligibility rule: forecasting uses a fixed 371-series natural-month panel with causal year-based specification joins; specification analysis requires aligned annual sales and attributes; user-needs analysis requires complete, traceable review text.
 
+## Results at a glance
+
+| Key finding | Current result |
+|---|---:|
+| 📈 Rolling one-month headline | **29.72% WMAPE**, 11.27 points below the last-value baseline |
+| 🧪 Fixed six-month stress test | **38.38% WMAPE**, 44.6% lower absolute error than the trailing-six-month mean |
+| 🧩 Incremental specification signal | Grouped-CV R² **0.301** |
+| 💬 User-needs monitoring | 24,175 reviews, 10 dimensions, 123 qualifying series |
+
 ## Main results
 
-### 1. Sales forecasting
+### 1. 📈 Sales forecasting
 
 The evaluation window is January–June 2026: 371 series and 2,226 series-month rows. The headline task refreshes a one-month-ahead forecast each month; the fixed-origin six-month result is a stress test. Global volume-weighted WMAPE is primary, with median per-series WMAPE as supporting evidence.
 
@@ -51,7 +68,7 @@ The fixed stress test reduces absolute error by 44.6% against its same-scenario 
 
 The sales model is a seasonal XGBoost with 12-month lag and trailing-12-month mean features. ARIMA, Prophet, LSTM, and other early candidates remain in the experiment scripts to document model selection; they are not mixed into the current headline table.
 
-### 2. Product specifications and annual sales variation
+### 2. 🧩 Product specifications and annual sales variation
 
 | Feature combination | Grouped-CV R² | Annual cross-sectional WMAPE (module metric) |
 |---|---:|---:|
@@ -61,7 +78,7 @@ The sales model is a seasonal XGBoost with 12-month lag and trailing-12-month me
 
 Adding specifications increases R² by about 0.143 over year plus brand, indicating incremental explanatory power for between-series annual variation. The module uses out-of-sample evaluation to quantify this cross-series explanatory power and does not perform causal identification; annual cross-sectional WMAPE is reported as a module-specific supporting error metric alongside, rather than against, monthly forecast WMAPE.
 
-### 3. User needs and risk
+### 3. 💬 User needs and risk
 
 Reviews are mapped to ten dimensions—space, power, control, comfort, energy/fuel, configuration, intelligence, value, appearance, and interior—with mention, polarity, and time-window fields kept separate. The latest complete monitoring month is July 2026; 123 series meet the monitoring threshold and one active rule-based alert is queued for manual review.
 
@@ -80,6 +97,18 @@ Global WMAPE is defined as:
 ```text
 Σ |actual sales − forecast sales| / Σ actual sales
 ```
+
+## Quick start
+
+The pre-baked dashboard runs without a backend service:
+
+```bash
+git clone https://github.com/Yemyu/china-auto-market-analysis.git
+cd china-auto-market-analysis
+python3 -m http.server 8000 --directory app
+```
+
+Open `http://localhost:8000` to browse the Chinese and English pages. To rebuild analysis outputs, use the project environment and follow the [data guide](./data/README_EN.md).
 
 ## Dashboard and reproduction
 
@@ -104,13 +133,13 @@ The dashboard is a static HTML/CSS/JavaScript/ECharts site backed by pre-baked J
 Preview the dashboard (data is already pre-baked):
 
 ```bash
-python -m http.server 8000 --directory app
+python3 -m http.server 8000 --directory app
 ```
 
 Regenerate dashboard payloads:
 
 ```bash
-python app/build_dashboard_data.py
+python3 app/build_dashboard_data.py
 ```
 
 Rolling forecast artifacts:

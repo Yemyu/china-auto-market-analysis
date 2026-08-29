@@ -2,264 +2,116 @@
   <a href="./README.md">中文</a> · <a href="./README_EN.md">English</a>
 </p>
 
-# 数据说明
+# 📦 数据说明
 
-本目录保存原始表、时间切分、评论语料、模型产物和数据审计。可复用的历史评论与标签单独放在 `resources/`。
+本目录提供项目的数据入口、样本口径和可复现产物索引。原始平台数据仅用于学习、研究与项目展示；平台版权归相应来源方所有。
 
-## 目录分层
+## 数据一览
 
-| 路径 | 内容 | 是否进入当前流程 |
-|---|---|---|
-| `raw/` | 月销量与车型配置原始表 | 是 |
-| `processed/` | 清洗结果、时间切分、模型预测、归因与监测产物 | 是 |
-| `reviews/raw/` | 采集评论、源站详情与采集清单 | 是，经质量筛选后 |
-| `reviews/processed/` | 严格评论语料、结构化标签、月度特征与审计 | 是 |
-| `resources/` | 历史评论与标签归档 | 参考与扩展 |
+| 模块 | 入口 | 规模 | 用途 |
+|---|---|---:|---|
+| 月度销量 | `raw/monthly_sales.csv` | 54,918 行 / 1,017 个车系 | 滚动单月预测与固定六个月压力测试 |
+| 产品配置 | `raw/feature.csv` | 2,084 行 / 766 个车系 | 年度销量差异的产品属性分析 |
+| 车主评论 | `reviews/processed/` | 24,175 条 / 345 个车系 | 用户需求、风险监测与口碑辅助实验 |
 
-## 三组分析样本
+三个模块使用各自的样本筛选和评价口径，不将不同模块的指标直接横向比较。
 
-| 分析 | 最终样本 | 主要筛选条件 |
-|---|---:|---|
-| 月度销量预测 | 371 个车系 | 完整自然月测试期，配置按年份因果连接 |
-| 产品配置分析 | 736 个车系；2,007 条车系年记录 | 2022—2026 年销量与配置可对齐 |
-| 用户需求与风险 | 24,175 条评论；345 个车系 | 完整正文、有效发布时间、可核验来源 |
+## 目录结构
 
-这些数字不是同一张表逐级删减的结果。每项分析按自己的数据需求建立样本。
-
-## 1. 原始数据
-
-### `raw/monthly_sales.csv`
-
-太平洋汽车口径的车系月销量面板。
-
-| 项目 | 数值 |
-|---|---:|
-| 记录数 | 54,918 |
-| 车系数 | 1,017 |
-| 时间范围 | 2022-01—2026-06 |
-| 负销量 | 0 |
-| 主要粒度 | 车系 × 自然月 |
-
-建模主要使用：
-
-| 字段 | 说明 |
+| 路径 | 内容 |
 |---|---|
-| `year`, `month`, `period` | 时间字段 |
-| `series_id`, `series_name` | 源站车系标识与车系名 |
-| `brand`, `category` | 品牌与车型类别 |
-| `monthly_sales` | 当月销量 |
-| `数据来源` | 来源标记 |
+| `raw/` | 月销量和年度车型配置原始表 |
+| `processed/splits/` | 371 个目标车系的时间切分与建模特征 |
+| `processed/forecast/` | 预测、基准、消融和稳健性产物 |
+| `processed/product/` | 产品配置年度归因产物 |
+| `processed/user_feedback/` | 用户需求与风险监测产物 |
+| `processed/data_quality/` | 结构、映射和来源审计的机器可读记录 |
+| `reviews/raw/` | 评论采集清单和来源层文件 |
+| `reviews/processed/` | 去标识语料、标签和时间特征 |
+| `resources/` | 可复用的历史评论资源归档 |
 
-排名、累计销量、网站展示价格等字段属于源站元信息，不进入预测特征。
+## 原始输入
 
-### `raw/feature.csv`
+### 月度销量：`raw/monthly_sales.csv`
 
-车型配置表，粒度为“车系 × 年款”，不是 trim 级车型清单。
+- 粒度：车系 × 自然月；时间范围：2022-01—2026-06；
+- 主要字段：`series_id`、`series_name`、`brand`、`category`、`year`、`month`、`monthly_sales`；
+- 负销量记录为 0；排名、累计销量和网站展示价格等源站派生字段不作为预测特征。
 
-| 项目 | 数值 |
-|---|---:|
-| 记录数 | 2,084 |
-| 车系数 | 766 |
-| 字段数 | 84 |
-| 唯一键 | `series_name, year` |
-| 年度销量覆盖 | 760 / 766 个车系 |
+### 产品配置：`raw/feature.csv`
 
-配置字段可分为：
+- 粒度：车系 × 年款，不是 trim 级车型清单；
+- 唯一键：`series_name, year`；共 84 个字段，年度销量可对齐 760 / 766 个车系；
+- 配置缺失具有结构性：例如纯电车型通常没有发动机参数，燃油车型通常没有电池参数，不应简单视为采集错误。
 
-- 基础属性：品牌、年款、能源类型、车型级别、指导价；
-- 动力系统：发动机、电机、变速箱、加速与能耗；
-- 电池与续航：容量、类型、续航、充电；
-- 车身：长宽高、轴距、质量、座位与车身结构；
-- 安全与座舱：气囊、屏幕、座椅、音响与空调。
+### 评论语料：`reviews/processed/`
 
-发动机、电机和电池字段存在结构性缺失。例如纯电车型没有发动机参数，燃油车型没有电池参数；这些缺失不能简单解释为数据错误。
+进入时间模型的评论同时满足车系可识别、发布时间可解析、正文完整且在预测截止日前发布。当前严格语料为 24,175 条，覆盖 345 个车系；缺失覆盖保留为缺失状态，不编码为中性。
 
-## 2. 月度预测样本与时间切分
+评论标签拆分为“是否提及”和“评价方向”两类字段，覆盖外观、内饰、空间、动力、操控、舒适、能耗、配置、智能化和性价比十个维度。
 
-`processed/splits/` 保存 371 车系的固定时间切分：
+## 月度预测样本
+
+`processed/splits/` 固定保存 371 个车系的绝对时间切分：
 
 | 文件 | 时间 | 用途 |
 |---|---|---|
-| `train.csv` | 截至 2025-06 | 训练 |
+| `train.csv` | 截至 2025-06 | 模型训练；前置月份作为滞后特征预热 |
 | `val.csv` | 2025-07—12 | 参数与方案选择 |
 | `test.csv` | 2026-01—06 | 最终评价 |
-| `split_index.csv` | 全部样本 | 每行所属数据段 |
-| `manifest.json` | — | 车系数、行数、时间边界和版本信息 |
+| `split_index.csv` | 完整面板 | 每个车系月所属的数据段 |
+| `manifest.json` | — | 行数、特征、时间边界和防泄漏约束 |
 
-当前主实验采用滚动单月协议：每个测试月预测下一个月，并使用当时已经公布的上月真实销量；模型参数在六个月评估窗内锁定。固定起点协议作为压力测试保留：从 2026 年 1 月一次性递归预测六个月，后续月份只能使用此前预测出来的销量滞后，不能读取测试期真实销量。两种协议对应不同应用场景，指标分别在各自协议内评估。
+预测面板保留每个目标车系的自然月间隔。年度配置按“不晚于目标年份”的最新记录因果连接；无法回退的数值配置使用训练表中位数，类别使用 `-1` 未知标记。基础特征使用 1/2/3 个月滞后和 3/6 个月历史均值，主模型额外使用 12 个月滞后和 12 个月历史均值。
 
-## 3. 评论语料
+主协议是滚动单月预测：每月预测下一个月，并使用已公布的上月真实销量。固定起点六个月协议从 2026-01 一次性递归预测，作为信息受限压力测试；两种协议分别评价。
 
-### 原始采集层
-
-`reviews/raw/` 在本地保存懂车帝与汽车之家两类公开车主评论及采集清单。完整评论含平台用户标识，不随公开仓库提交；采集清单和去标识后的分析产物保留在仓库中。
-
-主要审计文件：
-
-| 文件 | 用途 |
-|---|---|
-| `dongchedi_incremental_manifest.csv` | 懂车帝增量采集清单 |
-| `autohome_incremental_manifest.csv` | 汽车之家增量采集清单 |
-| `autohome_incremental_review_details.csv` | 汽车之家详情正文 |
-| `processed/review_collection/autohome_id_resolutions.csv` | 车系映射与解析结果 |
-| `processed/review_collection/sentiment_resolution_exceptions.csv` | 未解决项及止损说明 |
-
-### 严格建模语料
-
-本地文件 `reviews/processed/target_371_review_corpus.csv` 包含 371 个目标车系的候选评论、质量标记和来源审计。进入模型的记录必须同时满足：
-
-1. 车系身份有效；
-2. 发布时间可解析；
-3. 正文完整且达到质量要求；
-4. 在相应预测起点之前已经发布。
-
-最终可用评论为 24,175 条，覆盖 345 个车系。另有 103 条汽车之家列表摘要无法取得详情全文；这些记录保留在审计表，但 `eligible_for_temporal_model=False`。
-
-| 覆盖口径 | 车系数 |
-|---|---:|
-| 有任意合格评论 | 345 |
-| 2026-01 固定起点前有评论 | 330 |
-| 2026-01 起点前最近 180 天有评论 | 272 |
-
-## 4. 评论标签与月度特征
-
-### 评论级标签
-
-[结构化评论标签](./reviews/processed/review_aspect_labels.csv) 对每条合格评论保存十个维度：
-
-`appearance`, `interior`, `space`, `power`, `control`, `comfort`, `fuel_consumption`, `configuration`, `intelligence`, `value`。
-
-每个维度分开保存两类信息：
-
-- 是否明确提及该维度；
-- 提及后的评价方向：`-1` 负面、`0` 中性、`1` 正面。
-
-平台自带星级评分与文本标签互不替代。评论没有提及某维度时，不会被当作中性评价写入该维度的正负比例。
-
-### 防泄漏月度特征
-
-[固定起点月度评论特征](./reviews/processed/review_features_by_series_month_fixed_origin.csv) 有 13,866 行，覆盖 371 个车系和 51 个预测月份。主要字段包括：
-
-- 截止预测起点的累计评论数；
-- 最近 180 天评论数与可用性；
-- 十个维度的历史均值；
-- 最近 180 天正面率、负面率与提及率；
-- 综合维度得分与任意正/负面比例；
-- `information_cutoff_exclusive`：该行特征的信息截止时间。
-
-固定起点测试特征统一冻结在 `2026-01-01` 之前，用于压力测试和口碑消融。滚动主结果使用每个月可获得的销量历史；滚动预测产物另存为 `processed/forecast/rolling_origin_*.{json,csv}`。
-
-## 5. 分析产物
-
-### 数据质量与修复：`processed/data_quality/`
-
-| 产物 | 内容 |
-|---|---|
-| `data_repair_summary.json` | 销量零值和跨平台车系映射的阶段摘要 |
-| `sales_correction_register.csv` | 逐月、逐来源人工核实的非破坏性销量修复清单 |
-| `sales_panel_integrity_summary.json` | 54,918 行全量结构、派生字段与模型样本风险摘要 |
-| `sales_series_risk_audit.csv` | 1,017 个车系的正销量历史、零值区间及模型影响 |
-| `sales_manual_verification_queue.csv` | 按严重程度与模型影响排序的外部核验对象 |
-| `sales_cutoff_cluster_audit.csv` | 车系最后正销量月份的聚集分布，用于识别批量截断 |
-| `sales_zero_audit.csv` | 逐车系正销量月份、连续正销量、测试期零值和异常标记 |
-| `sales_zero_audit_repaired.csv` | 仅应用已核实修复后的同口径零值审计 |
-| `sales_zero_status_register.csv` | 高风险零值的来源缺口、停售和待核实状态 |
-| `series_mapping_audit.csv` | 销量与配置名称的精确、安全规范化及未匹配记录 |
-| `verified_sales_overlay_audit.csv` | 本次实际应用的修复行及销量增量 |
-| `pcauto_recrawl_pilot_manifest.csv` | 10 车系、90 个半年锚点页面的请求、身份和解析审计 |
-| `pcauto_recrawl_pilot_diff.csv` | 540 个回采车系月与冻结原表的逐行差异分类 |
-| `pcauto_recrawl_pilot_summary.json` | 批量回采试点的覆盖和差异摘要 |
-| `pcauto_recrawl_high_remaining_manifest.csv` | 第二批 108 个页面的连接失败与重试审计 |
-| `pcauto_recrawl_high_remaining_summary.json` | 第二批当前 `blocked_no_successful_pages` 状态 |
-| `alternative_sales_source_map.csv` | 替代来源的显式车系、品牌/厂商和页面映射；冲突对象不自动合并 |
-| `alternative_sales_crosscheck_*.csv/json` | 替代来源的身份校验、逐月观测、差异和口径校准结果 |
-
-车系与配置名称只接受精确或一对一安全规范化匹配，不做模糊合并。全量 54,918 行、1,017 个车系通过重复键、负值和自然月完整性检查；排名、累计值等由源站派生的字段不作为独立交叉验证。
-
-已核实的跨源差异以非破坏性覆盖层保存，原始 `monthly_sales.csv` 从不覆盖。当前覆盖层修复 62 行、涉及 5 个车系，净恢复 1,357,467 辆；Model Y、Model 3 的历史缺口以及其他已完成独立复核的月份已纳入，未核实对象仍保留在队列中，不自动推断零值或跨车系合并。
-
-源站“—”与页面未取得分开标记，二者都不会直接被当作真实销量结论。缺少年度配置的销量行也不删除：预测面板保留 371 个目标车系的完整自然月，配置按年份因果回退，无法回退的数值使用配置表中位数、类别使用显式未知标记。这样可以保持真实日历间隔，避免缺月把较早销量误当成上月销量。
-
-修复后的固定压力测试综合方案为 38.38%，滚动季节增强 XGBoost 主结果为 29.72%；结果均由保存的模型产物重新计算。详细的逐行审计、来源映射和待核验清单见本节列出的数据质量文件。
+## 主要产物
 
 ### 销量预测：`processed/forecast/`
 
-| 产物 | 内容 |
+| 文件 | 用途 |
 |---|---|
-| `review_feature_ablation_summary.csv` | 371 车系方案对比 |
-| `review_feature_predictions.csv` | 测试期逐车系、逐月预测 |
-| `review_feature_series_metrics.csv` | 逐车系误差 |
-| `forecast_robustness_bootstrap.csv` | 按车系重采样结果 |
-| `review_feature_shap_importance.csv` | 特征贡献 |
-| `cold_start_launch_curve_summary.json` | 冷启动方法与结果 |
-| `forecast_benchmark_comparison.csv` | 完整 371 车系朴素基准与最终模型对比 |
-| `rolling_origin_summary.json` | 滚动单月主结果、历史起点验证与锁定测试摘要 |
-| `rolling_origin_validation.csv` | 四个历史起点的滚动/固定协议对照 |
-| `rolling_origin_test_predictions.csv` | 2026-01—06 逐车系逐月滚动预测与同场景朴素基准 |
-| `direct_multihorizon_validation.csv` | 直接多步候选模型的滚动验证汇总 |
-| `direct_multihorizon_summary.json` | 直接多步实验的锁定选模规则与拒绝结论 |
+| `rolling_origin_summary.json` | 滚动主协议的历史起点验证、门槛和锁定测试摘要 |
+| `rolling_origin_test_predictions.csv` | 测试期逐车系逐月预测与同场景朴素基准 |
+| `forecast_benchmark_comparison.csv` | 固定压力测试与朴素基准对比 |
+| `review_feature_ablation_summary.csv` | 固定场景口碑特征消融 |
+| `forecast_robustness_summary.json` | 聚类 Bootstrap、分组误差和稳健性摘要 |
+| `cold_start_launch_curve_summary.json` | 边界车系冷启动方案及验证结果 |
 
-滚动单月主结果中，季节增强 XGBoost 的全局 WMAPE 为 29.72%，沿用上月销量的同场景朴素基准为 40.99%，相对降低 11.27 个百分点（约 27.5%）。固定六个月压力测试中，最近 6 个月均值为 69.31%，口碑＋冷启动保护综合方案为 38.38%，相对减少 44.6% 的绝对误差；两种协议对应不同应用场景，指标在各自协议内分别报告。
-
-固定压力测试中的口碑增强点估计改善 0.697 个百分点，5,000 次车系聚类 Bootstrap 的 95% 区间为 −0.234 至 1.873 个百分点，稳定增益证据不足，因此定位为辅助特征。冷启动保护覆盖 9 个同时缺少历史正销量和起点前配置记录的边界车系，用于边界样本处理，不改变 371 个车系的滚动主模型。
-
-直接多步实验仍按预设锁定测试门槛拒绝，不替换滚动主结果；其汇总产物仅用于记录该决策，逐行实验预测不进入公开结果。
+当前保存的滚动主结果为 29.72% 全局 WMAPE；固定六个月压力测试综合方案为 38.38%。完整指标解释见项目根目录 [README.md](../README.md)。
 
 ### 产品配置：`processed/product/`
 
-| 产物 | 内容 |
-|---|---|
-| `config_attribution_ablation.csv` | 年份、品牌与配置的逐步消融 |
-| `config_importance_annual.csv` | 年度配置重要性 |
+- `config_attribution_ablation.csv`：年份、品牌、配置的逐步消融；
+- `config_importance_annual.csv`：年度配置特征重要性。
 
-完整模型的五折分组交叉验证 R² 为 0.301，用于评估产品属性对年度跨车系差异的样本外解释力；年度截面 WMAPE 作为模块内辅助误差指标，与月度预测指标分别报告。该分析不进行因果识别。
+该模块报告按车系分组的样本外 R²；年度截面 WMAPE 只作模块内辅助指标，不与月度预测 WMAPE 直接比较，也不代表因果效应。
 
-### 用户需求与风险：`processed/user_feedback/`
+### 用户需求：`processed/user_feedback/`
 
-| 产物 | 内容 |
-|---|---|
-| `user_need_aspect_summary.csv` | 十维度提及与正负分布 |
-| `user_need_keywords.csv` | 维度关键词 |
-| `user_need_topics.csv` | 维度内主题 |
-| `sentiment_monitoring_windows.csv` | 相邻 180 天窗口统计 |
-| `sentiment_alerts.csv` | 历史与当前规则预警 |
+`user_need_aspect_summary.csv`、`user_need_topics.csv`、`sentiment_monitoring_windows.csv` 和 `sentiment_alerts.csv` 分别用于维度汇总、主题、时间窗口和规则预警。预警需要人工复核后才能形成业务结论。
 
-当前预警表示评论信号触发预设规则，需经人工复核后形成业务结论。
+## 历史资源
 
-## 6. 历史资源归档
+`resources/historical_reviews/` 保存可复用的历史评论与标签归档：
 
-`resources/historical_reviews/` 保存可复用的历史评论资源：
+- `review_absa_reference.csv.gz`：本地全文归档，39,496 条去重评论，其中 28,724 条带历史十维标签；
+- `manifest.json`、`README.md`：行数、时间范围、校验摘要和使用限制。
 
-| 文件 | 内容 |
-|---|---|
-| `review_absa_reference.csv.gz` | 本地全文归档：39,496 条去重评论，其中 28,724 条带历史十维标签 |
-| `manifest.json` | 行数、车系数、时间范围、SHA-256 与标签语义 |
-| `README.md` | 使用方式和限制 |
+全文归档被 Git 忽略，仅在本地保留；公开仓库提交去标识标签和聚合结果。
 
-当前语料复用了其中 16,538 条已经生成的历史标签。归档表保留原文、时间、车型、购车信息和平台评分，仅在本地保存；公开仓库提交去标识标签和聚合结果。
+## 复现入口
 
-历史标签中的 `0` 不能可靠区分“未提及”“中性”和解析回退，因此不直接作为维度提及真值；当前模型使用单独的统一提及标记。
+在项目根目录准备依赖后，可按以下顺序重建主要产物：
 
-## 7. 复现与更新
-
-安装根目录 `requirements.txt` 中的依赖后，按顺序运行 `scripts/` 下的脚本。
-
-评论语料、标签和月度特征的主要顺序为：
-
-```text
-18 生成目标车系语料
-21 多来源质量审计
-25 检查时间可用性
-27 生成平台评分与词典标签
-28 聚合本地评论月度特征
-30 补标缺失评论（可选，需配置 API）
-31 合并评论级标签
-32 生成防泄漏月度特征
-33 运行 371 车系预测消融
-34 稳健性分析
-35 用户需求与风险监测
-36 冷启动验证
-37 生成报告 Notebook
+```bash
+.venv/bin/python scripts/06_make_splits.py
+.venv/bin/python scripts/32_build_temporal_review_features.py
+.venv/bin/python scripts/33_evaluate_review_features.py
+.venv/bin/python scripts/48_evaluate_rolling_origin.py --test
+.venv/bin/python scripts/36_build_cold_start_curve.py
+.venv/bin/python app/build_dashboard_data.py
 ```
 
-原始平台数据版权归相应来源方。本目录的数据仅用于学习、研究与项目展示。
+如需完整评论标签流水线，请先按根目录 Notebook 和脚本注释准备评论语料；缺失评论标签的补标步骤为可选项。
