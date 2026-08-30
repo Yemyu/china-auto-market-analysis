@@ -92,7 +92,7 @@
 
 ### 用户需求：`processed/user_feedback/`
 
-`user_need_aspect_summary.csv`、`user_need_topics.csv`、`sentiment_monitoring_windows.csv` 和 `sentiment_alerts.csv` 分别用于维度汇总、主题、时间窗口和规则预警。预警需要人工复核后才能形成业务结论。
+`user_need_aspect_summary.csv`、`user_need_keywords.csv`、`user_need_topics.csv`、`sentiment_monitoring_windows.csv` 和 `sentiment_alerts.csv` 分别用于维度汇总、区分性投诉词、主题、时间窗口和风险监测。`sentiment_alerts.csv` 同时保留文本候选与双信号验证状态；只有通过重采样稳定性和平台评分同向验证的记录计为有效预警，所有记录仍需人工复核。
 
 ## 历史资源
 

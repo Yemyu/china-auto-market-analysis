@@ -92,7 +92,7 @@ This module reports grouped out-of-sample R². Annual cross-sectional WMAPE is a
 
 ### User needs: `processed/user_feedback/`
 
-`user_need_aspect_summary.csv`, `user_need_topics.csv`, `sentiment_monitoring_windows.csv`, and `sentiment_alerts.csv` cover aspect summaries, topics, time windows, and rule alerts. Alerts require manual review before becoming business conclusions.
+`user_need_aspect_summary.csv`, `user_need_keywords.csv`, `user_need_topics.csv`, `sentiment_monitoring_windows.csv`, and `sentiment_alerts.csv` cover aspect summaries, discriminative complaint terms, topics, time windows, and risk monitoring. `sentiment_alerts.csv` retains both text candidates and their dual-signal validation status; only records passing bootstrap stability and same-direction platform-rating checks count as active alerts, and all records still require manual review.
 
 ## Historical resources
 

@@ -20,19 +20,19 @@
         <div class="analysis-header-copy">
           <p class="analysis-breadcrumb" data-i18n="al_breadcrumb">规则监测 / 用户反馈</p>
           <h1 data-i18n="al_title_full">近期口碑异常监测</h1>
-          <p data-i18n="al_lead_public">比较相邻两个180天评论窗口，筛出近期评价已经转负且继续恶化的车系，作为人工复核入口。</p>
+          <p data-i18n="al_lead_public">比较相邻两个180天评论窗口，并用重采样稳定性和平台评分同向变化验证文本异常，作为人工复核入口。</p>
         </div>
         <dl class="analysis-protocol">
           <div><dt data-i18n="al_protocol_month">监测月份</dt><dd id="al-latest">2026-07</dd></div>
           <div><dt data-i18n="al_protocol_eligible">具备判定资格</dt><dd><strong id="al-eligible">123</strong><span data-i18n="home_series_unit">个车系</span></dd></div>
-          <div><dt data-i18n="al_protocol_active">当前预警</dt><dd><strong id="al-active">1</strong><span data-i18n="ov_unit_alert">条</span></dd></div>
+          <div><dt data-i18n="al_protocol_active">当前预警</dt><dd><strong id="al-active">0</strong><span data-i18n="ov_unit_alert">条</span></dd></div>
         </dl>
       </header>
 
       <section class="analysis-section" aria-labelledby="al-current-title">
         <header class="analysis-section-head">
           <span>01</span>
-          <div><h2 id="al-current-title" data-i18n="al_current_title">当前监测结果</h2><p data-i18n="al_current_lead">预警表示评论信号触发预设规则，需经人工复核后形成业务结论。</p></div>
+          <div><h2 id="al-current-title" data-i18n="al_current_title">当前监测结果</h2><p data-i18n="al_current_lead">有效预警需同时通过文本重采样稳定性和平台评分同向验证，仍须人工复核。</p></div>
         </header>
         <div class="alerts-current-grid">
           <article class="alerts-current-card">
@@ -49,8 +49,8 @@
             <p id="al-rule-text"></p>
             <div class="alerts-rule-steps">
               <div><b>01</b><span data-i18n="al_rule_sample">相邻两个窗口均有足够评论</span></div>
-              <div><b>02</b><span data-i18n="al_rule_negative">近期综合评价已低于阈值</span></div>
-              <div><b>03</b><span data-i18n="al_rule_drop">较前一窗口继续下降</span></div>
+              <div><b>02</b><span data-i18n="al_rule_negative">文本恶化规则在重采样中稳定复现</span></div>
+              <div><b>03</b><span data-i18n="al_rule_drop">平台原始评分同向下降</span></div>
             </div>
             <p class="alerts-conclusion" id="al-concl"></p>
           </aside>
@@ -89,7 +89,7 @@
           </table>
           </div>
         </div>
-        <details class="analysis-method-note"><summary data-i18n="al_method_summary">查看阈值与数据来源</summary><p data-i18n="al_method_note">每个监测月只使用当月第一天前发布的评论。预警规则不参与销量预测，也不会自动给出故障结论。</p><p data-i18n="al_source"></p></details>
+        <details class="analysis-method-note"><summary data-i18n="al_method_summary">查看阈值与数据来源</summary><p data-i18n="al_method_note">每个监测月只使用截至该月月末已发布的评论，未完成月份不参与判断。预警规则不参与销量预测，也不会自动给出故障结论。</p><p data-i18n="al_source"></p></details>
       </section>
     </main>
   </div>
@@ -97,7 +97,7 @@
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js?v=20260829-1"></script>
-  <script src="static/js/i18n.js?v=20260829-1"></script>
+  <script src="static/js/i18n.js?v=20260830-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });

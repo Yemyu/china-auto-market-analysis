@@ -24,8 +24,8 @@
     "review_fixed_point_gain_pp": 0.697,
     "config_brand_r2": 0.07,
     "config_full_r2": 0.239,
-    "alert_count": 1,
-    "historical_alerts": 60,
+    "alert_count": 0,
+    "historical_alerts": 12,
     "brand_count": 86,
     "eval_series": 371,
     "sales_series": 1017,
@@ -288,8 +288,8 @@
       "en": "Intelligence and comfort carry the highest complaint concentration"
     },
     {
-      "zh": "截至2026-07，当前有效预警1条",
-      "en": "As of 2026-07, 1 active alert is detected"
+      "zh": "截至2026-07，当前双信号预警0条、观察名单1条",
+      "en": "As of 2026-07, 0 dual-signal alerts and 1 watchlist candidates remain"
     }
   ]
 }

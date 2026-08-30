@@ -80,7 +80,9 @@ Adding specifications increases R² by about 0.169 over year plus brand, indicat
 
 ### 3. 💬 User needs and risk
 
-Reviews are mapped to ten dimensions—space, power, control, comfort, energy/fuel, configuration, intelligence, value, appearance, and interior—with mention, polarity, and time-window fields kept separate. The latest complete monitoring month is July 2026; 123 series meet the monitoring threshold and one active rule-based alert is queued for manual review.
+Reviews are mapped to ten dimensions—space, power, control, comfort, energy/fuel, configuration, intelligence, value, appearance, and interior—with mention, polarity, and time-window fields kept separate. Monitoring first produces text-rule candidates, then requires at least 70% reproduction across 3,000 bootstrap samples and at least an 80% probability of a same-direction decline in the original platform rating. Twelve of 60 historical text candidates pass this dual-signal gate. In the latest complete month, July 2026, 123 series meet the monitoring threshold, with no active dual-signal alert and one watchlist candidate.
+
+Complaint keywords are ranked by positive-versus-negative distinctiveness rather than raw frequency. The current high-distinctiveness issues include thin paint, plastic-heavy interiors, cramped rear seating, weak acceleration, tyre noise, high fuel consumption, specification deletions, infotainment problems, and high prices—rather than generic frequent words such as “appearance” or “like”. The dual-signal gate improves contemporaneous evidence stability; it is not validation of future faults or persistent deterioration.
 
 ## Research design and information availability
 

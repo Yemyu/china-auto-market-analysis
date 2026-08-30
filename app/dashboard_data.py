@@ -23,6 +23,7 @@ ASPECT_EN = {
     "appearance": "Appearance", "interior": "Interior", "space": "Space", "power": "Power",
     "control": "Control", "comfort": "Comfort", "fuel_consumption": "Energy/Fuel",
     "configuration": "Configuration", "intelligence": "Intelligence", "value": "Value",
+    "overall": "Overall composition",
 }
 PALETTE = ["#2c7be5", "#00a9ae", "#34c38f", "#f6c343", "#ee5b5b", "#a55eea", "#7783f5"]
 MODEL_LABELS = {
@@ -268,7 +269,7 @@ class DashboardData:
                 {"zh": f"固定起点口碑增强点估计改善{review_point:.3f}个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息", "en": f"Fixed-origin review enhancement shows a {review_point:.3f} pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"},
                 {"zh": f"{config_summary['series']}车系完整年度分析中，配置将分组交叉验证R²从{config_brand:.3f}提升到{config_full:.3f}", "en": f"Across {config_summary['series']} series with complete annual targets, specifications raise grouped-CV R² from {config_brand:.3f} to {config_full:.3f}"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
-                {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前有效预警{needs['latest_active_alerts']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} active alert is detected"},
+                {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前双信号预警{needs['latest_active_alerts']}条、观察名单{needs['latest_watchlist_events']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} dual-signal alerts and {needs['latest_watchlist_events']} watchlist candidates remain"},
             ],
         }
 
@@ -553,9 +554,10 @@ class DashboardData:
     def alerts(self) -> dict[str, Any]:
         alerts = _read(self.processed / "user_feedback" / "sentiment_alerts.csv", parse_dates=["information_cutoff_inclusive"])
         summary = _read_json(self.processed / "user_feedback" / "user_needs_alerts_summary.json")
+        confirmed = alerts.loc[alerts["alert"].astype(str).str.lower().isin(["true", "1"])].copy()
         risk_labels = {"high": "高危", "medium": "中危", "low": "低危"}
         rows = []
-        for _, row in alerts.sort_values(["information_cutoff_inclusive", "score_change"], ascending=[False, True]).iterrows():
+        for _, row in confirmed.sort_values(["information_cutoff_inclusive", "score_change"], ascending=[False, True]).iterrows():
             brand = str(row["brand"])
             rows.append({
                 "series_name": str(row["series_name"]), "brand": brand,
@@ -567,28 +569,33 @@ class DashboardData:
                 "risk_en": str(row["risk_level"]).title(),
                 "current_reviews": int(row["current_reviews"]),
                 "previous_reviews": int(row["previous_reviews"]),
+                "text_retrigger_probability": round(float(row["text_rule_retrigger_probability"]), 3),
+                "rating_decline_probability": round(float(row["rating_decline_probability"]), 3),
                 "worst_aspect": str(row["worst_aspect_zh"]),
                 "worst_aspect_en": ASPECT_EN.get(str(row["worst_aspect"]), str(row["worst_aspect"])),
             })
-        monthly = alerts.groupby(alerts["information_cutoff_inclusive"].dt.to_period("M")).size().sort_index()
-        risk = alerts["risk_level"].map(risk_labels).value_counts()
+        monthly = confirmed.groupby(confirmed["information_cutoff_inclusive"].dt.to_period("M")).size().sort_index()
+        risk = confirmed["risk_level"].map(risk_labels).value_counts()
         return {
             "meta": {
                 "active_alerts": int(summary["latest_active_alerts"]),
+                "watchlist_events": int(summary["latest_watchlist_events"]),
+                "alert_candidates": int(summary["latest_alert_candidates"]),
                 "historical_alerts": int(summary["historical_alert_events"]),
+                "historical_candidates": int(summary["historical_alert_candidates"]),
                 "eligible_series": int(summary["latest_eligible_series"]),
                 "latest_month": str(summary["latest_completed_monitoring_month"])[:7],
             },
             "rule": {
-                "zh": "相邻180天窗口各≥5条评论；当前综合评价≤−0.10、较前窗下降≥0.15，且负面评论率≥35%",
-                "en": "Two adjacent 180-day windows each have ≥5 reviews; current score ≤−0.10, drop ≥0.15, and negative-review rate ≥35%",
+                "zh": "相邻180天窗口各≥5条评论；文本规则在3,000次重采样中复现率≥70%，且平台评分下降概率≥80%",
+                "en": "Two adjacent 180-day windows each have ≥5 reviews; the text rule reproduces in ≥70% of 3,000 bootstrap samples and the platform-rating decline probability is ≥80%",
             },
             "alerts": rows,
             "monthly": [{"month": str(period), "count": int(count)} for period, count in monthly.items()],
             "risk_dist": [{"level": str(level), "count": int(count)} for level, count in risk.items()],
             "conclusion": {
-                "zh": f"样本量约束后共有{summary['historical_alert_events']}次历史预警；截至{summary['latest_completed_monitoring_month'][:7]}，123个车系具备判定资格，当前有效预警{summary['latest_active_alerts']}条。预警是人工复核入口，不是故障定论。",
-                "en": f"After sample-size controls, {summary['historical_alert_events']} historical events remain. As of {summary['latest_completed_monitoring_month'][:7]}, 123 series are eligible and {summary['latest_active_alerts']} alert is active. Alerts are review candidates, not fault verdicts.",
+                "zh": f"历史{summary['historical_alert_candidates']}个文本候选中，{summary['historical_alert_events']}个通过重采样稳定性与平台评分同向验证。截至{summary['latest_completed_monitoring_month'][:7]}，{summary['latest_eligible_series']}个车系具备判定资格，当前双信号预警{summary['latest_active_alerts']}条、观察名单{summary['latest_watchlist_events']}条。预警是人工复核入口，不是故障定论。",
+                "en": f"Of {summary['historical_alert_candidates']} historical text candidates, {summary['historical_alert_events']} pass both bootstrap stability and same-direction platform-rating checks. As of {summary['latest_completed_monitoring_month'][:7]}, {summary['latest_eligible_series']} series are eligible, with {summary['latest_active_alerts']} dual-signal alerts and {summary['latest_watchlist_events']} watchlist candidates. Alerts are review candidates, not fault verdicts.",
             },
         }
 

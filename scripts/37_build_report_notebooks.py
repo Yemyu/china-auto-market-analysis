@@ -298,25 +298,27 @@ else:
 
 ALERTS = r"""
 latest = alerts.information_cutoff_inclusive.max()
-current = alerts[(alerts.information_cutoff_inclusive == latest)
-                 & alerts.alert.astype(str).str.lower().isin(["true", "1"])].copy()
+current = alerts[alerts.information_cutoff_inclusive == latest].copy()
 if ZH:
     overview = pd.DataFrame([
         ["最近完整监测月", monitor["latest_completed_monitoring_month"]],
         ["达到样本门槛的车系", monitor["latest_eligible_series"]],
-        ["当前预警", monitor["latest_active_alerts"]],
+        ["当前双信号预警", monitor["latest_active_alerts"]],
+        ["当前观察名单", monitor["latest_watchlist_events"]],
         ["历史预警事件", monitor["historical_alert_events"]],
     ], columns=["项目", "数值"])
 else:
     overview = pd.DataFrame([
         ["Latest complete month", monitor["latest_completed_monitoring_month"]],
         ["Eligible series", monitor["latest_eligible_series"]],
-        ["Current alerts", monitor["latest_active_alerts"]],
+        ["Current dual-signal alerts", monitor["latest_active_alerts"]],
+        ["Current watchlist", monitor["latest_watchlist_events"]],
         ["Historical alert events", monitor["historical_alert_events"]],
     ], columns=["Item", "Value"])
 display(overview)
 display(current[["series_name", "brand", "current_reviews", "current_overall_score",
-                 "score_change", "current_negative_review_rate", "worst_aspect", "risk_level"]])
+                 "score_change", "platform_rating_change", "text_rule_retrigger_probability",
+                 "rating_decline_probability", "alert_status", "worst_aspect", "risk_level"]])
 """
 
 
@@ -390,9 +392,9 @@ TEXT = {
         "needs": """## 4. 用户需求与口碑风险
 
 严格语料包含 24,175 条评论。十个维度同时保留提及率和有效评分中的负面率，避免把“讨论很多”和“评价很差”合并成一个指标。""",
-        "alerts": """### 规则预警
+        "alerts": """### 双信号风险监测
 
-预警要求相邻两个 180 天窗口都达到最小评论量，并同时触发综合评价、下降幅度和负面率阈值。它只用于安排人工复核。""",
+文本规则先生成观察候选；只有在 3,000 次 Bootstrap 中至少 70% 可复现，且平台原始评分下降概率至少为 80% 时，才计为有效预警。所有记录仍只用于安排人工复核。""",
         "audit": "## 5. 数据质量与时间可用性",
         "dashboard": """## 6. 看板与复现
 
@@ -449,9 +451,9 @@ The sample contains 646 series and 1,510 complete series-year records from 2022 
         "needs": """## 4. User needs and review risk
 
 The strict corpus contains 24,175 reviews. Mention share and negative share among scored mentions remain separate, so discussion volume is not conflated with dissatisfaction.""",
-        "alerts": """### Rule-based alerts
+        "alerts": """### Dual-signal risk monitoring
 
-Both adjacent 180-day windows must meet the minimum review count and all score, deterioration, and negative-share thresholds. An alert queues manual review.""",
+The text rule first creates watchlist candidates. A candidate counts as an active alert only when it reproduces in at least 70% of 3,000 bootstrap samples and the original platform-rating decline probability is at least 80%. Every record remains a manual-review input.""",
         "audit": "## 5. Data quality and temporal availability",
         "dashboard": """## 6. Dashboard and reproduction
 

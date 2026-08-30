@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import importlib
+import hashlib
 import json
 import re
 import sys
@@ -57,6 +58,9 @@ MIN_REVIEWS_PER_WINDOW = 5
 ALERT_SCORE_THRESHOLD = -0.10
 ALERT_DROP_THRESHOLD = -0.15
 ALERT_NEGATIVE_RATE_THRESHOLD = 0.35
+TEXT_RETRIGGER_PROBABILITY_THRESHOLD = 0.70
+RATING_DECLINE_PROBABILITY_THRESHOLD = 0.80
+BOOTSTRAP_DRAWS = 3_000
 TOPIC_COUNT = 4
 TOPIC_WORDS = 10
 TOPIC_MAX_DOCS = 6_000
@@ -75,6 +79,19 @@ STOPWORDS = {
 TOKEN_CLEAN_RE = re.compile(r"^[\W_]+$", re.UNICODE)
 
 
+def vehicle_entity_stopwords() -> set[str]:
+    metadata = pd.read_csv(TEST_SPLIT, usecols=["series_name", "brand"], low_memory=False)
+    values = pd.concat([metadata["series_name"], metadata["brand"]]).dropna().astype(str).str.lower().unique()
+    entities: set[str] = set()
+    for value in values:
+        entities.add(value.strip())
+        entities.update(token.strip() for token in jieba.lcut(value) if len(token.strip()) > 1)
+    return entities
+
+
+VEHICLE_ENTITY_STOPWORDS = vehicle_entity_stopwords()
+
+
 def as_bool(values: pd.Series) -> pd.Series:
     return values.fillna(False).astype(str).str.strip().str.lower().isin(["true", "1", "yes"])
 
@@ -83,7 +100,13 @@ def tokenize(text: str) -> list[str]:
     tokens: list[str] = []
     for token in jieba.lcut(str(text).lower()):
         word = token.strip()
-        if len(word) <= 1 or word in STOPWORDS or word.isdigit() or TOKEN_CLEAN_RE.fullmatch(word):
+        if (
+            len(word) <= 1
+            or word in STOPWORDS
+            or word in VEHICLE_ENTITY_STOPWORDS
+            or word.isdigit()
+            or TOKEN_CLEAN_RE.fullmatch(word)
+        ):
             continue
         if word.replace(".", "", 1).isdigit():
             continue
@@ -129,6 +152,10 @@ def add_review_scores(data: pd.DataFrame) -> pd.DataFrame:
     output["monitor_negative_review"] = output["monitor_overall_score"].lt(0).where(
         output["monitor_overall_score"].notna()
     )
+    output["platform_rating_overall"] = pd.to_numeric(output["rating_overall"], errors="coerce")
+    invalid_rating = output["platform_rating_overall"].notna() & ~output["platform_rating_overall"].between(0.5, 5.0)
+    if invalid_rating.any():
+        raise ValueError("Platform ratings outside the audited 0.5-5.0 range")
     return output
 
 
@@ -192,36 +219,119 @@ def sample_documents(documents: pd.DataFrame) -> pd.DataFrame:
 
 def keyword_rows(aspect: str, documents: pd.DataFrame) -> list[dict[str, Any]]:
     output: list[dict[str, Any]] = []
-    groups = {
-        "all": documents,
-        "positive": documents.loc[documents["polarity"].eq(1)],
-        "negative": documents.loc[documents["polarity"].eq(-1)],
-    }
-    for polarity_group, group in groups.items():
-        sampled = sample_documents(group)
-        if len(sampled) < 20:
-            continue
-        min_df = max(2, min(10, int(np.ceil(len(sampled) * 0.001))))
+    sampled_all = sample_documents(documents)
+    if len(sampled_all) >= 20:
+        min_df = max(2, min(10, int(np.ceil(len(sampled_all) * 0.001))))
         vectorizer = TfidfVectorizer(
             tokenizer=tokenize, token_pattern=None, lowercase=False,
             ngram_range=(1, 2), min_df=min_df, max_df=0.92, max_features=4_000,
         )
-        matrix = vectorizer.fit_transform(sampled["aspect_text"])
+        matrix = vectorizer.fit_transform(sampled_all["aspect_text"])
         terms = vectorizer.get_feature_names_out()
         scores = np.asarray(matrix.mean(axis=0)).ravel()
         for rank, index in enumerate(scores.argsort()[::-1][:20], start=1):
             output.append({
                 "aspect": aspect,
                 "aspect_zh": ASPECT_ZH[aspect],
+                "polarity_group": "all",
+                "rank": rank,
+                "keyword": terms[index].replace(" ", "·"),
+                "keyword_score": float(scores[index]),
+                "documents_available": int(len(documents)),
+                "documents_sampled": int(len(sampled_all)),
+                "min_document_frequency": min_df,
+                "method": "mean TF-IDF",
+            })
+
+    contrast = documents.loc[documents["polarity"].isin([-1, 1])].copy()
+    positive = sample_documents(contrast.loc[contrast["polarity"].eq(1)])
+    negative = sample_documents(contrast.loc[contrast["polarity"].eq(-1)])
+    if min(len(positive), len(negative)) < 20:
+        return output
+    sampled = pd.concat([positive, negative], ignore_index=True)
+    min_df = max(2, min(10, int(np.ceil(len(sampled) * 0.001))))
+    vectorizer = CountVectorizer(
+        tokenizer=tokenize, token_pattern=None, lowercase=False,
+        ngram_range=(1, 2), min_df=min_df, max_df=0.98, max_features=4_000,
+    )
+    matrix = vectorizer.fit_transform(sampled["aspect_text"])
+    terms = vectorizer.get_feature_names_out()
+    positive_counts = np.asarray(matrix[:len(positive)].sum(axis=0)).ravel().astype(float)
+    negative_counts = np.asarray(matrix[len(positive):].sum(axis=0)).ravel().astype(float)
+    pooled = positive_counts + negative_counts
+    prior_strength = 1_000.0
+    alpha = prior_strength * pooled / pooled.sum()
+    alpha = np.maximum(alpha, 1e-9)
+    alpha_total = alpha.sum()
+
+    def log_odds(counts: np.ndarray, total: float) -> np.ndarray:
+        return np.log((counts + alpha) / (total + alpha_total - counts - alpha))
+
+    delta = log_odds(negative_counts, negative_counts.sum()) - log_odds(
+        positive_counts, positive_counts.sum()
+    )
+    variance = 1.0 / (negative_counts + alpha) + 1.0 / (positive_counts + alpha)
+    z_scores = delta / np.sqrt(variance)
+    group_specs = {
+        "negative": (negative, z_scores),
+        "positive": (positive, -z_scores),
+    }
+    for polarity_group, (group, group_scores) in group_specs.items():
+        polarity = -1 if polarity_group == "negative" else 1
+        for rank, index in enumerate(group_scores.argsort()[::-1][:20], start=1):
+            output.append({
+                "aspect": aspect,
+                "aspect_zh": ASPECT_ZH[aspect],
                 "polarity_group": polarity_group,
                 "rank": rank,
                 "keyword": terms[index].replace(" ", "·"),
-                "mean_tfidf": float(scores[index]),
-                "documents_available": int(len(group)),
-                "documents_sampled": int(len(sampled)),
+                "keyword_score": float(group_scores[index]),
+                "documents_available": int(documents["polarity"].eq(polarity).sum()),
+                "documents_sampled": int(len(group)),
                 "min_document_frequency": min_df,
+                "method": "informative Dirichlet log-odds z-score",
             })
     return output
+
+
+def bootstrap_signal_support(
+    series_name: str,
+    cutoff: pd.Timestamp,
+    current: pd.DataFrame,
+    previous: pd.DataFrame,
+) -> tuple[float, float]:
+    """Estimate text-rule reproducibility and platform-rating corroboration."""
+    seed_material = f"{series_name}|{cutoff:%Y-%m-%d}|v3".encode("utf-8")
+    seed = int.from_bytes(hashlib.sha256(seed_material).digest()[:8], "little")
+    rng = np.random.default_rng(seed)
+    current_text = current["monitor_overall_score"].to_numpy(dtype=float)
+    previous_text = previous["monitor_overall_score"].to_numpy(dtype=float)
+    current_negative = current["monitor_negative_review"].to_numpy(dtype=float)
+    current_rating = current["platform_rating_overall"].dropna().to_numpy(dtype=float)
+    previous_rating = previous["platform_rating_overall"].dropna().to_numpy(dtype=float)
+
+    current_text_draws = rng.choice(
+        current_text, size=(BOOTSTRAP_DRAWS, len(current_text)), replace=True
+    ).mean(axis=1)
+    previous_text_draws = rng.choice(
+        previous_text, size=(BOOTSTRAP_DRAWS, len(previous_text)), replace=True
+    ).mean(axis=1)
+    negative_rate_draws = rng.choice(
+        current_negative, size=(BOOTSTRAP_DRAWS, len(current_negative)), replace=True
+    ).mean(axis=1)
+    text_retrigger = (
+        (current_text_draws <= ALERT_SCORE_THRESHOLD)
+        & (current_text_draws - previous_text_draws <= ALERT_DROP_THRESHOLD)
+        & (negative_rate_draws >= ALERT_NEGATIVE_RATE_THRESHOLD)
+    )
+    if not len(current_rating) or not len(previous_rating):
+        return float(text_retrigger.mean()), np.nan
+    rating_change_draws = rng.choice(
+        current_rating, size=(BOOTSTRAP_DRAWS, len(current_rating)), replace=True
+    ).mean(axis=1) - rng.choice(
+        previous_rating, size=(BOOTSTRAP_DRAWS, len(previous_rating)), replace=True
+    ).mean(axis=1)
+    return float(text_retrigger.mean()), float((rating_change_draws < 0).mean())
 
 
 def topic_rows(aspect: str, documents: pd.DataFrame) -> list[dict[str, Any]]:
@@ -313,18 +423,48 @@ def window_statistics(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, p
                 group["publish_time"].ge(previous_start)
                 & group["publish_time"].lt(current_start)
             ]
+            if set(current["identity"]) & set(previous["identity"]):
+                raise ValueError(f"Overlapping monitoring windows for {series_name} at {cutoff:%Y-%m-%d}")
+            if len(current) and current["publish_time"].max() >= cutoff_exclusive:
+                raise ValueError(f"Future review entered current window for {series_name} at {cutoff:%Y-%m-%d}")
+            if len(previous) and previous["publish_time"].max() >= current_start:
+                raise ValueError(f"Previous review entered current window for {series_name} at {cutoff:%Y-%m-%d}")
             if current.empty and previous.empty:
                 continue
             current_score = float(current["monitor_overall_score"].mean()) if len(current) else np.nan
             previous_score = float(previous["monitor_overall_score"].mean()) if len(previous) else np.nan
             score_drop = current_score - previous_score if len(current) and len(previous) else np.nan
             negative_rate = float(current["monitor_negative_review"].mean()) if len(current) else np.nan
+            current_rating = current["platform_rating_overall"].dropna()
+            previous_rating = previous["platform_rating_overall"].dropna()
+            current_rating_mean = float(current_rating.mean()) if len(current_rating) else np.nan
+            previous_rating_mean = float(previous_rating.mean()) if len(previous_rating) else np.nan
+            rating_change = (
+                current_rating_mean - previous_rating_mean
+                if len(current_rating) and len(previous_rating) else np.nan
+            )
             eligible = len(current) >= MIN_REVIEWS_PER_WINDOW and len(previous) >= MIN_REVIEWS_PER_WINDOW
-            alert = bool(
+            text_alert_candidate = bool(
                 eligible
                 and current_score <= ALERT_SCORE_THRESHOLD
                 and score_drop <= ALERT_DROP_THRESHOLD
                 and negative_rate >= ALERT_NEGATIVE_RATE_THRESHOLD
+            )
+            text_retrigger_probability = np.nan
+            rating_decline_probability = np.nan
+            if text_alert_candidate:
+                text_retrigger_probability, rating_decline_probability = bootstrap_signal_support(
+                    series_name, cutoff, current, previous
+                )
+            corroborated_alert = bool(
+                text_alert_candidate
+                and text_retrigger_probability >= TEXT_RETRIGGER_PROBABILITY_THRESHOLD
+                and rating_decline_probability >= RATING_DECLINE_PROBABILITY_THRESHOLD
+            )
+            alert_status = (
+                "corroborated" if corroborated_alert
+                else "watchlist" if text_alert_candidate
+                else "none"
             )
             base_row = {
                 "series_name": series_name,
@@ -340,11 +480,20 @@ def window_statistics(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, p
                 "previous_overall_score": previous_score,
                 "score_change": score_drop,
                 "current_negative_review_rate": negative_rate,
+                "current_rating_reviews": int(len(current_rating)),
+                "previous_rating_reviews": int(len(previous_rating)),
+                "current_platform_rating": current_rating_mean,
+                "previous_platform_rating": previous_rating_mean,
+                "platform_rating_change": rating_change,
                 "eligible_for_alert": eligible,
-                "alert": alert,
+                "text_alert_candidate": text_alert_candidate,
+                "text_rule_retrigger_probability": text_retrigger_probability,
+                "rating_decline_probability": rating_decline_probability,
+                "alert_status": alert_status,
+                "alert": corroborated_alert,
             }
             window_rows.append(base_row)
-            if not alert:
+            if not text_alert_candidate:
                 continue
             aspect_changes: list[tuple[str, float, float, float, int, int]] = []
             for aspect in ASPECTS:
@@ -355,7 +504,10 @@ def window_statistics(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, p
                     continue
                 change = float(cur_scores.mean() - prev_scores.mean())
                 aspect_changes.append((aspect, change, float(cur_scores.mean()), float(prev_scores.mean()), len(cur_scores), len(prev_scores)))
-            worst = min(aspect_changes, key=lambda item: item[1]) if aspect_changes else ("overall", score_drop, current_score, previous_score, len(current), len(previous))
+            deteriorating_aspects = [item for item in aspect_changes if item[1] < 0]
+            worst = min(deteriorating_aspects, key=lambda item: item[1]) if deteriorating_aspects else (
+                "overall", score_drop, current_score, previous_score, len(current), len(previous)
+            )
             if current_score <= -0.25 or score_drop <= -0.50 or negative_rate >= 0.60:
                 risk_level = "high"
             elif current_score <= -0.15 or score_drop <= -0.30 or negative_rate >= 0.50:
@@ -373,7 +525,7 @@ def window_statistics(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame, p
                 "worst_aspect_previous_score": worst[3],
                 "worst_aspect_current_mentions": worst[4],
                 "worst_aspect_previous_mentions": worst[5],
-                "rule_version": "v2_180d_sample_aware",
+                "rule_version": "v3_dual_signal_bootstrap",
             })
     windows = pd.DataFrame(window_rows)
     alerts = pd.DataFrame(alert_rows)
@@ -392,12 +544,13 @@ def save_figure(aspects: pd.DataFrame, alerts: pd.DataFrame) -> None:
     axes[1].set_xlabel("Negative rate among scored mentions (%)")
     axes[1].set_title("Where complaints concentrate")
 
-    if len(alerts):
-        monthly = alerts.assign(month=pd.to_datetime(alerts["information_cutoff_inclusive"]).dt.to_period("M").astype(str)).groupby("month").size()
+    corroborated = alerts.loc[alerts["alert"]] if len(alerts) else alerts
+    if len(corroborated):
+        monthly = corroborated.assign(month=pd.to_datetime(corroborated["information_cutoff_inclusive"]).dt.to_period("M").astype(str)).groupby("month").size()
         axes[2].bar(monthly.index, monthly.values, color="#F58518")
         axes[2].tick_params(axis="x", rotation=55, labelsize=7)
         axes[2].set_ylabel("Alert events")
-        axes[2].set_title("Sample-aware alert history")
+        axes[2].set_title("Dual-signal alert history")
     else:
         axes[2].axis("off")
         axes[2].set_title("No alerts under the registered rule")
@@ -421,13 +574,19 @@ def main() -> None:
     alerts.to_csv(ALERTS, index=False, encoding="utf-8-sig")
     save_figure(aspects, alerts)
 
-    latest_alerts = alerts.loc[pd.to_datetime(alerts["information_cutoff_inclusive"]).eq(latest_completed)] if len(alerts) else alerts
+    latest_candidates = alerts.loc[
+        pd.to_datetime(alerts["information_cutoff_inclusive"]).eq(latest_completed)
+    ] if len(alerts) else alerts
+    latest_alerts = latest_candidates.loc[latest_candidates["alert"]] if len(latest_candidates) else latest_candidates
+    latest_watchlist = latest_candidates.loc[
+        latest_candidates["alert_status"].eq("watchlist")
+    ] if len(latest_candidates) else latest_candidates
     eligible_latest = windows.loc[
         pd.to_datetime(windows["information_cutoff_inclusive"]).eq(latest_completed)
         & windows["eligible_for_alert"]
     ] if len(windows) else windows
     summary = {
-        "schema_version": "v1",
+        "schema_version": "v2",
         "review_rows": int(len(data)),
         "review_series": int(data["series_name"].nunique()),
         "review_publish_time_min": data["publish_time"].min().isoformat(),
@@ -441,13 +600,24 @@ def main() -> None:
             "current_overall_score_lte": ALERT_SCORE_THRESHOLD,
             "score_change_lte": ALERT_DROP_THRESHOLD,
             "current_negative_review_rate_gte": ALERT_NEGATIVE_RATE_THRESHOLD,
+            "text_rule_retrigger_probability_gte": TEXT_RETRIGGER_PROBABILITY_THRESHOLD,
+            "platform_rating_decline_probability_gte": RATING_DECLINE_PROBABILITY_THRESHOLD,
+            "bootstrap_draws": BOOTSTRAP_DRAWS,
         },
         "latest_completed_monitoring_month": latest_completed.strftime("%Y-%m-%d"),
         "latest_eligible_series": int(eligible_latest["series_name"].nunique()) if len(eligible_latest) else 0,
+        "latest_alert_candidates": int(len(latest_candidates)),
         "latest_active_alerts": int(len(latest_alerts)),
-        "historical_alert_events": int(len(alerts)),
-        "historical_alert_series": int(alerts["series_name"].nunique()) if len(alerts) else 0,
-        "topic_method": "aspect-filtered LDA with TF-IDF polarity keywords",
+        "latest_watchlist_events": int(len(latest_watchlist)),
+        "historical_alert_candidates": int(len(alerts)),
+        "historical_alert_events": int(alerts["alert"].sum()) if len(alerts) else 0,
+        "historical_watchlist_events": int(alerts["alert_status"].eq("watchlist").sum()) if len(alerts) else 0,
+        "historical_alert_series": int(alerts.loc[alerts["alert"], "series_name"].nunique()) if len(alerts) else 0,
+        "candidate_mean_text_rule_retrigger_probability": float(alerts["text_rule_retrigger_probability"].mean()) if len(alerts) else np.nan,
+        "corroborated_mean_text_rule_retrigger_probability": float(alerts.loc[alerts["alert"], "text_rule_retrigger_probability"].mean()) if len(alerts) and alerts["alert"].any() else np.nan,
+        "topic_method": "aspect-filtered LDA",
+        "keyword_method": "mean TF-IDF for prevalence; informative Dirichlet log-odds for positive/negative distinctiveness",
+        "alert_interpretation": "Dual-signal corroboration improves contemporaneous evidence stability; it is not validated as a predictor of future incidents or persistent deterioration.",
         "current_incomplete_month_excluded_from_alerts": True,
         "external_api_calls": 0,
     }
@@ -460,11 +630,13 @@ def main() -> None:
     ]].to_string(index=False, float_format=lambda value: f"{value:.3f}"), flush=True)
     print("\n===== Monitoring summary =====", flush=True)
     print(json.dumps(summary, ensure_ascii=False, indent=2), flush=True)
-    if len(latest_alerts):
-        print("\n===== Latest active alerts =====", flush=True)
-        print(latest_alerts[[
+    if len(latest_candidates):
+        print("\n===== Latest alert candidates =====", flush=True)
+        print(latest_candidates[[
             "series_name", "risk_level", "current_reviews", "current_overall_score",
-            "score_change", "current_negative_review_rate", "worst_aspect_zh",
+            "score_change", "current_negative_review_rate", "platform_rating_change",
+            "text_rule_retrigger_probability", "rating_decline_probability",
+            "alert_status", "worst_aspect_zh",
         ]].sort_values(["risk_level", "score_change"]).to_string(index=False, float_format=lambda value: f"{value:.3f}"), flush=True)
     print(f"[output] {SUMMARY.relative_to(BASE)}", flush=True)
     print(f"[output] {FIGURE.relative_to(BASE)}", flush=True)

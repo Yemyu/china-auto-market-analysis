@@ -1,5 +1,5 @@
 {
-  "schema_version": "v1",
+  "schema_version": "v2",
   "review_rows": 24175,
   "review_series": 345,
   "review_publish_time_min": "2014-04-24T00:00:00",
@@ -12,14 +12,25 @@
   "alert_rule": {
     "current_overall_score_lte": -0.1,
     "score_change_lte": -0.15,
-    "current_negative_review_rate_gte": 0.35
+    "current_negative_review_rate_gte": 0.35,
+    "text_rule_retrigger_probability_gte": 0.7,
+    "platform_rating_decline_probability_gte": 0.8,
+    "bootstrap_draws": 3000
   },
   "latest_completed_monitoring_month": "2026-07-31",
   "latest_eligible_series": 123,
-  "latest_active_alerts": 1,
-  "historical_alert_events": 60,
-  "historical_alert_series": 26,
-  "topic_method": "aspect-filtered LDA with TF-IDF polarity keywords",
+  "latest_alert_candidates": 1,
+  "latest_active_alerts": 0,
+  "latest_watchlist_events": 1,
+  "historical_alert_candidates": 60,
+  "historical_alert_events": 12,
+  "historical_watchlist_events": 48,
+  "historical_alert_series": 8,
+  "candidate_mean_text_rule_retrigger_probability": 0.5674166666666666,
+  "corroborated_mean_text_rule_retrigger_probability": 0.7916666666666666,
+  "topic_method": "aspect-filtered LDA",
+  "keyword_method": "mean TF-IDF for prevalence; informative Dirichlet log-odds for positive/negative distinctiveness",
+  "alert_interpretation": "Dual-signal corroboration improves contemporaneous evidence stability; it is not validated as a predictor of future incidents or persistent deterioration.",
   "current_incomplete_month_excluded_from_alerts": true,
   "external_api_calls": 0
 }

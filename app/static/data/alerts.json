@@ -1,240 +1,18 @@
 {
   "meta": {
-    "active_alerts": 1,
-    "historical_alerts": 60,
+    "active_alerts": 0,
+    "watchlist_events": 1,
+    "alert_candidates": 1,
+    "historical_alerts": 12,
+    "historical_candidates": 60,
     "eligible_series": 123,
     "latest_month": "2026-07"
   },
   "rule": {
-    "zh": "相邻180天窗口各≥5条评论；当前综合评价≤−0.10、较前窗下降≥0.15，且负面评论率≥35%",
-    "en": "Two adjacent 180-day windows each have ≥5 reviews; current score ≤−0.10, drop ≥0.15, and negative-review rate ≥35%"
+    "zh": "相邻180天窗口各≥5条评论；文本规则在3,000次重采样中复现率≥70%，且平台评分下降概率≥80%",
+    "en": "Two adjacent 180-day windows each have ≥5 reviews; the text rule reproduces in ≥70% of 3,000 bootstrap samples and the platform-rating decline probability is ≥80%"
   },
   "alerts": [
-    {
-      "series_name": "奥迪Q4 e-tron",
-      "brand": "奥迪",
-      "brand_en": "Audi",
-      "series_en": "Q4 e-tron",
-      "period": "2026-07",
-      "overall": -0.233,
-      "overall_drop": -0.15,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 5,
-      "previous_reviews": 5,
-      "worst_aspect": "外观",
-      "worst_aspect_en": "Appearance"
-    },
-    {
-      "series_name": "宋L EV",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "Song L EV",
-      "period": "2026-06",
-      "overall": -0.169,
-      "overall_drop": -0.343,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 6,
-      "previous_reviews": 8,
-      "worst_aspect": "性价比",
-      "worst_aspect_en": "Value"
-    },
-    {
-      "series_name": "红旗HS7 PHEV",
-      "brand": "红旗",
-      "brand_en": "Hongqi",
-      "series_en": "HS7 PHEV",
-      "period": "2026-05",
-      "overall": -0.2,
-      "overall_drop": -0.438,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 5,
-      "previous_reviews": 7,
-      "worst_aspect": "能耗/油耗",
-      "worst_aspect_en": "Energy/Fuel"
-    },
-    {
-      "series_name": "奥迪Q4 e-tron",
-      "brand": "奥迪",
-      "brand_en": "Audi",
-      "series_en": "Q4 e-tron",
-      "period": "2026-04",
-      "overall": -0.35,
-      "overall_drop": -0.5,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 5,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "红旗天工08",
-      "brand": "红旗",
-      "brand_en": "Hongqi",
-      "series_en": "08",
-      "period": "2026-04",
-      "overall": -0.1,
-      "overall_drop": -0.412,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 5,
-      "previous_reviews": 8,
-      "worst_aspect": "能耗/油耗",
-      "worst_aspect_en": "Energy/Fuel"
-    },
-    {
-      "series_name": "奥德赛",
-      "brand": "本田",
-      "brand_en": "Honda",
-      "series_en": "Odyssey",
-      "period": "2026-04",
-      "overall": -0.298,
-      "overall_drop": -0.364,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 7,
-      "previous_reviews": 5,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "宋L EV",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "Song L EV",
-      "period": "2026-04",
-      "overall": -0.203,
-      "overall_drop": -0.318,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 10,
-      "worst_aspect": "动力",
-      "worst_aspect_en": "Power"
-    },
-    {
-      "series_name": "海狮07EV",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "Seal U 07 EV",
-      "period": "2026-04",
-      "overall": -0.129,
-      "overall_drop": -0.253,
-      "risk": "低危",
-      "risk_en": "Low",
-      "current_reviews": 11,
-      "previous_reviews": 17,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "红旗天工08",
-      "brand": "红旗",
-      "brand_en": "Hongqi",
-      "series_en": "08",
-      "period": "2026-03",
-      "overall": -0.227,
-      "overall_drop": -0.61,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 6,
-      "worst_aspect": "智能化",
-      "worst_aspect_en": "Intelligence"
-    },
-    {
-      "series_name": "海狮07EV",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "Seal U 07 EV",
-      "period": "2026-03",
-      "overall": -0.224,
-      "overall_drop": -0.412,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 13,
-      "previous_reviews": 17,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "理想MEGA",
-      "brand": "理想汽车",
-      "brand_en": "Li Auto",
-      "series_en": "Li Auto MEGA",
-      "period": "2026-03",
-      "overall": -0.148,
-      "overall_drop": -0.336,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 7,
-      "previous_reviews": 7,
-      "worst_aspect": "空间",
-      "worst_aspect_en": "Space"
-    },
-    {
-      "series_name": "理想MEGA",
-      "brand": "理想汽车",
-      "brand_en": "Li Auto",
-      "series_en": "Li Auto MEGA",
-      "period": "2026-02",
-      "overall": -0.168,
-      "overall_drop": -0.411,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 7,
-      "previous_reviews": 6,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "长安UNI-K",
-      "brand": "长安",
-      "brand_en": "Changan",
-      "series_en": "UNI-K",
-      "period": "2026-01",
-      "overall": -0.219,
-      "overall_drop": -0.672,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 6,
-      "previous_reviews": 5,
-      "worst_aspect": "动力",
-      "worst_aspect_en": "Power"
-    },
-    {
-      "series_name": "夏",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "夏",
-      "period": "2026-01",
-      "overall": -0.2,
-      "overall_drop": -0.581,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 21,
-      "previous_reviews": 27,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "海狮07EV",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "Seal U 07 EV",
-      "period": "2026-01",
-      "overall": -0.156,
-      "overall_drop": -0.538,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 17,
-      "previous_reviews": 14,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
     {
       "series_name": "悦意03",
       "brand": "奔腾",
@@ -247,68 +25,10 @@
       "risk_en": "Medium",
       "current_reviews": 21,
       "previous_reviews": 23,
+      "text_retrigger_probability": 0.745,
+      "rating_decline_probability": 0.98,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "星海V9",
-      "brand": "东风风行",
-      "brand_en": "Dongfeng Fengxing",
-      "series_en": "V9",
-      "period": "2025-12",
-      "overall": -0.283,
-      "overall_drop": -0.588,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 5,
-      "worst_aspect": "智能化",
-      "worst_aspect_en": "Intelligence"
-    },
-    {
-      "series_name": "海狮07EV",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "Seal U 07 EV",
-      "period": "2025-12",
-      "overall": -0.145,
-      "overall_drop": -0.525,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 16,
-      "previous_reviews": 14,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "夏",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "夏",
-      "period": "2025-12",
-      "overall": -0.104,
-      "overall_drop": -0.488,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 26,
-      "previous_reviews": 25,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "长安UNI-K",
-      "brand": "长安",
-      "brand_en": "Changan",
-      "series_en": "UNI-K",
-      "period": "2025-12",
-      "overall": -0.102,
-      "overall_drop": -0.235,
-      "risk": "低危",
-      "risk_en": "Low",
-      "current_reviews": 7,
-      "previous_reviews": 5,
-      "worst_aspect": "动力",
-      "worst_aspect_en": "Power"
     },
     {
       "series_name": "瑞虎3x",
@@ -322,6 +42,8 @@
       "risk_en": "High",
       "current_reviews": 10,
       "previous_reviews": 6,
+      "text_retrigger_probability": 0.756,
+      "rating_decline_probability": 0.995,
       "worst_aspect": "操控",
       "worst_aspect_en": "Control"
     },
@@ -337,6 +59,8 @@
       "risk_en": "High",
       "current_reviews": 9,
       "previous_reviews": 6,
+      "text_retrigger_probability": 0.797,
+      "rating_decline_probability": 0.989,
       "worst_aspect": "操控",
       "worst_aspect_en": "Control"
     },
@@ -352,36 +76,8 @@
       "risk_en": "High",
       "current_reviews": 10,
       "previous_reviews": 8,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "奔腾小马",
-      "brand": "奔腾",
-      "brand_en": "Bestune",
-      "series_en": "奔腾小马",
-      "period": "2025-09",
-      "overall": -0.143,
-      "overall_drop": -0.266,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 19,
-      "previous_reviews": 19,
-      "worst_aspect": "空间",
-      "worst_aspect_en": "Space"
-    },
-    {
-      "series_name": "星海S7",
-      "brand": "东风风行",
-      "brand_en": "Dongfeng Fengxing",
-      "series_en": "S7",
-      "period": "2025-08",
-      "overall": -0.322,
-      "overall_drop": -0.831,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 6,
-      "previous_reviews": 12,
+      "text_retrigger_probability": 0.7,
+      "rating_decline_probability": 0.981,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
     },
@@ -397,23 +93,10 @@
       "risk_en": "High",
       "current_reviews": 17,
       "previous_reviews": 19,
+      "text_retrigger_probability": 0.806,
+      "rating_decline_probability": 0.802,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "奔腾小马",
-      "brand": "奔腾",
-      "brand_en": "Bestune",
-      "series_en": "奔腾小马",
-      "period": "2025-07",
-      "overall": -0.161,
-      "overall_drop": -0.352,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 16,
-      "previous_reviews": 16,
-      "worst_aspect": "内饰",
-      "worst_aspect_en": "Interior"
     },
     {
       "series_name": "奔腾小马",
@@ -427,38 +110,10 @@
       "risk_en": "High",
       "current_reviews": 17,
       "previous_reviews": 19,
+      "text_retrigger_probability": 0.742,
+      "rating_decline_probability": 0.935,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "奔腾小马",
-      "brand": "奔腾",
-      "brand_en": "Bestune",
-      "series_en": "奔腾小马",
-      "period": "2025-04",
-      "overall": -0.179,
-      "overall_drop": -0.593,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 17,
-      "previous_reviews": 15,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "IQ傲歌",
-      "brand": "凯迪拉克",
-      "brand_en": "Cadillac",
-      "series_en": "IQ",
-      "period": "2025-04",
-      "overall": -0.1,
-      "overall_drop": -0.518,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 25,
-      "worst_aspect": "舒适性",
-      "worst_aspect_en": "Comfort"
     },
     {
       "series_name": "探岳X",
@@ -472,6 +127,8 @@
       "risk_en": "High",
       "current_reviews": 5,
       "previous_reviews": 6,
+      "text_retrigger_probability": 0.8,
+      "rating_decline_probability": 0.879,
       "worst_aspect": "能耗/油耗",
       "worst_aspect_en": "Energy/Fuel"
     },
@@ -487,6 +144,8 @@
       "risk_en": "High",
       "current_reviews": 5,
       "previous_reviews": 5,
+      "text_retrigger_probability": 0.819,
+      "rating_decline_probability": 0.919,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
     },
@@ -502,156 +161,8 @@
       "risk_en": "High",
       "current_reviews": 5,
       "previous_reviews": 6,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "探岳X",
-      "brand": "大众",
-      "brand_en": "Volkswagen",
-      "series_en": "Tayron X",
-      "period": "2025-01",
-      "overall": -0.272,
-      "overall_drop": -0.656,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 6,
-      "previous_reviews": 5,
-      "worst_aspect": "能耗/油耗",
-      "worst_aspect_en": "Energy/Fuel"
-    },
-    {
-      "series_name": "瑞虎3x",
-      "brand": "奇瑞",
-      "brand_en": "Chery",
-      "series_en": "Tiggo 3x",
-      "period": "2024-12",
-      "overall": -0.183,
-      "overall_drop": -0.536,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 6,
-      "worst_aspect": "能耗/油耗",
-      "worst_aspect_en": "Energy/Fuel"
-    },
-    {
-      "series_name": "探岳X",
-      "brand": "大众",
-      "brand_en": "Volkswagen",
-      "series_en": "Tayron X",
-      "period": "2024-12",
-      "overall": -0.272,
-      "overall_drop": -0.508,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 6,
-      "previous_reviews": 6,
-      "worst_aspect": "能耗/油耗",
-      "worst_aspect_en": "Energy/Fuel"
-    },
-    {
-      "series_name": "探岳X",
-      "brand": "大众",
-      "brand_en": "Volkswagen",
-      "series_en": "Tayron X",
-      "period": "2024-11",
-      "overall": -0.217,
-      "overall_drop": -0.161,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 6,
-      "worst_aspect": "能耗/油耗",
-      "worst_aspect_en": "Energy/Fuel"
-    },
-    {
-      "series_name": "丰田bZ3",
-      "brand": "丰田",
-      "brand_en": "Toyota",
-      "series_en": "bZ3",
-      "period": "2024-10",
-      "overall": -0.161,
-      "overall_drop": -0.304,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 6,
-      "previous_reviews": 16,
-      "worst_aspect": "性价比",
-      "worst_aspect_en": "Value"
-    },
-    {
-      "series_name": "丰田bZ3",
-      "brand": "丰田",
-      "brand_en": "Toyota",
-      "series_en": "bZ3",
-      "period": "2024-09",
-      "overall": -0.115,
-      "overall_drop": -0.288,
-      "risk": "低危",
-      "risk_en": "Low",
-      "current_reviews": 7,
-      "previous_reviews": 14,
-      "worst_aspect": "动力",
-      "worst_aspect_en": "Power"
-    },
-    {
-      "series_name": "AION S",
-      "brand": "埃安",
-      "brand_en": "Aion",
-      "series_en": "AION S",
-      "period": "2024-08",
-      "overall": -0.162,
-      "overall_drop": -0.268,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 8,
-      "previous_reviews": 12,
-      "worst_aspect": "智能化",
-      "worst_aspect_en": "Intelligence"
-    },
-    {
-      "series_name": "起亚K3",
-      "brand": "起亚",
-      "brand_en": "Kia",
-      "series_en": "K3",
-      "period": "2024-07",
-      "overall": -0.298,
-      "overall_drop": -0.164,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 7,
-      "previous_reviews": 6,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "AION S",
-      "brand": "埃安",
-      "brand_en": "Aion",
-      "series_en": "AION S",
-      "period": "2024-06",
-      "overall": -0.176,
-      "overall_drop": -0.615,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 15,
-      "previous_reviews": 6,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "起亚K3",
-      "brand": "起亚",
-      "brand_en": "Kia",
-      "series_en": "K3",
-      "period": "2024-06",
-      "overall": -0.298,
-      "overall_drop": -0.308,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 7,
-      "previous_reviews": 7,
+      "text_retrigger_probability": 0.846,
+      "rating_decline_probability": 0.905,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
     },
@@ -667,111 +178,8 @@
       "risk_en": "High",
       "current_reviews": 8,
       "previous_reviews": 6,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "AION S",
-      "brand": "埃安",
-      "brand_en": "Aion",
-      "series_en": "AION S",
-      "period": "2024-05",
-      "overall": -0.112,
-      "overall_drop": -0.667,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 14,
-      "previous_reviews": 9,
-      "worst_aspect": "内饰",
-      "worst_aspect_en": "Interior"
-    },
-    {
-      "series_name": "世纪",
-      "brand": "别克",
-      "brand_en": "Buick",
-      "series_en": "Century",
-      "period": "2024-04",
-      "overall": -0.233,
-      "overall_drop": -0.532,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 6,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "海豹",
-      "brand": "比亚迪",
-      "brand_en": "BYD",
-      "series_en": "Seal",
-      "period": "2024-04",
-      "overall": -0.107,
-      "overall_drop": -0.418,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 14,
-      "worst_aspect": "动力",
-      "worst_aspect_en": "Power"
-    },
-    {
-      "series_name": "世纪",
-      "brand": "别克",
-      "brand_en": "Buick",
-      "series_en": "Century",
-      "period": "2024-03",
-      "overall": -0.233,
-      "overall_drop": -0.432,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 7,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "起亚K3",
-      "brand": "起亚",
-      "brand_en": "Kia",
-      "series_en": "K3",
-      "period": "2024-01",
-      "overall": -0.133,
-      "overall_drop": -0.863,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 6,
-      "previous_reviews": 11,
-      "worst_aspect": "舒适性",
-      "worst_aspect_en": "Comfort"
-    },
-    {
-      "series_name": "世纪",
-      "brand": "别克",
-      "brand_en": "Buick",
-      "series_en": "Century",
-      "period": "2024-01",
-      "overall": -0.308,
-      "overall_drop": -0.68,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 5,
-      "previous_reviews": 9,
-      "worst_aspect": "智能化",
-      "worst_aspect_en": "Intelligence"
-    },
-    {
-      "series_name": "荣威iMAX8",
-      "brand": "荣威",
-      "brand_en": "Roewe",
-      "series_en": "iMAX8",
-      "period": "2023-12",
-      "overall": -0.134,
-      "overall_drop": -0.61,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 6,
-      "previous_reviews": 12,
+      "text_retrigger_probability": 0.903,
+      "rating_decline_probability": 0.884,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
     },
@@ -787,98 +195,10 @@
       "risk_en": "High",
       "current_reviews": 5,
       "previous_reviews": 12,
+      "text_retrigger_probability": 0.805,
+      "rating_decline_probability": 0.852,
       "worst_aspect": "配置",
       "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "启辰D60",
-      "brand": "启辰",
-      "brand_en": "Venucia",
-      "series_en": "D60",
-      "period": "2023-10",
-      "overall": -0.25,
-      "overall_drop": -0.586,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 7,
-      "previous_reviews": 14,
-      "worst_aspect": "配置",
-      "worst_aspect_en": "Configuration"
-    },
-    {
-      "series_name": "荣威iMAX8",
-      "brand": "荣威",
-      "brand_en": "Roewe",
-      "series_en": "iMAX8",
-      "period": "2023-09",
-      "overall": -0.202,
-      "overall_drop": -0.866,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 6,
-      "previous_reviews": 14,
-      "worst_aspect": "能耗/油耗",
-      "worst_aspect_en": "Energy/Fuel"
-    },
-    {
-      "series_name": "启辰D60",
-      "brand": "启辰",
-      "brand_en": "Venucia",
-      "series_en": "D60",
-      "period": "2023-09",
-      "overall": -0.165,
-      "overall_drop": -0.506,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 9,
-      "previous_reviews": 13,
-      "worst_aspect": "外观",
-      "worst_aspect_en": "Appearance"
-    },
-    {
-      "series_name": "奥迪Q3 Sportback",
-      "brand": "奥迪",
-      "brand_en": "Audi",
-      "series_en": "Q3 Sportback",
-      "period": "2023-06",
-      "overall": -0.147,
-      "overall_drop": -0.517,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 8,
-      "previous_reviews": 14,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "奥迪Q3 Sportback",
-      "brand": "奥迪",
-      "brand_en": "Audi",
-      "series_en": "Q3 Sportback",
-      "period": "2023-05",
-      "overall": -0.147,
-      "overall_drop": -0.515,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 8,
-      "previous_reviews": 15,
-      "worst_aspect": "操控",
-      "worst_aspect_en": "Control"
-    },
-    {
-      "series_name": "捷达VA3",
-      "brand": "捷达",
-      "brand_en": "Jetta",
-      "series_en": "VA3",
-      "period": "2022-12",
-      "overall": -0.123,
-      "overall_drop": -0.227,
-      "risk": "中危",
-      "risk_en": "Medium",
-      "current_reviews": 8,
-      "previous_reviews": 15,
-      "worst_aspect": "性价比",
-      "worst_aspect_en": "Value"
     },
     {
       "series_name": "捷达VA3",
@@ -892,52 +212,15 @@
       "risk_en": "High",
       "current_reviews": 10,
       "previous_reviews": 12,
+      "text_retrigger_probability": 0.781,
+      "rating_decline_probability": 0.884,
       "worst_aspect": "动力",
       "worst_aspect_en": "Power"
-    },
-    {
-      "series_name": "瑞风M3",
-      "brand": "江淮瑞风",
-      "brand_en": "JAC Ruifeng",
-      "series_en": "M3",
-      "period": "2022-01",
-      "overall": -0.267,
-      "overall_drop": -0.385,
-      "risk": "高危",
-      "risk_en": "High",
-      "current_reviews": 7,
-      "previous_reviews": 7,
-      "worst_aspect": "性价比",
-      "worst_aspect_en": "Value"
     }
   ],
   "monthly": [
     {
-      "month": "2022-01",
-      "count": 1
-    },
-    {
       "month": "2022-11",
-      "count": 1
-    },
-    {
-      "month": "2022-12",
-      "count": 1
-    },
-    {
-      "month": "2023-05",
-      "count": 1
-    },
-    {
-      "month": "2023-06",
-      "count": 1
-    },
-    {
-      "month": "2023-09",
-      "count": 2
-    },
-    {
-      "month": "2023-10",
       "count": 1
     },
     {
@@ -945,63 +228,15 @@
       "count": 1
     },
     {
-      "month": "2023-12",
-      "count": 1
-    },
-    {
-      "month": "2024-01",
-      "count": 2
-    },
-    {
-      "month": "2024-03",
-      "count": 1
-    },
-    {
-      "month": "2024-04",
-      "count": 2
-    },
-    {
       "month": "2024-05",
-      "count": 2
-    },
-    {
-      "month": "2024-06",
-      "count": 2
-    },
-    {
-      "month": "2024-07",
       "count": 1
-    },
-    {
-      "month": "2024-08",
-      "count": 1
-    },
-    {
-      "month": "2024-09",
-      "count": 1
-    },
-    {
-      "month": "2024-10",
-      "count": 1
-    },
-    {
-      "month": "2024-11",
-      "count": 1
-    },
-    {
-      "month": "2024-12",
-      "count": 2
     },
     {
       "month": "2025-01",
-      "count": 2
+      "count": 1
     },
     {
       "month": "2025-02",
-      "count": 2
-    },
-    {
-      "month": "2025-04",
       "count": 2
     },
     {
@@ -1009,16 +244,12 @@
       "count": 1
     },
     {
-      "month": "2025-07",
+      "month": "2025-08",
       "count": 1
     },
     {
-      "month": "2025-08",
-      "count": 2
-    },
-    {
       "month": "2025-09",
-      "count": 2
+      "count": 1
     },
     {
       "month": "2025-10",
@@ -1029,54 +260,22 @@
       "count": 1
     },
     {
-      "month": "2025-12",
-      "count": 4
-    },
-    {
       "month": "2026-01",
-      "count": 4
-    },
-    {
-      "month": "2026-02",
-      "count": 1
-    },
-    {
-      "month": "2026-03",
-      "count": 3
-    },
-    {
-      "month": "2026-04",
-      "count": 5
-    },
-    {
-      "month": "2026-05",
-      "count": 1
-    },
-    {
-      "month": "2026-06",
-      "count": 1
-    },
-    {
-      "month": "2026-07",
       "count": 1
     }
   ],
   "risk_dist": [
     {
       "level": "高危",
-      "count": 43
+      "count": 11
     },
     {
       "level": "中危",
-      "count": 14
-    },
-    {
-      "level": "低危",
-      "count": 3
+      "count": 1
     }
   ],
   "conclusion": {
-    "zh": "样本量约束后共有60次历史预警；截至2026-07，123个车系具备判定资格，当前有效预警1条。预警是人工复核入口，不是故障定论。",
-    "en": "After sample-size controls, 60 historical events remain. As of 2026-07, 123 series are eligible and 1 alert is active. Alerts are review candidates, not fault verdicts."
+    "zh": "历史60个文本候选中，12个通过重采样稳定性与平台评分同向验证。截至2026-07，123个车系具备判定资格，当前双信号预警0条、观察名单1条。预警是人工复核入口，不是故障定论。",
+    "en": "Of 60 historical text candidates, 12 pass both bootstrap stability and same-direction platform-rating checks. As of 2026-07, 123 series are eligible, with 0 dual-signal alerts and 1 watchlist candidates. Alerts are review candidates, not fault verdicts."
   }
 }
