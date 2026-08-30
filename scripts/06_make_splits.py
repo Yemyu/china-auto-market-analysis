@@ -128,7 +128,7 @@ def main():
         "schema_version": SCHEMA_VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sales": "data/processed/sales_filtered_24m.csv",
-        "source_config": "data/raw/feature.csv (车系×年, 因果回退 join)",
+        "source_config": "data/raw/feature.csv or tracked feature.xlsx fallback (车系×年, 因果回退 join)",
         "population": "frozen 371-series evaluation cohort with causal configuration join",
         "source_cohort": "data/reviews/processed/target_371_review_coverage.csv",
         "time_cutoffs": {

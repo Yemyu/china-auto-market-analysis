@@ -10,8 +10,8 @@ This directory documents the project data entry points, sample definitions, and 
 
 | Module | Entry point | Scale | Use |
 |---|---|---:|---|
-| Monthly sales | `raw/monthly_sales.csv` | 54,918 rows / 1,017 series | Rolling one-month forecast and fixed six-month stress test |
-| Specifications | `raw/feature.csv` | 2,084 rows / 766 series | Product-attribute analysis of annual sales variation |
+| Monthly sales | `processed/sales_filtered_24m.csv` | 54,918 rows / 1,017 series | Tracked modeling snapshot; rolling one-month forecast and fixed six-month stress test |
+| Specifications | `raw/feature.csv` | 2,084 rows / 766 series | Tracked modeling table; product-attribute analysis of annual sales variation |
 | Owner reviews | `reviews/processed/` | 24,175 reviews / 345 series | User needs, risk monitoring, and supporting forecast experiments |
 
 Each module has its own sample filter and evaluation protocol; metrics from different modules are not directly comparable.
@@ -20,7 +20,7 @@ Each module has its own sample filter and evaluation protocol; metrics from diff
 
 | Path | Contents |
 |---|---|
-| `raw/` | Raw monthly-sales and annual-specification tables |
+| `raw/` | Annual-specification CSV and Excel source; other local collection CSVs are not distributed through Git |
 | `processed/splits/` | Time splits and modeling features for the 371-series cohort |
 | `processed/forecast/` | Forecast, baseline, ablation, and robustness outputs |
 | `processed/product/` | Annual product-specification explanatory-analysis outputs |
@@ -30,9 +30,9 @@ Each module has its own sample filter and evaluation protocol; metrics from diff
 | `reviews/processed/` | De-identified corpus, labels, and temporal features |
 | `resources/` | Reusable historical review-resource archive |
 
-## Raw inputs
+## Modeling inputs
 
-### Monthly sales: `raw/monthly_sales.csv`
+### Monthly sales: `processed/sales_filtered_24m.csv`
 
 - Grain: series × calendar month; period: 2022-01—2026-06.
 - Main fields: `series_id`, `series_name`, `brand`, `category`, `year`, `month`, `monthly_sales`.
@@ -44,6 +44,8 @@ Each module has its own sample filter and evaluation protocol; metrics from diff
 - Key: `series_name, year`; 84 fields; annual sales are alignable for 760 / 766 series.
 - Annual specification analysis uses only years with all 12 calendar months in the sales source; currently 2022–2025, covering 646 series and 1,510 series-year records.
 - Missingness is partly structural: battery fields are normally absent for combustion models and engine fields for battery-electric models. It should not be treated as a blanket collection error.
+
+The public repository retains the audited monthly-sales modeling snapshot, the specification CSV, and its Excel source workbook. `raw/monthly_sales.csv` is a local collection-stage working file rather than a required input after a public clone; core scripts read the tracked modeling snapshot directly and fall back to the Excel workbook if the specification CSV is absent.
 
 ### Review corpus: `reviews/processed/`
 
@@ -113,6 +115,8 @@ After preparing dependencies in the project environment, the main outputs can be
 .venv/bin/python scripts/33_evaluate_review_features.py
 .venv/bin/python scripts/48_evaluate_rolling_origin.py --test
 .venv/bin/python scripts/36_build_cold_start_curve.py
+.venv/bin/python scripts/29_config_attribution.py
+.venv/bin/python scripts/35_build_user_needs_and_alerts.py
 .venv/bin/python app/build_dashboard_data.py
 ```
 

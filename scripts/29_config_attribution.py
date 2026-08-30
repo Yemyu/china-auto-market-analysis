@@ -21,10 +21,10 @@ from sklearn.model_selection import GroupKFold
 from sklearn.metrics import r2_score
 from xgboost import XGBRegressor
 
+from _feature_join import load_feature_source
 from _sales_repair import apply_verified_annual_sales_corrections
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FEAT = os.path.join(BASE, "data", "raw", "feature.csv")
 SALES = os.path.join(BASE, "data", "processed", "sales_filtered_24m.csv")
 FIG = os.path.join(BASE, "assets/analysis")
 PROC = os.path.join(BASE, "data", "processed", "product")
@@ -208,7 +208,7 @@ def cv_naive_baselines(df, y, groups):
 
 
 def main():
-    df = pd.read_csv(FEAT, low_memory=False)
+    df = load_feature_source()
     sales = pd.read_csv(SALES, low_memory=False)
     df, annual_repair_audit = apply_verified_annual_sales_corrections(df, sales)
     annual_repair_audit.to_csv(ANNUAL_REPAIR_AUDIT, index=False, encoding="utf-8-sig")

@@ -8,7 +8,8 @@ import pandas as pd
 from _series_mapping import build_series_name_mapping
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-FEAT = os.path.join(BASE, "data", "raw", "feature.csv")
+FEAT_CSV = os.path.join(BASE, "data", "raw", "feature.csv")
+FEAT_XLSX = os.path.join(BASE, "data", "raw", "feature.xlsx")
 
 # 连续数值配置特征
 CFG_NUM = ["official_price_wan", "engine_max_power_kw", "engine_max_torque_nm",
@@ -22,8 +23,20 @@ CFG_CAT = ["energy_type", "vehicle_class", "brand_name", "body_structure",
 CFG_COLS = CFG_NUM + [c + "_enc" for c in CFG_CAT]
 
 
+def load_feature_source():
+    """Load the local CSV when present, otherwise use the tracked workbook."""
+    if os.path.exists(FEAT_CSV):
+        return pd.read_csv(FEAT_CSV, low_memory=False)
+    if os.path.exists(FEAT_XLSX):
+        return pd.read_excel(FEAT_XLSX)
+    raise FileNotFoundError(
+        "Missing configuration source: expected data/raw/feature.csv or "
+        "the tracked data/raw/feature.xlsx"
+    )
+
+
 def _load_cfg_frame():
-    feat = pd.read_csv(FEAT, low_memory=False)
+    feat = load_feature_source()
     feat["series_name"] = feat["series_name"].astype(str)
     feat["year"] = pd.to_numeric(feat["year"], errors="coerce")
     fk = feat[["series_name", "year"] + CFG_NUM + CFG_CAT].copy()

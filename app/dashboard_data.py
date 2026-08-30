@@ -105,6 +105,11 @@ def _feature_label(feature: str) -> tuple[str, str]:
         "month_cos": ("月份季节性（余弦）", "Month seasonality (cos)"), "year": ("年份", "Year"),
         "review_count_prior_all": ("历史评论数量", "Prior review count"),
         "review_count_180d": ("近180天评论数量", "180-day review count"),
+        "sentiment_review_count_prior_all": ("历史评论数量", "Prior review count"),
+        "sentiment_review_count_180d": ("近180天评论数量", "180-day review count"),
+        "platform_rating_configuration_sentiment_180d_mean": (
+            "近180天平台配置评分", "180-day platform configuration rating"
+        ),
     }
     if feature in simple:
         return simple[feature]

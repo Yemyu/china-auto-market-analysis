@@ -8148,17 +8148,17 @@
       "importance": 0.0691
     },
     {
-      "name": "sentiment_review_count_180d",
-      "name_zh": "sentiment_review_count_180d",
-      "name_en": "sentiment_review_count_180d",
+      "name": "近180天评论数量",
+      "name_zh": "近180天评论数量",
+      "name_en": "180-day review count",
       "desc_zh": "特征组：评论覆盖",
       "desc_en": "Feature group: Review coverage",
       "importance": 0.0613
     },
     {
-      "name": "sentiment_review_count_prior_all",
-      "name_zh": "sentiment_review_count_prior_all",
-      "name_en": "sentiment_review_count_prior_all",
+      "name": "历史评论数量",
+      "name_zh": "历史评论数量",
+      "name_en": "Prior review count",
       "desc_zh": "特征组：评论覆盖",
       "desc_en": "Feature group: Review coverage",
       "importance": 0.0439
@@ -8180,9 +8180,9 @@
       "importance": 0.0227
     },
     {
-      "name": "platform_rating_configuration_sentiment_180d_mean",
-      "name_zh": "platform_rating_configuration_sentiment_180d_mean",
-      "name_en": "platform_rating_configuration_sentiment_180d_mean",
+      "name": "近180天平台配置评分",
+      "name_zh": "近180天平台配置评分",
+      "name_en": "180-day platform configuration rating",
       "desc_zh": "特征组：评论覆盖",
       "desc_en": "Feature group: Review coverage",
       "importance": 0.0216

@@ -66,7 +66,7 @@ At each test month, the rolling protocol uses the latest published previous-mont
 
 The fixed stress test reduces absolute error by 44.6% against its same-scenario trailing-six-month comparator. Because it withholds post-origin realised sales and carries recursive lag, it is evaluated separately from the rolling headline. Review enhancement improves the point estimate by 0.697 percentage points; the 5,000-replicate series-cluster bootstrap 95% interval is −0.234 to 1.873 points, leaving evidence for a stable gain insufficient. The guarded cold-start supplement covers nine series with neither positive historical sales nor a pre-origin specification record and does not alter the headline model.
 
-The sales model is a seasonal XGBoost with 12-month lag and trailing-12-month mean features. ARIMA, Prophet, LSTM, and other early candidates remain in the experiment scripts to document model selection; they are not mixed into the current headline table.
+The sales model is a seasonal XGBoost with 12-month lag and trailing-12-month mean features. ARIMA, Prophet, LSTM, and other approaches were evaluated as early candidates; the streamlined public repository retains the selection conclusion and the reproducible adopted pipeline rather than redundant candidate scripts, and their early scores are not mixed into the current headline table.
 
 ### 2. 🧩 Product specifications and annual sales variation
 

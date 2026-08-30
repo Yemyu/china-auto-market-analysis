@@ -10,8 +10,8 @@
 
 | 模块 | 入口 | 规模 | 用途 |
 |---|---|---:|---|
-| 月度销量 | `raw/monthly_sales.csv` | 54,918 行 / 1,017 个车系 | 滚动单月预测与固定六个月压力测试 |
-| 产品配置 | `raw/feature.csv` | 2,084 行 / 766 个车系 | 年度销量差异的产品属性分析 |
+| 月度销量 | `processed/sales_filtered_24m.csv` | 54,918 行 / 1,017 个车系 | 仓库内建模快照；滚动单月预测与固定六个月压力测试 |
+| 产品配置 | `raw/feature.csv` | 2,084 行 / 766 个车系 | 仓库内建模表；年度销量差异的产品属性分析 |
 | 车主评论 | `reviews/processed/` | 24,175 条 / 345 个车系 | 用户需求、风险监测与口碑辅助实验 |
 
 三个模块使用各自的样本筛选和评价口径，不将不同模块的指标直接横向比较。
@@ -20,7 +20,7 @@
 
 | 路径 | 内容 |
 |---|---|
-| `raw/` | 月销量和年度车型配置原始表 |
+| `raw/` | 年度配置 CSV 与 Excel 源表；其他本地采集 CSV 不随 Git 分发 |
 | `processed/splits/` | 371 个目标车系的时间切分与建模特征 |
 | `processed/forecast/` | 预测、基准、消融和稳健性产物 |
 | `processed/product/` | 产品配置年度解释分析产物 |
@@ -30,9 +30,9 @@
 | `reviews/processed/` | 去标识语料、标签和时间特征 |
 | `resources/` | 可复用的历史评论资源归档 |
 
-## 原始输入
+## 建模输入
 
-### 月度销量：`raw/monthly_sales.csv`
+### 月度销量：`processed/sales_filtered_24m.csv`
 
 - 粒度：车系 × 自然月；时间范围：2022-01—2026-06；
 - 主要字段：`series_id`、`series_name`、`brand`、`category`、`year`、`month`、`monthly_sales`；
@@ -44,6 +44,8 @@
 - 唯一键：`series_name, year`；共 84 个字段，年度销量可对齐 760 / 766 个车系；
 - 年度配置分析只使用销量源覆盖 12 个自然月的年份；当前为 2022—2025，共 646 个车系、1,510 条车系年记录；
 - 配置缺失具有结构性：例如纯电车型通常没有发动机参数，燃油车型通常没有电池参数，不应简单视为采集错误。
+
+公开仓库保留已审计的月销量建模快照、配置 CSV 和对应 Excel 源表。`raw/monthly_sales.csv` 是本地采集过程中的工作文件，不作为公开克隆后的必需输入；核心脚本直接读取仓库内建模快照，配置 CSV 缺失时可回退到 Excel 源表。
 
 ### 评论语料：`reviews/processed/`
 
@@ -113,6 +115,8 @@
 .venv/bin/python scripts/33_evaluate_review_features.py
 .venv/bin/python scripts/48_evaluate_rolling_origin.py --test
 .venv/bin/python scripts/36_build_cold_start_curve.py
+.venv/bin/python scripts/29_config_attribution.py
+.venv/bin/python scripts/35_build_user_needs_and_alerts.py
 .venv/bin/python app/build_dashboard_data.py
 ```
 

@@ -58,8 +58,10 @@ print("Project root:", ROOT)
 
 
 LOAD = r"""
-sales = pd.read_csv(DATA / "raw" / "monthly_sales.csv")
-specs = pd.read_csv(DATA / "raw" / "feature.csv")
+sales_path = DATA / "raw" / "monthly_sales.csv"
+sales = pd.read_csv(sales_path if sales_path.exists() else DATA / "processed" / "sales_filtered_24m.csv")
+specs_csv = DATA / "raw" / "feature.csv"
+specs = pd.read_csv(specs_csv) if specs_csv.exists() else pd.read_excel(DATA / "raw" / "feature.xlsx")
 train = pd.read_csv(DATA / "processed" / "splits" / "train.csv")
 val = pd.read_csv(DATA / "processed" / "splits" / "val.csv")
 test = pd.read_csv(DATA / "processed" / "splits" / "test.csv")

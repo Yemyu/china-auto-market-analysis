@@ -72,16 +72,16 @@
       </section>
 
       <section class="analysis-section" aria-labelledby="fc-signal-title">
-        <header class="analysis-section-head"><span>02</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">模型主要依赖什么信号？</h2><p data-i18n="fc_signal_lead">特征贡献用于说明模型的预测依据，不构成销量因果效应估计。</p></div></header>
+        <header class="analysis-section-head"><span>02</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">固定压力测试的信号结构</h2><p data-i18n="fc_signal_lead">下图解释固定六个月口碑增强模型，不代表滚动单月主模型包含口碑特征，也不构成销量因果效应估计。</p></div></header>
         <div class="forecast-signal-grid">
           <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="fc_features_public">前12项特征贡献</h3><p data-i18n="fc_features_public_note">平均绝对 SHAP 值，基于对数销量预测；数值越大，模型越依赖该特征。</p></div></div>
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_features_public">固定六个月口碑模型：前12项特征贡献</h3><p data-i18n="fc_features_public_note">平均绝对 SHAP 值，基于固定起点压力测试的对数销量预测；数值越大，该辅助模型越依赖该特征。</p></div></div>
             <div id="chartFeatures" class="analysis-chart analysis-chart-tall"></div>
           </article>
           <aside class="forecast-signal-summary">
-            <div><span>01</span><strong data-i18n="fc_signal_history">销量历史占主导</strong><p data-i18n="fc_signal_history_note">上月销量、前2月销量和前3月销量位列前三，历史惯性远高于其他信号。</p></div>
-            <div><span>02</span><strong data-i18n="fc_signal_calendar">季节项提供补充</strong><p data-i18n="fc_signal_calendar_note">月份正弦与余弦项排在第4、第5位，用于刻画年度季节变化。</p></div>
-            <div><span>03</span><strong data-i18n="fc_signal_reviews">口碑特征不是主驱动</strong><p data-i18n="fc_signal_reviews_note">评论量与长期情感进入前12，但贡献明显低于销量滞后特征。</p></div>
+            <div><span>01</span><strong data-i18n="fc_signal_history">销量历史占主导</strong><p data-i18n="fc_signal_history_note">上月销量、近3月均值、前2月销量和近6月均值位列前四，历史惯性远高于其他信号。</p></div>
+            <div><span>02</span><strong data-i18n="fc_signal_calendar">季节项提供补充</strong><p data-i18n="fc_signal_calendar_note">月份正弦与余弦项排在第5、第6位，用于刻画年度季节变化。</p></div>
+            <div><span>03</span><strong data-i18n="fc_signal_reviews">口碑只提供辅助信号</strong><p data-i18n="fc_signal_reviews_note">评论覆盖与平台评分特征进入前12，但贡献明显低于销量历史；它们只属于固定压力测试，不进入滚动主模型。</p></div>
           </aside>
         </div>
       </section>
@@ -129,7 +129,7 @@
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
   <script src="static/js/common.js?v=20260829-1"></script>
-  <script src="static/js/i18n.js?v=20260830-1"></script>
+  <script src="static/js/i18n.js?v=20260830-2"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });

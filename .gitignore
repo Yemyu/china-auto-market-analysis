@@ -25,6 +25,7 @@ config/.env
 
 # Local source data
 data/raw/*.csv
+!data/raw/feature.csv
 data/raw/pcauto_sales_recrawl/
 data/raw/alternative_sales_recrawl/
 data/reviews/raw/*.csv
