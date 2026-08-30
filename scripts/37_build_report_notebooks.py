@@ -360,7 +360,7 @@ TEXT = {
     "zh": {
         "title": """# 中国汽车市场分析：销量预测、产品配置与用户需求
 
-这本 Notebook 从已保存的数据产物复现主要结果与图表。采集、标签生成和模型训练脚本位于 `scripts/`。
+本 Notebook 读取仓库内保存的分析产物，复现销量预测、配置分析和用户需求监测的主要表格与图形。采集、标签生成和模型训练脚本位于 `scripts/`。
 
 **研究期：** 2022-01—2026-07
 
@@ -419,7 +419,7 @@ TEXT = {
     "en": {
         "title": """# China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs
 
-This notebook reproduces the main results and figures from saved analysis artifacts. Collection, labeling, and model-fitting scripts are in `scripts/`.
+This notebook reads the saved analysis artifacts in the repository and reproduces the main tables and figures for sales forecasting, specification analysis, and user-needs monitoring. Collection, labeling, and model-fitting scripts are in `scripts/`.
 
 **Study period:** 2022-01—2026-07
 

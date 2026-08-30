@@ -4,9 +4,9 @@
 
 # 📦 Data guide
 
-This directory documents the project data entry points, sample definitions, and reproducible outputs. Source-platform data is provided for learning, research, and project demonstration; copyright remains with the respective sources.
+This guide lists the files, sample definitions, and generated outputs used by each module. Source-platform data is provided for learning, research, and project demonstration; copyright remains with the respective sources.
 
-## Data at a glance
+## Dataset summary
 
 | Module | Entry point | Scale | Use |
 |---|---|---:|---|

@@ -14,7 +14,7 @@
 
 ---
 
-> **In one sentence**　A reproducible market-analysis workflow built from public sales, vehicle specifications, and owner reviews: forecast next-month demand, explain annual product differences, and monitor changes in user needs.
+> **Project summary**　This project uses public monthly sales, vehicle specifications, and owner reviews for next-month sales forecasting, annual product-difference analysis, and user-needs monitoring.
 
 ## Research questions
 
@@ -22,7 +22,7 @@
 2. 🧩 Which product specifications explain annual sales differences between series?
 3. 💬 Which user needs are most visible in reviews, and which signals merit follow-up?
 
-## Project overview
+## Analysis scope
 
 | Module | Sample | Question | Current protocol |
 |---|---:|---|---|
@@ -33,7 +33,7 @@
 
 Each module has its own eligibility rule: forecasting uses a fixed 371-series natural-month panel and never falls forward to a specification record later than the target year; specification analysis requires aligned complete-year sales and attributes; user-needs analysis requires complete, traceable review text.
 
-## Results at a glance
+## Key metrics
 
 | Key finding | Current result |
 |---|---:|
