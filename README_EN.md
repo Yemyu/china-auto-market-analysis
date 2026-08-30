@@ -28,10 +28,10 @@
 |---|---:|---|---|
 | 📈 Rolling one-month sales forecast | 371 series | Forecast next month with the latest published sales | Headline result; complete monthly panel and strict temporal split |
 | 🧪 Fixed six-month stress test | Same 371 series | Recursively forecast six months from 2026-01 | Supporting scenario; evaluated separately from the headline |
-| 🧩 Product-specification analysis | 736 series, 2,007 series-year records | Estimate the incremental explanatory value of year, brand, and specifications | Five-fold `GroupKFold` by series |
+| 🧩 Product-specification analysis | 646 series, 1,510 complete series-year records | Estimate the incremental explanatory value of year, brand, and specifications | Complete 2022–2025 calendar years; five-fold `GroupKFold` by series |
 | 💬 User needs and risk | 24,175 reviews across 345 series | Identify ten needs, negative concentration, and reputation anomalies | Structural checks, sampling audit, adjacent 180-day windows |
 
-Each module has its own eligibility rule: forecasting uses a fixed 371-series natural-month panel with causal year-based specification joins; specification analysis requires aligned annual sales and attributes; user-needs analysis requires complete, traceable review text.
+Each module has its own eligibility rule: forecasting uses a fixed 371-series natural-month panel and never falls forward to a specification record later than the target year; specification analysis requires aligned complete-year sales and attributes; user-needs analysis requires complete, traceable review text.
 
 ## Results at a glance
 
@@ -39,7 +39,7 @@ Each module has its own eligibility rule: forecasting uses a fixed 371-series na
 |---|---:|
 | 📈 Rolling one-month headline | **29.72% WMAPE**, 11.27 points below the last-value baseline |
 | 🧪 Fixed six-month stress test | **38.38% WMAPE**, 44.6% lower absolute error than the trailing-six-month mean |
-| 🧩 Incremental specification signal | Grouped-CV R² **0.301** |
+| 🧩 Incremental specification signal | Grouped-CV R² **0.239** |
 | 💬 User-needs monitoring | 24,175 reviews, 10 dimensions, 123 qualifying series |
 
 ## Main results
@@ -72,11 +72,11 @@ The sales model is a seasonal XGBoost with 12-month lag and trailing-12-month me
 
 | Feature combination | Grouped-CV R² | Annual cross-sectional WMAPE (module metric) |
 |---|---:|---:|
-| Year | 0.089 | 87.77% |
-| Year + brand | 0.158 | 83.77% |
-| Year + brand + specifications | **0.301** | **75.68%** |
+| Year | 0.013 | 87.50% |
+| Year + brand | 0.070 | 83.82% |
+| Year + brand + specifications | **0.239** | **73.85%** |
 
-Adding specifications increases R² by about 0.143 over year plus brand, indicating incremental explanatory power for between-series annual variation. The module uses out-of-sample evaluation to quantify this cross-series explanatory power and does not perform causal identification; annual cross-sectional WMAPE is reported as a module-specific supporting error metric alongside, rather than against, monthly forecast WMAPE.
+Adding specifications increases R² by about 0.169 over year plus brand, indicating incremental explanatory power for between-series annual variation. The analysis uses only the four complete calendar years from 2022 through 2025, avoiding a mixture of the 2026 first-half total with full-year targets. The module uses out-of-sample evaluation to quantify this cross-series explanatory power and does not perform causal identification; annual cross-sectional WMAPE is reported as a module-specific supporting error metric alongside, rather than against, monthly forecast WMAPE.
 
 ### 3. 💬 User needs and risk
 

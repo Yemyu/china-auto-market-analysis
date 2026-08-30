@@ -22,16 +22,16 @@
     "fixed_stress_horizon": 6,
     "fixed_stress_relative_error_reduction_pct": 44.63,
     "review_fixed_point_gain_pp": 0.697,
-    "config_brand_r2": 0.158,
-    "config_full_r2": 0.301,
+    "config_brand_r2": 0.07,
+    "config_full_r2": 0.239,
     "alert_count": 1,
     "historical_alerts": 60,
     "brand_count": 86,
     "eval_series": 371,
     "sales_series": 1017,
     "config_series": 766,
-    "attribution_series": 736,
-    "attribution_rows": 2007,
+    "attribution_series": 646,
+    "attribution_rows": 1510,
     "review_count": 24175
   },
   "monthly_trend": [
@@ -280,8 +280,8 @@
       "en": "Fixed-origin review enhancement shows a 0.697 pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"
     },
     {
-      "zh": "736车系年度归因中，配置将分组交叉验证R²从0.158提升到0.301",
-      "en": "Across 736 series, specifications raise grouped-CV annual-attribution R² from 0.158 to 0.301"
+      "zh": "646车系完整年度分析中，配置将分组交叉验证R²从0.070提升到0.239",
+      "en": "Across 646 series with complete annual targets, specifications raise grouped-CV R² from 0.070 to 0.239"
     },
     {
       "zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度",

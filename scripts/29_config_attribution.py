@@ -4,6 +4,7 @@
 The table is one row per series and year. Cross-validation is grouped by
 series, and the ablation compares year, year plus brand, and configuration.
 """
+import json
 import os
 os.environ["OMP_NUM_THREADS"] = "1"
 
@@ -33,7 +34,7 @@ ANNUAL_REPAIR_AUDIT = os.path.join(
 os.makedirs(PROC, exist_ok=True)
 os.makedirs(FIG, exist_ok=True)
 
-YEAR_MIN, YEAR_MAX = 2022, 2026
+YEAR_MIN = 2022
 N_SPLITS = 5
 
 # 排除: 标识列 / 目标 / 市场结果价(内生, 非产品属性) / 冗余文本
@@ -63,6 +64,22 @@ def wmape(y_true, y_pred):
     y_pred = np.asarray(y_pred, float)
     d = np.sum(np.abs(y_true))
     return np.sum(np.abs(y_true - y_pred)) / d * 100 if d > 0 else np.nan
+
+
+def complete_calendar_years(sales):
+    """Return years backed by all twelve natural months in the sales source."""
+    source = sales.copy()
+    if "date" in source.columns:
+        source["date"] = pd.to_datetime(source["date"], errors="raise")
+    else:
+        source["date"] = pd.to_datetime(
+            dict(year=source["year"], month=source["month"], day=1),
+            errors="raise",
+        )
+    coverage = source.assign(year=source["date"].dt.year).groupby("year")["date"].agg(
+        lambda values: values.dt.month.nunique()
+    )
+    return tuple(int(year) for year in coverage.index[coverage.eq(12)] if year >= YEAR_MIN)
 
 
 def feature_columns(df):
@@ -198,12 +215,15 @@ def main():
     print(f"[归因] 年度销量覆盖: {len(annual_repair_audit)} 行 / "
           f"{annual_repair_audit['series_name'].nunique()} 个车系 / "
           f"{annual_repair_audit['sales_delta'].sum():+,.0f} 辆")
-    df = df[df["annual_sales"].notna() & df["year"].between(YEAR_MIN, YEAR_MAX)].copy()
+    eligible_years = complete_calendar_years(sales)
+    if not eligible_years:
+        raise ValueError("No complete calendar year is available for annual attribution")
+    df = df[df["annual_sales"].notna() & df["year"].isin(eligible_years)].copy()
     df = df.reset_index(drop=True)
     y = np.log1p(df["annual_sales"].astype(float).values)
     groups = df["series_name"].astype(str).values
     print(f"[归因] 面板 {len(df)} 行 (车系×年) | 车系 {df['series_name'].nunique()} | "
-          f"年份 {YEAR_MIN}-{YEAR_MAX}")
+          f"完整年份 {eligible_years[0]}-{eligible_years[-1]}")
     print(f"[归因] y=log1p(annual_sales), 分组切分 GroupKFold({N_SPLITS}) by series_name\n")
 
     num_cols, cat_cols = feature_columns(df)
@@ -240,6 +260,22 @@ def main():
     r_b = abl.loc[abl["variant"] == "+BRAND", "R2_log_mean"].iloc[0]
     r_c = abl.loc[abl["variant"] == "+CONFIG", "R2_log_mean"].iloc[0]
     print(f"\n[配置增量贡献] R2: {r_b:.3f} -> {r_c:.3f}  (ΔR2 = {r_c - r_b:+.3f})")
+    summary = {
+        "schema_version": "v1",
+        "target_definition": "complete-calendar-year series sales",
+        "eligible_years": list(eligible_years),
+        "rows": int(len(df)),
+        "series": int(df["series_name"].nunique()),
+        "cv": f"GroupKFold({N_SPLITS}) by series_name",
+        "brand_r2_log_mean": float(r_b),
+        "config_r2_log_mean": float(r_c),
+        "config_incremental_r2": float(r_c - r_b),
+        "config_wmape_oof_global": float(
+            abl.loc[abl["variant"].eq("+CONFIG"), "WMAPE_oof_global"].iloc[0]
+        ),
+    }
+    with open(os.path.join(PROC, "config_attribution_summary.json"), "w", encoding="utf-8") as handle:
+        json.dump(summary, handle, ensure_ascii=False, indent=2)
 
     # ---- 全量拟合一次, 取重要性 + SHAP ----
     X_full = assemble(full_blocks, variants["+CONFIG"])
@@ -277,7 +313,7 @@ def main():
     axes[1].barh(top_cfg["feature"][::-1], top_cfg["gain"][::-1], color="#54A24B")
     axes[1].set_title("Top 15 配置特征重要性 (gain)")
     axes[1].tick_params(labelsize=8)
-    fig.suptitle("配置 → 年销量 归因（车系×年 面板, between-series 变异）", fontsize=12)
+    fig.suptitle("配置与年销量差异（车系×年面板，between-series 变异）", fontsize=12)
     fig.savefig(os.path.join(FIG, "config_attribution_ablation.png"), dpi=130)
     plt.close(fig)
 

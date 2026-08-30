@@ -1,143 +1,143 @@
 {
   "shap": [
     {
-      "key": "center_screen_NA",
-      "name_zh": "中控屏：缺失",
-      "name_en": "Center screen: Missing",
-      "importance": 0.0287,
+      "key": "engine_cylinder_arrangement_L",
+      "name_zh": "气缸排列：L",
+      "name_en": "Cylinder layout: Inline (L)",
+      "importance": 0.044,
       "color": "#2c7be5"
-    },
-    {
-      "key": "fuel_form_插电式混合动力",
-      "name_zh": "燃料形式：插电式混合动力",
-      "name_en": "Fuel form: Plug-in hybrid",
-      "importance": 0.0256,
-      "color": "#00a9ae"
     },
     {
       "key": "cylinder_material_铝",
       "name_zh": "气缸材料：铝",
       "name_en": "Cylinder material: Aluminum",
-      "importance": 0.0247,
-      "color": "#34c38f"
-    },
-    {
-      "key": "oil_supply_直喷",
-      "name_zh": "供油方式：直喷",
-      "name_en": "Fuel supply: Direct injection",
-      "importance": 0.0243,
-      "color": "#f6c343"
-    },
-    {
-      "key": "engine_cylinder_arrangement_L",
-      "name_zh": "气缸排列：L",
-      "name_en": "Cylinder layout: Inline (L)",
-      "importance": 0.0235,
-      "color": "#ee5b5b"
+      "importance": 0.0419,
+      "color": "#00a9ae"
     },
     {
       "key": "steering_wheel_material_真皮",
       "name_zh": "方向盘材质：真皮",
       "name_en": "Steering-wheel material: Leather",
-      "importance": 0.0226,
-      "color": "#a55eea"
-    },
-    {
-      "key": "steering_wheel_material_NA",
-      "name_zh": "方向盘材质：缺失",
-      "name_en": "Steering-wheel material: Missing",
-      "importance": 0.017,
-      "color": "#7783f5"
-    },
-    {
-      "key": "engine_intake_type_自然吸气",
-      "name_zh": "进气形式：自然吸气",
-      "name_en": "Intake type: 自然吸气",
-      "importance": 0.0165,
-      "color": "#2c7be5"
-    },
-    {
-      "key": "fuel_grade_95#",
-      "name_zh": "燃油标号：95#",
-      "name_en": "Fuel grade: 95#",
-      "importance": 0.0154,
-      "color": "#00a9ae"
-    },
-    {
-      "key": "battery_type_NA",
-      "name_zh": "电池类型：缺失",
-      "name_en": "Battery type: Missing",
-      "importance": 0.0147,
+      "importance": 0.0256,
       "color": "#34c38f"
     },
     {
-      "key": "manufacturer_freq",
-      "name_zh": "制造商频次",
-      "name_en": "Manufacturer frequency",
-      "importance": 0.0144,
+      "key": "center_screen_NA",
+      "name_zh": "中控屏：缺失",
+      "name_en": "Center screen: Missing",
+      "importance": 0.0249,
       "color": "#f6c343"
-    },
-    {
-      "key": "oil_supply_混合喷射",
-      "name_zh": "供油方式：混合喷射",
-      "name_en": "Fuel supply: Combined injection",
-      "importance": 0.012,
-      "color": "#ee5b5b"
     },
     {
       "key": "center_screen_大屏",
       "name_zh": "中控屏：大屏",
       "name_en": "Center screen: 大屏",
-      "importance": 0.011,
+      "importance": 0.0236,
+      "color": "#ee5b5b"
+    },
+    {
+      "key": "oil_supply_直喷",
+      "name_zh": "供油方式：直喷",
+      "name_en": "Fuel supply: Direct injection",
+      "importance": 0.0175,
       "color": "#a55eea"
     },
     {
-      "key": "body_structure_客车",
-      "name_zh": "body_structure_客车",
-      "name_en": "body_structure_客车",
-      "importance": 0.0103,
+      "key": "fuel_grade_95#",
+      "name_zh": "燃油标号：95#",
+      "name_en": "Fuel grade: 95#",
+      "importance": 0.0161,
       "color": "#7783f5"
+    },
+    {
+      "key": "engine_intake_type_涡轮增压",
+      "name_zh": "进气形式：涡轮增压",
+      "name_en": "Intake type: 涡轮增压",
+      "importance": 0.0156,
+      "color": "#2c7be5"
     },
     {
       "key": "door_open_way_平开门",
       "name_zh": "door_open_way_平开门",
       "name_en": "door_open_way_平开门",
-      "importance": 0.0102,
+      "importance": 0.0152,
+      "color": "#00a9ae"
+    },
+    {
+      "key": "manufacturer_freq",
+      "name_zh": "制造商频次",
+      "name_en": "Manufacturer frequency",
+      "importance": 0.0147,
+      "color": "#34c38f"
+    },
+    {
+      "key": "fast_charge_percent_60.0",
+      "name_zh": "fast_charge_percent_60.0",
+      "name_en": "fast_charge_percent_60.0",
+      "importance": 0.0134,
+      "color": "#f6c343"
+    },
+    {
+      "key": "gearbox_type_freq",
+      "name_zh": "gearbox_type_freq",
+      "name_en": "gearbox_type_freq",
+      "importance": 0.0129,
+      "color": "#ee5b5b"
+    },
+    {
+      "key": "oil_supply_混合喷射",
+      "name_zh": "供油方式：混合喷射",
+      "name_en": "Fuel supply: Combined injection",
+      "importance": 0.0127,
+      "color": "#a55eea"
+    },
+    {
+      "key": "steering_wheel_material_皮质",
+      "name_zh": "方向盘材质：皮质",
+      "name_en": "Steering-wheel material: 皮质",
+      "importance": 0.0121,
+      "color": "#7783f5"
+    },
+    {
+      "key": "body_structure_客车",
+      "name_zh": "body_structure_客车",
+      "name_en": "body_structure_客车",
+      "importance": 0.0111,
       "color": "#2c7be5"
     }
   ],
   "models": [
     {
       "variant": "YEAR-ONLY",
-      "r2": 0.089,
-      "r2_std": 0.016,
-      "wmape": 87.77,
-      "wmape_fold_mean": 87.75,
-      "n_features": 5
+      "r2": 0.013,
+      "r2_std": 0.012,
+      "wmape": 87.5,
+      "wmape_fold_mean": 87.52,
+      "n_features": 4
     },
     {
       "variant": "+BRAND",
-      "r2": 0.158,
-      "r2_std": 0.068,
-      "wmape": 83.77,
-      "wmape_fold_mean": 83.73,
-      "n_features": 131
+      "r2": 0.07,
+      "r2_std": 0.058,
+      "wmape": 83.82,
+      "wmape_fold_mean": 83.75,
+      "n_features": 126
     },
     {
       "variant": "+CONFIG",
-      "r2": 0.301,
+      "r2": 0.239,
       "r2_std": 0.073,
-      "wmape": 75.68,
-      "wmape_fold_mean": 75.73,
-      "n_features": 310
+      "wmape": 73.85,
+      "wmape_fold_mean": 73.94,
+      "n_features": 314
     },
     {
       "variant": "CONFIG-ONLY",
-      "r2": 0.168,
-      "r2_std": 0.052,
-      "wmape": 82.53,
-      "wmape_fold_mean": 82.55,
-      "n_features": 179
+      "r2": 0.197,
+      "r2_std": 0.086,
+      "wmape": 76.05,
+      "wmape_fold_mean": 76.09,
+      "n_features": 188
     }
   ],
   "blocks": [
@@ -145,38 +145,44 @@
       "block": "config",
       "name_zh": "配置",
       "name_en": "Configuration",
-      "share": 0.7316
+      "share": 0.7727
     },
     {
       "block": "brand",
       "name_zh": "品牌",
       "name_en": "Brand",
-      "share": 0.254
+      "share": 0.2223
     },
     {
       "block": "year",
       "name_zh": "年份",
       "name_en": "Year",
-      "share": 0.0144
+      "share": 0.005
     }
   ],
   "meta": {
-    "series": 736,
-    "series_year_rows": 2007,
+    "series": 646,
+    "series_year_rows": 1510,
+    "eligible_years": [
+      2022,
+      2023,
+      2024,
+      2025
+    ],
     "cv_folds": 5,
     "wmape_is_secondary": true,
     "wmape_note_zh": "年度截面模块内辅助误差指标，与月度预测指标分别报告。",
     "wmape_note_en": "Module-specific annual cross-sectional error; reported separately from monthly forecasting."
   },
   "wmape_baselines": {
-    "GLOBAL_MEDIAN": 89.39,
-    "YEAR_MEDIAN": 87.34
+    "GLOBAL_MEDIAN": 87.65,
+    "YEAR_MEDIAN": 87.23
   },
   "wmape_by_variant": {
-    "YEAR-ONLY": 87.77,
-    "+BRAND": 83.77,
-    "+CONFIG": 75.68,
-    "CONFIG-ONLY": 82.53
+    "YEAR-ONLY": 87.5,
+    "+BRAND": 83.82,
+    "+CONFIG": 73.85,
+    "CONFIG-ONLY": 76.05
   },
   "comparison": {
     "with": null,
@@ -184,7 +190,7 @@
   },
   "top_example": null,
   "conclusion": {
-    "zh": "736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由0.158提升至0.301（+0.143）；该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别。完整模型年度截面WMAPE为75.68%，作为模块内辅助误差指标，与月度预测指标分别报告。",
-    "en": "Across 736 series and 2,007 series-year rows, grouped CV R² rises from 0.158 to 0.301 (+0.143) after adding configuration. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification. The full model's annual cross-sectional WMAPE is 75.68%, reported as a module-specific supporting metric separately from monthly forecasting."
+    "zh": "646车系、1,510条完整车系×年记录的分组交叉验证中，加入配置后R²由0.070提升至0.239（+0.169）；该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别。完整模型年度截面WMAPE为73.85%，作为模块内辅助误差指标，与月度预测指标分别报告。",
+    "en": "Across 646 series and 1,510 complete series-year rows, grouped CV R² rises from 0.070 to 0.239 (+0.169) after adding configuration. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification. The full model's annual cross-sectional WMAPE is 73.85%, reported as a module-specific supporting metric separately from monthly forecasting."
   }
 }

@@ -210,6 +210,7 @@ class DashboardData:
             "selected_feedback_vs_base_improvement_pp"
         ])
         config_ablation = _read(self.processed / "product" / "config_attribution_ablation.csv")
+        config_summary = _read_json(self.processed / "product" / "config_attribution_summary.json")
         config_brand = float(config_ablation.loc[config_ablation["variant"].eq("+BRAND"), "R2_log_mean"].iloc[0])
         config_full = float(config_ablation.loc[config_ablation["variant"].eq("+CONFIG"), "R2_log_mean"].iloc[0])
         monthly = panel.groupby("date")["monthly_sales"].sum().sort_index()
@@ -245,8 +246,8 @@ class DashboardData:
                 "eval_series": 371,
                 "sales_series": 1017,
                 "config_series": 766,
-                "attribution_series": 736,
-                "attribution_rows": 2007,
+                "attribution_series": int(config_summary["series"]),
+                "attribution_rows": int(config_summary["rows"]),
                 "review_count": int(needs["review_rows"]),
             },
             "monthly_trend": [
@@ -265,7 +266,7 @@ class DashboardData:
                 {"zh": f"滚动单月季节增强XGBoost为{rolling_global:.2f}% WMAPE，比“沿用上月销量”朴素基准{last_global:.2f}%低{last_global-rolling_global:.2f}个百分点", "en": f"The rolling one-month seasonal XGBoost reaches {rolling_global:.2f}% WMAPE, {last_global-rolling_global:.2f} pp below the last-observed-value naive baseline at {last_global:.2f}%"},
                 {"zh": f"固定六个月压力测试的综合方案为{fixed_hybrid:.2f}%，相对同场景最近6个月均值{fixed_naive:.2f}%的绝对误差降低{(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}%；该协议与滚动单月协议分别评估", "en": f"The fixed six-month stress test scores {fixed_hybrid:.2f}% versus {fixed_naive:.2f}% for its trailing-six-month naive comparator, a {(fixed_naive-fixed_hybrid)/fixed_naive*100:.1f}% absolute-error reduction; the protocol is evaluated separately from the rolling headline"},
                 {"zh": f"固定起点口碑增强点估计改善{review_point:.3f}个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息", "en": f"Fixed-origin review enhancement shows a {review_point:.3f} pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"},
-                {"zh": f"736车系年度归因中，配置将分组交叉验证R²从{config_brand:.3f}提升到{config_full:.3f}", "en": f"Across 736 series, specifications raise grouped-CV annual-attribution R² from {config_brand:.3f} to {config_full:.3f}"},
+                {"zh": f"{config_summary['series']}车系完整年度分析中，配置将分组交叉验证R²从{config_brand:.3f}提升到{config_full:.3f}", "en": f"Across {config_summary['series']} series with complete annual targets, specifications raise grouped-CV R² from {config_brand:.3f} to {config_full:.3f}"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
                 {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前有效预警{needs['latest_active_alerts']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} active alert is detected"},
             ],
@@ -450,6 +451,7 @@ class DashboardData:
         ablation = _read(self.processed / "product" / "config_attribution_ablation.csv")
         baselines = _read(self.processed / "product" / "config_attribution_baselines.csv")
         importance = _read(self.processed / "product" / "config_importance_annual.csv")
+        summary = _read_json(self.processed / "product" / "config_attribution_summary.json")
         features = []
         for index, (_, row) in enumerate(importance.loc[importance["block"].eq("config")].head(15).iterrows()):
             zh, en = _feature_label(str(row["feature"]))
@@ -480,7 +482,8 @@ class DashboardData:
         }
         return {
             "shap": features, "models": models, "blocks": blocks,
-            "meta": {"series": 736, "series_year_rows": 2007, "cv_folds": 5, "wmape_is_secondary": True,
+            "meta": {"series": int(summary["series"]), "series_year_rows": int(summary["rows"]),
+                     "eligible_years": summary["eligible_years"], "cv_folds": 5, "wmape_is_secondary": True,
                      "wmape_note_zh": "年度截面模块内辅助误差指标，与月度预测指标分别报告。",
                      "wmape_note_en": "Module-specific annual cross-sectional error; reported separately from monthly forecasting."},
             "wmape_baselines": {
@@ -490,8 +493,8 @@ class DashboardData:
             "wmape_by_variant": wmape_rows,
             "comparison": {"with": None, "without": None}, "top_example": None,
             "conclusion": {
-                "zh": f"736车系、2,007条车系×年记录的分组交叉验证中，加入配置后R²由{brand_r2:.3f}提升至{config_r2:.3f}（+{config_r2-brand_r2:.3f}）；该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别。完整模型年度截面WMAPE为{wmape_rows.get('+CONFIG', np.nan):.2f}%，作为模块内辅助误差指标，与月度预测指标分别报告。",
-                "en": f"Across 736 series and 2,007 series-year rows, grouped CV R² rises from {brand_r2:.3f} to {config_r2:.3f} (+{config_r2-brand_r2:.3f}) after adding configuration. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification. The full model's annual cross-sectional WMAPE is {wmape_rows.get('+CONFIG', np.nan):.2f}%, reported as a module-specific supporting metric separately from monthly forecasting.",
+                "zh": f"{summary['series']}车系、{summary['rows']:,}条完整车系×年记录的分组交叉验证中，加入配置后R²由{brand_r2:.3f}提升至{config_r2:.3f}（+{config_r2-brand_r2:.3f}）；该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别。完整模型年度截面WMAPE为{wmape_rows.get('+CONFIG', np.nan):.2f}%，作为模块内辅助误差指标，与月度预测指标分别报告。",
+                "en": f"Across {summary['series']} series and {summary['rows']:,} complete series-year rows, grouped CV R² rises from {brand_r2:.3f} to {config_r2:.3f} (+{config_r2-brand_r2:.3f}) after adding configuration. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification. The full model's annual cross-sectional WMAPE is {wmape_rows.get('+CONFIG', np.nan):.2f}%, reported as a module-specific supporting metric separately from monthly forecasting.",
             },
         }
 

@@ -1,0 +1,17 @@
+{
+  "schema_version": "v1",
+  "target_definition": "complete-calendar-year series sales",
+  "eligible_years": [
+    2022,
+    2023,
+    2024,
+    2025
+  ],
+  "rows": 1510,
+  "series": 646,
+  "cv": "GroupKFold(5) by series_name",
+  "brand_r2_log_mean": 0.06980536218266768,
+  "config_r2_log_mean": 0.23872276190641895,
+  "config_incremental_r2": 0.16891739972375125,
+  "config_wmape_oof_global": 73.85315124893859
+}

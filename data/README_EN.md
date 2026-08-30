@@ -23,7 +23,7 @@ Each module has its own sample filter and evaluation protocol; metrics from diff
 | `raw/` | Raw monthly-sales and annual-specification tables |
 | `processed/splits/` | Time splits and modeling features for the 371-series cohort |
 | `processed/forecast/` | Forecast, baseline, ablation, and robustness outputs |
-| `processed/product/` | Annual product-specification attribution outputs |
+| `processed/product/` | Annual product-specification explanatory-analysis outputs |
 | `processed/user_feedback/` | User-needs and risk-monitoring outputs |
 | `processed/data_quality/` | Machine-readable structural, mapping, and source audits |
 | `reviews/raw/` | Review collection manifests and source-layer files |
@@ -42,6 +42,7 @@ Each module has its own sample filter and evaluation protocol; metrics from diff
 
 - Grain: series × model year, not a trim-level vehicle list.
 - Key: `series_name, year`; 84 fields; annual sales are alignable for 760 / 766 series.
+- Annual specification analysis uses only years with all 12 calendar months in the sales source; currently 2022–2025, covering 646 series and 1,510 series-year records.
 - Missingness is partly structural: battery fields are normally absent for combustion models and engine fields for battery-electric models. It should not be treated as a blanket collection error.
 
 ### Review corpus: `reviews/processed/`
@@ -62,7 +63,7 @@ Labels separate “dimension mentioned” from “polarity” for ten dimensions
 | `split_index.csv` | Complete panel | Split assignment for each series-month |
 | `manifest.json` | — | Row counts, features, cutoffs, and leakage constraints |
 
-The panel preserves the natural-month spacing of every target series. Specifications are joined causally using the latest record not later than the target year; unrecoverable numeric values use the training-table median and categorical values use the explicit `-1` unknown marker. Base features use 1/2/3-month lags and 3/6-month trailing means; the headline model additionally uses 12-month lag and trailing-12-month mean features.
+The panel preserves the natural-month spacing of every target series. Specifications may fall back only to the latest record not later than the target year; unrecoverable numeric values use the specification-table median and categorical values use the explicit `-1` unknown marker. Because the source lacks within-year publication timestamps, this establishes year alignment and no future-year fallback rather than month-level point-in-time availability. Base features use 1/2/3-month lags and 3/6-month trailing means; the headline model additionally uses 12-month lag and trailing-12-month mean features.
 
 The headline protocol refreshes a one-month-ahead forecast each month using the latest realised previous-month sales. The fixed-origin protocol recursively forecasts six months from 2026-01 as an information-constrained stress test; the two protocols are evaluated separately.
 
@@ -85,6 +86,7 @@ The saved rolling headline is 29.72% global WMAPE; the fixed six-month combined 
 
 - `config_attribution_ablation.csv`: stepwise year, brand, and specification ablation;
 - `config_importance_annual.csv`: annual specification feature importance.
+- `config_attribution_summary.json`: complete-year range, sample size, and headline metrics.
 
 This module reports grouped out-of-sample R². Annual cross-sectional WMAPE is a within-module supporting metric, not a direct comparison with monthly forecast WMAPE and not a causal effect estimate.
 

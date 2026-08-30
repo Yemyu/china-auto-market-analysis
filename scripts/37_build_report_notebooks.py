@@ -74,6 +74,7 @@ rolling_test = pd.read_csv(FORECAST_DIR / "rolling_origin_test_predictions.csv",
 robustness = read_json(FORECAST_DIR / "forecast_robustness_summary.json")
 cold = read_json(FORECAST_DIR / "cold_start_launch_curve_summary.json")
 config = pd.read_csv(PRODUCT_DIR / "config_attribution_ablation.csv")
+config_summary = read_json(PRODUCT_DIR / "config_attribution_summary.json")
 aspects = pd.read_csv(FEEDBACK_DIR / "user_need_aspect_summary.csv", encoding="utf-8-sig")
 alerts = pd.read_csv(FEEDBACK_DIR / "sentiment_alerts.csv")
 monitor = read_json(FEEDBACK_DIR / "user_needs_alerts_summary.json")
@@ -86,7 +87,8 @@ if ZH:
     table = pd.DataFrame([
         ["滚动单月销量预测", "371 个车系", "2,226 条测试车系月", "每月更新下月预测"],
         ["固定六个月压力测试", "371 个车系", "2,226 条测试车系月", "固定起点递归预测"],
-        ["产品配置分析", "736 个车系", "2,007 条车系年记录", "GroupKFold(5) 按车系"],
+        ["产品配置分析", f"{config_summary['series']} 个车系",
+         f"{config_summary['rows']:,} 条完整车系年记录", "GroupKFold(5) 按车系"],
         ["用户需求与风险", "345 个车系", "24,175 条评论", "质量审计 + 180 天窗口"],
     ], columns=["分析", "样本", "观测", "验证"])
     source = pd.DataFrame([
@@ -101,7 +103,8 @@ else:
          "Monthly refresh, one month ahead"],
         ["Fixed six-month stress test", "371 series", "2,226 test series-months",
          "Fixed-origin recursive forecast"],
-        ["Product specifications", "736 series", "2,007 series-year records",
+        ["Product specifications", f"{config_summary['series']} series",
+         f"{config_summary['rows']:,} complete series-year records",
          "Five-fold GroupKFold by series"],
         ["User needs and risk", "345 series", "24,175 reviews",
          "Quality audit + 180-day windows"],
@@ -362,7 +365,7 @@ TEXT = {
 **主指标：** 全局 volume-weighted WMAPE""",
         "sample": """## 1. 三组分析样本
 
-三项分析的筛选条件不同。销量预测固定 371 个车系的完整自然月面板，并对年度配置做因果连接；产品配置分析要求年度销量与配置能够对齐，用户需求分析要求完整且可核验的评论正文。""",
+三项分析的筛选条件不同。销量预测固定 371 个车系的完整自然月面板，年度配置只向不晚于目标年份的记录回退；产品配置分析要求完整年度销量与配置能够对齐，用户需求分析要求完整且可核验的评论正文。""",
 
         "forecast": """## 2. 月度销量预测
 
@@ -382,8 +385,8 @@ TEXT = {
 固定六个月压力测试为 9 个同时缺少历史正销量和起点前配置记录的车系补充受约束的上市曲线；这项统计策略用于边界样本处理，不改变 371 个车系的滚动主模型。""",
         "config": """## 3. 产品配置与年度销量差异
 
-样本为 736 个车系、2,007 条车系年记录。验证按车系分组，避免同一车系的不同年份同时出现在训练折和验证折。""",
-        "config_read": """**结果解读：** 加入品牌后 R² 从 0.089 升至 0.158；继续加入配置后达到 0.301。该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别；年度截面 WMAPE 作为模块内辅助误差指标，与月度预测指标分别报告。""",
+样本为 646 个车系、1,510 条 2022—2025 完整车系年记录。验证按车系分组，避免同一车系的不同年份同时出现在训练折和验证折。""",
+        "config_read": """**结果解读：** 加入品牌后 R² 从 0.013 升至 0.070；继续加入配置后达到 0.239。该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别；完整自然年截面 WMAPE 为 73.85%，仅作为模块内辅助误差指标，与月度预测指标分别报告。""",
         "needs": """## 4. 用户需求与口碑风险
 
 严格语料包含 24,175 条评论。十个维度同时保留提及率和有效评分中的负面率，避免把“讨论很多”和“评价很差”合并成一个指标。""",
@@ -421,7 +424,7 @@ This notebook reproduces the main results and figures from saved analysis artifa
 **Primary metric:** global volume-weighted WMAPE""",
         "sample": """## 1. Three analysis samples
 
-Forecasting uses a fixed 371-series natural-month panel with causal year-based specification joins; the specification analysis requires aligned annual sales and product attributes; the user-needs analysis requires complete and traceable review text.""",
+Forecasting uses a fixed 371-series natural-month panel and never falls forward to a specification record later than the target year; the specification analysis requires aligned complete-year sales and product attributes; the user-needs analysis requires complete and traceable review text.""",
 
         "forecast": """## 2. Monthly sales forecasting
 
@@ -441,8 +444,8 @@ Review enhancement belongs to the fixed six-month stress test: its point estimat
 The fixed six-month stress test adds a guarded launch-curve statistical supplement for nine series with neither positive historical sales nor a pre-origin specification record. It is used for boundary-case treatment and does not alter the 371-series rolling headline model.""",
         "config": """## 3. Product specifications and annual sales variation
 
-The sample contains 736 series and 2,007 series-year records. Validation groups by series so different years of one series cannot enter both training and validation folds.""",
-        "config_read": """**Interpretation:** R² rises from 0.089 to 0.158 after adding brand and reaches 0.301 after adding specifications. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification; annual cross-sectional WMAPE is a module-specific supporting metric reported separately from monthly forecasting.""",
+The sample contains 646 series and 1,510 complete series-year records from 2022 through 2025. Validation groups by series so different years of one series cannot enter both training and validation folds.""",
+        "config_read": """**Interpretation:** R² rises from 0.013 to 0.070 after adding brand and reaches 0.239 after adding specifications. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification; complete-year cross-sectional WMAPE is 73.85% and remains a module-specific supporting metric reported separately from monthly forecasting.""",
         "needs": """## 4. User needs and review risk
 
 The strict corpus contains 24,175 reviews. Mention share and negative share among scored mentions remain separate, so discussion volume is not conflated with dissatisfaction.""",

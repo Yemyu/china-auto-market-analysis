@@ -51,7 +51,7 @@
           <a class="home-question" href="attribution.html">
             <span class="home-question-no">02</span>
             <h3 data-i18n="home_q2_title">哪些产品配置能够解释年度销量差异？</h3>
-            <p data-i18n="home_q2_body">在736个车系、2,007条车系年记录上，区分年份、品牌与配置的增量解释力。</p>
+            <p data-i18n="home_q2_body">在646个车系、1,510条完整车系年记录上，区分年份、品牌与配置的增量解释力。</p>
             <span class="home-question-link" data-i18n="home_q2_link">查看产品配置 →</span>
           </a>
           <a class="home-question" href="absa.html">
@@ -66,20 +66,20 @@
       <section class="home-report-section" aria-labelledby="cohort-title">
         <div class="home-section-aside">
           <h2 id="cohort-title"><span class="home-heading-no" aria-hidden="true">02</span><span data-i18n="home_scope_title">三组分析样本</span></h2>
-          <p data-i18n="home_scope_body">销量预测、产品分析和用户需求模块的筛选条件不同，最终分别保留371、736和345个车系。</p>
+          <p data-i18n="home_scope_body">销量预测、产品分析和用户需求模块的筛选条件不同，最终分别保留371、646和345个车系。</p>
         </div>
         <div class="home-section-body">
           <div class="home-cohort-list">
             <article class="home-cohort-row">
               <div class="home-cohort-name"><span>FORECAST</span><h3 data-i18n="home_cohort_forecast">月度销量预测</h3></div>
               <div class="home-cohort-count"><strong id="cohort-forecast">—</strong><span data-i18n="home_series_unit">个车系</span></div>
-              <p data-i18n="home_cohort_forecast_rule">固定371个车系的完整自然月面板，配置按年份因果连接并显式保留未知值；主结果为滚动单月预测，2026年1—6月固定起点结果作为压力测试。</p>
+              <p data-i18n="home_cohort_forecast_rule">固定371个车系的完整自然月面板，年度配置不使用目标年份之后的记录并显式保留未知值；主结果为滚动单月预测，2026年1—6月固定起点结果作为压力测试。</p>
               <a href="forecast.html" data-i18n="home_read_analysis">进入分析 →</a>
             </article>
             <article class="home-cohort-row">
               <div class="home-cohort-name"><span>ATTRIBUTION</span><h3 data-i18n="home_cohort_attribution">产品配置分析</h3></div>
               <div class="home-cohort-count"><strong id="cohort-attribution">—</strong><span data-i18n="home_series_unit">个车系</span></div>
-              <p data-i18n="home_cohort_attribution_rule">年度销量与配置可对齐，共形成2,007条车系年记录；通过GroupKFold按车系分组验证。</p>
+              <p data-i18n="home_cohort_attribution_rule">2022—2025完整年度销量与配置可对齐，共形成1,510条车系年记录；通过GroupKFold按车系分组验证。</p>
               <a href="attribution.html" data-i18n="home_read_analysis">进入分析 →</a>
             </article>
             <article class="home-cohort-row">
@@ -140,8 +140,8 @@
           <div class="home-supporting-results">
             <article class="home-result-block">
               <div class="home-result-heading"><div><span class="home-result-index">B</span><h3 data-i18n="home_result_attr_title">产品配置提高年度销量差异的解释力</h3></div><a href="attribution.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
-              <div class="home-evidence-line"><strong>0.158</strong><span aria-hidden="true">→</span><strong class="accent">0.301</strong></div>
-              <p data-i18n="home_result_attr_body">在同一736车系口径下，加入配置后，GroupKFold验证 R² 从品牌模型的0.158提升至0.301；表明产品属性对年度跨车系差异具有增量解释力。年度截面 WMAPE 作为模块内辅助误差指标，与月度预测指标分别报告。</p>
+              <div class="home-evidence-line"><strong>0.070</strong><span aria-hidden="true">→</span><strong class="accent">0.239</strong></div>
+              <p data-i18n="home_result_attr_body">在同一646车系完整年度口径下，加入配置后，GroupKFold验证 R² 从品牌模型的0.070提升至0.239；表明产品属性对年度跨车系差异具有增量解释力。年度截面 WMAPE 作为模块内辅助误差指标，与月度预测指标分别报告。</p>
             </article>
             <article class="home-result-block">
               <div class="home-result-heading"><div><span class="home-result-index">C</span><h3 data-i18n="home_result_need_title">用户需求：智能化与舒适性是负面反馈最集中的维度</h3></div><a href="absa.html" data-i18n="home_view_detail">查看完整结果 →</a></div>
