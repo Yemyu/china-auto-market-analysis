@@ -1,25 +1,24 @@
 ﻿priority_rank,series_name,historical_actual_volume,historical_absolute_error,historical_months,historical_origins,historical_WMAPE,absolute_error_rank,actual_volume_rank,selected_for_high_error,selected_for_high_volume,selection_score,event_types_requested,selection_window,locked_test_used
-1,Model Y,905646.0,261536.396484375,24,4,28.878435556980875,1,1,True,True,2,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-2,海鸥,764549.0,198939.958984375,24,4,26.020563624355663,2,3,True,True,5,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-3,宏光MINIEV,696740.0,176636.8740234375,24,4,25.351906596928192,3,4,True,True,7,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-4,秦PLUS,867340.0,114317.888671875,24,4,13.180285547982914,8,2,True,True,10,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-5,宋PLUS新能源,618750.0,135817.951171875,24,4,21.950375946969697,5,6,True,True,11,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-6,轩逸,662395.0,114346.685546875,24,4,17.262613024988866,7,5,True,True,12,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-7,秦L,494262.0,127683.43493424356,24,4,25.83314819554074,6,9,True,True,15,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-8,星越L,461216.0,97478.6064453125,24,4,21.135131141441864,12,11,True,True,23,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-9,Model 3,377154.0,160436.15380859375,24,4,42.53863244419885,4,20,True,False,24,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-10,小米SU7,397651.0,113215.49886056781,24,4,28.471071080059602,10,14,True,True,24,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-11,长安CS75 PLUS,393950.0,113760.0205078125,24,4,28.876766215969667,9,16,True,True,25,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-12,宋Pro新能源,422259.0,96076.3623046875,24,4,22.752946012918017,13,12,True,True,25,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-13,元PLUS,410669.0,90574.8232421875,24,4,22.055432292719317,15,13,True,True,28,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-14,速腾,497106.0,78310.5869140625,24,4,15.753297468560529,20,8,False,True,28,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-15,海豹06DM-i,359476.0,103145.10396693647,24,4,28.693182289481488,11,24,True,False,35,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-16,朗逸,593410.0,64956.587890625,24,4,10.94632511933149,28,7,False,True,35,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-17,帕萨特,473138.0,65834.9638671875,24,4,13.914537379620217,27,10,False,True,37,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-18,RAV4荣放,397586.0,73458.12890625,24,4,18.47603509838123,23,15,False,True,38,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-19,汉,348534.0,82516.08056640625,24,4,23.67518823598451,17,26,True,False,43,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-20,长安Lumin,307504.0,90679.52099609375,24,4,29.48889152534398,14,33,True,False,47,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-21,元UP,324116.0,80217.96107828617,24,4,24.749768934050206,18,29,True,False,47,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-22,卡罗拉锐放,377567.0,62385.474609375,24,4,16.523020976243952,31,18,False,True,49,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-23,锋兰达,379281.0,57710.998046875,24,4,15.215894823857509,36,17,False,True,53,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
-24,吉利熊猫,293697.0,87099.9990234375,24,4,29.656414271660083,16,38,True,False,54,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+1,Model Y,651800.0,177206.22265625,18,3,27.187208139958575,1,1,True,True,2,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+2,海鸥,628505.0,153446.732421875,18,3,24.414560333151687,2,3,True,True,5,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+3,秦PLUS,643628.0,94865.298828125,18,3,14.739150383159993,6,2,True,True,8,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+4,宋PLUS新能源,555798.0,87246.89453125,18,3,15.697590587092794,7,4,True,True,11,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+5,宏光MINIEV,432205.0,98049.3603515625,18,3,22.68584591838653,5,7,True,True,12,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+6,轩逸,478739.0,84309.83203125,18,3,17.61081341425077,9,5,True,True,14,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+7,秦L,364541.0,85723.83923111856,18,3,23.515554966689223,8,8,True,True,16,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+8,长安CS75 PLUS,318541.0,98282.6669921875,18,3,30.85400842974295,4,14,True,True,18,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+9,星越L,364101.0,74104.6201171875,18,3,20.352764787019947,13,9,True,True,22,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+10,宋Pro新能源,341738.0,75300.7626953125,18,3,22.03464721374635,11,13,True,True,24,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+11,小米SU7,295179.0,84292.97346994281,18,3,28.556561770973822,10,16,True,True,26,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+12,元PLUS,352771.0,73376.0927734375,18,3,20.799921981522715,14,12,True,True,26,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+13,Model 3,268712.0,117378.80224609375,18,3,43.68200982691274,3,24,True,False,27,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+14,汉,302198.0,70303.0224609375,18,3,23.26389402343414,15,15,True,True,30,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+15,海豹06DM-i,286190.0,74749.40865443647,18,3,26.118805218364187,12,19,True,False,31,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+16,帕萨特,361169.0,58560.2001953125,18,3,16.214071582918937,22,10,False,True,32,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+17,朗逸,459895.0,55467.2109375,18,3,12.060842352602224,28,6,False,True,34,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+18,速腾,360444.0,55786.5244140625,18,3,15.477168274145914,27,11,False,True,38,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+19,本田CR-V,270699.0,62019.5234375,18,3,22.910880142704627,18,23,True,False,41,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+20,RAV4荣放,290561.0,53860.525390625,18,3,18.536735966156847,29,17,False,True,46,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+21,海豚,223716.0,62612.85498046875,18,3,27.98765174617316,16,35,True,False,51,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+22,锋兰达,289021.0,47748.1767578125,18,3,16.520660006647443,34,18,False,True,52,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
+23,长安Lumin,218522.0,62339.92626953125,18,3,28.527986321528836,17,39,True,False,56,launch|facelift|price_cut|promotion,"calibration origins 2024-01, 2024-07, 2025-01; targets through 2025-06",False
