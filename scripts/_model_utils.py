@@ -27,19 +27,6 @@ def load_splits(parse_dates=True):
     return tr, va, te
 
 
-def load_panel_for_subset(subset):
-    """拼接 train+val+test，仅保留 subset 车系，按 (series_name, date) 排序。
-
-    返回的 DataFrame 含 train/val/test 全部月份 + 特征 + 配置，供
-    recursive_forecast_tree 按车系、按时间递归预测。
-    """
-    tr, va, te = load_splits()
-    all_df = pd.concat([tr, va, te], ignore_index=True)
-    ss = set(map(str, subset))
-    all_df = all_df[all_df["series_name"].astype(str).isin(ss)]
-    return all_df.sort_values(["series_name", "date"]).reset_index(drop=True)
-
-
 def wmape_vol(y_true, y_pred):
     """Return global volume-weighted WMAPE in percent."""
     yt = np.asarray(y_true, dtype=float)

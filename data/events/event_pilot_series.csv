@@ -1,0 +1,25 @@
+﻿priority_rank,series_name,historical_actual_volume,historical_absolute_error,historical_months,historical_origins,historical_WMAPE,absolute_error_rank,actual_volume_rank,selected_for_high_error,selected_for_high_volume,selection_score,event_types_requested,selection_window,locked_test_used
+1,Model Y,905646.0,261536.396484375,24,4,28.878435556980875,1,1,True,True,2,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+2,海鸥,764549.0,198939.958984375,24,4,26.020563624355663,2,3,True,True,5,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+3,宏光MINIEV,696740.0,176636.8740234375,24,4,25.351906596928192,3,4,True,True,7,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+4,秦PLUS,867340.0,114317.888671875,24,4,13.180285547982914,8,2,True,True,10,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+5,宋PLUS新能源,618750.0,135817.951171875,24,4,21.950375946969697,5,6,True,True,11,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+6,轩逸,662395.0,114346.685546875,24,4,17.262613024988866,7,5,True,True,12,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+7,秦L,494262.0,127683.43493424356,24,4,25.83314819554074,6,9,True,True,15,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+8,星越L,461216.0,97478.6064453125,24,4,21.135131141441864,12,11,True,True,23,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+9,Model 3,377154.0,160436.15380859375,24,4,42.53863244419885,4,20,True,False,24,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+10,小米SU7,397651.0,113215.49886056781,24,4,28.471071080059602,10,14,True,True,24,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+11,长安CS75 PLUS,393950.0,113760.0205078125,24,4,28.876766215969667,9,16,True,True,25,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+12,宋Pro新能源,422259.0,96076.3623046875,24,4,22.752946012918017,13,12,True,True,25,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+13,元PLUS,410669.0,90574.8232421875,24,4,22.055432292719317,15,13,True,True,28,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+14,速腾,497106.0,78310.5869140625,24,4,15.753297468560529,20,8,False,True,28,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+15,海豹06DM-i,359476.0,103145.10396693647,24,4,28.693182289481488,11,24,True,False,35,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+16,朗逸,593410.0,64956.587890625,24,4,10.94632511933149,28,7,False,True,35,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+17,帕萨特,473138.0,65834.9638671875,24,4,13.914537379620217,27,10,False,True,37,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+18,RAV4荣放,397586.0,73458.12890625,24,4,18.47603509838123,23,15,False,True,38,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+19,汉,348534.0,82516.08056640625,24,4,23.67518823598451,17,26,True,False,43,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+20,长安Lumin,307504.0,90679.52099609375,24,4,29.48889152534398,14,33,True,False,47,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+21,元UP,324116.0,80217.96107828617,24,4,24.749768934050206,18,29,True,False,47,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+22,卡罗拉锐放,377567.0,62385.474609375,24,4,16.523020976243952,31,18,False,True,49,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+23,锋兰达,379281.0,57710.998046875,24,4,15.215894823857509,36,17,False,True,53,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
+24,吉利熊猫,293697.0,87099.9990234375,24,4,29.656414271660083,16,38,True,False,54,launch|facelift|price_cut|promotion,rolling origins 2024-01..2025-07; targets through 2025-12,False
