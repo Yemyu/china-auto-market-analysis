@@ -31,6 +31,16 @@ SIGNAL_GATE = {
     "minimum_promotion_recent_rows": 10,
     "minimum_promotion_recent_series": 3,
 }
+CORRECTION_GATE = {
+    "minimum_calibration_promotion_rows": 8,
+    "minimum_calibration_promotion_series": 3,
+    "correction_factor_lower_bound": 0.85,
+    "correction_factor_upper_bound": 1.15,
+    "minimum_promotion_recent_gain_pp": 1.0,
+    "minimum_promotion_all_covered_gain_pp": 0.2,
+    "minimum_improved_series_share": 0.5,
+    "maximum_worst_series_regression_pp": 5.0,
+}
 ALLOWED_EVENT_TYPES = {"launch", "facelift", "price_cut", "promotion"}
 ALLOWED_VERIFICATION_STATUSES = {"verified_primary", "verified_secondary"}
 
@@ -204,6 +214,7 @@ def build_point_in_time_features(events: pd.DataFrame) -> pd.DataFrame:
         known = known.loc[known["months_since_event"].ge(0)].copy()
         recent_3m = known["months_since_event"].between(1, 3)
         recent_6m = known["months_since_event"].between(1, 6)
+        recent_promotions = recent_3m & known["event_type"].eq("promotion")
         price_cuts = known.loc[
             recent_6m & known["event_type"].eq("price_cut"), "price_change_wan"
         ].dropna()
@@ -227,6 +238,7 @@ def build_point_in_time_features(events: pd.DataFrame) -> pd.DataFrame:
             ),
             "price_cut_magnitude_6m_wan": float(-price_cuts.clip(upper=0).sum()),
             "promotion_amount_3m_wan": float(promotions.sum()),
+            "promotion_count_recent_3m": int(recent_promotions.sum()),
             "launch_count_6m": int(
                 (recent_6m & known["event_type"].eq("launch")).sum()
             ),
@@ -257,6 +269,106 @@ def pooled_diagnostic(frame: pd.DataFrame) -> dict[str, float | int | None]:
         "actual_volume": actual_volume,
         "WMAPE": float(error.abs().sum() / actual_volume * 100),
         "signed_error_share": float(error.sum() / actual_volume * 100),
+    }
+
+
+def prediction_wmape(frame: pd.DataFrame, column: str) -> float:
+    volume = float(frame["actual"].abs().sum())
+    if volume <= 0:
+        return float("nan")
+    return float((frame["actual"] - frame[column]).abs().sum() / volume * 100)
+
+
+def evaluate_predeclared_promotion_correction(
+    features: pd.DataFrame,
+) -> dict[str, object]:
+    """Calibrate once on historical origins, then score the promotion origin."""
+    calibration = features.loc[
+        features["origin"].isin(PILOT_SELECTION_ORIGINS)
+        & features["promotion_count_recent_3m"].gt(0)
+    ].copy()
+    promotion = features.loc[
+        features["origin"].eq(PROMOTION_ORIGIN)
+        & features["event_coverage_available"].eq(1)
+    ].copy()
+    promotion_recent = promotion.loc[
+        promotion["promotion_count_recent_3m"].gt(0)
+    ].copy()
+    calibration_coverage = bool(
+        len(calibration) >= CORRECTION_GATE["minimum_calibration_promotion_rows"]
+        and calibration["series_name"].nunique()
+        >= CORRECTION_GATE["minimum_calibration_promotion_series"]
+    )
+    if not calibration_coverage:
+        return {
+            "status": "not_run",
+            "reason": "insufficient_calibration_promotion_coverage",
+            "gate": CORRECTION_GATE,
+            "calibration_rows": int(len(calibration)),
+            "calibration_series": int(calibration["series_name"].nunique()),
+        }
+
+    raw_factor = float(calibration["actual"].sum() / calibration["prediction"].sum())
+    factor = float(np.clip(
+        raw_factor,
+        CORRECTION_GATE["correction_factor_lower_bound"],
+        CORRECTION_GATE["correction_factor_upper_bound"],
+    ))
+    promotion["candidate_prediction"] = promotion["prediction"]
+    routed = promotion["promotion_count_recent_3m"].gt(0)
+    promotion.loc[routed, "candidate_prediction"] *= factor
+    promotion_recent = promotion.loc[routed].copy()
+
+    recent_baseline = prediction_wmape(promotion_recent, "prediction")
+    recent_candidate = prediction_wmape(promotion_recent, "candidate_prediction")
+    all_baseline = prediction_wmape(promotion, "prediction")
+    all_candidate = prediction_wmape(promotion, "candidate_prediction")
+    per_series = []
+    for name, group in promotion_recent.groupby("series_name", sort=True):
+        baseline = prediction_wmape(group, "prediction")
+        candidate = prediction_wmape(group, "candidate_prediction")
+        per_series.append({
+            "series_name": name,
+            "rows": int(len(group)),
+            "baseline_WMAPE": baseline,
+            "candidate_WMAPE": candidate,
+            "gain_pp": baseline - candidate,
+        })
+    per_series_frame = pd.DataFrame(per_series)
+    improved_share = float(per_series_frame["gain_pp"].gt(0).mean())
+    worst_regression = float((-per_series_frame["gain_pp"]).max())
+    recent_gain = recent_baseline - recent_candidate
+    all_gain = all_baseline - all_candidate
+    passes = bool(
+        recent_gain >= CORRECTION_GATE["minimum_promotion_recent_gain_pp"]
+        and all_gain >= CORRECTION_GATE["minimum_promotion_all_covered_gain_pp"]
+        and improved_share >= CORRECTION_GATE["minimum_improved_series_share"]
+        and worst_regression
+        <= CORRECTION_GATE["maximum_worst_series_regression_pp"]
+    )
+    return {
+        "status": "evaluated_once",
+        "gate": CORRECTION_GATE,
+        "calibration_rows": int(len(calibration)),
+        "calibration_series": int(calibration["series_name"].nunique()),
+        "raw_calibration_factor": raw_factor,
+        "deployed_calibration_factor": factor,
+        "promotion_recent_rows": int(len(promotion_recent)),
+        "promotion_recent_series": int(promotion_recent["series_name"].nunique()),
+        "promotion_recent_baseline_WMAPE": recent_baseline,
+        "promotion_recent_candidate_WMAPE": recent_candidate,
+        "promotion_recent_gain_pp": recent_gain,
+        "promotion_all_covered_baseline_WMAPE": all_baseline,
+        "promotion_all_covered_candidate_WMAPE": all_candidate,
+        "promotion_all_covered_gain_pp": all_gain,
+        "improved_series_share": improved_share,
+        "worst_series_regression_pp": worst_regression,
+        "per_series": per_series,
+        "passes": passes,
+        "decision": (
+            "stop_without_locked_test_or_roster_expansion"
+            if not passes else "eligible_for_final_sol_review_before_any_locked_test"
+        ),
     }
 
 
@@ -297,8 +409,16 @@ def write_signal_diagnostic(features: pd.DataFrame) -> dict[str, object]:
         decision = "evaluate_predeclared_event_correction_on_promotion_origin"
     else:
         decision = "stop_event_expansion_due_to_weak_calibration_targeting_signal"
+    correction = (
+        evaluate_predeclared_promotion_correction(features)
+        if calibration_signal and promotion_coverage
+        else {"status": "not_run", "reason": "signal_or_coverage_gate_failed"}
+    )
+    coverage_decision = decision
+    if correction.get("status") == "evaluated_once":
+        decision = str(correction["decision"])
     summary: dict[str, object] = {
-        "schema_version": "v1",
+        "schema_version": "v2",
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "task": "exploratory point-in-time event residual diagnostic",
         "interpretation": (
@@ -314,7 +434,9 @@ def write_signal_diagnostic(features: pd.DataFrame) -> dict[str, object]:
         "calibration_targeting_signal": calibration_signal,
         "promotion_recent": promotion_recent_metrics,
         "promotion_coverage_sufficient": promotion_coverage,
+        "coverage_decision": coverage_decision,
         "decision": decision,
+        "predeclared_promotion_correction": correction,
     }
     DIAGNOSTIC_OUT.mkdir(parents=True, exist_ok=True)
     features.to_csv(
