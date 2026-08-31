@@ -16,6 +16,19 @@
 
 三个模块使用各自的样本筛选和评价口径，不将不同模块的指标直接横向比较。
 
+## 数据仓库与血缘
+
+本地完整工程链使用四个逻辑 MySQL 数据库：
+
+| 层 | 作用 | 主要输出 |
+|---|---|---|
+| `auto_raw` | 按来源批次原样留存并记录文件哈希 | 销量、配置、评论、标签和修复证据原始表 |
+| `auto_staging` | 标准化类型、统一车系、去重并执行时间可用性规则 | 标准销量、配置、评论与十维评论特征 |
+| `auto_mart` | 为稳定下游接口组织事实表、维表和主题表 | 预测、产品配置和用户需求数据集市 |
+| `auto_ops` | 横向保存运行、任务、质量结果和数据版本 | 批次状态、失败记录、血缘与发布清单 |
+
+公开仓库中的 CSV/JSON 是经过验证的便携快照，不要求浏览者连接本地数据库。完整本地数据链和便携公开快照使用相同的时间切分、样本定义和指标合同。
+
 ## 目录结构
 
 | 路径 | 内容 |
@@ -121,3 +134,16 @@
 ```
 
 如需完整评论标签流水线，请先按根目录 Notebook 和脚本注释准备评论语料；缺失评论标签的补标步骤为可选项。
+
+若拥有本地完整来源快照和独立 MySQL 实例，可按工程顺序运行：
+
+```bash
+.venv/bin/python scripts/initialize_mysql.py --apply
+.venv/bin/python scripts/ingest_raw.py --dataset all --mode full
+.venv/bin/python scripts/validate_raw.py
+.venv/bin/python scripts/rebuild_staging.py
+.venv/bin/python scripts/rebuild_core_marts.py
+.venv/bin/python scripts/validate_core_marts.py
+```
+
+数据库凭据只通过本机加密 login path 读取，不接受命令行明文密码。CI 使用 `tests/fixtures/ci/` 下的虚构小样本验证相同 DDL、摄取、幂等和 staging 质量规则；它不能替代完整数据的业务评价。

@@ -3,6 +3,7 @@
 
 from __future__ import annotations
 
+import argparse
 import json
 import math
 import re
@@ -13,7 +14,7 @@ from dashboard_data import DashboardData
 
 
 ROOT = Path(__file__).resolve().parents[1]
-OUT = ROOT / "app" / "static" / "data"
+DEFAULT_OUT = ROOT / "app" / "static" / "data"
 
 BRAND_EN = {
     "ARCFOX极狐": "ARCFOX", "DS": "DS", "MG名爵": "MG", "Polestar极星": "Polestar",
@@ -121,9 +122,9 @@ def _json_safe(value: Any) -> Any:
     return value
 
 
-def _write_json(filename: str, payload: dict[str, Any]) -> None:
-    OUT.mkdir(parents=True, exist_ok=True)
-    path = OUT / filename
+def _write_json(filename: str, payload: dict[str, Any], output_dir: Path) -> None:
+    output_dir.mkdir(parents=True, exist_ok=True)
+    path = output_dir / filename
     compact = filename in {"drilldown.json", "brand_drilldown.json"}
     options = {"ensure_ascii": False, "separators": (",", ":")} if compact else {
         "ensure_ascii": False, "indent": 2,
@@ -133,10 +134,13 @@ def _write_json(filename: str, payload: dict[str, Any]) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUT)
+    args = parser.parse_args()
     print("== 构建看板数据 ==")
     payloads = DashboardData(ROOT, brand_en, series_en).payloads()
     for filename, payload in payloads.items():
-        _write_json(filename, payload)
+        _write_json(filename, payload, args.output_dir.resolve())
     print("== 完成 ==")
 
 

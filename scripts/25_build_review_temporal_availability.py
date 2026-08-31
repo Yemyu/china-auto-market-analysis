@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from china_auto_market.reviews.temporal import reviews_before_cutoff
+
 BASE = Path(__file__).resolve().parents[1]
 SPLITS = BASE / "data" / "processed" / "splits"
 OUT = BASE / "data" / "reviews" / "processed"
@@ -32,7 +34,7 @@ def main() -> None:
     for period in months:
         origin = period.start_time
         column = f"reviews_available_before_{period.strftime('%Y_%m')}"
-        counts = (usable.loc[usable["publish_time"] < origin]
+        counts = (reviews_before_cutoff(usable, origin)
                   .groupby("series_name_canonical")["review_id"].size())
         result[column] = result["series_name"].map(counts).fillna(0).astype(int)
         month_summary.append({

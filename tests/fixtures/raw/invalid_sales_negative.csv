@@ -1,0 +1,2 @@
+record_id,year,month,series_id,source_series_id,series_name,monthly_sales,零销量类型,数据来源
+fixture-negative,2026,1,1,fixture-series,DE3失败测试车系,-1,非零销量,fixture

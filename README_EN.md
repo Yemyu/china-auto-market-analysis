@@ -16,6 +16,8 @@
 
 > **Project summary**　This project uses public monthly sales, vehicle specifications, and owner reviews for next-month sales forecasting, annual product-difference analysis, and user-needs monitoring.
 
+It also implements a reproducible path from source batches and a layered MySQL warehouse through quality gates, business marts, monthly Airflow orchestration, and static dashboard publication.
+
 ## Research questions
 
 1. 📈 Can next-month series sales be forecast reliably as information is refreshed each month?
@@ -100,6 +102,31 @@ Global WMAPE is defined as:
 Σ |actual sales − forecast sales| / Σ actual sales
 ```
 
+## Data platform and quality controls
+
+```text
+Public sources / local snapshots
+        ↓
+auto_raw (source-faithful rows and batches)
+        ↓
+auto_staging (standardization, mapping, repairs, and availability)
+        ↓
+auto_mart (forecast, product, and user-needs marts)
+        ↓
+Models and analysis artifacts → validation → pre-baked dashboard JSON
+
+auto_ops records runs, task attempts, quality results, and dataset versions;
+Airflow manages monthly dependencies, retries, backfills, and failure blocking.
+```
+
+- The four logical databases contain 23 tables with explicit grain and key contracts.
+- Raw ingestion registers source-file SHA-256 values and skips exact reruns idempotently.
+- Critical staging or mart failures prevent public artifacts from being replaced.
+- The monthly DAG has ten tasks and succeeds only after data, model, and publication contracts pass.
+- Automated tests use fully synthetic fixtures in an ephemeral MySQL service; they do not read the full review corpus or access external websites.
+
+The static dashboard remains directly viewable on GitHub Pages and does not require access to local MySQL. MySQL and Airflow implement the full local engineering path, while pre-baked JSON is the public delivery interface.
+
 ## Quick start
 
 The pre-baked dashboard runs without a backend service:
@@ -156,10 +183,15 @@ Rolling forecast artifacts:
 china-auto-market-analysis/
 ├── app/                    Static research dashboard and pre-baked JSON
 ├── assets/                 Analysis figures and dashboard captures
+├── dags/                   Monthly Airflow orchestration
 ├── data/                   Raw, processed, and audit data
 ├── notebook/               Chinese and English analysis notebooks
-├── scripts/                Reproducible scripts
+├── scripts/                Collection, analysis, and engineering commands
+├── sql/                    MySQL DDL, staging, marts, and quality rules
+├── src/china_auto_market/  Testable production Python modules
+├── tests/                  Unit tests, synthetic fixtures, and MySQL integration
 ├── environment.yml
+├── pyproject.toml
 ├── requirements.txt
 ├── README.md
 └── README_EN.md

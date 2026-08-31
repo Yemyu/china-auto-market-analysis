@@ -201,9 +201,7 @@ class DashboardData:
         panel = self.panel()
         needs = _read_json(self.processed / "user_feedback" / "user_needs_alerts_summary.json")
         cold = _read_json(self.processed / "forecast" / "cold_start_launch_curve_summary.json")
-        model_summary = _read(self.processed / "forecast" / "review_feature_ablation_summary.csv")
         benchmark = _read(self.processed / "forecast" / "forecast_benchmark_comparison.csv")
-        rolling = _read_json(self.processed / "forecast" / "rolling_origin_summary.json")
         rolling_test = _read(self.processed / "forecast" / "rolling_origin_test_predictions.csv")
         rolling_global, rolling_median, rolling_median_series = _wmape_summary(rolling_test, "actual", "pred")
         last_global, last_median, _ = _wmape_summary(rolling_test, "actual", "LAST_VALUE")
@@ -380,7 +378,10 @@ class DashboardData:
                 "fixed_stress_naive_median_wmape": round(float(fixed_naive["median_per_series_WMAPE"]), 4),
             },
             "class_wmape": class_rows,
-            "scatter": [[round(float(a), 1), round(float(p), 1)] for a, p in zip(valid["actual"], valid["pred"])],
+            "scatter": [
+                [round(float(a), 1), round(float(p), 1)]
+                for a, p in zip(valid["actual"], valid["pred"], strict=True)
+            ],
             "features": features,
             "fixed_stress": {
                 "name_zh": "固定六个月综合方案（口碑＋冷启动保护）",

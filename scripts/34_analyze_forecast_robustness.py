@@ -2,9 +2,7 @@
 """Run robustness, feature-contribution, and error diagnostics."""
 from __future__ import annotations
 
-import importlib
 import json
-import sys
 from pathlib import Path
 from typing import Any
 
@@ -17,10 +15,11 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
+from china_auto_market.forecasting import core as mu
+from china_auto_market.forecasting import review_evaluation as ablation
+
+
 BASE = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(Path(__file__).resolve().parent))
-ablation = importlib.import_module("33_evaluate_review_features")
-mu = ablation.mu
 
 FORECAST_DIR = BASE / "data" / "processed" / "forecast"
 PREDICTIONS = FORECAST_DIR / "review_feature_predictions.csv"

@@ -1,0 +1,89 @@
+name: Quality checks
+
+on:
+  push:
+    branches: [main, "codex/**"]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: quality-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  core-and-mysql:
+    runs-on: ubuntu-latest
+    services:
+      mysql:
+        image: mysql:8.4
+        env:
+          MYSQL_ALLOW_EMPTY_PASSWORD: "yes"
+          MYSQL_ROOT_HOST: "%"
+        ports:
+          - 3306:3306
+        options: >-
+          --health-cmd="mysqladmin ping --host=127.0.0.1 --user=root --silent"
+          --health-interval=10s
+          --health-timeout=5s
+          --health-retries=12
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+          cache: pip
+
+      - name: Install project and MySQL client
+        run: |
+          sudo apt-get update
+          sudo apt-get install --yes mysql-client-core-8.0
+          python -m pip install --upgrade pip
+          python -m pip install --editable ".[dev]"
+
+      - name: Configure ephemeral MySQL login path
+        run: |
+          mysql_config_editor set \
+            --login-path=ci-auto \
+            --host=127.0.0.1 \
+            --port=3306 \
+            --user=root \
+            --skip-warn
+          mysql --login-path=ci-auto --execute="SELECT VERSION();"
+
+      - name: Run static and unit checks
+        run: |
+          ruff check src tests dags scripts app
+          pytest tests/unit
+
+      - name: Run isolated MySQL integration test
+        env:
+          CI_MYSQL_SMOKE: "1"
+          MYSQL_LOGIN_PATH: ci-auto
+        run: pytest tests/integration/test_mysql_pipeline.py
+
+  airflow-dag-import:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Build constrained Airflow environment
+        run: python scripts/setup_airflow_env.py --env .airflow-venv-ci
+
+      - name: Import DAG and verify task contract
+        env:
+          AIRFLOW_HOME: ${{ runner.temp }}/airflow
+          AIRFLOW__CORE__LOAD_EXAMPLES: "False"
+          CHINA_AUTO_PROJECT_ROOT: ${{ github.workspace }}
+        run: .airflow-venv-ci/bin/python scripts/check_dag_import.py

@@ -65,7 +65,12 @@ class NonRetryableAPIError(RuntimeError):
 
 
 def system_prompt() -> str:
-    order = "；".join(f"{i}:{name}({desc})" for i, (name, desc) in enumerate(zip(ASPECTS, ASPECT_DESCRIPTIONS)))
+    order = "；".join(
+        f"{i}:{name}({desc})"
+        for i, (name, desc) in enumerate(
+            zip(ASPECTS, ASPECT_DESCRIPTIONS, strict=True)
+        )
+    )
     return f"""你是严谨的汽车用户评论 ABSA 标注员。输入是多条目标车系评论。
 只判断评论者对目标车系本身的态度；竞品评价不得记到目标车系；厂商宣传但无用户态度按客观中性。
 固定维度顺序：{order}
@@ -242,7 +247,8 @@ def request_batch(batch: list[pd.Series], retries: int) -> tuple[dict[str, Any],
             for key in total_usage:
                 total_usage[key] += current[key]
             usd, cny = usage_cost(current, tier)
-            total_usd += usd; total_cny += cny
+            total_usd += usd
+            total_cny += cny
             choice = response_body["choices"][0]
             finish_reason = str(choice.get("finish_reason") or "")
             if finish_reason == "length":
@@ -293,7 +299,11 @@ def result_records(batch: list[pd.Series], call: dict[str, Any], parsed: dict[st
             "success": bool(call["success"]), "error": call["error"],
             "scored_at": call["finished_at"],
         }
-        for aspect, label in zip(ASPECTS, labels or [None] * len(ASPECTS)):
+        for aspect, label in zip(
+            ASPECTS,
+            labels or [None] * len(ASPECTS),
+            strict=True,
+        ):
             record[f"{aspect}_mentioned"] = label is not None if labels is not None else None
             record[f"{aspect}_polarity"] = label
             record[f"{aspect}_score"] = 0 if label is None and labels is not None else label
@@ -362,23 +372,31 @@ def main() -> None:
         return
 
     rows = [row for _, row in todo.sort_values("content_chars").iterrows()]
-    run_calls = []; run_results = []; cost = 0.0; offset = 0; stopped_for_budget = False
+    run_calls = []
+    run_results = []
+    cost = 0.0
+    offset = 0
+    stopped_for_budget = False
     started = datetime.now(timezone.utc)
     while offset < len(rows):
         if cost >= args.max_cost_cny:
-            stopped_for_budget = True; break
+            stopped_for_budget = True
+            break
         size = 1 if offset == 0 else args.batch_size
         batch = rows[offset:offset + size]
         call, parsed = request_batch(batch, args.max_retries)
         call["batch_id"] = hashlib.sha256("|".join(str(row["identity"]) for row in batch).encode()).hexdigest()[:16]
         records = result_records(batch, call, parsed)
-        append_jsonl(CALL_LOG, [call]); append_jsonl(CHECKPOINT, records)
-        run_calls.append(call); run_results.extend(records)
+        append_jsonl(CALL_LOG, [call])
+        append_jsonl(CHECKPOINT, records)
+        run_calls.append(call)
+        run_results.extend(records)
         cost = sum(float(item["estimated_cost_cny"]) for item in run_calls)
         success = sum(bool(item["success"]) for item in run_results)
         print(f"[compact] progress={len(run_results)}/{len(rows)} success={success} failed={len(run_results)-success} calls={len(run_calls)} tokens={sum(c['total_tokens'] for c in run_calls):,} estimated_cost=CNY {cost:.4f}", flush=True)
         if offset == 0 and not call["success"]:
-            print("[compact] smoke gate failed; stopping", flush=True); break
+            print("[compact] smoke gate failed; stopping", flush=True)
+            break
         offset += len(batch)
 
     latest = export_latest(prior + run_results)

@@ -1,0 +1,2 @@
+series_name,year,original_annual_sales,corrected_annual_sales,source_name,source_url,evidence_status,verified_at,note
+CI合成车系A,2025,1200,1250,synthetic_fixture,https://example.invalid/annual-evidence,fixture_verified,2026-08-31,验证年度修复血缘与净变化

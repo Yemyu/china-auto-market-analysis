@@ -3,7 +3,6 @@
 from __future__ import annotations
 
 import json
-import sys
 from pathlib import Path
 from typing import Callable
 
@@ -22,13 +21,13 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
+from china_auto_market import visualization as _visualization  # noqa: F401
+from china_auto_market.features.configuration import CFG_NUM, _load_cfg_frame
+from china_auto_market.forecasting import core as mu
+from china_auto_market.quality.series_mapping import build_series_name_mapping
+
+
 BASE = Path(__file__).resolve().parents[1]
-SCRIPT_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(SCRIPT_DIR))
-import _font_setup  # noqa: F401
-import _model_utils as mu
-from _feature_join import CFG_NUM, _load_cfg_frame
-from _series_mapping import build_series_name_mapping
 
 FORECAST_DIR = BASE / "data" / "processed" / "forecast"
 SOURCE_PREDICTIONS = FORECAST_DIR / "review_feature_predictions.csv"

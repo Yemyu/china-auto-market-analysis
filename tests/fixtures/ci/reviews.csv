@@ -1,0 +1,2 @@
+platform,review_id,identity,series_name_canonical,publish_time,content,platform_series_id,rating_overall,source_url,corpus_source,content_source,eligible_for_temporal_model
+autohome,review-1,ci-review-1,CI合成车系A,2025-12-15 12:00:00,这是脱敏合成评论，仅用于验证数据链路。,1001,4.5,https://example.invalid/review-1,synthetic_fixture,synthetic_fixture,True

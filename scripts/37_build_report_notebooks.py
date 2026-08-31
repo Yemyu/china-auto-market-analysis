@@ -371,6 +371,12 @@ TEXT = {
 
 三项分析的筛选条件不同。销量预测固定 371 个车系的完整自然月面板，年度配置只向不晚于目标年份的记录回退；产品配置分析要求完整年度销量与配置能够对齐，用户需求分析要求完整且可核验的评论正文。""",
 
+        "engineering": """### 数据工程与复现边界
+
+完整本地链路按 `auto_raw → auto_staging → auto_mart` 分层处理，`auto_ops` 记录来源批次、任务、质量结果和数据版本。Airflow 串联摄取、质量检查、主题表、模型等价和静态 JSON 发布；critical 规则失败时不会替换看板数据。
+
+公开 Notebook 读取已经验证的便携快照，因此不要求浏览者连接本地 MySQL。自动测试另用完全虚构的小型样本验证建库、幂等摄取、质量门禁和看板数据合同，不读取完整评论语料，也不访问外部网站。""",
+
         "forecast": """## 2. 月度销量预测
 
 训练截至 2025-06，验证期为 2025-07—12，测试期为 2026-01—06。主结果是每月更新的下月预测：每次预测可使用已公布的上月真实销量；固定起点六个月递归结果另作压力测试。""",
@@ -430,6 +436,12 @@ This notebook reads the saved analysis artifacts in the repository and reproduce
 
 Forecasting uses a fixed 371-series natural-month panel and never falls forward to a specification record later than the target year; the specification analysis requires aligned complete-year sales and product attributes; the user-needs analysis requires complete and traceable review text.""",
 
+        "engineering": """### Data engineering and reproduction boundary
+
+The complete local path follows `auto_raw → auto_staging → auto_mart`, while `auto_ops` records source batches, task attempts, quality results, and dataset versions. Airflow connects ingestion, quality gates, marts, model parity, and static JSON publication; a critical failure cannot replace dashboard data.
+
+The public notebook reads validated portable snapshots and therefore does not require access to local MySQL. Automated checks separately use fully synthetic fixtures for schema creation, idempotent ingestion, quality gates, and dashboard contracts without reading the full review corpus or accessing external websites.""",
+
         "forecast": """## 2. Monthly sales forecasting
 
 Training ends in 2025-06, validation covers 2025-07—12, and testing covers 2026-01—06. The headline refreshes each month for a one-month-ahead forecast and can use the latest published sales; the fixed-origin six-month recursive result is reported separately as a stress test.""",
@@ -485,7 +497,7 @@ def build(lang):
         md(t["title"]),
         code(("ZH = True\n" if zh else "ZH = False\n") + dedent(SETUP).strip()),
         code(LOAD),
-        md(t["sample"]), code(SAMPLES),
+        md(t["sample"]), code(SAMPLES), md(t["engineering"]),
         md(t["forecast"]), code(TIME),
         md(t["models"]), code(MODELS),
         md(t["uncertainty"]), code(UNCERTAINTY),

@@ -7,6 +7,8 @@ from pathlib import Path
 
 import pandas as pd
 
+from china_auto_market.reviews.temporal import reviews_before_cutoff
+
 
 BASE = Path(__file__).resolve().parents[1]
 SPLITS = BASE / "data" / "processed" / "splits"
@@ -45,7 +47,7 @@ def monthly_features(panel: pd.DataFrame, reviews: pd.DataFrame) -> tuple[pd.Dat
     for origin in sorted(panel["date"].unique()):
         origin = pd.Timestamp(origin)
         target = panel.loc[panel["date"].eq(origin), ["series_name", "date"]].copy()
-        prior = reviews.loc[reviews["publish_time"].lt(origin)].copy()
+        prior = reviews_before_cutoff(reviews, origin)
         recent = prior.loc[prior["publish_time"].ge(origin - pd.Timedelta(days=LOOKBACK_DAYS))].copy()
 
         all_counts = prior.groupby("series_name").size().rename("sentiment_review_count_prior_all")

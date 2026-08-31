@@ -1,0 +1,4 @@
+# Airflow is an application-level dependency and lives in .airflow-venv.
+# Install with the matching official Python 3.13 constraints file; see
+# scripts/setup_airflow_env.py.
+apache-airflow==3.3.1

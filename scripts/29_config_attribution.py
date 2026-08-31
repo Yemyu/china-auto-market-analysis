@@ -4,6 +4,7 @@
 The table is one row per series and year. Cross-validation is grouped by
 series, and the ablation compares year, year plus brand, and configuration.
 """
+import argparse
 import json
 import os
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -16,13 +17,18 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-import _font_setup  # noqa: F401
+from china_auto_market import visualization as _visualization  # noqa: F401
 from sklearn.model_selection import GroupKFold
 from sklearn.metrics import r2_score
 from xgboost import XGBRegressor
 
-from _feature_join import load_feature_source
-from _sales_repair import apply_verified_annual_sales_corrections
+from china_auto_market.features.configuration import load_feature_source
+from china_auto_market.quality.sales_repair import apply_verified_annual_sales_corrections
+from china_auto_market.warehouse.sources import (
+    load_product_analysis_mart,
+    load_raw_configuration,
+    load_standard_sales,
+)
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SALES = os.path.join(BASE, "data", "processed", "sales_filtered_24m.csv")
@@ -208,9 +214,19 @@ def cv_naive_baselines(df, y, groups):
 
 
 def main():
-    df = load_feature_source()
-    sales = pd.read_csv(SALES, low_memory=False)
-    df, annual_repair_audit = apply_verified_annual_sales_corrections(df, sales)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--backend", choices=("csv", "mysql"), default="csv")
+    parser.add_argument("--login-path", default="local-auto")
+    args = parser.parse_args()
+    if args.backend == "mysql":
+        sales = load_standard_sales(args.login_path)
+        source = load_raw_configuration(args.login_path)
+        _, annual_repair_audit = apply_verified_annual_sales_corrections(source, sales)
+        df = load_product_analysis_mart(args.login_path)
+    else:
+        df = load_feature_source()
+        sales = pd.read_csv(SALES, low_memory=False)
+        df, annual_repair_audit = apply_verified_annual_sales_corrections(df, sales)
     annual_repair_audit.to_csv(ANNUAL_REPAIR_AUDIT, index=False, encoding="utf-8-sig")
     print(f"[归因] 年度销量覆盖: {len(annual_repair_audit)} 行 / "
           f"{annual_repair_audit['series_name'].nunique()} 个车系 / "

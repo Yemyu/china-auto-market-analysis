@@ -2,11 +2,10 @@
 """Build review topics and sample-aware month-end alerts for 371 series."""
 from __future__ import annotations
 
-import importlib
+import argparse
 import hashlib
 import json
 import re
-import sys
 from pathlib import Path
 from typing import Any
 
@@ -21,11 +20,15 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 
+from china_auto_market import visualization as _visualization  # noqa: F401
+from china_auto_market.reviews import local_sentiment
+from china_auto_market.warehouse.sources import (
+    load_standard_review_labels,
+    load_standard_reviews,
+)
+
+
 BASE = Path(__file__).resolve().parents[1]
-SCRIPT_DIR = Path(__file__).resolve().parent
-sys.path.insert(0, str(SCRIPT_DIR))
-importlib.import_module("_font_setup")
-local_sentiment = importlib.import_module("27_build_local_sentiment_features")
 
 SENTIMENT = BASE / "data" / "reviews" / "processed"
 CORPUS = SENTIMENT / "target_371_review_corpus.csv"
@@ -123,9 +126,15 @@ def relevant_text(content: str, aspect: str) -> str:
     return "。".join(segments)
 
 
-def load_review_data() -> pd.DataFrame:
-    corpus = pd.read_csv(CORPUS, low_memory=False)
-    unified = pd.read_csv(UNIFIED, low_memory=False, parse_dates=["publish_time"])
+def load_review_data(*, backend: str = "csv", login_path: str = "local-auto") -> pd.DataFrame:
+    if backend == "mysql":
+        corpus = load_standard_reviews(login_path)
+        unified = load_standard_review_labels(login_path)
+    elif backend == "csv":
+        corpus = pd.read_csv(CORPUS, low_memory=False)
+        unified = pd.read_csv(UNIFIED, low_memory=False, parse_dates=["publish_time"])
+    else:
+        raise ValueError(f"Unsupported data backend: {backend}")
     corpus = corpus.loc[as_bool(corpus["eligible_for_temporal_model"]), ["identity", "content"]].copy()
     if corpus["identity"].duplicated().any() or unified["identity"].duplicated().any():
         raise ValueError("Review identity is not unique")
@@ -383,7 +392,9 @@ def build_text_insights(data: pd.DataFrame) -> tuple[pd.DataFrame, pd.DataFrame]
         mentioned = data[f"uniform_local_{aspect}_mentioned"].eq(1)
         columns = ["identity", "content", f"monitor_{aspect}_score"]
         documents = data.loc[mentioned, columns].copy()
-        documents["aspect_text"] = documents["content"].map(lambda value: relevant_text(value, aspect))
+        documents["aspect_text"] = documents["content"].map(
+            lambda value, selected_aspect=aspect: relevant_text(value, selected_aspect)
+        )
         documents["polarity"] = documents[f"monitor_{aspect}_score"]
         documents = documents.loc[documents["aspect_text"].str.strip().ne("")].copy()
         print(f"[topics:{aspect}] aspect snippets={len(documents):,}", flush=True)
@@ -559,9 +570,15 @@ def save_figure(aspects: pd.DataFrame, alerts: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--backend", choices=("csv", "mysql"), default="csv")
+    parser.add_argument("--login-path", default="local-auto")
+    args = parser.parse_args()
     OUT.mkdir(parents=True, exist_ok=True)
     FIG_DIR.mkdir(parents=True, exist_ok=True)
-    data = add_review_scores(load_review_data())
+    data = add_review_scores(
+        load_review_data(backend=args.backend, login_path=args.login_path)
+    )
     aspects, series = aspect_and_series_summaries(data)
     keywords, topics = build_text_insights(data)
     windows, alerts, latest_completed = window_statistics(data)

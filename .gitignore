@@ -5,6 +5,9 @@ __pycache__/
 dist/
 build/
 .venv/
+.airflow-venv/
+.airflow-venv-ci/
+.airflow-pythonpath/
 venv/
 
 # Environment
@@ -52,6 +55,7 @@ artifacts/
 # Logs
 *.log
 logs/
+airflow_home/
 
 # Jupyter
 .ipynb_checkpoints/

@@ -9,6 +9,13 @@ from typing import Any
 import pandas as pd
 from pandas.testing import assert_frame_equal
 
+from china_auto_market.reviews.temporal import (
+    TEST_ORIGIN,
+    VALIDATION_ORIGIN,
+    feature_cutoff,
+    reviews_before_cutoff,
+)
+
 
 BASE = Path(__file__).resolve().parents[1]
 SPLITS = BASE / "data" / "processed" / "splits"
@@ -26,8 +33,6 @@ ASPECTS = [
     "fuel_consumption", "configuration", "intelligence", "value",
 ]
 LOOKBACK_DAYS = 180
-VALIDATION_ORIGIN = pd.Timestamp("2025-07-01")
-TEST_ORIGIN = pd.Timestamp("2026-01-01")
 EXPECTED_SERIES = 371
 EXPECTED_REVIEWS = 24_175
 
@@ -81,7 +86,7 @@ def aggregate_at_cutoff(
     cutoff: pd.Timestamp,
     universe: list[str],
 ) -> tuple[pd.DataFrame, dict[str, Any]]:
-    prior = reviews.loc[reviews["publish_time"].lt(cutoff)].copy()
+    prior = reviews_before_cutoff(reviews, cutoff)
     recent_start = cutoff - pd.Timedelta(days=LOOKBACK_DAYS)
     recent = prior.loc[prior["publish_time"].ge(recent_start)].copy()
     base = pd.DataFrame(index=pd.Index(universe, name="series_name"))
@@ -164,17 +169,8 @@ def aggregate_at_cutoff(
 
 
 def cutoff_for(protocol: str, split: str, target_month: pd.Timestamp) -> pd.Timestamp:
-    if protocol == "rolling_origin":
-        return target_month
-    if protocol != "fixed_origin":
-        raise ValueError(protocol)
-    if split == "train":
-        return target_month
-    if split == "val":
-        return VALIDATION_ORIGIN
-    if split == "test":
-        return TEST_ORIGIN
-    raise ValueError(split)
+    """Compatibility name for the shared point-in-time cutoff rule."""
+    return feature_cutoff(protocol, split, target_month)
 
 
 def build_protocol(

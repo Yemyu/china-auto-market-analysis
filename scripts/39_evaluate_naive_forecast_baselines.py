@@ -8,7 +8,7 @@ import json
 import numpy as np
 import pandas as pd
 
-import _model_utils as mu
+from china_auto_market.forecasting import core as mu
 
 
 BASE = Path(__file__).resolve().parents[1]

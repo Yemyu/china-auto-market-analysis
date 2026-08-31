@@ -7,8 +7,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-import _font_setup
-from _sales_repair import apply_verified_sales_corrections
+from china_auto_market import visualization as _visualization  # noqa: F401
+from china_auto_market.quality.sales_repair import apply_verified_sales_corrections
 from matplotlib.ticker import FuncFormatter
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))

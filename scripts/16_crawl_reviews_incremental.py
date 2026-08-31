@@ -20,7 +20,7 @@ import requests
 BASE = Path(__file__).resolve().parents[1]
 SPLITS = BASE / "data" / "processed" / "splits"
 SERIES_INDEX = BASE / "data" / "raw" / "series_index.csv"
-READINESS = BASE / "data" / "processed" / "review_collection" / "review_readiness.csv"
+COVERAGE = BASE / "data" / "reviews" / "processed" / "target_371_review_coverage.csv"
 OUT = BASE / "data" / "reviews" / "raw"
 REVIEWS_OUT = OUT / "dongchedi_incremental_reviews.csv"
 MANIFEST_OUT = OUT / "dongchedi_incremental_manifest.csv"
@@ -52,11 +52,13 @@ def target_roster(mode: str) -> pd.DataFrame:
     brand = brand.sort_values("year").drop_duplicates("series_name", keep="last")[["series_name", "brand_name"]]
     roster = roster.merge(brand, on="series_name", how="left")
     if mode == "missing":
-        if not READINESS.exists():
-            raise FileNotFoundError("Run 15_audit_review_readiness.py before --mode missing.")
-        readiness = pd.read_csv(READINESS, usecols=["series_name", "archived_reviews_available"])
-        roster = roster.merge(readiness, on="series_name", how="left")
-        roster = roster[~roster["archived_reviews_available"].fillna(False)].drop(columns="archived_reviews_available")
+        if not COVERAGE.exists():
+            raise FileNotFoundError(f"Missing tracked coverage snapshot: {COVERAGE}")
+        coverage = pd.read_csv(COVERAGE, usecols=["series_name", "review_count"])
+        roster = roster.merge(coverage, on="series_name", how="left")
+        roster = roster.loc[roster["review_count"].fillna(0).eq(0)].drop(
+            columns="review_count"
+        )
     return roster.sort_values(["brand_name", "series_name"]).reset_index(drop=True)
 
 

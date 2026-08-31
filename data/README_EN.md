@@ -16,6 +16,19 @@ This guide lists the files, sample definitions, and generated outputs used by ea
 
 Each module has its own sample filter and evaluation protocol; metrics from different modules are not directly comparable.
 
+## Warehouse and lineage
+
+The complete local engineering path uses four logical MySQL databases:
+
+| Layer | Role | Main outputs |
+|---|---|---|
+| `auto_raw` | Preserve source-faithful batches and file hashes | Raw sales, specifications, reviews, labels, and repair evidence |
+| `auto_staging` | Standardize types, resolve series, deduplicate, and enforce availability | Standard sales, specifications, reviews, and ten-aspect features |
+| `auto_mart` | Provide stable facts, dimensions, and subject interfaces | Forecast, product, and user-needs marts |
+| `auto_ops` | Record runs, tasks, quality results, and versions across layers | Batch status, failures, lineage, and publication manifests |
+
+The CSV and JSON files in the public repository are validated portable snapshots and do not require a local database connection. The full local path and portable snapshots share the same time splits, sample definitions, and metric contracts.
+
 ## Directory structure
 
 | Path | Contents |
@@ -121,3 +134,16 @@ After preparing dependencies in the project environment, the main outputs can be
 ```
 
 For the full review-label pipeline, prepare the review corpus as described in the root Notebook and script comments. Re-labeling missing review labels is optional.
+
+With the complete local source snapshots and an isolated MySQL instance, the engineering path runs in this order:
+
+```bash
+.venv/bin/python scripts/initialize_mysql.py --apply
+.venv/bin/python scripts/ingest_raw.py --dataset all --mode full
+.venv/bin/python scripts/validate_raw.py
+.venv/bin/python scripts/rebuild_staging.py
+.venv/bin/python scripts/rebuild_core_marts.py
+.venv/bin/python scripts/validate_core_marts.py
+```
+
+Database credentials are read only through a local encrypted login path; plaintext command-line passwords are not accepted. CI uses the fully synthetic fixtures under `tests/fixtures/ci/` to exercise the same DDL, ingestion, idempotency, and staging quality rules. Those fixtures do not replace full-data business evaluation.
