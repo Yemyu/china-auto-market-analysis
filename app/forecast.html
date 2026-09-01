@@ -226,9 +226,17 @@
       var bootLabels = r.granger.aspects.map(publicReviewName);
       if (!chartBootstrap) chartBootstrap = initChart('chartBootstrap');
       chartBootstrap.setOption({
-        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
+        tooltip: Object.assign({
+          trigger: 'axis',
+          axisPointer: { type: 'shadow' },
+          formatter: function (params) {
+            var point = Array.isArray(params) ? params[0] : params;
+            return escapeHTML(point.name) + '<br>' + point.marker +
+              (Number(point.value) * 100).toFixed(1) + '%';
+          }
+        }, tooltipStyle()),
         grid: baseGrid({ left: 125, top: 22, right: 56, bottom: 44 }),
-        xAxis: Object.assign({ type: 'value', min: .7, max: 1, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } } }, axisStyle()),
+        xAxis: Object.assign({ type: 'value', min: 0, max: 1, interval: .2, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } } }, axisStyle()),
         yAxis: Object.assign({ type: 'category', data: bootLabels }, axisStyle()),
         series: [{ type: 'bar', barMaxWidth: 18, data: r.granger.sig_rates.map(function (v) { return { value: v, itemStyle: { color: v >= .9 ? '#2a65b7' : '#8fa2b5' } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 10, formatter: function (p) { return (p.value * 100).toFixed(1) + '%'; } } }]
       }, true);
