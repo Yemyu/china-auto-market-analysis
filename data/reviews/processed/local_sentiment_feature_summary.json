@@ -7,5 +7,5 @@
   "method": "Reviewer-submitted platform ratings plus deterministic automotive lexicon ABSA; source ratings and text-derived polarity are not combined.",
   "time_rule": "Downstream monthly features must use only rows published before the relevant forecast origin.",
   "quality_rule": "Only corpus rows eligible_for_temporal_model are scored; Autohome list summaries without successful full-detail parsing are excluded.",
-  "legacy_reference_rule": "Legacy DeepSeek labels are used only for nonzero-label agreement diagnostics. Their zero label is not treated as neutral or as not-mentioned ground truth."
+  "legacy_reference_rule": "Legacy reference labels are used only for nonzero-label agreement diagnostics. Their zero label is not treated as neutral or as not-mentioned ground truth."
 }

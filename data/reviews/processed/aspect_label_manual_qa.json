@@ -2,7 +2,7 @@
   "schema_version": "v1",
   "reviewed_at": "2026-08-24",
   "reviewer": "codex_sol_manual_qa",
-  "scope": "All 42 compact DeepSeek reviews whose ten aspect mention flags were false.",
+  "scope": "All 42 compact legacy-reference reviews whose ten aspect mention flags were false.",
   "policy": "Only explicit attitudes toward the target series and the fixed ten ABSA aspects are labeled. Dealer service and undifferentiated overall sentiment remain outside the aspect schema.",
   "accepted_all_unmentioned": {
     "dongchedi::7649687673392615448": "Generic overall assessment without a named product aspect.",

@@ -21,6 +21,10 @@ config/.env
 *.swp
 *.swo
 
+# Local agent/tool state
+.codex/
+.workbuddy/
+
 # macOS
 .DS_Store
 .AppleDouble
