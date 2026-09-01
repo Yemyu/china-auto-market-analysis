@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Compare DE-5 core marts with the frozen pre-migration inputs."""
+"""Compare the business marts with the frozen reference inputs."""
 
 from __future__ import annotations
 

@@ -69,13 +69,7 @@ def _unpack_payload(raw: dict) -> tuple[list[dict], int, bool]:
 
 
 def _curl_page(series_id: int, page: int, attempts: int = 3) -> tuple[list[dict] | None, int, bool, str]:
-    """TLS fallback for hosts where Python/OpenSSL is rejected by the source.
-
-    This remains a normal public GET request.  ``subprocess`` receives an
-    argument list (not a shell string), so the numerical ID cannot alter the
-    command.  The fallback makes the crawler portable without silently
-    treating a transport error as an empty review list.
-    """
+    """Fetch with curl on hosts that reject Python's TLS profile."""
     url = (f"{API_URL}?series_id={int(series_id)}&page={int(page)}&size=15"
            "&city_name=&sort_by=default")
     last_error = ""
@@ -87,7 +81,14 @@ def _curl_page(series_id: int, page: int, attempts: int = 3) -> tuple[list[dict]
             ], check=True, capture_output=True, text=True, timeout=30)
             reviews, total, has_more = _unpack_payload(json.loads(result.stdout))
             return reviews, total, has_more, ""
-        except Exception as exc:
+        except (
+            AttributeError,
+            json.JSONDecodeError,
+            OSError,
+            subprocess.SubprocessError,
+            TypeError,
+            ValueError,
+        ) as exc:
             last_error = f"curl attempt {attempt}/{attempts} {type(exc).__name__}: {exc}"
             if attempt < attempts:
                 time.sleep(4 * attempt + random.uniform(0, 1))
@@ -109,7 +110,7 @@ def fetch_page(session: requests.Session, series_id: int, page: int) -> tuple[li
         resp.raise_for_status()
         reviews, total, has_more = _unpack_payload(resp.json())
         return reviews, total, has_more, ""
-    except Exception as exc:  # network failures are recorded in the manifest
+    except (AttributeError, requests.RequestException, TypeError, ValueError) as exc:
         return None, 0, False, f"curl first: {curl_error}; requests {type(exc).__name__}: {exc}"
 
 

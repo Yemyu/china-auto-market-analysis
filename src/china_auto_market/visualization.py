@@ -1,14 +1,20 @@
-"""Global matplotlib font setup for Chinese labels."""
+"""Matplotlib defaults for charts with Chinese labels."""
+
 import matplotlib.pyplot as plt
 
-# Prefer macOS system CJK fonts, then common Windows/Linux fallbacks, then DejaVu
-plt.rcParams['font.sans-serif'] = [
-    'PingFang SC',
-    'Heiti SC',
-    'Hiragino Sans GB',
-    'SimHei',
-    'Noto Sans CJK SC',
-    'Microsoft YaHei',
-    'DejaVu Sans',
+
+CJK_FONT_FALLBACKS = [
+    "PingFang SC",
+    "Heiti SC",
+    "Hiragino Sans GB",
+    "SimHei",
+    "Noto Sans CJK SC",
+    "Microsoft YaHei",
+    "DejaVu Sans",
 ]
-plt.rcParams['axes.unicode_minus'] = False  # avoid tofu minus signs
+
+
+def configure_chinese_fonts() -> None:
+    """Apply the font fallback used by the analysis charts."""
+    plt.rcParams["font.sans-serif"] = CJK_FONT_FALLBACKS
+    plt.rcParams["axes.unicode_minus"] = False

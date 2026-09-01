@@ -83,14 +83,21 @@ def fetch_page(session: requests.Session, series_id: int, page: int, page_size: 
         ], check=True, capture_output=True, text=True, timeout=35)
         reviews, total, has_more, returned_name = unpack(json.loads(result.stdout))
         return reviews, total, has_more, returned_name, ""
-    except Exception as exc:
+    except (
+        AttributeError,
+        json.JSONDecodeError,
+        OSError,
+        subprocess.SubprocessError,
+        TypeError,
+        ValueError,
+    ) as exc:
         curl_error = f"curl {type(exc).__name__}: {exc}"
     try:
         response = session.get(url, headers=HEADERS, timeout=30)
         response.raise_for_status()
         reviews, total, has_more, returned_name = unpack(response.json())
         return reviews, total, has_more, returned_name, ""
-    except Exception as exc:
+    except (AttributeError, requests.RequestException, TypeError, ValueError) as exc:
         return None, 0, False, "", f"{curl_error}; requests {type(exc).__name__}: {exc}"
 
 
@@ -100,9 +107,7 @@ def content_from_sections(review: dict) -> tuple[str, bool]:
         f"{str(item.get('structuredname') or '评价').strip()}: {str(item.get('content') or '').strip()}"
         for item in sections if str(item.get("content") or "").strip()
     ).strip()
-    # The list API visibly marks abbreviated passages with an ellipsis.  This
-    # False means no visible abbreviation marker,
-    # not a guarantee that it is the original full-detail text.
+    # No ellipsis means only that the list response does not look truncated.
     abbreviated = any(str(item.get("content") or "").rstrip().endswith(("...", "…")) for item in sections)
     return text, abbreviated
 

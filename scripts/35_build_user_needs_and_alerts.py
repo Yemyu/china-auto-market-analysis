@@ -19,14 +19,14 @@ from sklearn.feature_extraction.text import CountVectorizer, TfidfVectorizer
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-
-from china_auto_market import visualization as _visualization  # noqa: F401
 from china_auto_market.reviews import local_sentiment
+from china_auto_market.visualization import configure_chinese_fonts
 from china_auto_market.warehouse.sources import (
     load_standard_review_labels,
     load_standard_reviews,
 )
 
+configure_chinese_fonts()
 
 BASE = Path(__file__).resolve().parents[1]
 

@@ -20,12 +20,12 @@ from xgboost import XGBRegressor
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-
-from china_auto_market import visualization as _visualization  # noqa: F401
 from china_auto_market.features.configuration import CFG_NUM, _load_cfg_frame
 from china_auto_market.forecasting import core as mu
 from china_auto_market.quality.series_mapping import build_series_name_mapping
+from china_auto_market.visualization import configure_chinese_fonts
 
+configure_chinese_fonts()
 
 BASE = Path(__file__).resolve().parents[1]
 

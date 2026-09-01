@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Compatibility CLI for the fixed-origin review-feature evaluation."""
+"""Evaluate review features in the fixed-origin forecast."""
 
-from china_auto_market.forecasting.review_evaluation import *  # noqa: F401,F403
 from china_auto_market.forecasting.review_evaluation import main
 
 

@@ -7,8 +7,8 @@ import numpy as np
 import matplotlib
 matplotlib.use('Agg')
 import matplotlib.pyplot as plt
-from china_auto_market import visualization as _visualization  # noqa: F401
 from china_auto_market.quality.sales_repair import apply_verified_sales_corrections
+from china_auto_market.visualization import configure_chinese_fonts
 from matplotlib.ticker import FuncFormatter
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -20,6 +20,7 @@ os.makedirs(FIG, exist_ok=True)
 
 MIN_RUN = 24
 
+configure_chinese_fonts()
 plt.rcParams.update({
     'font.family': 'sans-serif',
     'font.sans-serif': ['DejaVu Sans', 'Arial', 'Helvetica', 'sans-serif'],

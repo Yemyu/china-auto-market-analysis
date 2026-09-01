@@ -19,9 +19,11 @@ from xgboost import XGBRegressor, __version__ as xgboost_version
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
-from china_auto_market import visualization as _visualization  # noqa: F401
 from china_auto_market.forecasting import core as mu
 from china_auto_market.paths import PROJECT_ROOT
+from china_auto_market.visualization import configure_chinese_fonts
+
+configure_chinese_fonts()
 
 SENTIMENT = PROJECT_ROOT / "data" / "reviews" / "processed"
 LOCAL_ROLLING = SENTIMENT / "sentiment_features_by_series_month.csv"

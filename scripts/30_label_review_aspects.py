@@ -9,7 +9,6 @@ from __future__ import annotations
 import argparse
 import hashlib
 import json
-import sys
 import time
 from datetime import datetime, timezone
 from pathlib import Path
@@ -18,11 +17,10 @@ from typing import Any
 import pandas as pd
 import requests
 
+from china_auto_market.reviews.labeling_config import load_review_labeling_config
 
 BASE = Path(__file__).resolve().parents[1]
-sys.path.insert(0, str(BASE))
-from config import settings  # noqa: E402
-
+SETTINGS = load_review_labeling_config()
 
 CORPUS = BASE / "data" / "reviews" / "processed" / "target_371_review_corpus.csv"
 HISTORICAL = BASE / "data" / "resources" / "historical_reviews" / "review_absa_reference.csv.gz"
@@ -49,7 +47,7 @@ ASPECT_DESCRIPTIONS = [
     "售价/优惠/成本/物有所值",
 ]
 
-MODEL = settings.REVIEW_LABEL_MODEL
+MODEL = SETTINGS.model
 PROMPT_VERSION = "review_aspect_batch_v1"
 SAMPLE_VERSION = "review_aspect_missing_v1"
 MAX_OUTPUT_TOKENS = 2000
@@ -61,7 +59,7 @@ PRICE_USD_PER_MILLION = {
 
 
 class NonRetryableAPIError(RuntimeError):
-    pass
+    """An API response that should not be retried."""
 
 
 def system_prompt() -> str:
@@ -216,7 +214,7 @@ def request_batch(batch: list[pd.Series], retries: int) -> tuple[dict[str, Any],
         "max_tokens": MAX_OUTPUT_TOKENS,
         "temperature": 0,
     }
-    headers = {"Authorization": f"Bearer {settings.REVIEW_LABEL_API_KEY}", "Content-Type": "application/json"}
+    headers = {"Authorization": f"Bearer {SETTINGS.api_key}", "Content-Type": "application/json"}
     started = datetime.now(timezone.utc)
     total_usage = {key: 0 for key in [
         "prompt_tokens", "cache_hit_tokens", "cache_miss_tokens", "completion_tokens", "total_tokens"
@@ -233,8 +231,8 @@ def request_batch(batch: list[pd.Series], retries: int) -> tuple[dict[str, Any],
         tier = pricing_tier(datetime.now(timezone.utc))
         try:
             response = requests.post(
-                f"{settings.REVIEW_LABEL_BASE_URL.rstrip('/')}/chat/completions",
-                headers=headers, json=body, timeout=settings.REVIEW_LABEL_TIMEOUT,
+                f"{SETTINGS.base_url.rstrip('/')}/chat/completions",
+                headers=headers, json=body, timeout=SETTINGS.timeout,
             )
             if response.status_code >= 400:
                 detail = response.text.replace("\n", " ")[:300]
@@ -265,7 +263,14 @@ def request_batch(batch: list[pd.Series], retries: int) -> tuple[dict[str, Any],
                 "finished_at": datetime.now(timezone.utc).isoformat(),
             }
             return call, parsed
-        except Exception as exc:  # noqa: BLE001
+        except (
+            IndexError,
+            KeyError,
+            RuntimeError,
+            TypeError,
+            ValueError,
+            requests.RequestException,
+        ) as exc:
             last_error = f"{type(exc).__name__}: {exc}"[:500]
             if isinstance(exc, NonRetryableAPIError):
                 break
@@ -349,10 +354,10 @@ def main() -> None:
     if args.batch_size < 1 or args.max_cost_cny <= 0 or args.max_retries < 1:
         raise ValueError("batch size, cost ceiling, and retries must be positive")
     if not args.dry_run and (
-        not settings.REVIEW_LABEL_API_KEY
-        or settings.REVIEW_LABEL_API_KEY == "xxxxx"
-        or not settings.REVIEW_LABEL_MODEL
-        or not settings.REVIEW_LABEL_BASE_URL
+        not SETTINGS.api_key
+        or SETTINGS.api_key == "xxxxx"
+        or not SETTINGS.model
+        or not SETTINGS.base_url
     ):
         raise RuntimeError("Review-label API credentials are not configured")
     missing = load_missing_reviews()

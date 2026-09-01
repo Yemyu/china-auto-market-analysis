@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build DE-5 core marts after exact shadow parity checks."""
+"""Rebuild the three business marts after source parity checks."""
 
 from __future__ import annotations
 

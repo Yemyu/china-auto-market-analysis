@@ -52,15 +52,12 @@ def join_cfg(
     keep_unmatched: bool = False,
     feature_source: pd.DataFrame | None = None,
 ):
-    """Join by series/year with a causal specification fallback.
+    """Join the latest configuration that is not newer than the sales year.
 
-    By default this keeps the historical behaviour and drops monthly rows for
-    which no specification is available.  Forecasting panels can instead set
-    ``keep_unmatched=True``: the sales row is retained, numeric attributes use
-    the configuration-table median, and encoded categorical attributes use
-    ``-1`` as an explicit unknown sentinel.  This is important for preserving
-    the calendar spacing of the sales history; a missing configuration record
-    must not silently turn two months ago into the previous month.
+    With ``keep_unmatched=True``, sales rows without a usable configuration are
+    retained so that missing specifications cannot create gaps in the monthly
+    lag history. Numeric fields use the configuration median and categories use
+    ``-1`` for unknown.
     """
     fk = _load_cfg_frame() if feature_source is None else _load_cfg_frame(feature_source)
     mapping = build_series_name_mapping(sm["series_name"], fk["series_name"])

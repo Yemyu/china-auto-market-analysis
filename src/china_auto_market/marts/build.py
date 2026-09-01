@@ -1,4 +1,4 @@
-"""Atomic builders for the first DE-5 business marts."""
+"""Build the business marts and record their quality results."""
 
 from __future__ import annotations
 

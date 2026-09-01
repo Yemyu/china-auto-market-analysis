@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Compatibility CLI for the frozen chronological dataset split."""
+"""Build the train, validation, and test splits."""
 
-from china_auto_market.features.splits import *  # noqa: F401,F403
 from china_auto_market.features.splits import main
 
 

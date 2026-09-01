@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
-"""Compatibility CLI for local review sentiment feature generation."""
+"""Build local review sentiment features."""
 
-from china_auto_market.reviews.local_sentiment import *  # noqa: F401,F403
 from china_auto_market.reviews.local_sentiment import main
 
 

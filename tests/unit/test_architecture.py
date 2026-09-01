@@ -38,3 +38,17 @@ def test_formal_entry_points_do_not_dynamically_import_numbered_scripts() -> Non
         if any(module == "importlib" or module.startswith("importlib.") for module in imported):
             offenders.append(name)
     assert offenders == []
+
+
+def test_formal_entry_points_do_not_use_wildcard_imports() -> None:
+    offenders: list[str] = []
+    for name in FORMAL_ENTRY_POINTS:
+        path = PROJECT_ROOT / "scripts" / name
+        tree = ast.parse(path.read_text(encoding="utf-8"), filename=str(path))
+        if any(
+            isinstance(node, ast.ImportFrom)
+            and any(alias.name == "*" for alias in node.names)
+            for node in ast.walk(tree)
+        ):
+            offenders.append(name)
+    assert offenders == []

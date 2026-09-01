@@ -17,18 +17,20 @@ import pandas as pd
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from china_auto_market import visualization as _visualization  # noqa: F401
 from sklearn.model_selection import GroupKFold
 from sklearn.metrics import r2_score
 from xgboost import XGBRegressor
 
 from china_auto_market.features.configuration import load_feature_source
 from china_auto_market.quality.sales_repair import apply_verified_annual_sales_corrections
+from china_auto_market.visualization import configure_chinese_fonts
 from china_auto_market.warehouse.sources import (
     load_product_analysis_mart,
     load_raw_configuration,
     load_standard_sales,
 )
+
+configure_chinese_fonts()
 
 BASE = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SALES = os.path.join(BASE, "data", "processed", "sales_filtered_24m.csv")
@@ -344,8 +346,8 @@ def main():
         plt.savefig(os.path.join(FIG, "config_attribution_shap.png"), dpi=130)
         plt.close()
         print("\n[SHAP] assets/analysis/config_attribution_shap.png")
-    except Exception as e:
-        print(f"\n[SHAP] 跳过: {e}")
+    except (ImportError, RuntimeError, TypeError, ValueError) as error:
+        print(f"\n[SHAP] 跳过: {error}")
 
     print("[归因] 完成。")
 

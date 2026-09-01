@@ -65,25 +65,11 @@ def wmape_per_series(y_true, y_pred, series):
 
 def recursive_forecast_tree(model, series_df, feat_cols=None,
                             history_splits=("train",), forecast_splits=("val", "test")):
-    """用训练好的树模型在指定时期上做递归多步预测。
+    """Forecast each requested month and feed predictions into later lags.
 
-    ``history_splits`` contains periods whose realised sales are legitimately
-    known when the forecast starts; ``forecast_splits`` are forecast
-    recursively.  For example, validation uses ``train -> val`` while the
-    final test forecast uses ``train+val -> test`` after model selection.
-
-    机制（无泄漏）：
-      * seed history = ``history_splits`` 中、预测起点之前的真实 monthly_sales。
-      * 对每一个 forecast 月份：
-          - 用「当前 running history」构造 lag_1..3 / roll_mean_3/6（只引用过去），
-          - 配置列取该月自身在 splits 中已 join 好的因果配置（year<=行年），
-          - ``feat_cols`` 中的其他列直接取该预测月预先准备好的外生变量；
-            调用方必须保证它们在预测起点已可获得（例如按月截断的评论特征）。
-          - predict -> expm1 -> clip(>=0) -> 记为该月预测，并 append 进 history。
-      * 因此 test 月份用到的 lag，除了首月来自真实 2025-06，其后均为递归预测值，
-        与真实推理一致；绝不偷看该月实际销量。
-
-    返回 {Timestamp: pred}（仅非 train 月份）。
+    Observed sales from ``history_splits`` seed the history. Once forecasting
+    starts, later lag features use earlier predictions. Any extra feature in
+    ``feat_cols`` must already satisfy its own information cutoff.
     """
     if feat_cols is None:
         feat_cols = FEAT_COLS

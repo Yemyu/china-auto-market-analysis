@@ -39,13 +39,13 @@ def fetch_html(session: requests.Session, review_id: str, referer: str) -> tuple
             "-e", referer, url,
         ], check=True, capture_output=True, text=True, timeout=35)
         return result.stdout, ""
-    except Exception as exc:
+    except (OSError, subprocess.SubprocessError) as exc:
         curl_error = f"curl {type(exc).__name__}: {exc}"
     try:
         response = session.get(url, headers={**HEADERS, "Referer": referer}, timeout=30)
         response.raise_for_status()
         return response.text, ""
-    except Exception as exc:
+    except requests.RequestException as exc:
         return None, f"{curl_error}; requests {type(exc).__name__}: {exc}"
 
 
@@ -117,7 +117,7 @@ def main() -> None:
                 if not content:
                     status = "empty"
                     error = "HTTP succeeded but no div.kb-item p.kb-item-msg content was found"
-            except Exception as exc:
+            except (AttributeError, TypeError, ValueError) as exc:
                 status = "error"
                 error = f"parse {type(exc).__name__}: {exc}"
         record = pd.DataFrame([{
