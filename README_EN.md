@@ -106,7 +106,7 @@ The model fits `log1p(annual sales)` and R² is calculated on that scale. WMAPE 
 
 The analysis uses complete 2022–2025 calendar years. GroupKFold holds out entire series, and imputation and encoding are fitted within each training fold. This measures generalisation to unseen series, not to future years. A year-specific median baseline fitted on the same training folds has 87.21% WMAPE versus 73.85% for the full model. Considerable variation remains unexplained.
 
-Feature importance uses XGBoost gain. It describes contributions to tree splits, not effect direction or causality. The analysis can support comparisons of similar products, but it cannot estimate the sales or financial return from adding a feature. Annual series-level specifications and list prices also do not replace trim-level sales or transaction prices.
+Feature importance uses XGBoost gain to describe contributions to tree splits. The analysis supports comparisons of similar products; annual series-level specifications and list prices also do not replace trim-level sales or transaction prices.
 
 ### 3. 💬 User needs and risk
 
@@ -128,7 +128,7 @@ The 123 eligible series represent 33.2% of the 371-series target cohort. Other s
 
 These are the development splits. After selecting each model configuration, both the rolling and fixed-origin models are refitted on Train+Validation. Test sales enter history only for subsequent rolling predictions; they do not refit model weights during the test window. The notebook rescores saved predictions; scripts perform model training.
 
-The 2026 evaluation window has been examined during development and is not a new independent holdout. Review bootstrap intervals are conditional on the fitted models and observed months; they do not include uncertainty from refitting, model selection or future time windows.
+The January–June 2026 evaluation window was examined during development for checks and repairs, so it is treated as a fixed retrospective evaluation rather than presented as a completely new blind holdout. Review bootstrap intervals are conditional on the fitted models and observed months; they do not include uncertainty from refitting, model selection or future time windows.
 
 Rolling evaluation updates observed sales history each month; the fixed stress test recursively generates post-origin sales lags. Review features use only reviews published before their relevant cutoff. The strict corpus keeps complete text, publication time, and auditable source fields; list-only summaries without detail text are excluded from temporal modeling. Missing review coverage remains missing with an availability indicator rather than being coded as neutral.
 
@@ -167,16 +167,7 @@ Airflow manages monthly dependencies, retries, backfills, and failure blocking.
 
 The static dashboard remains directly viewable on GitHub Pages and does not require access to local MySQL. MySQL and Airflow implement the full local engineering path, while pre-baked JSON is the public delivery interface.
 
-The following entry points expose testable behaviour:
-
-| Behaviour | Implementation or test | Observable result |
-|---|---|---|
-| Repeated ingestion | [MySQL integration test](./tests/integration/test_mysql_pipeline.py) | The second identical batch is skipped; row counts do not increase |
-| Invalid data | [SQL quality rules](./sql/quality/) | A critical failure blocks subsequent publication |
-| Failed publication | [Publication tests](./tests/unit/test_publication_release.py) | Existing public files remain available after failure |
-| Dependencies and retries | [Monthly DAG](./dags/) | Upstream status controls downstream execution |
-
-Quality checks establish structural and processing consistency, not the accuracy of every source value. Backfills replay processing against available cumulative snapshots; missing historical source versions cannot be recovered. Source code and local tests are available for review; GitHub Actions is used only to deploy the Pages dashboard.
+The engineering implementation is available in `src/`, `sql/`, `dags/`, and `tests/`; the public dashboard uses pre-baked JSON and does not require access to the local database.
 
 ## Quick start
 
