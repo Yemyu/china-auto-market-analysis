@@ -6,6 +6,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from pathlib import Path
 
 import pandas as pd
 from pandas.testing import assert_frame_equal
@@ -20,24 +21,26 @@ from china_auto_market.warehouse.sources import (
     load_standard_review_labels,
     load_standard_sales,
     load_user_needs_mart,
+    staging_configuration_batch,
 )
 
 
 def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--login-path", default=os.environ.get("MYSQL_LOGIN_PATH", "local-auto"))
+    parser.add_argument("--split-dir", type=Path, default=Path("data/processed/splits"))
     args = parser.parse_args()
 
     mart_forecast = load_forecast_feature_mart(args.login_path)
     frozen = pd.concat(
-        [pd.read_csv(f"data/processed/splits/{split}.csv", parse_dates=["date"])
+        [pd.read_csv(args.split_dir / f"{split}.csv", parse_dates=["date"])
          for split in ("train", "val", "test")],
         ignore_index=True,
     )
     forecast_columns = [
         "series_name", "series_id", "date", "year", "month", "brand", "category",
         "category_en", "monthly_sales", "lag_1", "lag_2", "lag_3", "roll_mean_3",
-        "roll_mean_6", "month_sin", "month_cos", *CFG_COLS, "lag_12", "roll_mean_12", "split",
+        "roll_mean_6", "month_sin", "month_cos", "lag_12", "roll_mean_12", "split",
     ]
     assert_frame_equal(
         mart_forecast[forecast_columns].sort_values(["date", "series_name"]).reset_index(drop=True),
@@ -48,7 +51,12 @@ def main() -> None:
         atol=1e-12,
     )
 
-    config = load_raw_configuration(args.login_path)
+    if set(CFG_COLS) & set(mart_forecast.columns):
+        raise ValueError("Forecast mart still contains globally preprocessed configuration values")
+    batch = mart_forecast.attrs.get("configuration_batch_id")
+    if batch is None or batch != staging_configuration_batch(args.login_path):
+        raise ValueError("Forecast configuration reference does not match its standardized source batch")
+    config = load_raw_configuration(args.login_path, batch_id=batch)
     sales = load_standard_sales(args.login_path)
     expected_product, audit = apply_verified_annual_sales_corrections(config, sales)
     expected_product = expected_product.loc[
@@ -89,6 +97,8 @@ def main() -> None:
         "forecast_rows": len(mart_forecast),
         "forecast_series": int(mart_forecast["series_name"].nunique()),
         "forecast_value_parity": True,
+        "forecast_configuration_batch_id": batch,
+        "forecast_configuration_policy": mart_forecast.attrs["configuration_policy"],
         "product_rows": len(mart_product),
         "product_series": int(mart_product["series_name"].nunique()),
         "product_value_parity": True,

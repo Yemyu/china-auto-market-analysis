@@ -2,6 +2,8 @@
 from __future__ import annotations
 
 import os
+import argparse
+from pathlib import Path
 
 os.environ["OMP_NUM_THREADS"] = "1"
 
@@ -20,6 +22,7 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 
 from china_auto_market.forecasting import core as mu
+from china_auto_market.features.configuration_window import prepare_configuration_window
 from china_auto_market.paths import PROJECT_ROOT
 from china_auto_market.visualization import configure_chinese_fonts
 
@@ -209,10 +212,32 @@ def build_frames(
     }
     required = set(column for columns in versions.values() for column in columns)
     for name, frame in frames.items():
+        frame.attrs.update(train.attrs)
         missing = required - set(frame.columns)
         if missing:
             raise ValueError(f"{name} is missing model columns: {sorted(missing)}")
     return frames, versions, manifest
+
+
+def prepare_fixed_panels(frames, source):
+    """Fit configuration transforms separately for validation and final refit.
+
+    Reviews deliberately retain NaNs for XGBoost. Only sales/calendar lag
+    availability defines eligible training rows for configuration statistics.
+    """
+    training = frames["train_roll"]
+    # XGBoost subsampling depends on row order. Both backends must use the
+    # same order, including when their values and keys already match.
+    order = ["series_name", "date"]
+    validation = pd.concat([training, frames["val_fixed"]], ignore_index=True).sort_values(order)
+    final = pd.concat([training, frames["val_roll"], frames["test_fixed"]], ignore_index=True).sort_values(order)
+    rolling = pd.concat([training, frames["val_roll"], frames["test_roll"]], ignore_index=True).sort_values(order)
+    validation, first = prepare_configuration_window(validation, source, pd.Timestamp("2025-07-01"), mu.FEAT_COLS)
+    final, second = prepare_configuration_window(final, source, pd.Timestamp("2026-01-01"), mu.FEAT_COLS)
+    rolling, third = prepare_configuration_window(rolling, source, pd.Timestamp("2026-01-01"), mu.FEAT_COLS)
+    if second != third:
+        raise ValueError("Fixed/rolling review paths fitted different configuration transforms")
+    return validation, final, rolling, [first, second]
 
 
 def new_model(n_estimators: int) -> XGBRegressor:
@@ -441,20 +466,36 @@ def save_figure(summary: pd.DataFrame) -> None:
 
 
 def main() -> None:
+    global OUT, FIG, SUMMARY, VALIDATION_GRID, PREDICTIONS, SERIES_METRICS
+    global COVERAGE, FEATURE_MANIFEST, RUN_SUMMARY, FIGURE
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--backend", choices=("csv", "mysql"), default="csv")
+    parser.add_argument("--login-path", default="local-auto")
+    parser.add_argument("--output-dir", type=Path)
+    parser.add_argument("--locked-capacity", action="store_true",
+                        help="Keep saved validation-selected tree counts for a repair comparison")
+    args = parser.parse_args()
+    saved_capacity = pd.read_csv(SUMMARY).set_index("version")["validation_selected_n_estimators"].to_dict() if args.locked_capacity else None
+    saved_selection = (json.loads(RUN_SUMMARY.read_text(encoding="utf-8"))[
+        "validation_selected_primary_version"] if args.locked_capacity else None)
+    if args.output_dir:
+        OUT = args.output_dir.resolve()
+        FIG = OUT
+        SUMMARY, VALIDATION_GRID, PREDICTIONS, SERIES_METRICS, COVERAGE, FEATURE_MANIFEST, RUN_SUMMARY, FIGURE = [
+            OUT / path.name for path in (SUMMARY, VALIDATION_GRID, PREDICTIONS, SERIES_METRICS,
+                                        COVERAGE, FEATURE_MANIFEST, RUN_SUMMARY, FIGURE)]
     OUT.mkdir(parents=True, exist_ok=True)
     FIG.mkdir(parents=True, exist_ok=True)
-    frames, versions, manifest = build_frames()
+    frames, versions, manifest = build_frames(backend=args.backend, login_path=args.login_path)
     manifest.to_csv(FEATURE_MANIFEST, index=False, encoding="utf-8-sig")
 
     train = frames["train_roll"]
     val_roll = frames["val_roll"]
-    val_fixed = frames["val_fixed"]
-    test_roll = frames["test_roll"]
     test_fixed = frames["test_fixed"]
-    validation_panel = pd.concat([train, val_fixed], ignore_index=True).sort_values(["series_name", "date"])
-    train_val_roll = pd.concat([train, val_roll], ignore_index=True).sort_values(["series_name", "date"])
-    fixed_test_panel = pd.concat([train, val_roll, test_fixed], ignore_index=True).sort_values(["series_name", "date"])
-    rolling_test_panel = pd.concat([train, val_roll, test_roll], ignore_index=True).sort_values(["series_name", "date"])
+    source = mu.load_configuration_source(backend=args.backend, login_path=args.login_path, frame=train)
+    validation_panel, fixed_test_panel, rolling_test_panel, preprocessing = prepare_fixed_panels(frames, source)
+    train = validation_panel.loc[validation_panel["split"].eq("train")].copy()
+    train_val_roll = fixed_test_panel.loc[fixed_test_panel["split"].isin(["train", "val"])].copy()
 
     print(
         f"[full371] train={len(train):,} val={len(val_roll):,} test={len(test_fixed):,} "
@@ -468,8 +509,19 @@ def main() -> None:
     final_models: dict[str, XGBRegressor] = {}
 
     for version, columns in versions.items():
-        print(f"[full371:{version}] selecting capacity with {len(columns)} features", flush=True)
-        best_trees, grid = select_trees(version, columns, train, validation_panel)
+        action = "evaluating saved capacity" if saved_capacity is not None else "selecting capacity"
+        print(f"[full371:{version}] {action} with {len(columns)} features", flush=True)
+        if saved_capacity is None:
+            best_trees, grid = select_trees(version, columns, train, validation_panel)
+        else:
+            best_trees = int(saved_capacity[version])
+            check_model = new_model(best_trees)
+            check_model.fit(train[columns], np.log1p(train[mu.TARGET]), verbose=False)
+            check = recursive_predictions(check_model, validation_panel, columns, "val", ("train",), version, "fixed_origin_validation")
+            grid = pd.DataFrame([{"version": version, "n_estimators": best_trees,
+                                  "validation_rows": len(check), "validation_series": check.series_name.nunique(),
+                                  "validation_global_volume_weighted_WMAPE": mu.wmape_vol(check.actual, check.pred),
+                                  "validation_median_per_series_WMAPE": float(mu.wmape_per_series(check.actual, check.pred, check.series_name).median())}])
         selected_trees[version] = best_trees
         validation_scores[version] = float(
             grid.loc[grid["n_estimators"].eq(best_trees), "validation_global_volume_weighted_WMAPE"].iloc[0]
@@ -512,17 +564,27 @@ def main() -> None:
     save_figure(summary)
 
     primary = summary.loc[summary["primary_fixed_origin_comparison"]].copy()
-    validation_selected = primary.sort_values(
+    descriptive_validation_best = primary.sort_values(
         ["fixed_origin_validation_global_WMAPE", "version"]
     ).iloc[0]
+    validation_selected = (primary.loc[primary.version.eq(saved_selection)].iloc[0]
+                           if saved_selection else descriptive_validation_best)
     descriptive_test_best = primary.sort_values(
         ["global_volume_weighted_WMAPE", "version"]
     ).iloc[0]
     run_summary = {
         "schema_version": "v1",
+        "configuration_policy": "fit-window-v1",
+        "configuration_preprocessing": preprocessing,
+        "capacity_locked_to_saved_validation": args.locked_capacity,
+        "primary_version_locked_to_saved_validation": saved_selection is not None,
+        "descriptive_best_validation_version": descriptive_validation_best["version"],
+        "test_is_new_holdout": False,
         "evaluation_series": int(test_fixed["series_name"].nunique()),
-        "validation_protocol": "recursive six-month fixed-origin forecast; select n_estimators by global volume-weighted WMAPE",
-        "test_protocol": "refit on point-in-time train+validation rows; recursive fixed-origin 2026-01..06 forecast",
+        "validation_protocol": ("repair comparison with saved tree counts and primary version; no reselection"
+                                if saved_capacity is not None else
+                                "recursive six-month fixed-origin forecast; select n_estimators by global volume-weighted WMAPE"),
+        "test_protocol": "refit on train+validation rows with origin-bounded annual configuration proxies; recursive fixed-origin 2026-01..06 forecast",
         "primary_versions": primary.sort_values("version")["version"].tolist(),
         "primary_version_selection_metric": "fixed-origin validation global volume-weighted WMAPE",
         "validation_selected_primary_version": validation_selected["version"],
@@ -560,8 +622,8 @@ def main() -> None:
         ]].sort_values(["scenario", "global_volume_weighted_WMAPE"]).to_string(index=False, float_format=lambda x: f"{x:.3f}"),
         flush=True,
     )
-    print(f"[output] {SUMMARY.relative_to(PROJECT_ROOT)}", flush=True)
-    print(f"[output] {FIGURE.relative_to(PROJECT_ROOT)}", flush=True)
+    print(f"[output] {SUMMARY}", flush=True)
+    print(f"[output] {FIGURE}", flush=True)
 
 
 if __name__ == "__main__":

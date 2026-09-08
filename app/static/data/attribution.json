@@ -163,6 +163,8 @@
   "meta": {
     "series": 646,
     "series_year_rows": 1510,
+    "r2_scale": "log1p(annual_sales)",
+    "r2_aggregation": "mean across five grouped folds",
     "eligible_years": [
       2022,
       2023,
@@ -176,7 +178,7 @@
   },
   "wmape_baselines": {
     "GLOBAL_MEDIAN": 87.65,
-    "YEAR_MEDIAN": 87.23
+    "YEAR_MEDIAN": 87.21
   },
   "wmape_by_variant": {
     "YEAR-ONLY": 87.5,
@@ -190,7 +192,7 @@
   },
   "top_example": null,
   "conclusion": {
-    "zh": "646车系、1,510条完整车系×年记录的分组交叉验证中，加入配置后R²由0.070提升至0.239（+0.169）；该结果量化产品属性对年度跨车系差异的样本外解释力，不进行因果识别。完整模型年度截面WMAPE为73.85%，作为模块内辅助误差指标，与月度预测指标分别报告。",
-    "en": "Across 646 series and 1,510 complete series-year rows, grouped CV R² rises from 0.070 to 0.239 (+0.169) after adding configuration. The result quantifies out-of-sample explanatory power for annual between-series variation without causal identification. The full model's annual cross-sectional WMAPE is 73.85%, reported as a module-specific supporting metric separately from monthly forecasting."
+    "zh": "646车系、1,510条完整车系年记录中，对数销量R²的五折均值由0.070升至0.239，配置增量为0.169。它不表示配置贡献的销量比例。还原为辆数的折外预测WMAPE为73.85%；本分析检验未见车系的预测，不检验未来年份，也不估计因果效应。",
+    "en": "Across 646 series and 1,510 complete series-year rows, mean five-fold R² on log sales rises from 0.070 to 0.239; specifications add 0.169. This is not a share of sales attributable to specifications. Out-of-fold WMAPE in vehicle counts is 73.85%. Evaluation holds out series, not future years, and does not estimate causal effects."
   }
 }

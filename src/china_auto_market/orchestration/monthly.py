@@ -149,7 +149,8 @@ def build_task_specs(config: PipelineConfig) -> tuple[TaskSpec, ...]:
         ),
         TaskSpec(
             "validate_forecast_model",
-            script("validate_forecast_consumer_parity.py", "--login-path", login),
+            script("validate_forecast_consumer_parity.py", "--login-path", login,
+                   "--fixed-reference-dir", str(root / "data/processed/forecast")),
             1800,
         ),
     )

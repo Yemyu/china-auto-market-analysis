@@ -1,5 +1,13 @@
 {
   "scenario": "fixed_origin_stress",
+  "primary_comparison": {
+    "improvement_pp": 0.9803855453804402,
+    "ci_95_pp": [
+      -0.004682744627472414,
+      2.2330860088374562
+    ],
+    "fraction_resamples_better": 0.9748
+  },
   "granger": {
     "aspects": [
       {
@@ -11,41 +19,41 @@
         "en": "Local-lexicon enhanced (XGBoost)"
       },
       {
-        "zh": "文本情感增强（XGBoost）",
-        "en": "Text-sentiment enhanced (XGBoost)"
-      },
-      {
         "zh": "用户口碑增强（XGBoost）",
         "en": "User-review enhanced (XGBoost)"
+      },
+      {
+        "zh": "文本情感增强（XGBoost）",
+        "en": "Text-sentiment enhanced (XGBoost)"
       }
     ],
     "sig_rates": [
-      0.9264,
-      0.5292,
-      0.3544,
-      0.021
+      0.9748,
+      0.8424,
+      0.127,
+      0.0816
     ]
   },
   "fusion": [
     {
       "version": "销量基线（XGBoost）",
       "version_en": "Sales baseline (XGBoost)",
-      "wmape_vol": 39.096
+      "wmape_vol": 39.073
     },
     {
       "version": "平台评分增强（XGBoost）",
       "version_en": "Platform-rating enhanced (XGBoost)",
-      "wmape_vol": 38.399
+      "wmape_vol": 38.093
     },
     {
       "version": "文本情感增强（XGBoost）",
       "version_en": "Text-sentiment enhanced (XGBoost)",
-      "wmape_vol": 39.273
+      "wmape_vol": 39.739
     },
     {
       "version": "用户口碑增强（XGBoost）",
       "version_en": "User-review enhanced (XGBoost)",
-      "wmape_vol": 40.213
+      "wmape_vol": 39.816
     }
   ],
   "correlation": [
@@ -265,7 +273,7 @@
     ]
   },
   "conclusion": {
-    "zh": "固定六个月压力测试中，选定的口碑增强相对销量基线改善0.697个百分点；5,000次车系聚类Bootstrap胜出概率为92.64%，95%区间为-0.23至1.87个百分点，稳定增益证据不足，定位为辅助信息。",
-    "en": "In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by 0.697 pp; it wins 92.64% of 5,000 series-cluster bootstrap samples, with a 95% interval from -0.23 to 1.87 pp. Evidence for a stable gain is insufficient, so it is classified as supporting information."
+    "zh": "固定六个月压力测试中，选定的口碑增强相对销量基线改善0.980个百分点；5,000次车系聚类Bootstrap重采样胜出比例为97.48%，95%区间为-0.0047至2.2331个百分点，稳定增益证据不足，定位为辅助信息。",
+    "en": "In the fixed six-month stress test, the selected review enhancement improves on the sales baseline by 0.980 pp; it wins 97.48% of 5,000 series-cluster bootstrap samples, with a 95% interval from -0.0047 to 2.2331 pp. Evidence for a stable gain is insufficient, so it is classified as supporting information."
   }
 }

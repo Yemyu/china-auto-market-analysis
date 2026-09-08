@@ -17,7 +17,7 @@ SELECT
   f.review_information_cutoff_exclusive,
   (SELECT dataset_version_id FROM auto_ops.dataset_versions
    WHERE dataset_name = 'mart_forecast_features'
-     AND version_key = 'forecast-b2-c4-r5-l8-de5-v1')
+     AND version_key = 'forecast-b2-c__CONFIG_BATCH_ID__-r5-l8-r1-v2')
 FROM auto_mart._de5_forecast_input f
 JOIN auto_staging.series_name_mappings sm
   ON sm.source_system = 'pcauto_sales'

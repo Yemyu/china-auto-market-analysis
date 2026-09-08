@@ -1,5 +1,6 @@
 ﻿feature_family,feature_count,total_mean_abs_shap,max_feature_mean_abs_shap,share_of_total_abs_shap
-sales_lag_roll,5,2.1382399,1.5060343,0.79643476
-configuration,21,0.2032278,0.028064942,0.07569669
-review_observation_context,14,0.18463188,0.061274305,0.06877023
-calendar,3,0.15866527,0.07874282,0.059098393
+sales_lag_roll,5,2.1649907,1.5207938,0.7982535
+configuration,21,0.19837154,0.026182577,0.07314155
+calendar,3,0.15921637,0.07849067,0.058704652
+review_observation_context,4,0.108542524,0.057236265,0.040020704
+platform_rating_scores,10,0.0810383,0.025124574,0.029879624

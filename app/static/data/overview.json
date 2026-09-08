@@ -1,27 +1,27 @@
 {
   "kpis": {
     "coverage_series": 345,
-    "forecast_wmape": 29.7235,
-    "forecast_median_wmape": 36.7432,
-    "baseline_wmape": 29.7235,
-    "baseline_median_wmape": 36.7432,
-    "core_forecast_wmape": 38.3767,
-    "core_forecast_median_wmape": 46.8843,
+    "forecast_wmape": 29.7478,
+    "forecast_median_wmape": 36.8337,
+    "baseline_wmape": 29.7478,
+    "baseline_median_wmape": 36.8337,
+    "core_forecast_wmape": 38.093,
+    "core_forecast_median_wmape": 48.1759,
     "naive_wmape": 40.9924,
     "naive_median_wmape": 48.3586,
-    "relative_error_reduction_vs_naive_pct": 27.49,
-    "wmape_gain_pp": 11.27,
-    "wmape_relative_gain_pct": 27.49,
+    "relative_error_reduction_vs_naive_pct": 27.43,
+    "wmape_gain_pp": 11.24,
+    "wmape_relative_gain_pct": 27.43,
     "forecast_horizon": 1,
     "forecast_rows": 2226,
     "forecast_median_series": 341,
-    "fixed_stress_wmape": 38.3767,
-    "fixed_stress_median_wmape": 46.8843,
-    "fixed_stress_naive_wmape": 69.3051,
-    "fixed_stress_naive_median_wmape": 89.6016,
+    "fixed_stress_wmape": 38.093,
+    "fixed_stress_median_wmape": 48.1759,
+    "fixed_stress_naive_wmape": 67.4326,
+    "fixed_stress_naive_median_wmape": 89.3981,
     "fixed_stress_horizon": 6,
-    "fixed_stress_relative_error_reduction_pct": 44.63,
-    "review_fixed_point_gain_pp": 0.697,
+    "fixed_stress_relative_error_reduction_pct": 43.51,
+    "review_fixed_point_gain_pp": 0.98,
     "config_brand_r2": 0.07,
     "config_full_r2": 0.239,
     "alert_count": 0,
@@ -268,20 +268,20 @@
   ],
   "findings": [
     {
-      "zh": "滚动单月季节增强XGBoost为29.72% WMAPE，比“沿用上月销量”朴素基准40.99%低11.27个百分点",
-      "en": "The rolling one-month seasonal XGBoost reaches 29.72% WMAPE, 11.27 pp below the last-observed-value naive baseline at 40.99%"
+      "zh": "滚动单月季节增强XGBoost为29.75% WMAPE，比“沿用上月销量”朴素基准40.99%低11.24个百分点",
+      "en": "The rolling one-month seasonal XGBoost reaches 29.75% WMAPE, 11.24 pp below the last-observed-value naive baseline at 40.99%"
     },
     {
-      "zh": "固定六个月压力测试的综合方案为38.38%，相对同场景最近6个月均值69.31%的绝对误差降低44.6%；该协议与滚动单月协议分别评估",
-      "en": "The fixed six-month stress test scores 38.38% versus 69.31% for its trailing-six-month naive comparator, a 44.6% absolute-error reduction; the protocol is evaluated separately from the rolling headline"
+      "zh": "固定六个月压力测试的平台评分模型为38.09%，相对同场景最近12个月均值67.43%的绝对误差降低43.5%；该协议与滚动单月协议分别评估",
+      "en": "The fixed six-month stress test scores 38.09% versus 67.43% for its trailing-twelve-month naive comparator, a 43.5% absolute-error reduction; the protocol is evaluated separately from the rolling headline"
     },
     {
-      "zh": "固定起点口碑增强点估计改善0.697个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息",
-      "en": "Fixed-origin review enhancement shows a 0.697 pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"
+      "zh": "固定起点口碑增强点估计改善0.980个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息",
+      "en": "Fixed-origin review enhancement shows a 0.980 pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"
     },
     {
-      "zh": "646车系完整年度分析中，配置将分组交叉验证R²从0.070提升到0.239",
-      "en": "Across 646 series with complete annual targets, specifications raise grouped-CV R² from 0.070 to 0.239"
+      "zh": "646车系完整年度分析中，配置将对数销量分组交叉验证R²从0.070提升到0.239",
+      "en": "Across 646 series with complete annual targets, specifications raise grouped-CV log-sales R² from 0.070 to 0.239"
     },
     {
       "zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度",

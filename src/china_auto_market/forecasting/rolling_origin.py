@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 import json
 import os
+from pathlib import Path
 from typing import Any
 
 os.environ["OMP_NUM_THREADS"] = "1"
@@ -20,6 +21,7 @@ from xgboost import XGBRegressor
 
 from china_auto_market.forecasting import core as mu
 from china_auto_market.forecasting import review_evaluation
+from china_auto_market.features.configuration_window import prepare_configuration_window
 from china_auto_market.paths import PROJECT_ROOT
 
 OUT = PROJECT_ROOT / "data" / "processed" / "forecast"
@@ -164,17 +166,21 @@ def naive_rolling_predictions(
     return pd.DataFrame(rows)
 
 
-def validation(module, frames, versions) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
+def validation(module, frames, versions, configuration_source=None) -> tuple[pd.DataFrame, pd.DataFrame, dict[str, Any]]:
+    source = mu.load_configuration_source() if configuration_source is None else configuration_source
     historical = pd.concat(
         [frames["train_roll"], frames["val_roll"]], ignore_index=True
     ).sort_values(["series_name", "date"])
     rows: list[dict[str, Any]] = []
+    preprocessing = []
     for origin in ORIGINS:
         fit, panel = origin_panel(historical, origin)
         for version in VERSIONS:
             columns = versions[version]
-            model = fit_model(version, fit, columns)
-            rolling = rolling_predictions(model, panel, columns, "val", ("train",))
+            prepared, state = prepare_configuration_window(panel, source, origin, columns)
+            preprocessing.append({"version": version, **state})
+            model = fit_model(version, prepared.loc[prepared.date.lt(origin)], columns)
+            rolling = rolling_predictions(model, prepared, columns, "val", ("train",))
             error = float(np.abs(rolling["actual"] - rolling["pred"]).sum())
             volume = float(np.abs(rolling["actual"]).sum())
             rows.append({
@@ -247,6 +253,8 @@ def validation(module, frames, versions) -> tuple[pd.DataFrame, pd.DataFrame, di
     ].iloc[0]
     payload: dict[str, Any] = {
         "schema_version": "v1",
+        "configuration_policy": "fit-window-v1",
+        "configuration_preprocessing": preprocessing,
         "task_definition": "monthly refreshed one-month-ahead forecast; previous realised month is available",
         "comparison_task": "six-month recursive fixed-origin forecast",
         "test_used_for_selection": False,
@@ -268,7 +276,7 @@ def validation(module, frames, versions) -> tuple[pd.DataFrame, pd.DataFrame, di
     return detail, summary, payload
 
 
-def locked_test(module, frames, versions, payload: dict[str, Any]) -> pd.DataFrame:
+def locked_test(module, frames, versions, payload: dict[str, Any], configuration_source=None) -> pd.DataFrame:
     if not payload["gate"]["passes"]:
         raise RuntimeError("Historical-validation gate did not pass; locked test remains untouched")
     version = str(payload["selected_version"])
@@ -280,6 +288,10 @@ def locked_test(module, frames, versions, payload: dict[str, Any]) -> pd.DataFra
         [frames["train_roll"], frames["val_roll"], frames["test_roll"]],
         ignore_index=True,
     ).sort_values(["series_name", "date"])
+    source = mu.load_configuration_source() if configuration_source is None else configuration_source
+    panel, state = prepare_configuration_window(panel, source, pd.Timestamp("2026-01-01"), columns)
+    train_val = panel.loc[panel.date.lt("2026-01-01")]
+    payload["test_configuration_preprocessing"] = state
     model = fit_model(version, train_val, columns)
     prediction = rolling_predictions(model, panel, columns, "test", ("train", "val"))
     naive = naive_rolling_predictions(panel, "test", ("train", "val"))
@@ -308,22 +320,34 @@ def main() -> None:
     parser.add_argument("--test", action="store_true")
     parser.add_argument("--backend", choices=("csv", "mysql"), default="csv")
     parser.add_argument("--login-path", default="local-auto")
+    parser.add_argument("--configuration-audit-dir", type=Path,
+                        help="Assess fit-window configuration repair under artifacts/ without publishing")
+    parser.add_argument("--output-dir", type=Path, help="Write a complete evaluation to a separate directory")
     args = parser.parse_args()
-    OUT.mkdir(parents=True, exist_ok=True)
+    if args.configuration_audit_dir:
+        if args.test or args.output_dir:
+            parser.error("Configuration assessment already includes the seen test; do not combine with --test")
+        from china_auto_market.forecasting.configuration_audit import run_audit
+        run_audit(args.configuration_audit_dir, backend=args.backend, login_path=args.login_path)
+        return
+    output = args.output_dir or OUT
+    output.mkdir(parents=True, exist_ok=True)
     module = load_forecast_module()
     frames, _, _ = module.build_frames(
         backend=args.backend, login_path=args.login_path
     )
+    source = mu.load_configuration_source(backend=args.backend, login_path=args.login_path,
+                                          frame=frames["train_roll"])
     versions = {
         "BASE": list(mu.FEAT_COLS),
         "SEASONAL_D5": list(mu.SEASONAL_FEAT_COLS),
     }
-    detail, summary, payload = validation(module, frames, versions)
-    detail.to_csv(VALIDATION_OUTPUT, index=False, encoding="utf-8-sig")
+    detail, summary, payload = validation(module, frames, versions, source)
+    detail.to_csv(output / VALIDATION_OUTPUT.name, index=False, encoding="utf-8-sig")
     if args.test:
-        prediction = locked_test(module, frames, versions, payload)
-        prediction.to_csv(TEST_OUTPUT, index=False, encoding="utf-8-sig")
-    SUMMARY_OUTPUT.write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
+        prediction = locked_test(module, frames, versions, payload, source)
+        prediction.to_csv(output / TEST_OUTPUT.name, index=False, encoding="utf-8-sig")
+    (output / SUMMARY_OUTPUT.name).write_text(json.dumps(payload, ensure_ascii=False, indent=2), encoding="utf-8")
     print(summary.to_string(index=False), flush=True)
     print(
         f"gate_passes={payload['gate']['passes']} "

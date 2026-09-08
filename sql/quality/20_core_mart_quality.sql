@@ -46,6 +46,23 @@ SELECT __PIPELINE_RUN_ID__, 'mart_forecast_features', 'forecast_point_in_time_cu
        )), NULL
 FROM auto_mart.mart_forecast_features
 UNION ALL
+SELECT __PIPELINE_RUN_ID__, 'mart_forecast_features', 'forecast_configuration_source_reference', 'r1-v2', 'critical',
+       SUM(COALESCE(
+         JSON_LENGTH(f.configuration_payload) = 2
+         AND JSON_UNQUOTE(JSON_EXTRACT(f.configuration_payload, '$.configuration_policy')) = 'raw-batch-reference-v1'
+         AND JSON_TYPE(JSON_EXTRACT(f.configuration_payload, '$.configuration_batch_id')) = 'INTEGER'
+         AND JSON_EXTRACT(f.configuration_payload, '$.configuration_batch_id') = JSON_EXTRACT(v.upstream_versions_json, '$.config_batch')
+         AND v.schema_version = 'r1-v2'
+         AND b.status = 'succeeded' AND BINARY b.dataset_name = BINARY 'config'
+         AND EXISTS (SELECT 1 FROM auto_raw.raw_vehicle_config r WHERE r.batch_id = b.batch_id), FALSE)) = COUNT(*)
+       AND COUNT(DISTINCT b.batch_id) = 1,
+       CONCAT_WS('/', COUNT(*), COUNT(DISTINCT b.batch_id)), '17808 rows / one successful bound config batch',
+       0, NULL
+FROM auto_mart.mart_forecast_features f
+JOIN auto_ops.dataset_versions v ON v.dataset_version_id = f.dataset_version_id
+LEFT JOIN auto_ops.ingestion_batches b
+  ON b.batch_id = CAST(JSON_UNQUOTE(JSON_EXTRACT(f.configuration_payload, '$.configuration_batch_id')) AS UNSIGNED)
+UNION ALL
 SELECT __PIPELINE_RUN_ID__, 'mart_product_analysis', 'product_rows_and_series', 'de5-v1', 'critical',
        COUNT(*) = 1510 AND COUNT(DISTINCT vehicle_series_sk) = 646,
        CONCAT_WS('/', COUNT(*), COUNT(DISTINCT vehicle_series_sk)), '1510/646',

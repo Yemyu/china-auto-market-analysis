@@ -2,6 +2,8 @@
 """Run robustness, feature-contribution, and error diagnostics."""
 from __future__ import annotations
 
+import argparse
+import hashlib
 import json
 from pathlib import Path
 from typing import Any
@@ -17,6 +19,7 @@ import matplotlib.pyplot as plt
 
 from china_auto_market.forecasting import core as mu
 from china_auto_market.forecasting import review_evaluation as ablation
+from china_auto_market.forecasting.uncertainty import paired_bootstrap
 
 
 BASE = Path(__file__).resolve().parents[1]
@@ -38,74 +41,20 @@ MODEL_RUN_SUMMARY = FORECAST_DIR / "review_feature_run_summary.json"
 
 BASE_VERSION = "BASE"
 PLATFORM_VERSION = "PLATFORM_RATING_FIXED"
-model_run = json.loads(MODEL_RUN_SUMMARY.read_text(encoding="utf-8"))
-BEST_VERSION = model_run.get(
-    "validation_selected_primary_version", model_run["best_primary_version"]
-)
+BEST_VERSION = PLATFORM_VERSION
 BOOTSTRAP_REPLICATES = 5_000
 BOOTSTRAP_SEED = 42
 
 
-def wmape_from_totals(error: np.ndarray, volume: np.ndarray) -> np.ndarray:
-    denominator = volume.sum(axis=1)
-    return np.divide(error.sum(axis=1), denominator, out=np.full(len(error), np.nan), where=denominator > 0) * 100
-
-
-def series_totals(predictions: pd.DataFrame) -> tuple[list[str], dict[str, np.ndarray], np.ndarray]:
-    versions = sorted(predictions["version"].unique())
-    series_names = sorted(predictions["series_name"].unique())
-    volume_reference: np.ndarray | None = None
-    errors: dict[str, np.ndarray] = {}
-    for version in versions:
-        part = predictions.loc[predictions["version"].eq(version)].copy()
-        grouped = part.assign(abs_error=(part["actual"] - part["pred"]).abs()).groupby("series_name").agg(
-            actual_volume=("actual", lambda values: float(np.abs(values).sum())),
-            absolute_error=("abs_error", "sum"),
-        ).reindex(series_names)
-        volume = grouped["actual_volume"].to_numpy(float)
-        if volume_reference is None:
-            volume_reference = volume
-        elif not np.allclose(volume_reference, volume):
-            raise ValueError("Actual series volumes differ across model versions")
-        errors[version] = grouped["absolute_error"].to_numpy(float)
-    if volume_reference is None:
-        raise ValueError("No prediction versions")
-    return series_names, errors, volume_reference
-
-
 def bootstrap_comparisons(predictions: pd.DataFrame) -> pd.DataFrame:
-    series_names, errors, volume = series_totals(predictions)
-    rng = np.random.default_rng(BOOTSTRAP_SEED)
-    indices = rng.integers(0, len(series_names), size=(BOOTSTRAP_REPLICATES, len(series_names)))
-    sampled_volume = volume[indices]
-    comparisons = [(BASE_VERSION, version) for version in sorted(errors) if version not in (BASE_VERSION, "REVIEW_TEXT_ROLLING")]
+    comparisons = [(BASE_VERSION, version) for version in sorted(predictions.version.unique()) if version not in (BASE_VERSION, "REVIEW_TEXT_ROLLING")]
     comparisons.extend([
         (BASE_VERSION, "REVIEW_TEXT_ROLLING"),
         ("REVIEW_TEXT_FIXED", "REVIEW_TEXT_ROLLING"),
     ])
     if PLATFORM_VERSION != BEST_VERSION:
         comparisons.append((PLATFORM_VERSION, BEST_VERSION))
-    rows: list[dict[str, Any]] = []
-    for comparator, candidate in comparisons:
-        comparator_boot = wmape_from_totals(errors[comparator][indices], sampled_volume)
-        candidate_boot = wmape_from_totals(errors[candidate][indices], sampled_volume)
-        improvement = comparator_boot - candidate_boot
-        point_comparator = errors[comparator].sum() / volume.sum() * 100
-        point_candidate = errors[candidate].sum() / volume.sum() * 100
-        rows.append({
-            "comparator": comparator,
-            "candidate": candidate,
-            "point_comparator_WMAPE": point_comparator,
-            "point_candidate_WMAPE": point_candidate,
-            "point_improvement_pp": point_comparator - point_candidate,
-            "bootstrap_mean_improvement_pp": float(np.nanmean(improvement)),
-            "bootstrap_ci_2_5_pp": float(np.nanquantile(improvement, 0.025)),
-            "bootstrap_ci_97_5_pp": float(np.nanquantile(improvement, 0.975)),
-            "bootstrap_probability_candidate_better": float(np.nanmean(improvement > 0)),
-            "bootstrap_replicates": BOOTSTRAP_REPLICATES,
-            "cluster_unit": "series_name",
-        })
-    return pd.DataFrame(rows)
+    return paired_bootstrap(predictions, comparisons, replicates=BOOTSTRAP_REPLICATES, seed=BOOTSTRAP_SEED)
 
 
 def model_row(record: pd.Series, history: list[float], columns: list[str]) -> dict[str, Any]:
@@ -161,7 +110,9 @@ def feature_family(feature: str) -> str:
         return "calendar"
     if feature in mu.CFG_COLS:
         return "configuration"
-    if feature.startswith("platform_rating_") or feature.startswith("sentiment_"):
+    if feature.startswith("platform_rating_"):
+        return "platform_rating_scores"
+    if feature.startswith("sentiment_"):
         return "review_observation_context"
     if feature.startswith("review_"):
         if feature in (
@@ -185,19 +136,17 @@ def feature_family(feature: str) -> str:
     return "other"
 
 
-def shap_importance() -> tuple[pd.DataFrame, pd.DataFrame]:
+def shap_importance() -> tuple[pd.DataFrame, pd.DataFrame, dict]:
     frames, versions, _ = ablation.build_frames()
     summary = pd.read_csv(ABLATION_SUMMARY, low_memory=False)
     n_estimators = int(summary.loc[summary["version"].eq(BEST_VERSION), "validation_selected_n_estimators"].iloc[0])
     columns = versions[BEST_VERSION]
-    # Preserve the exact row ordering used by the original final fit.  XGBoost's
-    # subsampling is deterministic only for an identical ordered training matrix.
-    train_val = pd.concat(
-        [frames["train_roll"], frames["val_roll"]], ignore_index=True
-    ).sort_values(["series_name", "date"])
-    panel = pd.concat(
-        [frames["train_roll"], frames["val_roll"], frames["test_fixed"]], ignore_index=True
-    ).sort_values(["series_name", "date"])
+    source = mu.load_configuration_source(frame=frames["train_roll"])
+    _, panel, _, preprocessing = ablation.prepare_fixed_panels(frames, source)
+    saved_run = json.loads(MODEL_RUN_SUMMARY.read_text(encoding="utf-8"))
+    if preprocessing != saved_run["configuration_preprocessing"]:
+        raise ValueError("SHAP replay configuration transforms differ from saved run")
+    train_val = panel.loc[panel["split"].isin(("train", "val"))]
     model = ablation.new_model(n_estimators)
     model.fit(train_val[columns], np.log1p(train_val[mu.TARGET]), verbose=False)
     feature_rows, traced = traced_test_rows(model, panel, columns)
@@ -205,12 +154,15 @@ def shap_importance() -> tuple[pd.DataFrame, pd.DataFrame]:
     saved = pd.read_csv(PREDICTIONS, low_memory=False, parse_dates=["date"])
     saved = saved.loc[saved["version"].eq(BEST_VERSION)].sort_values(["series_name", "date"]).reset_index(drop=True)
     traced = traced.sort_values(["series_name", "date"]).reset_index(drop=True)
-    if len(saved) != len(traced) or not np.allclose(saved["pred"], traced["pred"], rtol=1e-7, atol=1e-7):
+    keys = ["series_name", "date", "actual"]
+    if not saved[keys].equals(traced[keys]) or not np.allclose(saved["pred"], traced["pred"], rtol=1e-10, atol=1e-10):
         raise ValueError("Refitted SHAP model predictions do not match saved best-model predictions")
 
     contributions = model.get_booster().predict(DMatrix(feature_rows, feature_names=columns), pred_contribs=True)
     if contributions.shape != (len(feature_rows), len(columns) + 1):
         raise ValueError("Unexpected SHAP contribution shape")
+    if not np.allclose(contributions.sum(axis=1), model.predict(feature_rows), rtol=1e-5, atol=1e-5):
+        raise ValueError("SHAP contributions do not reconstruct model log-sales output")
     shap = contributions[:, :-1]
     importance = pd.DataFrame({
         "feature": columns,
@@ -228,7 +180,11 @@ def shap_importance() -> tuple[pd.DataFrame, pd.DataFrame]:
         max_feature_mean_abs_shap=("mean_abs_shap_log_sales", "max"),
     ).sort_values("total_mean_abs_shap", ascending=False)
     family["share_of_total_abs_shap"] = family["total_mean_abs_shap"] / family["total_mean_abs_shap"].sum()
-    return importance, family
+    replay = {"training_rows": len(train_val), "test_rows": len(traced),
+              "n_estimators": n_estimators, "configuration_transforms_equal": True,
+              "keys_and_actuals_equal": True, "shap_additivity_passed": True,
+              "max_abs_prediction_difference": float(np.max(np.abs(saved.pred - traced.pred)))}
+    return importance, family, replay
 
 
 def monthly_stability(predictions: pd.DataFrame) -> pd.DataFrame:
@@ -289,15 +245,21 @@ def series_and_segments(predictions: pd.DataFrame) -> tuple[pd.DataFrame, pd.Dat
         ["recent_180d", "prior_but_not_recent"],
         default="no_prior_review",
     )
-    rank = diagnostics["actual_volume"].rank(method="first")
-    diagnostics["actual_volume_quartile"] = pd.qcut(rank, 4, labels=["Q1_low", "Q2", "Q3", "Q4_high"])
+    validation = pd.read_csv(TEST_SPLIT.with_name("val.csv"), parse_dates=["date"])
+    if validation.date.max() >= predictions.date.min():
+        raise ValueError("Size grouping history overlaps test dates")
+    mean = validation.groupby("series_name")[mu.TARGET].mean()
+    groups = pd.qcut(mean, 4, labels=["Q1_low", "Q2", "Q3", "Q4_high"])
+    diagnostics["pre_test_volume_quartile"] = diagnostics.series_name.map(groups)
+    if diagnostics.pre_test_volume_quartile.isna().any():
+        raise ValueError("Missing pre-origin volume group")
     diagnostics = diagnostics.sort_values(f"absolute_error_{BEST_VERSION}", ascending=False).reset_index(drop=True)
 
     segment_rows: list[dict[str, Any]] = []
     segment_specs = {
         "history_group": diagnostics["history_group"],
         "sentiment_coverage": diagnostics["sentiment_coverage_group"],
-        "actual_volume_quartile": diagnostics["actual_volume_quartile"].astype(str),
+        "pre_test_volume_quartile": diagnostics["pre_test_volume_quartile"].astype(str),
         "vehicle_category": diagnostics["category"].fillna("missing").astype(str),
     }
     for segment_type, values in segment_specs.items():
@@ -343,7 +305,7 @@ def save_figure(bootstrap: pd.DataFrame, importance: pd.DataFrame, monthly: pd.D
 
     axes[1].barh(top["feature"], top["mean_abs_shap_log_sales"], color="#54A24B")
     axes[1].set_xlabel("Mean |SHAP| on log-sales output")
-    axes[1].set_title("Top review features")
+    axes[1].set_title("Top model features")
     axes[1].tick_params(axis="y", labelsize=7)
 
     for version, group in month.groupby("version"):
@@ -358,12 +320,36 @@ def save_figure(bootstrap: pd.DataFrame, importance: pd.DataFrame, monthly: pd.D
 
 
 def main() -> None:
+    global PREDICTIONS, ABLATION_SUMMARY, MODEL_RUN_SUMMARY, BEST_VERSION, TEST_SPLIT
+    global BOOTSTRAP_OUTPUT, SHAP_OUTPUT, FAMILY_OUTPUT, MONTHLY_OUTPUT
+    global SERIES_OUTPUT, SEGMENT_OUTPUT, SUMMARY_OUTPUT, FIGURE
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--forecast-dir", type=Path, default=FORECAST_DIR)
+    parser.add_argument("--split-dir", type=Path, default=TEST_SPLIT.parent)
+    parser.add_argument("--output-dir", type=Path, required=True,
+                        help="Stage diagnostics separately before publication")
+    args = parser.parse_args()
+    directory = args.forecast_dir.resolve()
+    PREDICTIONS, ABLATION_SUMMARY, MODEL_RUN_SUMMARY = [
+        directory / p.name for p in (PREDICTIONS, ABLATION_SUMMARY, MODEL_RUN_SUMMARY)]
+    TEST_SPLIT = args.split_dir.resolve() / "test.csv"
+    model_run = json.loads(MODEL_RUN_SUMMARY.read_text(encoding="utf-8"))
+    if model_run.get("configuration_policy") != "fit-window-v1":
+        raise ValueError("Rebuild forecasts with fit-window-v1 before running diagnostics")
+    BEST_VERSION = model_run["validation_selected_primary_version"]
+    output = args.output_dir.resolve()
+    if output == directory or output == FORECAST_DIR.resolve():
+        raise ValueError("Diagnostics must be staged outside the forecast input directory")
+    output.mkdir(parents=True, exist_ok=True)
+    BOOTSTRAP_OUTPUT, SHAP_OUTPUT, FAMILY_OUTPUT, MONTHLY_OUTPUT, SERIES_OUTPUT, SEGMENT_OUTPUT, SUMMARY_OUTPUT, FIGURE = [
+        output / p.name for p in (BOOTSTRAP_OUTPUT, SHAP_OUTPUT, FAMILY_OUTPUT, MONTHLY_OUTPUT,
+                                  SERIES_OUTPUT, SEGMENT_OUTPUT, SUMMARY_OUTPUT, FIGURE)]
     predictions = pd.read_csv(PREDICTIONS, low_memory=False, parse_dates=["date"])
     required_versions = {BASE_VERSION, BEST_VERSION, PLATFORM_VERSION, "REVIEW_TEXT_FIXED", "REVIEW_TEXT_ROLLING"}
     if not required_versions.issubset(set(predictions["version"])):
         raise ValueError("Required ablation prediction versions are missing")
     bootstrap = bootstrap_comparisons(predictions)
-    importance, family = shap_importance()
+    importance, family, replay = shap_importance()
     monthly = monthly_stability(predictions)
     diagnostics, segments = series_and_segments(predictions)
 
@@ -385,7 +371,18 @@ def main() -> None:
         )
     ]
     summary = {
-        "schema_version": "v1",
+        "schema_version": "v2",
+        "configuration_policy": model_run["configuration_policy"],
+        "prediction_sha256": hashlib.sha256(PREDICTIONS.read_bytes()).hexdigest(),
+        "model_run_sha256": hashlib.sha256(MODEL_RUN_SUMMARY.read_bytes()).hexdigest(),
+        "test_is_new_holdout": False,
+        "bootstrap_seed": BOOTSTRAP_SEED,
+        "bootstrap_scope": "paired series clusters conditional on saved models and observed months; no selection/refit uncertainty or multiple-comparison correction",
+        "probability_field_interpretation": "fraction of defined resamples with lower WMAPE, not probability of future superiority",
+        "size_group_rule": "quartiles of pre-test 2025-07..12 mean monthly sales",
+        "review_text_rolling_protocol": "recursive sales with monthly review refresh; not rolling one-month sales prediction",
+        "shap_scope": "mean absolute contributions to log1p sales for selected fixed-origin model; not causal effects or incremental forecast accuracy",
+        "shap_replay": replay,
         "validation_selected_feedback_version": BEST_VERSION,
         "series_cluster_bootstrap_replicates": BOOTSTRAP_REPLICATES,
         "selected_feedback_vs_base_improvement_pp": float(best_boot["point_improvement_pp"]),
@@ -413,8 +410,8 @@ def main() -> None:
     )
     print("\n===== Feature-family SHAP =====", flush=True)
     print(family.to_string(index=False, float_format=lambda value: f"{value:.4f}"), flush=True)
-    print(f"[output] {SUMMARY_OUTPUT.relative_to(BASE)}", flush=True)
-    print(f"[output] {FIGURE.relative_to(BASE)}", flush=True)
+    print(f"[output] {SUMMARY_OUTPUT}", flush=True)
+    print(f"[output] {FIGURE}", flush=True)
 
 
 if __name__ == "__main__":

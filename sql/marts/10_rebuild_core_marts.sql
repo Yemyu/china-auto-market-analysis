@@ -14,10 +14,10 @@ INSERT INTO auto_ops.dataset_versions (
 ) VALUES
   ('fact_monthly_sales', 'sales-b2-c3-de5-v1', 'canonical vehicle series x calendar month',
    54918, 'de5-v1', __PIPELINE_RUN_ID__, JSON_OBJECT('sales_batch', 2, 'correction_batch', 3)),
-  ('mart_forecast_features', 'forecast-b2-c4-r5-l8-de5-v1', 'locked series x forecast target month',
-   17808, 'de5-v1', __PIPELINE_RUN_ID__, JSON_OBJECT('sales_batch', 2, 'config_batch', 4, 'review_batch', 5, 'label_batch', 8)),
-  ('mart_product_analysis', 'product-b2-a9-c4-de5-v1', 'canonical vehicle series x complete model year',
-   1510, 'de5-v1', __PIPELINE_RUN_ID__, JSON_OBJECT('annual_correction_batch', 9, 'config_batch', 4)),
+  ('mart_forecast_features', 'forecast-b2-c__CONFIG_BATCH_ID__-r5-l8-r1-v2', 'locked series x forecast target month; raw configuration batch reference',
+   17808, 'r1-v2', __PIPELINE_RUN_ID__, JSON_OBJECT('sales_batch', 2, 'config_batch', __CONFIG_BATCH_ID__, 'review_batch', 5, 'label_batch', 8)),
+  ('mart_product_analysis', 'product-b2-a9-c__CONFIG_BATCH_ID__-de5-v1', 'canonical vehicle series x complete model year',
+   1510, 'de5-v1', __PIPELINE_RUN_ID__, JSON_OBJECT('annual_correction_batch', 9, 'config_batch', __CONFIG_BATCH_ID__)),
   ('mart_user_needs', 'user-needs-r5-l8-202607-de5-v1', 'canonical vehicle series x monitoring month x aspect',
    3000, 'de5-v1', __PIPELINE_RUN_ID__, JSON_OBJECT('review_batch', 5, 'label_batch', 8, 'cutoff_exclusive', '2026-08-01'))
 ON DUPLICATE KEY UPDATE
@@ -129,7 +129,7 @@ SELECT
     c.annual_sales
   ),
   (SELECT dataset_version_id FROM auto_ops.dataset_versions
-   WHERE dataset_name = 'mart_product_analysis' AND version_key = 'product-b2-a9-c4-de5-v1')
+   WHERE dataset_name = 'mart_product_analysis' AND version_key = 'product-b2-a9-c__CONFIG_BATCH_ID__-de5-v1')
 FROM auto_staging.stg_vehicle_config c
 JOIN auto_raw.raw_vehicle_config r ON r.raw_config_id = c.raw_config_id
 JOIN auto_mart.dim_vehicle_series dv

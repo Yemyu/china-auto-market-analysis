@@ -40,24 +40,42 @@ def load_standard_sales(login_path: str) -> pd.DataFrame:
     return frame
 
 
-def load_raw_configuration(login_path: str) -> pd.DataFrame:
-    """Return the latest successful full configuration snapshot from raw JSON."""
-    sql = """
+def load_raw_configuration(login_path: str, batch_id: int | None = None) -> pd.DataFrame:
+    """Read a successful raw snapshot, selecting the latest only when unbound."""
+    if batch_id is None:
+        batches = query_json_rows(login_path, """
+          SELECT JSON_OBJECT('batch_id', MAX(batch_id)) FROM auto_ops.ingestion_batches
+          WHERE BINARY dataset_name=BINARY 'config' AND status='succeeded';
+        """)
+        batch_id = batches[0]["batch_id"] if batches else None
+    if batch_id is None or isinstance(batch_id, bool) or not str(batch_id).isdigit() or int(batch_id) <= 0:
+        raise ValueError("A successful configuration batch is required")
+    batch_id = int(batch_id)
+    sql = f"""
     SELECT c.source_payload
     FROM auto_raw.raw_vehicle_config c
     JOIN auto_ops.ingestion_batches b ON b.batch_id = c.batch_id
     WHERE BINARY b.dataset_name = BINARY 'config'
       AND b.status = 'succeeded'
-      AND c.batch_id = (
-        SELECT MAX(batch_id) FROM auto_ops.ingestion_batches
-        WHERE BINARY dataset_name = BINARY 'config' AND status = 'succeeded'
-      )
+      AND c.batch_id = {batch_id}
     ORDER BY c.source_row_number;
     """
     frame = pd.DataFrame(query_json_rows(login_path, sql))
     if frame.empty:
         raise RuntimeError("No successful raw configuration snapshot is available")
+    frame.attrs["configuration_batch_id"] = batch_id
     return frame
+
+
+def staging_configuration_batch(login_path: str) -> int:
+    """Use the snapshot actually standardized, not a newly ingested raw batch."""
+    rows = query_json_rows(login_path, """
+      SELECT JSON_OBJECT('batch_id', batch_id) FROM auto_staging.stg_vehicle_config
+      GROUP BY batch_id;
+    """)
+    if len(rows) != 1 or not rows[0].get("batch_id"):
+        raise ValueError("Staging must reference exactly one configuration batch")
+    return int(rows[0]["batch_id"])
 
 
 def load_standard_reviews(login_path: str) -> pd.DataFrame:
@@ -106,7 +124,7 @@ def load_standard_review_labels(login_path: str) -> pd.DataFrame:
 
 
 def load_forecast_feature_mart(login_path: str) -> pd.DataFrame:
-    """Return the forecast mart as a pandas-ready, point-in-time feature panel."""
+    """Return forecast rows; configuration references are resolved by consumers."""
     sql = """
     SELECT JSON_MERGE_PATCH(
       f.configuration_payload,
@@ -144,6 +162,17 @@ def load_forecast_feature_mart(login_path: str) -> pd.DataFrame:
     if frame.empty:
         raise RuntimeError("auto_mart.mart_forecast_features is empty")
     frame["date"] = pd.to_datetime(frame["date"], errors="raise")
+    if "configuration_policy" in frame or "configuration_batch_id" in frame:
+        if ("configuration_policy" not in frame or "configuration_batch_id" not in frame
+                or not frame["configuration_policy"].eq("raw-batch-reference-v1").all()):
+            raise ValueError("Forecast mart contains an invalid configuration reference policy")
+        batches = frame["configuration_batch_id"].drop_duplicates()
+        if len(batches) != 1 or batches.isna().any():
+            raise ValueError("Forecast mart mixes or omits configuration source batches")
+        if not str(batches.iloc[0]).isdigit() or int(batches.iloc[0]) <= 0:
+            raise ValueError("Forecast mart has an invalid configuration batch ID")
+        frame.attrs["configuration_batch_id"] = int(batches.iloc[0])
+        frame.attrs["configuration_policy"] = "raw-batch-reference-v1"
     return frame
 
 

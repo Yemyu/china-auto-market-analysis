@@ -7,6 +7,8 @@ protocol recursively withholds post-origin realised sales as a stress test.
 """
 import os
 import json
+import argparse
+from pathlib import Path
 from datetime import datetime, timezone
 
 import numpy as np
@@ -21,7 +23,7 @@ COHORT = os.path.join(
     BASE, "data", "reviews", "processed", "target_371_review_coverage.csv"
 )
 OUTDIR = os.path.join(BASE, "data", "processed", "splits")
-SCHEMA_VERSION = "v1"
+SCHEMA_VERSION = "sales-lags-v2"
 
 TRAIN_END = "2025-06"   # train: 2022-01 .. 2025-06
 VAL_END = "2025-12"     # val:   2025-07 .. 2025-12 ; test: 2026-01 .. 2026-06
@@ -29,6 +31,7 @@ VAL_END = "2025-12"     # val:   2025-07 .. 2025-12 ; test: 2026-01 .. 2026-06
 LAG_COLS = ["lag_1", "lag_2", "lag_3", "roll_mean_3", "roll_mean_6"]
 CAL = ["month_sin", "month_cos", "year"]
 FEAT_COLS = LAG_COLS + CAL + fj.CFG_COLS
+STORED_FEATURE_COLS = LAG_COLS + CAL
 # Optional long-memory features used by the rolling one-month candidate. They
 # are written to the shared split files but are not part of the fixed-origin
 # stress-test feature set.
@@ -43,6 +46,13 @@ def engineer_features(sm: pd.DataFrame) -> pd.DataFrame:
     # Without this, a merge-generated non-contiguous index can silently place
     # rolling means on the wrong rows and discard otherwise valid training rows.
     sm = sm.sort_values(["series_name", "date"]).reset_index(drop=True)
+    if sm["date"].isna().any() or sm.duplicated(["series_name", "date"]).any():
+        raise ValueError("Sales features require valid unique series/month keys")
+    months = sm["date"].dt.year * 12 + sm["date"].dt.month
+    if not sm["date"].eq(sm["date"].dt.to_period("M").dt.to_timestamp()).all():
+        raise ValueError("Sales dates must be calendar month starts")
+    if months.groupby(sm["series_name"]).diff().dropna().ne(1).any():
+        raise ValueError("Sales panel has missing calendar months; refusing row-offset lags")
     g = sm.groupby("series_name", sort=False)["monthly_sales"]
     sm["lag_1"] = g.shift(1)
     sm["lag_2"] = g.shift(2)
@@ -70,7 +80,11 @@ def assign_split(sm: pd.DataFrame) -> pd.DataFrame:
 
 
 def main():
-    os.makedirs(OUTDIR, exist_ok=True)
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--output-dir", type=Path, default=Path(OUTDIR))
+    args = parser.parse_args()
+    output = args.output_dir
+    output.mkdir(parents=True, exist_ok=True)
     sales = pd.read_csv(SALES)
     sales["date"] = pd.to_datetime(sales["date"])
     sales["series_name"] = sales["series_name"].astype(str)
@@ -87,15 +101,8 @@ def main():
     print(f"[splits] 月度面板: {sales['series_name'].nunique()} 车系 / {len(sales)} 行")
     print(f"[splits] 时间范围: {sales['date'].min().date()} .. {sales['date'].max().date()}")
 
-    # Keep every monthly sales row. A missing annual specification is not a
-    # missing sales observation; dropping it creates artificial time gaps and
-    # corrupts lag features. join_cfg applies causal fallback and explicit
-    # unknown sentinels for rows before the first available specification.
-    sm = fj.join_cfg(sales, keep_unmatched=True)
-    print(f"[splits] 保留完整月度面板(配置因果连接): "
-          f"{sm['series_name'].nunique()} 车系 / {len(sm)} 行")
-
-    sm = engineer_features(sm)
+    # Configuration fitting belongs to each model window, not shared splits.
+    sm = engineer_features(sales)
     sm = assign_split(sm)
 
     te = pd.to_datetime(TRAIN_END + "-01")
@@ -107,29 +114,32 @@ def main():
     assert va["date"].min() > te and va["date"].max() <= ve, "val 区间错误"
     assert te_df["date"].min() > ve, "test 含早于 VAL_END 的月份"
     assert sm.assign(m=sm["date"].dt.to_period("M").astype(str)).duplicated(["series_name", "m"]).sum() == 0
-    n_train_avail = int(tr[FEAT_COLS].notna().all(axis=1).sum())
+    n_train_avail = int(tr[STORED_FEATURE_COLS].notna().all(axis=1).sum())
     print(f"[splits] 切分行数: train={len(tr)} (可用{ n_train_avail }) "
           f"val={len(va)} test={len(te_df)}")
 
-    tr_out = tr[tr[FEAT_COLS].notna().all(axis=1)].copy()
+    tr_out = tr[tr[STORED_FEATURE_COLS].notna().all(axis=1)].copy()
     va_out = va.copy()
     te_out = te_df.copy()
 
-    cols = META_COLS + FEAT_COLS + SEASONAL_COLS + ["split"]
-    tr_out[cols].to_csv(os.path.join(OUTDIR, "train.csv"), index=False)
-    va_out[cols].to_csv(os.path.join(OUTDIR, "val.csv"), index=False)
-    te_out[cols].to_csv(os.path.join(OUTDIR, "test.csv"), index=False)
+    if (len(tr_out), len(va_out), len(te_out)) != (13356, 2226, 2226):
+        raise ValueError("Locked split row counts changed")
+    cols = list(dict.fromkeys(META_COLS + STORED_FEATURE_COLS + SEASONAL_COLS + ["split"]))
+    tr_out[cols].to_csv(output / "train.csv", index=False)
+    va_out[cols].to_csv(output / "val.csv", index=False)
+    te_out[cols].to_csv(output / "test.csv", index=False)
 
     split_idx = sm[["series_name", "date", "split"]].copy()
     split_idx["date"] = split_idx["date"].dt.strftime("%Y-%m-%d")
-    split_idx.to_csv(os.path.join(OUTDIR, "split_index.csv"), index=False)
+    split_idx.to_csv(output / "split_index.csv", index=False)
 
     manifest = {
         "schema_version": SCHEMA_VERSION,
         "generated_at": datetime.now(timezone.utc).isoformat(),
         "source_sales": "data/processed/sales_filtered_24m.csv",
-        "source_config": "data/raw/feature.csv or tracked feature.xlsx fallback (车系×年, 因果回退 join)",
-        "population": "frozen 371-series evaluation cohort with causal configuration join",
+        "configuration_policy": "deferred-fit-window-v1",
+        "source_config": "Loaded separately by each forecast evaluation; not preprocessed or stored in splits",
+        "population": "frozen 371-series evaluation cohort with complete calendar months",
         "source_cohort": "data/reviews/processed/target_371_review_coverage.csv",
         "time_cutoffs": {
             "train_end": TRAIN_END,
@@ -141,34 +151,38 @@ def main():
             "train_total": int(len(tr)), "train_usable": int(len(tr_out)),
             "val": int(len(va)), "test": int(len(te_df)),
         },
-        "feature_columns": FEAT_COLS,
+        "feature_columns": STORED_FEATURE_COLS,
+        "deferred_configuration_columns": fj.CFG_COLS,
         "optional_feature_columns": SEASONAL_COLS,
         "target": "monthly_sales",
         "panel_policy": (
-            "Retain every cohort series-month. Causal specification fallback is "
-            "used; rows before a series' first available specification keep the "
-            "sales observation and receive numeric medians/categorical -1 sentinels."
+            "Retain every cohort series-month; store only sales, lags and calendar features. "
+            "Configuration imputation and encoding are fitted by origin-specific consumers."
         ),
         "leakage_guarantees": [
             "切分按绝对时间 (全局切点), 非随机/非按车系打乱",
             "lag/roll 特征由 groupby(series).shift 计算, 仅用真实过去销量",
-            "配置 join 因果回退: 只用 <= 行年份的最新规格, 不借未来年份",
+            "切分生成不读取、填充或编码配置；消费者必须按预测起点单独拟合配置规则",
             "评估车系固定为既有371车系，避免数据修复前后因新增名称映射改变样本",
-            "训练仅用 train.csv; val/test 仅供评估, 不参与训练",
+            "开发阶段用 train 拟合、val 选型；选定后在 train+val 重新拟合；test 不参与参数选择或权重拟合",
+        ],
+        "availability_limitations": [
+            "销量源未逐条恢复历史发布日期及修订版本；滚动协议假定上月销量可用",
+            "配置缺少年内发布时间；消费者采用年度代理假设，不等于完整历史发布时间恢复",
         ],
         "annual_attribution_note": "年度配置归因使用按 series_name 分组的 GroupKFold(5)，与月度预测的时间切分相互独立。",
     }
-    with open(os.path.join(OUTDIR, "manifest.json"), "w", encoding="utf-8") as f:
+    with open(output / "manifest.json", "w", encoding="utf-8") as f:
         json.dump(manifest, f, ensure_ascii=False, indent=2)
 
     readme = build_readme(manifest)
-    with open(os.path.join(OUTDIR, "README.md"), "w", encoding="utf-8") as f:
+    with open(output / "README.md", "w", encoding="utf-8") as f:
         f.write(readme)
 
     print("[splits] 已写出:")
     for fn in ["train.csv", "val.csv", "test.csv", "split_index.csv",
                "manifest.json", "README.md"]:
-        p = os.path.join(OUTDIR, fn)
+        p = output / fn
         print(f"        {fn:16s} {os.path.getsize(p):>9,} bytes")
     print("[splits] 时间切分与完整性检查通过。")
 
@@ -207,16 +221,18 @@ train、validation 和 test 文件，避免各模型自行定义测试区间。
 - Validation：{n['val']} 行；
 - Test：{n['test']} 行。
 
-月度面板保留每个目标车系的完整自然月。若某个月没有对应年度配置，销量行仍保留；数值配置使用配置表中位数，类别编码使用 `-1` 未知标记。这样不会因配置表缺月而把两个月前的销量误当成上月销量。
+月度面板保留每个目标车系的完整自然月。配置缺失不影响销量行保留；本目录只保存销量、日历和滞后，不保存统一填充或编码后的配置。缺月会阻止生成，不将更早月份误当成上月。
 
-## 防泄漏约束
+## 时间约束与尚存限制
 
 1. 销量滞后和滚动均值由车系内 `shift` 计算，只引用目标月以前的销量；12 个月季节特征同样遵守该约束。
-2. 配置按时间因果回退：缺少当年配置时，只使用不晚于该年份的最近配置。
-3. 对首个可用配置年份之前的真实销量行不做删除；数值配置填充配置表中位数，类别编码使用 `-1` 未知标记。
-4. Validation 用于选择参数和方案；Test 只报告最终结果。
+2. 训练消费者单独读取原始配置，按预测起点限制可用年份，并在实际训练行中拟合填充和类别规则。
+3. 无配置记录的销售行不删除；训练窗口全缺数值列使用0占位，未知类别使用−1。这些占位不存入共享切分文件。
+4. Validation用于选型；选定后最终模型使用train+val重新拟合至2025-12，测试期权重固定。
 5. 固定起点压力测试从 2026-01 开始递归六个月。第二个月起需要的销量滞后来自此前预测，不能读取测试期真实销量；滚动主协议则在每月更新时使用已公布的上月真实销量。
-6. 用户评论特征在主实验中统一冻结于 2026-01-01 之前；每个预测月的可用范围由评论时间特征脚本生成并审计。
+6. 固定场景评论冻结于2026-01-01前；滚动评论辅助实验按各月截止日更新，销量滚动主模型不使用评论。
+
+销量源未逐条恢复历史发布/修订版本，配置源也没有年内发布时间；年度代理规则不代表完整点时隔离。年度配置分析采用独立折内预处理。
 
 ## 读取示例
 

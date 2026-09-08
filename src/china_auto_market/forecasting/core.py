@@ -1,5 +1,7 @@
 """Shared split, metric, and recursive-forecast utilities."""
 
+import json
+
 import numpy as np
 import pandas as pd
 
@@ -22,6 +24,11 @@ def load_splits(parse_dates=True, *, backend="csv", login_path="local-auto"):
         from china_auto_market.warehouse.sources import load_forecast_feature_mart
 
         panel = load_forecast_feature_mart(login_path)
+        # The repaired mart stores a raw-source batch reference, not globally
+        # encoded configurations. Origin-specific preprocessing fills these.
+        if panel.attrs.get("configuration_batch_id") is not None:
+            for column in CFG_COLS:
+                panel[column] = np.nan
         # Preserve the historical split contract. Review features are attached
         # by the evaluation module under their own point-in-time protocol.
         columns = list(dict.fromkeys([
@@ -38,7 +45,28 @@ def load_splits(parse_dates=True, *, backend="csv", login_path="local-auto"):
     tr = pd.read_csv(SPLITS / "train.csv", **kw)
     va = pd.read_csv(SPLITS / "val.csv", **kw)
     te = pd.read_csv(SPLITS / "test.csv", **kw)
+    manifest_path = SPLITS / "manifest.json"
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8")) if manifest_path.exists() else {}
+    if manifest.get("configuration_policy") == "deferred-fit-window-v1":
+        for frame in (tr, va, te):
+            if set(CFG_COLS) & set(frame.columns):
+                raise ValueError("Deferred splits must not contain preprocessed configuration columns")
+            for column in CFG_COLS:
+                frame[column] = np.nan
+            frame.attrs["configuration_policy"] = "deferred-fit-window-v1"
     return tr, va, te
+
+
+def load_configuration_source(*, backend="csv", login_path="local-auto", frame=None):
+    """Read raw specifications, honoring a mart's bound source batch."""
+    if backend == "mysql":
+        from china_auto_market.warehouse.sources import load_raw_configuration
+        batch_id = frame.attrs.get("configuration_batch_id") if frame is not None else None
+        return load_raw_configuration(login_path, batch_id=batch_id)
+    if backend != "csv":
+        raise ValueError(f"Unsupported configuration backend: {backend}")
+    from china_auto_market.features.configuration import load_feature_source
+    return load_feature_source()
 
 
 def wmape_vol(y_true, y_pred):

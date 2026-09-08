@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国车市分析 · 销量预测</title>
   <link rel="stylesheet" href="static/css/style.css?v=20260829-1">
+  <link rel="stylesheet" href="static/css/paper.css?v=20260907-1">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body class="analysis-page forecast-page">
+<body class="analysis-page forecast-page paper-theme">
   <header class="topbar">
     <div class="brand">中国车市分析</div>
     <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
@@ -32,7 +33,7 @@
       <div class="analysis-timeline" aria-label="Time split">
         <div><span>TRAIN</span><strong>2022-04—2025-06</strong><em data-i18n="fc_split_train">模型训练</em></div>
         <div><span>VALIDATION</span><strong>2025-07—12</strong><em data-i18n="fc_split_val">参数与方案选择</em></div>
-        <div><span>TEST</span><strong>2026-01—06</strong><em data-i18n="fc_split_test">仅用于最终评价</em></div>
+        <div><span>TEST</span><strong>2026-01—06</strong><em data-i18n="fc_split_test">结果评价</em></div>
       </div>
 
       <section class="analysis-section" aria-labelledby="fc-performance-title">
@@ -47,17 +48,14 @@
             <tbody>
               <tr><td><strong data-i18n="home_model_naive">沿用上月销量（朴素基准）</strong><span data-i18n="home_model_naive_note">每次预测直接沿用最近一个已公布月份</span></td><td id="fc-score-naive-global">—</td><td id="fc-score-naive-median">—</td><td>—</td></tr>
               <tr class="forecast-primary-row"><td><strong data-i18n="home_model_baseline">滚动单月季节增强 XGBoost（主结果）</strong><span data-i18n="fc_baseline_scope">每月更新下月预测，加入12个月季节滞后与历史均值</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td id="fc-score-base-gain">—</td></tr>
-              <tr><td><strong data-i18n="home_model_stress">固定六个月综合方案</strong><span data-i18n="fc_review_scope">固定起点，含口碑与冷启动补充；仅作压力测试</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
-              <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="fc_cold_scope">固定起点下的最近6个月均值</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td>—</td></tr>
             </tbody>
           </table>
         </div>
 
-        <div class="analysis-method-note"><p data-i18n="fc_scenario_note">滚动单月协议用于运营型下月预测，固定六个月协议用于评估递归信息受限情景；两项结果按协议分别报告。</p></div>
 
         <div class="forecast-main-grid">
           <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="fc_all_models_title">全部方案对比</h3><p data-i18n="fc_all_models_note">同一测试集上的全局 WMAPE 与逐车系中位数 WMAPE；数值越低越好。</p></div></div>
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_all_models_title">滚动单月预测比较</h3><p data-i18n="fc_all_models_note">季节增强 XGBoost 与四种滚动朴素基准使用相同车系月样本；两项 WMAPE 均为越低越好。</p></div></div>
             <div id="chartModels" class="analysis-chart analysis-chart-tall"></div>
           </article>
           <aside class="analysis-reading">
@@ -65,14 +63,73 @@
             <dl>
               <div><dt data-i18n="home_global_col">全局 WMAPE</dt><dd data-i18n="fc_global_explain">将全部车系月的绝对误差汇总后除以实际销量总和，高销量车系权重更大。</dd></div>
               <div><dt data-i18n="home_median_col">逐车系中位数 WMAPE</dt><dd data-i18n="fc_median_explain">先分别计算每个车系的误差，再取中位数，用来观察典型车系表现。</dd></div>
-              <div><dt data-i18n="fc_cold_label">固定六个月压力测试</dt><dd data-i18n="fc_cold_explain">固定起点综合方案用于压力测试，与滚动单月主结果分别评估。</dd></div>
+              <div><dt data-i18n="fc_rolling_information"></dt><dd data-i18n="fc_rolling_information_note"></dd></div>
             </dl>
           </aside>
         </div>
+        <details class="analysis-method-note" open>
+          <summary data-i18n="fc_selection_title"></summary>
+          <p data-i18n="fc_selection_note"></p>
+          <div style="overflow-x:auto"><table class="forecast-score-table" id="fc-selection-table">
+            <thead><tr><th data-i18n="fc_origin"></th><th>BASE · WMAPE</th><th>SEASONAL_D5 · WMAPE</th></tr></thead>
+            <tbody>
+              <tr data-origin="2024-01-01"><td>2024-01</td><td>30.57%</td><td>30.09%</td></tr>
+              <tr data-origin="2024-07-01"><td>2024-07</td><td>23.64%</td><td>21.47%</td></tr>
+              <tr data-origin="2025-01-01"><td>2025-01</td><td>22.05%</td><td>21.02%</td></tr>
+              <tr data-origin="2025-07-01"><td>2025-07</td><td>21.64%</td><td>21.70%</td></tr>
+            </tbody>
+          </table></div>
+          <p data-i18n="fc_selection_reading"></p>
+        </details>
+        <p data-i18n="fc_evaluation_status"></p>
+      </section>
+
+      <section class="analysis-section" aria-labelledby="fc-diagnostics-title">
+        <header class="analysis-section-head"><span>02</span><div><h2 id="fc-diagnostics-title" data-i18n="fc_diagnostics_title">补充指标与逐月表现</h2><p data-i18n="fc_diagnostics_note">MAE和RMSE单位为辆/车系月；sMAPE保留全部样本，双方为零时记0。</p></div></header>
+        <div class="analysis-panel" style="overflow-x:auto">
+          <table class="forecast-score-table"><thead><tr><th data-i18n="home_model_col">比较方案</th><th>MAE</th><th>RMSE</th><th>sMAPE</th><th data-i18n="fc_positive_mape">正销量MAPE</th></tr></thead><tbody id="fc-metric-rows"></tbody></table>
+          <p data-i18n="fc_metric_tradeoff">MAPE仅含1,964个正销量样本。模型全局sMAPE弱于基准：真实销量为零时，即使小幅正预测也得到200%的sMAPE。MAE与WMAPE在同一数据集上按固定比例换算。</p>
+        </div>
+        <details class="analysis-method-note" open><summary data-i18n="fc_monthly_details">逐月误差与汇总口径</summary>
+          <div style="overflow-x:auto"><table class="forecast-score-table"><thead><tr><th data-i18n="fc_month">月份</th><th data-i18n="fc_naive_wmape">上月基准WMAPE</th><th data-i18n="fc_model_wmape">模型WMAPE</th></tr></thead><tbody id="fc-month-rows"></tbody></table></div>
+          <p id="fc-aggregate-note"></p>
+        </details>
+        <p data-i18n="fc_availability_limit">选定后使用截至2025-12的数据拟合，测试期权重固定。配置填充及编码仅在各训练窗口拟合，预测期配置冻结。销量回测假定上月数据可用；历史发布修订和配置年内发布时间缺失，年度代理不等于完整点时重建。</p>
+      </section>
+
+      <section class="analysis-section" aria-labelledby="fc-error-title">
+        <header class="analysis-section-head"><span>03</span><div><h2 id="fc-error-title" data-i18n="fc_error_title">误差分布</h2><p data-i18n="fc_error_lead">滚动测试包含2,226个车系月样本；散点图展示其中1,964个正销量样本，分车型结果用于定位误差较高的市场类别。</p></div></header>
+        <article class="analysis-panel" style="overflow-x:auto">
+          <div class="analysis-panel-head"><div><h3 data-i18n="fc_size_title"></h3><p data-i18n="fc_size_note"></p></div></div>
+          <table class="forecast-score-table"><thead><tr><th data-i18n="fc_size_group"></th><th data-i18n="fc_series_count"></th><th data-i18n="fc_naive_wmape"></th><th data-i18n="fc_model_wmape"></th></tr></thead><tbody id="fc-size-rows"></tbody></table>
+          <p data-i18n="fc_size_reading"></p>
+        </article>
+        <div class="analysis-grid-2">
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_scatter_public">实际销量与预测销量</h3><p data-i18n="fc_scatter_public_note">点越接近对角线，预测误差越小；高销量车系的绝对偏差更明显。</p></div></div>
+            <div id="chartScatter" class="analysis-chart"></div>
+          </article>
+          <article class="analysis-panel">
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_class_public">分车型误差</h3><p data-i18n="fc_class_public_note">包含各类别的全部车系月及零销量记录；括号内为车系数量。</p></div></div>
+            <div id="chartClass" class="analysis-chart"></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="analysis-section" aria-labelledby="fc-stress-title">
+        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-stress-title" data-i18n="fc_cold_label"></h2><p data-i18n="fc_scenario_note"></p></div></header>
+        <div class="forecast-score-wrap"><table class="forecast-score-table"><thead><tr><th data-i18n="home_model_col"></th><th data-i18n="home_global_col"></th><th data-i18n="home_median_col"></th><th data-i18n="home_change_col"></th></tr></thead><tbody>
+              <tr><td><strong data-i18n="home_model_stress">固定六个月平台评分模型</strong><span data-i18n="fc_review_scope">固定起点平台评分模型；仅作压力测试</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
+              <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="fc_cold_scope">固定起点下的最近12个月均值</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td>—</td></tr>
+        </tbody></table></div>
+        <details class="analysis-method-note"><summary data-i18n="fc_all_fixed">固定六个月完整基准比较</summary>
+          <div style="overflow-x:auto"><table class="forecast-score-table"><thead><tr><th data-i18n="home_model_col">比较方案</th><th>WMAPE</th><th data-i18n="home_median_col">逐车系中位数WMAPE</th></tr></thead><tbody id="fc-fixed-rows"></tbody></table></div>
+          <p data-i18n="fc_fixed_context">原报告以近6月均值为对照；近12月均值在已保存朴素方法中测试WMAPE更低。全部列出用于结果解释，不通过测试集重新选模型。</p>
+        </details>
       </section>
 
       <section class="analysis-section" aria-labelledby="fc-signal-title">
-        <header class="analysis-section-head"><span>02</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">固定压力测试的信号结构</h2><p data-i18n="fc_signal_lead">下图解释固定六个月口碑增强模型，不代表滚动单月主模型包含口碑特征，也不构成销量因果效应估计。</p></div></header>
+        <header class="analysis-section-head"><span>05</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">固定压力测试的信号结构</h2><p data-i18n="fc_signal_lead">下图解释固定六个月口碑增强模型，不代表滚动单月主模型包含口碑特征，也不构成销量因果效应估计。</p></div></header>
         <div class="forecast-signal-grid">
           <article class="analysis-panel">
             <div class="analysis-panel-head"><div><h3 data-i18n="fc_features_public">固定六个月口碑模型：前12项特征贡献</h3><p data-i18n="fc_features_public_note">平均绝对 SHAP 值，基于固定起点压力测试的对数销量预测；数值越大，该辅助模型越依赖该特征。</p></div></div>
@@ -81,32 +138,18 @@
           <aside class="forecast-signal-summary">
             <div><span>01</span><strong data-i18n="fc_signal_history">销量历史占主导</strong><p data-i18n="fc_signal_history_note">上月销量、近3月均值、前2月销量和近6月均值位列前四，历史惯性远高于其他信号。</p></div>
             <div><span>02</span><strong data-i18n="fc_signal_calendar">季节项提供补充</strong><p data-i18n="fc_signal_calendar_note">月份正弦与余弦项排在第5、第6位，用于刻画年度季节变化。</p></div>
-            <div><span>03</span><strong data-i18n="fc_signal_reviews">口碑只提供辅助信号</strong><p data-i18n="fc_signal_reviews_note">评论覆盖与平台评分特征进入前12，但贡献明显低于销量历史；它们只属于固定压力测试，不进入滚动主模型。</p></div>
+            <div><span>05</span><strong data-i18n="fc_signal_reviews">口碑只提供辅助信号</strong><p data-i18n="fc_signal_reviews_note">评论覆盖与平台评分特征进入前12，但贡献明显低于销量历史；它们只属于固定压力测试，不进入滚动主模型。</p></div>
           </aside>
         </div>
       </section>
 
-      <section class="analysis-section" aria-labelledby="fc-error-title">
-        <header class="analysis-section-head"><span>03</span><div><h2 id="fc-error-title" data-i18n="fc_error_title">误差分布</h2><p data-i18n="fc_error_lead">滚动测试包含2,226个车系月样本；散点图展示其中1,964个正销量样本，分车型结果用于定位误差较高的市场类别。</p></div></header>
-        <div class="analysis-grid-2">
-          <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="fc_scatter_public">实际销量与预测销量</h3><p data-i18n="fc_scatter_public_note">点越接近对角线，预测误差越小；高销量车系的绝对偏差更明显。</p></div></div>
-            <div id="chartScatter" class="analysis-chart"></div>
-          </article>
-          <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="fc_class_public">分车型误差</h3><p data-i18n="fc_class_public_note">SUV的全局 WMAPE 最低，轿车最高；括号内为对应车系数量。</p></div></div>
-            <div id="chartClass" class="analysis-chart"></div>
-          </article>
-        </div>
-      </section>
-
       <section class="analysis-section" id="sentiment-value" aria-labelledby="fc-review-value-title">
-        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">口碑消融属于固定六个月压力测试，不改变滚动单月主结果；点估计改善，但稳定增益证据不足。</p></div></header>
+        <header class="analysis-section-head"><span>06</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">口碑消融属于固定六个月压力测试，不改变滚动单月主结果；点估计改善，但稳定增益证据不足。</p></div></header>
 
         <div class="forecast-evidence-strip">
-          <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong>0.70<small>pp</small></strong></div>
-          <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong>92.64<small>%</small></strong></div>
-          <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong>−0.23—1.87<small>pp</small></strong></div>
+          <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong id="fc-evidence-point">—</strong></div>
+          <div><span data-i18n="fc_evidence_probability">重采样中优于基线</span><strong id="fc-evidence-share">—</strong></div>
+          <div><span data-i18n="fc_evidence_interval">95%改善区间</span><strong id="fc-evidence-interval">—</strong></div>
           <p data-i18n="fc_evidence_plain">95%区间包含零，口碑增强的稳定增益尚未获得充分统计支持，定位为辅助信息。</p>
         </div>
 
@@ -116,7 +159,7 @@
             <div id="chartBootstrap" class="analysis-chart"></div>
           </article>
           <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="fc_ablation_public">固定起点口碑消融</h3><p data-i18n="fc_ablation_public_note">只改变口碑特征组合，其余样本、时间切分与模型配置保持一致。</p></div></div>
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_ablation_public">固定起点口碑消融</h3><p data-i18n="fc_ablation_public_note">样本与时间切分一致；保留既定模型及100棵树，不按当前测试分数重新选型。</p></div></div>
             <div id="chartFusion" class="analysis-chart"></div>
           </article>
         </div>
@@ -128,8 +171,9 @@
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js?v=20260829-1"></script>
-  <script src="static/js/i18n.js?v=20260830-2"></script>
+  <script src="static/js/paper-theme.js?v=20260907-1"></script>
+  <script src="static/js/common.js?v=20260905-1"></script>
+  <script src="static/js/i18n.js?v=20260908-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
@@ -142,6 +186,29 @@
     }
 
     function fcPct(value) { return Number(value).toFixed(2) + '%'; }
+
+    function fcTooltip() {
+      return Object.assign({}, tooltipStyle(), {
+        confine: true, backgroundColor: window.CHINA_AUTO_MARKET.text,
+        textStyle: { color: '#f8f7f2', fontSize: 13 },
+        extraCssText: 'max-width:320px;white-space:normal;box-shadow:0 4px 14px rgba(25,35,44,.14);border-radius:3px;'
+      });
+    }
+
+    function fcCategoryAxis(labels) {
+      var axis = Object.assign({ type: 'category', data: labels }, fcAxisStyle());
+      axis.axisLabel = Object.assign({}, axis.axisLabel, {
+        fontSize: 11, width: 145, overflow: 'break', lineHeight: 14,
+        interval: 0
+      });
+      return axis;
+    }
+
+    function fcAxisStyle() {
+      return Object.assign({}, axisStyle(), {
+        nameTextStyle: { color: window.CHINA_AUTO_MARKET.muted, fontSize: 12 }
+      });
+    }
 
     function publicModelName(model) {
       return window.CHINA_AUTO_MARKET.lang === 'en'
@@ -168,6 +235,37 @@
       var naive = d.models.find(function (m) { return m.scenario === 'rolling_naive_last'; });
       var stress = d.fixed_stress;
       var naiveGlobal = d.meta.best_naive_global_wmape;
+      var isEn = T.lang === 'en';
+      var diagnostics = d.diagnostics;
+      document.getElementById('fc-metric-rows').innerHTML = [naive, base].map(function (m) {
+        return '<tr><td>' + publicModelName(m) + '</td><td>' + m.mae.toFixed(2) + '</td><td>' + m.rmse.toFixed(2) + '</td><td>' + fcPct(m.smape) + '</td><td>' + fcPct(m.mape_positive) + '</td></tr>';
+      }).join('');
+      document.getElementById('fc-month-rows').innerHTML = diagnostics.monthly.filter(function (m) { return m.method === 'pred'; }).map(function (m) {
+        var n = diagnostics.monthly.find(function (x) { return x.method === 'LAST_VALUE' && x.month === m.month; });
+        return '<tr><td>' + m.month + '</td><td>' + fcPct(n.wmape) + '</td><td>' + fcPct(m.wmape) + '</td></tr>';
+      }).join('');
+      document.getElementById('fc-size-rows').innerHTML = diagnostics.segments.filter(function (m) {
+        return m.group_type === 'pre_test_size' && m.method === 'pred';
+      }).map(function (m) {
+        var n = diagnostics.segments.find(function (x) {
+          return x.group_type === 'pre_test_size' && x.method === 'LAST_VALUE' && x.group === m.group;
+        });
+        return '<tr><td>' + m.group + '</td><td>' + m.series + '</td><td>' + fcPct(n.wmape) + '</td><td>' + fcPct(m.wmape) + '</td></tr>';
+      }).join('');
+      var aggregate = diagnostics.aggregate.find(function (m) { return m.method === 'pred'; });
+      fcSetText('fc-aggregate-note', isEn
+        ? 'Monthly aggregate WMAPE for these 371 series: ' + fcPct(aggregate.monthly_aggregate_wmape) + '; six-month net bias: ' + fcPct(aggregate.six_month_net_bias_pct) + '. Net bias permits cancellation across months and is not monthly forecast accuracy or a national-market score.'
+        : '371车系按月汇总后的WMAPE为' + fcPct(aggregate.monthly_aggregate_wmape) + '，半年净偏差为' + fcPct(aggregate.six_month_net_bias_pct) + '。净偏差允许跨月份抵消，不能当作月度精度或全国市场预测得分。');
+      var fixedNames = {
+        LAST_VALUE: ['上月销量', 'Last observed sales'], SEASONAL_LAG12: ['去年同期', 'Same month last year'],
+        ROLLING_MEAN_3: ['近3月均值', 'Trailing 3-month mean'], ROLLING_MEAN_6: ['近6月均值', 'Trailing 6-month mean'],
+        ROLLING_MEAN_12: ['近12月均值', 'Trailing 12-month mean']
+      };
+      document.getElementById('fc-fixed-rows').innerHTML = d.fixed_benchmarks.map(function (m) {
+        var names = fixedNames[m.method], fixed = d.fixed_models.find(function (x) { return x.version === m.method; });
+        var name = names ? names[isEn ? 1 : 0] : (fixed ? publicModelName(fixed) : m.method);
+        return '<tr><td>' + name + '</td><td>' + fcPct(m.global_volume_weighted_WMAPE) + '</td><td>' + fcPct(m.median_per_series_WMAPE) + '</td></tr>';
+      }).join('');
       fcSetText('fc-score-naive-global', fcPct(naiveGlobal));
       fcSetText('fc-score-naive-median', fcPct(d.meta.best_naive_median_wmape));
       fcSetText('fc-score-base-global', fcPct(base.wmape_vol));
@@ -182,47 +280,52 @@
       var models = d.models.slice().sort(function (a, b) { return b.wmape_vol - a.wmape_vol; });
       if (!chartModels) chartModels = initChart('chartModels');
       chartModels.setOption({
-        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-        legend: { top: 2, right: 8, itemWidth: 12, itemHeight: 8, textStyle: { color: T.muted, fontSize: 10 } },
-        grid: baseGrid({ left: 160, top: 42, right: 62, bottom: 38 }),
-        xAxis: Object.assign({ type: 'value', min: 20, max: Math.ceil(Math.max.apply(null, models.map(function (m) { return Math.max(m.wmape_vol, m.wmape_med); })) + 8), name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, axisStyle()),
-        yAxis: Object.assign({ type: 'category', data: models.map(publicModelName), axisLabel: { color: T.muted, fontSize: 10 } }, axisStyle()),
+        tooltip: Object.assign({ axisPointer: { type: 'shadow' } }, fcTooltip()),
+        legend: { top: 2, right: 0, itemWidth: 12, itemHeight: 8, textStyle: { color: T.muted, fontSize: 11 } },
+        grid: baseGrid({ left: 0, top: 58, right: 46, bottom: 38 }),
+        xAxis: Object.assign({ type: 'value', min: 0, max: Math.ceil(Math.max.apply(null, models.map(function (m) { return Math.max(m.wmape_vol, m.wmape_med); })) + 8), name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, fcAxisStyle()),
+        yAxis: fcCategoryAxis(models.map(publicModelName)),
         series: [
-          { name: window.I18N.get('home_global_col'), type: 'bar', barMaxWidth: 9, data: models.map(function (m) { return m.wmape_vol; }), itemStyle: { color: '#2a65b7' }, label: { show: true, position: 'right', color: T.text, fontSize: 9, formatter: function (p) { return p.value.toFixed(2); } } },
-          { name: window.I18N.get('home_median_col'), type: 'bar', barMaxWidth: 9, data: models.map(function (m) { return m.wmape_med; }), itemStyle: { color: '#9ca9b7' }, label: { show: true, position: 'right', color: T.muted, fontSize: 9, formatter: function (p) { return p.value.toFixed(2); } } }
+          { name: window.I18N.get('home_global_col'), type: 'bar', barMaxWidth: 9, data: models.map(function (m) { return m.wmape_vol; }), itemStyle: { color: T.primary }, label: { show: true, position: 'right', color: T.text, fontSize: 11, formatter: function (p) { return p.value.toFixed(2); } } },
+          { name: window.I18N.get('home_median_col'), type: 'bar', barMaxWidth: 9, data: models.map(function (m) { return m.wmape_med; }), itemStyle: { color: T.comparison }, label: { show: true, position: 'right', color: T.muted, fontSize: 11, formatter: function (p) { return p.value.toFixed(2); } } }
         ]
       }, true);
 
       var features = d.features.slice().reverse();
       if (!chartFeatures) chartFeatures = initChart('chartFeatures');
       chartFeatures.setOption({
-        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-        grid: baseGrid({ left: 140, top: 18, right: 58, bottom: 34 }),
-        xAxis: Object.assign({ type: 'value', name: 'mean |SHAP|', nameLocation: 'middle', nameGap: 25 }, axisStyle()),
-        yAxis: Object.assign({ type: 'category', data: features.map(nameFromAspect), axisLabel: { color: T.muted, fontSize: 10 } }, axisStyle()),
-        series: [{ type: 'bar', barMaxWidth: 12, data: features.map(function (f, i) { return { value: f.importance, itemStyle: { color: i > 8 ? T.primary : '#8fa4ba', borderRadius: [0, 5, 5, 0] } }; }), label: { show: true, position: 'right', color: T.muted, fontSize: 11 } }]
+        tooltip: Object.assign({ axisPointer: { type: 'shadow' } }, fcTooltip()),
+        grid: baseGrid({ left: 0, top: 18, right: 58, bottom: 34 }),
+        xAxis: Object.assign({ type: 'value', name: 'mean |SHAP|', nameLocation: 'middle', nameGap: 25 }, fcAxisStyle()),
+        yAxis: fcCategoryAxis(features.map(nameFromAspect)),
+        series: [{ type: 'bar', barMaxWidth: 12, data: features.map(function (f, i) { return { value: f.importance, itemStyle: { color: i > 8 ? T.primary : T.comparison, borderRadius: [0, 2, 2, 0] } }; }), label: { show: true, position: 'right', color: T.muted, fontSize: 11 } }]
       }, true);
 
       if (!chartScatter) chartScatter = initChart('chartScatter');
       var maxVal = Math.max.apply(null, d.scatter.map(function (p) { return Math.max(p[0], p[1]); }));
       chartScatter.setOption({
-        tooltip: { trigger: 'item', backgroundColor: 'rgba(15,28,47,.96)', borderWidth: 0, textStyle: { color: '#fff' }, formatter: function (p) { return window.I18N.get('fc_legend_actual') + ': ' + p.data[0] + '<br>' + window.I18N.get('fc_legend_pred') + ': ' + p.data[1]; } },
-        grid: baseGrid({ top: 20, bottom: 48, left: 52, right: 30 }),
-        xAxis: Object.assign({ type: 'value', min: 0, max: maxVal, name: window.I18N.get('fc_legend_actual'), nameLocation: 'middle', nameGap: 28 }, axisStyle()),
-        yAxis: Object.assign({ type: 'value', min: 0, max: maxVal, name: window.I18N.get('fc_legend_pred') }, axisStyle()),
-        series: [{ type: 'scatter', data: d.scatter, symbolSize: 4, itemStyle: { color: 'rgba(40,120,255,.34)' } }, { type: 'line', data: [[0,0],[maxVal,maxVal]], symbol: 'none', silent: true, lineStyle: { color: '#7a8ca1', type: 'dashed' } }]
+        tooltip: Object.assign({}, fcTooltip(), { trigger: 'item', formatter: function (p) { return window.I18N.get('fc_legend_actual') + ': ' + p.data[0] + '<br>' + window.I18N.get('fc_legend_pred') + ': ' + p.data[1]; } }),
+        grid: baseGrid({ top: 28, bottom: 48, left: 0, right: 28 }),
+        xAxis: Object.assign({ type: 'value', min: 0, max: maxVal, name: window.I18N.get('fc_legend_actual'), nameLocation: 'middle', nameGap: 28 }, fcAxisStyle()),
+        yAxis: Object.assign({ type: 'value', min: 0, max: maxVal, name: window.I18N.get('fc_legend_pred') }, fcAxisStyle()),
+        series: [{ type: 'scatter', data: d.scatter, symbolSize: 4, itemStyle: { color: T.primary, opacity: .4 } }, { type: 'line', data: [[0,0],[maxVal,maxVal]], symbol: 'none', silent: true, lineStyle: { color: T.comparison, type: 'dashed' } }]
       }, true);
 
       if (!chartClass) chartClass = initChart('chartClass');
       var classes = d.class_wmape.slice().sort(function (a, b) { return b.wmape - a.wmape; });
       chartClass.setOption({
-        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'shadow' } }, tooltipStyle()),
-        grid: baseGrid({ left: 62, top: 20, right: 60, bottom: 44 }),
-        xAxis: Object.assign({ type: 'value', name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, axisStyle()),
-        yAxis: Object.assign({ type: 'category', data: classes.map(function (x) { return className(x.category) + ' · n=' + x.n_series; }) }, axisStyle()),
+        tooltip: Object.assign({ axisPointer: { type: 'shadow' } }, fcTooltip()),
+        grid: baseGrid({ left: 0, top: 20, right: 60, bottom: 44 }),
+        xAxis: Object.assign({ type: 'value', name: 'WMAPE %', nameLocation: 'middle', nameGap: 26 }, fcAxisStyle()),
+        yAxis: Object.assign({ type: 'category', data: classes.map(function (x) { return className(x.category) + ' · n=' + x.n_series; }) }, fcAxisStyle()),
         series: [{ type: 'bar', barMaxWidth: 20, data: classes.map(function (x, i) { return { value: x.wmape, itemStyle: { color: T.palette[i], borderRadius: [0,5,5,0] } }; }), label: { show: true, position: 'right', color: T.text, formatter: '{c}%' } }]
       }, true);
 
+      var primaryEvidence = r.primary_comparison;
+      fcSetText('fc-evidence-point', primaryEvidence.improvement_pp.toFixed(3) + ' pp');
+      fcSetText('fc-evidence-share', (primaryEvidence.fraction_resamples_better * 100).toFixed(2) + '%');
+      var intervalSeparator = window.CHINA_AUTO_MARKET.lang === 'en' ? ' to ' : ' 至 ';
+      fcSetText('fc-evidence-interval', primaryEvidence.ci_95_pp[0].toFixed(4) + intervalSeparator + primaryEvidence.ci_95_pp[1].toFixed(4) + ' pp');
       var bootLabels = r.granger.aspects.map(publicReviewName);
       if (!chartBootstrap) chartBootstrap = initChart('chartBootstrap');
       chartBootstrap.setOption({
@@ -234,21 +337,21 @@
             return escapeHTML(point.name) + '<br>' + point.marker +
               (Number(point.value) * 100).toFixed(1) + '%';
           }
-        }, tooltipStyle()),
-        grid: baseGrid({ left: 125, top: 22, right: 56, bottom: 44 }),
-        xAxis: Object.assign({ type: 'value', min: 0, max: 1, interval: .2, axisLabel: { formatter: function (v) { return Math.round(v * 100) + '%'; } } }, axisStyle()),
-        yAxis: Object.assign({ type: 'category', data: bootLabels }, axisStyle()),
-        series: [{ type: 'bar', barMaxWidth: 18, data: r.granger.sig_rates.map(function (v) { return { value: v, itemStyle: { color: v >= .9 ? '#2a65b7' : '#8fa2b5' } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 10, formatter: function (p) { return (p.value * 100).toFixed(1) + '%'; } } }]
+        }, fcTooltip()),
+        grid: baseGrid({ left: 0, top: 22, right: 48, bottom: 44 }),
+        xAxis: Object.assign({ type: 'value', min: 0, max: 1, interval: .25 }, fcAxisStyle(), { axisLabel: { color: T.muted, fontSize: 11, showMinLabel: true, showMaxLabel: true, formatter: function (v) { return Math.round(v * 100) + '%'; } } }),
+        yAxis: fcCategoryAxis(bootLabels),
+        series: [{ type: 'bar', barMaxWidth: 18, data: r.granger.sig_rates.map(function (v) { return { value: v, itemStyle: { color: v >= .9 ? T.primary : T.comparison } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 11, formatter: function (p) { return (p.value * 100).toFixed(1) + '%'; } } }]
       }, true);
 
       var fusion = r.fusion;
       if (!chartFusion) chartFusion = initChart('chartFusion');
       chartFusion.setOption({
-        tooltip: Object.assign({ trigger: 'axis', axisPointer: { type: 'line' } }, tooltipStyle()),
-        grid: baseGrid({ left: 110, top: 22, right: 62, bottom: 44 }),
-        xAxis: Object.assign({ type: 'value', min: Math.floor(Math.min.apply(null, fusion.map(function (x) { return x.wmape_vol; })) - 1), max: Math.ceil(Math.max.apply(null, fusion.map(function (x) { return x.wmape_vol; })) + 1), name: 'WMAPE %', nameLocation: 'middle', nameGap: 28 }, axisStyle()),
-        yAxis: Object.assign({ type: 'category', data: fusion.map(publicReviewName) }, axisStyle()),
-        series: [{ type: 'scatter', symbolSize: 12, data: fusion.map(function (x) { return { value: x.wmape_vol, itemStyle: { color: x.wmape_vol === Math.min.apply(null, fusion.map(function (v) { return v.wmape_vol; })) ? T.sentimentPos : '#2a65b7' } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 10, formatter: function (p) { return p.value.toFixed(3) + '%'; } } }]
+        tooltip: Object.assign({ axisPointer: { type: 'line' } }, fcTooltip()),
+        grid: baseGrid({ left: 0, top: 22, right: 68, bottom: 44 }),
+        xAxis: Object.assign({ type: 'value', min: Math.floor(Math.min.apply(null, fusion.map(function (x) { return x.wmape_vol; })) - 1), max: Math.ceil(Math.max.apply(null, fusion.map(function (x) { return x.wmape_vol; })) + 1), name: 'WMAPE %', nameLocation: 'middle', nameGap: 28 }, fcAxisStyle()),
+        yAxis: fcCategoryAxis(fusion.map(publicReviewName)),
+        series: [{ type: 'scatter', symbolSize: 12, data: fusion.map(function (x) { return { value: x.wmape_vol, itemStyle: { color: x.wmape_vol === Math.min.apply(null, fusion.map(function (v) { return v.wmape_vol; })) ? T.sentimentPos : T.primary } }; }), label: { show: true, position: 'right', color: T.text, fontSize: 11, formatter: function (p) { return p.value.toFixed(3) + '%'; } } }]
       }, true);
     }
 

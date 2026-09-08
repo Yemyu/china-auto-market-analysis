@@ -1,4 +1,4 @@
-"""Join annual specifications to the monthly sales panel without future fill."""
+"""Annual specification sources and legacy joins retained for historical replay."""
 
 import pandas as pd
 
@@ -33,6 +33,7 @@ def load_feature_source():
 
 
 def _load_cfg_frame(feature_source: pd.DataFrame | None = None):
+    """Legacy full-table preprocessing; not valid for historical forecast fitting."""
     feat = load_feature_source() if feature_source is None else feature_source.copy()
     feat["series_name"] = feat["series_name"].astype(str)
     feat["year"] = pd.to_numeric(feat["year"], errors="coerce")
@@ -52,7 +53,10 @@ def join_cfg(
     keep_unmatched: bool = False,
     feature_source: pd.DataFrame | None = None,
 ):
-    """Join the latest configuration that is not newer than the sales year.
+    """Legacy join by sales year, with full-table preprocessing.
+
+    This is not a point-in-time forecast transform. Current consumers use
+    prepare_configuration_window; retain this function only for old replays.
 
     With ``keep_unmatched=True``, sales rows without a usable configuration are
     retained so that missing specifications cannot create gaps in the monthly

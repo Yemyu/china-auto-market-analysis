@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国车市分析 · 用户需求</title>
   <link rel="stylesheet" href="static/css/style.css?v=20260829-1">
+  <link rel="stylesheet" href="static/css/paper.css?v=20260908-1">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body class="analysis-page needs-page">
+<body class="analysis-page needs-page paper-theme">
   <header class="topbar">
     <div class="brand">中国车市分析</div>
     <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
@@ -29,6 +30,7 @@
         </dl>
       </header>
 
+      <aside class="analysis-method-note"><p data-i18n="ab_sample_scope"></p></aside>
       <section class="analysis-section" aria-labelledby="ab-priority-title">
         <header class="analysis-section-head">
           <span>01</span>
@@ -81,13 +83,15 @@
         </div>
         <details class="analysis-method-note"><summary data-i18n="ab_method_summary">指标定义</summary><p data-i18n="ab_method_definition">提及率＝提及该维度的评论数÷全部评论数；负面占比＝该维度负面标签数÷该维度有效标签数。未提及与标签缺失均保留为缺失，不填成中性。</p></details>
       </section>
+      <aside class="analysis-method-note"><h3 data-i18n="ab_use_title"></h3><p data-i18n="ab_use_note"></p><a href="alerts.html" data-i18n="ab_use_link"></a></aside>
     </main>
   </div>
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js?v=20260829-1"></script>
-  <script src="static/js/i18n.js?v=20260830-2"></script>
+  <script src="static/js/paper-theme.js?v=20260908-1"></script>
+  <script src="static/js/common.js?v=20260905-1"></script>
+  <script src="static/js/i18n.js?v=20260908-2"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });

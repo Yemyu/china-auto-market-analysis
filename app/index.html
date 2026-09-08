@@ -103,7 +103,7 @@
             <p class="home-label" data-i18n="home_figure_label">图 1 · 市场背景</p>
             <h2 id="market-title" data-i18n="home_market_title">样本市场的月度销量与时间切分</h2>
           </div>
-          <p data-i18n="home_market_note">阴影区域标出训练、验证与测试期。测试期数据只用于最终评价，不参与参数选择。</p>
+          <p data-i18n="home_market_note">阴影标出原定训练、验证与测试窗口。2026年评价窗口已用于开发复核，当前结果不构成新的独立盲测。</p>
         </div>
         <div id="chartTrend" class="home-chart" role="img" aria-label="Monthly sales with train validation and test periods"></div>
         <div class="home-figure-caption"><span data-i18n="home_market_source">来源：公开月销量数据，自然月汇总。</span><span data-i18n="home_market_scope">图示为市场背景；模型评价以371车系测试样本为准。</span></div>
@@ -126,8 +126,8 @@
                 <tbody>
                   <tr><td><strong data-i18n="home_model_naive">沿用上月销量（朴素基准）</strong><span data-i18n="home_model_naive_note">每次预测直接沿用最近一个已公布月份</span></td><td id="model-naive-global">—</td><td id="model-naive-median">—</td><td class="home-neutral">—</td></tr>
                   <tr class="home-best-core"><td><strong data-i18n="home_model_baseline">滚动单月季节增强 XGBoost（主结果）</strong><span data-i18n="home_model_baseline_note">每月更新下月预测，加入12个月季节滞后与历史均值</span></td><td id="model-base-global">—</td><td id="model-base-median">—</td><td id="model-base-gain">—</td></tr>
-                  <tr><td><strong data-i18n="home_model_stress">固定六个月综合方案</strong><span data-i18n="home_model_stress_note">固定起点，含口碑与冷启动补充；仅作压力测试</span></td><td id="model-core-global">—</td><td id="model-core-median">—</td><td id="model-core-gain">—</td></tr>
-                  <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="home_model_stress_naive_note">固定起点下的最近6个月均值</span></td><td id="model-cold-global">—</td><td id="model-cold-median">—</td><td class="home-neutral">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_stress">固定六个月平台评分模型</strong><span data-i18n="home_model_stress_note">固定起点平台评分模型；仅作压力测试</span></td><td id="model-core-global">—</td><td id="model-core-median">—</td><td id="model-core-gain">—</td></tr>
+                  <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="home_model_stress_naive_note">固定起点下的最近12个月均值</span></td><td id="model-cold-global">—</td><td id="model-cold-median">—</td><td class="home-neutral">—</td></tr>
                 </tbody>
               </table>
             </div>
@@ -169,7 +169,7 @@
           </div>
           <details class="home-audit-note">
             <summary data-i18n="home_audit_summary">补充证据</summary>
-            <div><p data-i18n="home_audit_text">固定六个月压力测试中的口碑增强点估计改善0.697个百分点；5,000次车系聚类重采样的95%区间为−0.234至1.873个百分点，区间跨0，因此不把它当作滚动主结果的稳定增益。</p></div>
+            <div><p data-i18n="home_audit_text">固定六个月压力测试中的口碑增强点估计改善0.980个百分点；5,000次车系聚类重采样的95%区间为−0.0047至2.2331个百分点，区间跨0，因此不把它当作滚动主结果的稳定增益。</p></div>
           </details>
         </div>
       </section>
@@ -189,8 +189,8 @@
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js?v=20260829-1"></script>
-  <script src="static/js/i18n.js?v=20260830-2"></script>
+  <script src="static/js/common.js?v=20260905-1"></script>
+  <script src="static/js/i18n.js?v=20260907-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });

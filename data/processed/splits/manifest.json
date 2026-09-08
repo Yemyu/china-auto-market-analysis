@@ -1,9 +1,10 @@
 {
-  "schema_version": "v1",
-  "generated_at": "2026-08-29T16:16:50.170204+00:00",
+  "schema_version": "sales-lags-v2",
+  "generated_at": "2026-09-06T03:51:34.592737+00:00",
   "source_sales": "data/processed/sales_filtered_24m.csv",
-  "source_config": "data/raw/feature.csv or tracked feature.xlsx fallback (车系×年, 因果回退 join)",
-  "population": "frozen 371-series evaluation cohort with causal configuration join",
+  "configuration_policy": "deferred-fit-window-v1",
+  "source_config": "Loaded separately by each forecast evaluation; not preprocessed or stored in splits",
+  "population": "frozen 371-series evaluation cohort with complete calendar months",
   "source_cohort": "data/reviews/processed/target_371_review_coverage.csv",
   "time_cutoffs": {
     "train_end": "2025-06",
@@ -25,7 +26,9 @@
     "roll_mean_6",
     "month_sin",
     "month_cos",
-    "year",
+    "year"
+  ],
+  "deferred_configuration_columns": [
     "official_price_wan",
     "engine_max_power_kw",
     "engine_max_torque_nm",
@@ -53,13 +56,17 @@
     "roll_mean_12"
   ],
   "target": "monthly_sales",
-  "panel_policy": "Retain every cohort series-month. Causal specification fallback is used; rows before a series' first available specification keep the sales observation and receive numeric medians/categorical -1 sentinels.",
+  "panel_policy": "Retain every cohort series-month; store only sales, lags and calendar features. Configuration imputation and encoding are fitted by origin-specific consumers.",
   "leakage_guarantees": [
     "切分按绝对时间 (全局切点), 非随机/非按车系打乱",
     "lag/roll 特征由 groupby(series).shift 计算, 仅用真实过去销量",
-    "配置 join 因果回退: 只用 <= 行年份的最新规格, 不借未来年份",
+    "切分生成不读取、填充或编码配置；消费者必须按预测起点单独拟合配置规则",
     "评估车系固定为既有371车系，避免数据修复前后因新增名称映射改变样本",
-    "训练仅用 train.csv; val/test 仅供评估, 不参与训练"
+    "开发阶段用 train 拟合、val 选型；选定后在 train+val 重新拟合；test 不参与参数选择或权重拟合"
+  ],
+  "availability_limitations": [
+    "销量源未逐条恢复历史发布日期及修订版本；滚动协议假定上月销量可用",
+    "配置缺少年内发布时间；消费者采用年度代理假设，不等于完整历史发布时间恢复"
   ],
   "annual_attribution_note": "年度配置归因使用按 series_name 分组的 GroupKFold(5)，与月度预测的时间切分相互独立。"
 }

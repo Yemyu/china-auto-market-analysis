@@ -4,13 +4,11 @@ from __future__ import annotations
 
 import pandas as pd
 
-from china_auto_market.features import configuration
-from china_auto_market.features.splits import FEAT_COLS, assign_split, engineer_features
+from china_auto_market.features.splits import STORED_FEATURE_COLS, assign_split, engineer_features
 
 
 def build_forecast_panel(
     sales: pd.DataFrame,
-    config: pd.DataFrame,
     cohort_names: set[str],
 ) -> pd.DataFrame:
     """Return rows eligible for the current train/validation/test protocol."""
@@ -25,13 +23,8 @@ def build_forecast_panel(
         raise ValueError(f"Forecast cohort missing from standardized sales: {sorted(missing)}")
     panel["year"] = panel["date"].dt.year
     panel["month"] = panel["date"].dt.month
-    panel = configuration.join_cfg(
-        panel,
-        keep_unmatched=True,
-        feature_source=config,
-    )
     panel = assign_split(engineer_features(panel))
-    usable_train = panel["split"].ne("train") | panel[FEAT_COLS].notna().all(axis=1)
+    usable_train = panel["split"].ne("train") | panel[STORED_FEATURE_COLS].notna().all(axis=1)
     panel = panel.loc[usable_train].copy()
     if panel.duplicated(["series_name", "date"]).any():
         raise ValueError("Forecast mart panel contains duplicate series-month keys")

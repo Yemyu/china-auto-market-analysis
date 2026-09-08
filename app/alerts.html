@@ -5,9 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>中国车市分析 · 风险监测</title>
   <link rel="stylesheet" href="static/css/style.css?v=20260829-1">
+  <link rel="stylesheet" href="static/css/paper.css?v=20260908-1">
   <style>[data-i18n]{visibility:hidden}</style>
 </head>
-<body class="analysis-page alerts-page">
+<body class="analysis-page alerts-page paper-theme">
   <header class="topbar">
     <div class="brand">中国车市分析</div>
     <div class="brand-sub" data-i18n="brand_sub">汽车市场数据研究</div>
@@ -29,6 +30,10 @@
         </dl>
       </header>
 
+      <aside class="analysis-method-note">
+        <h3 data-i18n="al_coverage_title"></h3><p id="al-coverage"></p>
+        <p data-i18n="al_coverage_note"></p>
+      </aside>
       <section class="analysis-section" aria-labelledby="al-current-title">
         <header class="analysis-section-head">
           <span>01</span>
@@ -91,21 +96,27 @@
         </div>
         <details class="analysis-method-note"><summary data-i18n="al_method_summary">查看阈值与数据来源</summary><p data-i18n="al_method_note">每个监测月只使用截至该月月末已发布的评论，未完成月份不参与判断。预警规则不参与销量预测，也不会自动给出故障结论。</p><p data-i18n="al_source"></p></details>
       </section>
+      <aside class="analysis-method-note"><h3 data-i18n="al_use_title"></h3><p data-i18n="al_use_note"></p></aside>
     </main>
   </div>
 
   <script src="static/js/lib/echarts.min.js"></script>
   <script src="static/js/theme.js"></script>
-  <script src="static/js/common.js?v=20260829-1"></script>
-  <script src="static/js/i18n.js?v=20260830-2"></script>
+  <script src="static/js/paper-theme.js?v=20260908-1"></script>
+  <script src="static/js/common.js?v=20260905-1"></script>
+  <script src="static/js/i18n.js?v=20260908-2"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
-    var alertsData = null, chartTrend, chartRisk;
+    var alertsData = null, overviewData = null, chartTrend, chartRisk;
 
     function renderAlerts() {
-      if (!alertsData) return;
+      if (!alertsData || !overviewData) return;
       var d = alertsData, T = window.CHINA_AUTO_MARKET;
+      var total = overviewData.kpis.eval_series;
+      document.getElementById('al-coverage').textContent = T.lang === 'en'
+        ? d.meta.eligible_series + ' of ' + total + ' target series (' + (100 * d.meta.eligible_series / total).toFixed(1) + '%) meet the sample threshold. ' + (total - d.meta.eligible_series) + ' do not. Watchlist candidates: ' + d.meta.watchlist_events + '; active alerts: ' + d.meta.active_alerts + '.'
+        : total + '个目标车系中，' + d.meta.eligible_series + '个满足样本门槛（' + (100 * d.meta.eligible_series / total).toFixed(1) + '%），' + (total - d.meta.eligible_series) + '个不满足。观察名单' + d.meta.watchlist_events + '条，有效预警' + d.meta.active_alerts + '条。';
       document.getElementById('al-concl').textContent = d.conclusion[window.CHINA_AUTO_MARKET.lang] || d.conclusion.zh;
       document.getElementById('al-rule-text').textContent = d.rule[window.CHINA_AUTO_MARKET.lang] || d.rule.zh;
       document.getElementById('al-active').textContent = formatNumber(d.meta.active_alerts);
@@ -169,7 +180,9 @@
       }).join('');
     }
 
-    loadJSON('alerts').then(function (d) { alertsData = d; renderAlerts(); });
+    Promise.all([loadJSON('alerts'), loadJSON('overview')]).then(function (data) {
+      alertsData = data[0]; overviewData = data[1]; renderAlerts();
+    });
     window.__renderers.renderAlerts = renderAlerts;
   </script>
 </body>

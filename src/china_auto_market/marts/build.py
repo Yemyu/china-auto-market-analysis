@@ -9,7 +9,6 @@ from typing import Any
 import pandas as pd
 from pandas.testing import assert_frame_equal
 
-from china_auto_market.features.configuration import CFG_COLS
 from china_auto_market.ingestion.mysql_cli import insert_statements, normalize_value, run_transaction, sql_literal
 from china_auto_market.marts.forecast import build_forecast_panel
 from china_auto_market.marts.user_needs import build_latest_snapshot, assert_latest_window_parity
@@ -19,6 +18,7 @@ from china_auto_market.warehouse.sources import (
     load_raw_configuration,
     load_standard_review_labels,
     load_standard_sales,
+    staging_configuration_batch,
 )
 
 
@@ -73,9 +73,9 @@ def _render(path: Path, pipeline_run_id: int) -> str:
     return path.read_text(encoding="utf-8").replace("__PIPELINE_RUN_ID__", str(pipeline_run_id))
 
 
-def _frozen_forecast_panel(sales: pd.DataFrame, config: pd.DataFrame) -> pd.DataFrame:
+def _frozen_forecast_panel(sales: pd.DataFrame) -> pd.DataFrame:
     cohort_names = set(pd.read_csv(COHORT, usecols=["series_name"])["series_name"].astype(str))
-    panel = build_forecast_panel(sales, config, cohort_names)
+    panel = build_forecast_panel(sales, cohort_names)
     frozen = pd.concat(
         [pd.read_csv(SPLITS / f"{split}.csv", parse_dates=["date"]) for split in ("train", "val", "test")],
         ignore_index=True,
@@ -83,7 +83,7 @@ def _frozen_forecast_panel(sales: pd.DataFrame, config: pd.DataFrame) -> pd.Data
     comparison_columns = [
         "series_name", "series_id", "date", "monthly_sales",
         "lag_1", "lag_2", "lag_3", "roll_mean_3", "roll_mean_6",
-        "month_sin", "month_cos", *CFG_COLS, "lag_12", "roll_mean_12", "split",
+        "month_sin", "month_cos", "lag_12", "roll_mean_12", "split",
     ]
     actual = panel[comparison_columns].sort_values(["date", "series_name"]).reset_index(drop=True)
     expected = frozen[comparison_columns].sort_values(["date", "series_name"]).reset_index(drop=True)
@@ -102,7 +102,14 @@ def _payload(record: pd.Series, columns: list[str]) -> dict[str, Any]:
     return {column: normalize_value(record[column]) for column in columns}
 
 
-def _forecast_rows(panel: pd.DataFrame) -> list[tuple[Any, ...]]:
+def configuration_reference(batch_id: int) -> dict[str, Any]:
+    if isinstance(batch_id, bool) or not isinstance(batch_id, int) or batch_id <= 0:
+        raise ValueError("Configuration reference requires a positive integer batch")
+    return {"configuration_policy": "raw-batch-reference-v1", "configuration_batch_id": batch_id}
+
+
+def _forecast_rows(panel: pd.DataFrame, config_batch_id: int) -> list[tuple[Any, ...]]:
+    reference = configuration_reference(config_batch_id)
     review = pd.read_csv(REVIEW_FEATURES, low_memory=False, parse_dates=["date"])
     review["date"] = review["date"].dt.to_period("M").dt.to_timestamp()
     if len(review) != 17_808 or review.duplicated(["series_name", "date"]).any():
@@ -131,7 +138,7 @@ def _forecast_rows(panel: pd.DataFrame) -> list[tuple[Any, ...]]:
                 row["lag_1"], row["lag_2"], row["lag_3"], row["lag_12"],
                 row["roll_mean_3"], row["roll_mean_6"], row["roll_mean_12"],
                 row["month_sin"], row["month_cos"], int(pd.Timestamp(row["date"]).year),
-                _payload(row, list(CFG_COLS)),
+                reference,
                 _payload(row, review_columns),
                 row["information_cutoff_exclusive"],
             )
@@ -164,9 +171,10 @@ def _user_needs_rows(labels: pd.DataFrame) -> list[tuple[Any, ...]]:
 def rebuild_core_marts(login_path: str) -> CoreMartResult:
     """Rebuild core marts atomically after exact frozen-input parity."""
     sales = load_standard_sales(login_path)
-    config = load_raw_configuration(login_path)
-    panel = _frozen_forecast_panel(sales, config)
-    forecast_rows = _forecast_rows(panel)
+    batch_id = staging_configuration_batch(login_path)
+    load_raw_configuration(login_path, batch_id=batch_id)  # Must still be a successful retained snapshot.
+    panel = _frozen_forecast_panel(sales)
+    forecast_rows = _forecast_rows(panel, batch_id)
     user_needs_rows = _user_needs_rows(load_standard_review_labels(login_path))
     pipeline_run_id = _start_pipeline(login_path)
     columns = [
@@ -176,7 +184,7 @@ def rebuild_core_marts(login_path: str) -> CoreMartResult:
         "review_feature_payload", "review_information_cutoff_exclusive",
     ]
     statements = [
-        _render(MART_SQL, pipeline_run_id),
+        _render(MART_SQL, pipeline_run_id).replace("__CONFIG_BATCH_ID__", str(batch_id)),
         *insert_statements(
             "auto_mart._de5_forecast_input",
             columns,
@@ -193,7 +201,7 @@ def rebuild_core_marts(login_path: str) -> CoreMartResult:
             user_needs_rows,
             chunk_size=100,
         ),
-        _render(FINALIZE_SQL, pipeline_run_id),
+        _render(FINALIZE_SQL, pipeline_run_id).replace("__CONFIG_BATCH_ID__", str(batch_id)),
         _render(QUALITY_SQL, pipeline_run_id),
     ]
     try:

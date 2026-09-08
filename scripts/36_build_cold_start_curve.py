@@ -1,7 +1,12 @@
 #!/usr/bin/env python3
-"""Select a guarded cold-start method with rolling launch-cohort backtests."""
+"""Retain source forecasts while the launch-curve experiment is suspended.
+
+Legacy experiment helpers remain for audit, not prospective evaluation:
+their launch horizons were inferred from realised sales, including test sales.
+"""
 from __future__ import annotations
 
+import argparse
 import json
 from pathlib import Path
 from typing import Callable
@@ -39,10 +44,7 @@ HYBRID_OUTPUT = FORECAST_DIR / "cold_start_hybrid_predictions.csv"
 SUMMARY_OUTPUT = FORECAST_DIR / "cold_start_launch_curve_summary.json"
 FIGURE = BASE / "assets/analysis" / "cold_start_launch_curve.png"
 
-model_run = json.loads(MODEL_RUN_SUMMARY.read_text(encoding="utf-8"))
-SOURCE_VERSION = model_run.get(
-    "validation_selected_primary_version", model_run["best_primary_version"]
-)
+SOURCE_VERSION = "PLATFORM_RATING_FIXED"  # Historical audit only; no default inference path.
 HYBRID_VERSION = "SELECTED_FEEDBACK_COLD_START"
 VALIDATION_YEARS = (2024, 2025)
 TRAIN_LAUNCH_YEAR_MIN = 2023
@@ -331,7 +333,27 @@ def save_figure(series: pd.DataFrame) -> None:
     plt.close(fig)
 
 
+def legacy_experiment() -> None:
+    raise RuntimeError("Retrospective launch dates cannot support fixed-origin forecasts; experiment suspended")
+
+
 def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--forecast-dir", type=Path)
+    parser.add_argument("--output-dir", type=Path)
+    args = parser.parse_args()
+    if args.forecast_dir is None or args.output_dir is None:
+        parser.error("Launch-curve evaluation is suspended: no verified pre-origin launch dates. "
+                     "Use --forecast-dir <repaired evaluation> --output-dir <artifacts subdirectory> "
+                     "to retain source forecasts without an override.")
+    from china_auto_market.forecasting.cold_start_policy import write_retained_forecast
+    summary = write_retained_forecast(args.forecast_dir, args.output_dir)
+    print(json.dumps(summary, ensure_ascii=False, indent=2))
+
+
+def _historical_experiment_body() -> None:
+    # Kept for inspection of the old protocol; never regenerate its outputs.
+    legacy_experiment()
     launch, cold_test = build_launch_panel()
     validation, candidates, selected = final_predictions(
         launch, set(cold_test["series_name"].astype(str))

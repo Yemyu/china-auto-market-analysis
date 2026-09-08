@@ -1,6 +1,6 @@
 // China Auto Market Analysis shared shell and chart helpers.
 var __dataCache = {};
-var APP_DATA_VERSION = '20260829-1';
+var APP_DATA_VERSION = '20260905-1';
 
 function showAppError(message) {
   var main = document.querySelector('.content');

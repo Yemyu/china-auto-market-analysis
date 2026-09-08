@@ -1,13 +1,32 @@
 {
-  "schema_version": "v1",
+  "schema_version": "v2",
+  "configuration_policy": "fit-window-v1",
+  "prediction_sha256": "81be97c2c61c299befee43fbe65a69434f9109725e613dbcc593561e208638b4",
+  "model_run_sha256": "2c3090e52a1e90b488c0d8f17864c818f958189e3bbeb4ab68f8aed3565501cd",
+  "test_is_new_holdout": false,
+  "bootstrap_seed": 42,
+  "bootstrap_scope": "paired series clusters conditional on saved models and observed months; no selection/refit uncertainty or multiple-comparison correction",
+  "probability_field_interpretation": "fraction of defined resamples with lower WMAPE, not probability of future superiority",
+  "size_group_rule": "quartiles of pre-test 2025-07..12 mean monthly sales",
+  "review_text_rolling_protocol": "recursive sales with monthly review refresh; not rolling one-month sales prediction",
+  "shap_scope": "mean absolute contributions to log1p sales for selected fixed-origin model; not causal effects or incremental forecast accuracy",
+  "shap_replay": {
+    "training_rows": 15582,
+    "test_rows": 2226,
+    "n_estimators": 100,
+    "configuration_transforms_equal": true,
+    "keys_and_actuals_equal": true,
+    "shap_additivity_passed": true,
+    "max_abs_prediction_difference": 1.1368683772161603e-13
+  },
   "validation_selected_feedback_version": "PLATFORM_RATING_FIXED",
   "series_cluster_bootstrap_replicates": 5000,
-  "selected_feedback_vs_base_improvement_pp": 0.6973553615232504,
+  "selected_feedback_vs_base_improvement_pp": 0.9803855453804402,
   "selected_feedback_vs_base_bootstrap_95pct_ci_pp": [
-    -0.23400283984277034,
-    1.8733860490731498
+    -0.004682744627472414,
+    2.2330860088374562
   ],
-  "selected_feedback_vs_base_probability_better": 0.9264,
+  "selected_feedback_vs_base_probability_better": 0.9748,
   "test_months_selected_feedback_better_than_base": 6,
   "test_months_total": 6,
   "top_10_features_by_mean_abs_shap": [
@@ -20,31 +39,31 @@
     "sentiment_review_count_180d",
     "sentiment_review_count_prior_all",
     "trunk_volume_l",
-    "height_mm"
+    "platform_rating_configuration_sentiment_180d_mean"
   ],
   "top_10_selected_feedback_features_by_mean_abs_shap": [
     "sentiment_review_count_180d",
     "sentiment_review_count_prior_all",
     "platform_rating_configuration_sentiment_180d_mean",
-    "platform_rating_appearance_sentiment_180d_mean",
     "platform_rating_interior_sentiment_180d_mean",
+    "platform_rating_appearance_sentiment_180d_mean",
     "platform_rating_power_sentiment_180d_mean",
-    "platform_rating_overall_sentiment_180d_mean",
     "platform_rating_space_sentiment_180d_mean",
+    "platform_rating_overall_sentiment_180d_mean",
     "sentiment_available_prior",
-    "platform_rating_overall_polarity_180d_mean"
+    "platform_rating_fuel_consumption_sentiment_180d_mean"
   ],
   "top_10_error_contributing_series": [
     "小米SU7",
     "秦PLUS",
     "宏光MINIEV",
-    "轩逸",
     "Model Y",
     "元UP",
+    "轩逸",
     "长安CS75 PLUS",
-    "MG4",
     "Model 3",
-    "长安Lumin"
+    "长安Lumin",
+    "MG4"
   ],
   "cold_start_series": 13,
   "external_api_calls": 0
