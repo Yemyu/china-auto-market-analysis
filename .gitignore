@@ -21,9 +21,10 @@ config/.env
 *.swp
 *.swo
 
-# Local agent/tool state
+# Local workspace files
 .codex/
 .workbuddy/
+/AGENTS.md
 
 # macOS
 .DS_Store

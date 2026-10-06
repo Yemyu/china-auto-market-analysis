@@ -30,11 +30,11 @@
         </dl>
       </header>
 
-      <aside class="analysis-method-note"><p data-i18n="ab_sample_scope"></p></aside>
+      <aside class="analysis-method-note"><p data-i18n="ab_sample_scope">分析范围为已采集的车主评论。负面占比以各维度的有效标签为分母；近期监测另按评论数量筛选具备判定资格的车系。</p></aside>
       <section class="analysis-section" aria-labelledby="ab-priority-title">
         <header class="analysis-section-head">
           <span>01</span>
-          <div><h2 id="ab-priority-title" data-i18n="ab_priority_title">优先改进方向</h2><p data-i18n="ab_priority_lead">提及率衡量用户是否经常谈到，负面占比衡量提及后有多少评价为负；两者不能混为一个指标。</p></div>
+          <div><h2 id="ab-priority-title" data-i18n="ab_priority_title">优先复核方向</h2><p data-i18n="ab_priority_lead">提及率衡量讨论频率，负面占比衡量有效评价中的负面比例。</p></div>
         </header>
         <div class="needs-priority-grid">
           <article class="analysis-panel">
@@ -52,7 +52,7 @@
       <section class="analysis-section" aria-labelledby="ab-evaluation-title">
         <header class="analysis-section-head">
           <span>02</span>
-          <div><h2 id="ab-evaluation-title" data-i18n="ab_evaluation_title">各需求维度的评价</h2><p data-i18n="ab_evaluation_lead">平均分用于比较总体方向，正、中、负占比用于判断评价结构；未提及某个维度不计为中性。</p></div>
+          <div><h2 id="ab-evaluation-title" data-i18n="ab_evaluation_title">各需求维度的评价</h2><p data-i18n="ab_evaluation_lead">平均分比较总体方向，正、中、负占比描述有效评价的构成。</p></div>
         </header>
         <div class="analysis-grid-2">
           <article class="analysis-panel">
@@ -69,11 +69,11 @@
       <section class="analysis-section" aria-labelledby="ab-change-title">
         <header class="analysis-section-head">
           <span>03</span>
-          <div><h2 id="ab-change-title" data-i18n="ab_change_title">评价如何随时间变化</h2><p data-i18n="ab_change_lead">月度走势用于观察评价方向的持续变化，标准差用于识别分歧更大的需求维度。</p></div>
+          <div><h2 id="ab-change-title" data-i18n="ab_change_title">月度评价变化</h2><p data-i18n="ab_change_lead">月度走势用于观察评价方向的持续变化，标准差用于识别分歧更大的需求维度。</p></div>
         </header>
         <div class="needs-change-grid">
           <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="ab_trend">十维度月度评价走势</h3><p data-i18n="ab_trend_insight">智能化与舒适性使用较深线条突出，其余维度作为参照。</p></div></div>
+            <div class="analysis-panel-head"><div><h3 data-i18n="ab_trend">十维度月度评价走势</h3><p data-i18n="ab_trend_insight">比较十个需求维度的月度平均评价，重点关注智能化与舒适性。</p></div></div>
             <div id="chartTrend" class="analysis-chart analysis-chart-tall"></div>
           </article>
           <article class="analysis-panel">
@@ -81,9 +81,9 @@
             <div id="chartVariance" class="analysis-chart analysis-chart-tall"></div>
           </article>
         </div>
-        <details class="analysis-method-note"><summary data-i18n="ab_method_summary">指标定义</summary><p data-i18n="ab_method_definition">提及率＝提及该维度的评论数÷全部评论数；负面占比＝该维度负面标签数÷该维度有效标签数。未提及与标签缺失均保留为缺失，不填成中性。</p></details>
+        <details class="analysis-method-note"><summary data-i18n="ab_method_summary">指标定义</summary><p data-i18n="ab_method_definition">提及率＝提及该维度的评论数÷全部评论数；负面占比＝该维度负面标签数÷该维度有效标签数。未提及与标签缺失均保留为缺失；采集样本并非车主总体的随机抽样。</p></details>
       </section>
-      <aside class="analysis-method-note"><h3 data-i18n="ab_use_title"></h3><p data-i18n="ab_use_note"></p><a href="alerts.html" data-i18n="ab_use_link"></a></aside>
+      <aside class="analysis-method-note"><h3 data-i18n="ab_use_title">使用示例：确定下一轮访谈问题</h3><p data-i18n="ab_use_note">智能化在已标注提及中的负面占比最高，可作为用户访谈的切入点。按车系、车型年份和具体功能核对原评论，区分操作体验、功能缺失与个别故障，再确定访谈样本和问题。该比例描述评论反馈，不等同于故障率。</p><a href="alerts.html" data-i18n="ab_use_link">查看近期口碑监测</a></aside>
     </main>
   </div>
 
@@ -91,7 +91,7 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/paper-theme.js?v=20260908-1"></script>
   <script src="static/js/common.js?v=20260905-1"></script>
-  <script src="static/js/i18n.js?v=20260908-2"></script>
+  <script src="static/js/i18n.js?v=20261006-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });

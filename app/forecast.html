@@ -39,12 +39,12 @@
       <section class="analysis-section" aria-labelledby="fc-performance-title">
         <header class="analysis-section-head">
           <span>01</span>
-          <div><h2 id="fc-performance-title" data-i18n="fc_performance_title">模型表现</h2><p data-i18n="fc_performance_lead">先比较核心方案，再展开全部消融。全局 WMAPE 为主要指标，逐车系中位数 WMAPE 用于补充观察长尾车系。</p></div>
+          <div><h2 id="fc-performance-title" data-i18n="fc_performance_title">模型表现</h2><p data-i18n="fc_performance_lead">滚动单月主模型与四种同场景朴素基准比较；全局WMAPE为主要指标，逐车系中位数反映典型车系的表现。</p></div>
         </header>
 
         <div class="forecast-score-wrap">
           <table class="forecast-score-table">
-            <thead><tr><th data-i18n="home_model_col">比较方案</th><th data-i18n="home_global_col">全局 WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th><th data-i18n="home_change_col">相对基线</th></tr></thead>
+            <thead><tr><th data-i18n="home_model_col">比较方案</th><th data-i18n="home_global_col">全局 WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th><th data-i18n="home_change_col">相对同场景朴素基准</th></tr></thead>
             <tbody>
               <tr><td><strong data-i18n="home_model_naive">沿用上月销量（朴素基准）</strong><span data-i18n="home_model_naive_note">每次预测直接沿用最近一个已公布月份</span></td><td id="fc-score-naive-global">—</td><td id="fc-score-naive-median">—</td><td>—</td></tr>
               <tr class="forecast-primary-row"><td><strong data-i18n="home_model_baseline">滚动单月季节增强 XGBoost（主结果）</strong><span data-i18n="fc_baseline_scope">每月更新下月预测，加入12个月季节滞后与历史均值</span></td><td id="fc-score-base-global">—</td><td id="fc-score-base-median">—</td><td id="fc-score-base-gain">—</td></tr>
@@ -63,15 +63,15 @@
             <dl>
               <div><dt data-i18n="home_global_col">全局 WMAPE</dt><dd data-i18n="fc_global_explain">将全部车系月的绝对误差汇总后除以实际销量总和，高销量车系权重更大。</dd></div>
               <div><dt data-i18n="home_median_col">逐车系中位数 WMAPE</dt><dd data-i18n="fc_median_explain">先分别计算每个车系的误差，再取中位数，用来观察典型车系表现。</dd></div>
-              <div><dt data-i18n="fc_rolling_information"></dt><dd data-i18n="fc_rolling_information_note"></dd></div>
+              <div><dt data-i18n="fc_rolling_information">预测信息集</dt><dd data-i18n="fc_rolling_information_note">输入更新至上月已公布销量；六个月评价期内模型参数与权重固定，不逐月重新选型。</dd></div>
             </dl>
           </aside>
         </div>
         <details class="analysis-method-note" open>
-          <summary data-i18n="fc_selection_title"></summary>
-          <p data-i18n="fc_selection_note"></p>
+          <summary data-i18n="fc_selection_title">历史窗口模型比较</summary>
+          <p data-i18n="fc_selection_note">四个历史起点分别评价随后六个月的滚动单月预测，每窗覆盖相同的371个车系。BASE与SEASONAL_D5均为XGBoost；比较同时涵盖特征与参数差异，衡量两套完整方案的表现。</p>
           <div style="overflow-x:auto"><table class="forecast-score-table" id="fc-selection-table">
-            <thead><tr><th data-i18n="fc_origin"></th><th>BASE · WMAPE</th><th>SEASONAL_D5 · WMAPE</th></tr></thead>
+            <thead><tr><th data-i18n="fc_origin">历史预测起点</th><th>BASE · WMAPE</th><th>SEASONAL_D5 · WMAPE</th></tr></thead>
             <tbody>
               <tr data-origin="2024-01-01"><td>2024-01</td><td>30.57%</td><td>30.09%</td></tr>
               <tr data-origin="2024-07-01"><td>2024-07</td><td>23.64%</td><td>21.47%</td></tr>
@@ -79,9 +79,9 @@
               <tr data-origin="2025-07-01"><td>2025-07</td><td>21.64%</td><td>21.70%</td></tr>
             </tbody>
           </table></div>
-          <p data-i18n="fc_selection_reading"></p>
+          <p data-i18n="fc_selection_reading">季节方案在四个窗口中改善三个；合并窗口WMAPE从24.30%降至23.35%，最差窗口退步0.06个百分点，满足既定的总体改善至少0.5个百分点、单窗退步不超过1个百分点的门槛。合并指标按绝对误差和销量汇总计算，不是四个百分比的简单平均。</p>
         </details>
-        <p data-i18n="fc_evaluation_status"></p>
+        <p data-i18n="fc_evaluation_status">2026年结果保留原定评价口径，不据此重新选型；该窗口已在开发复核中查看，不属于新取得的独立留出集。</p>
       </section>
 
       <section class="analysis-section" aria-labelledby="fc-diagnostics-title">
@@ -100,9 +100,9 @@
       <section class="analysis-section" aria-labelledby="fc-error-title">
         <header class="analysis-section-head"><span>03</span><div><h2 id="fc-error-title" data-i18n="fc_error_title">误差分布</h2><p data-i18n="fc_error_lead">滚动测试包含2,226个车系月样本；散点图展示其中1,964个正销量样本，分车型结果用于定位误差较高的市场类别。</p></div></header>
         <article class="analysis-panel" style="overflow-x:auto">
-          <div class="analysis-panel-head"><div><h3 data-i18n="fc_size_title"></h3><p data-i18n="fc_size_note"></p></div></div>
-          <table class="forecast-score-table"><thead><tr><th data-i18n="fc_size_group"></th><th data-i18n="fc_series_count"></th><th data-i18n="fc_naive_wmape"></th><th data-i18n="fc_model_wmape"></th></tr></thead><tbody id="fc-size-rows"></tbody></table>
-          <p data-i18n="fc_size_reading"></p>
+          <div class="analysis-panel-head"><div><h3 data-i18n="fc_size_title">低销量车系仍是薄弱环节</h3><p data-i18n="fc_size_note">按测试前2025年7—12月的月均销量分为四组，Q1最低、Q4最高；分组在测试前固定，包含零销量月份。</p></div></div>
+          <table class="forecast-score-table"><thead><tr><th data-i18n="fc_size_group">销量规模组</th><th data-i18n="fc_series_count">车系数</th><th data-i18n="fc_naive_wmape">上月基准WMAPE</th><th data-i18n="fc_model_wmape">模型WMAPE</th></tr></thead><tbody id="fc-size-rows"></tbody></table>
+          <p data-i18n="fc_size_reading">四组均优于上月基准，但Q1的WMAPE仍为66.60%，Q4为28.02%。整体指标偏重高销量车系，低销量车系的误差仍需单独关注。</p>
         </article>
         <div class="analysis-grid-2">
           <article class="analysis-panel">
@@ -117,19 +117,19 @@
       </section>
 
       <section class="analysis-section" aria-labelledby="fc-stress-title">
-        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-stress-title" data-i18n="fc_cold_label"></h2><p data-i18n="fc_scenario_note"></p></div></header>
-        <div class="forecast-score-wrap"><table class="forecast-score-table"><thead><tr><th data-i18n="home_model_col"></th><th data-i18n="home_global_col"></th><th data-i18n="home_median_col"></th><th data-i18n="home_change_col"></th></tr></thead><tbody>
+        <header class="analysis-section-head"><span>04</span><div><h2 id="fc-stress-title" data-i18n="fc_cold_label">固定六个月压力测试</h2><p data-i18n="fc_scenario_note">滚动单月协议用于运营型下月预测，固定六个月协议用于评估递归信息受限情景；两项结果按协议分别报告。</p></div></header>
+        <div class="forecast-score-wrap"><table class="forecast-score-table"><thead><tr><th data-i18n="home_model_col">比较方案</th><th data-i18n="home_global_col">全局 WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th><th data-i18n="home_change_col">相对同场景朴素基准</th></tr></thead><tbody>
               <tr><td><strong data-i18n="home_model_stress">固定六个月平台评分模型</strong><span data-i18n="fc_review_scope">固定起点平台评分模型；仅作压力测试</span></td><td id="fc-score-review-global">—</td><td id="fc-score-review-median">—</td><td id="fc-score-review-gain">—</td></tr>
               <tr><td><strong data-i18n="home_model_stress_naive">固定六个月朴素基准</strong><span data-i18n="fc_cold_scope">固定起点下的最近12个月均值</span></td><td id="fc-score-cold-global">—</td><td id="fc-score-cold-median">—</td><td>—</td></tr>
         </tbody></table></div>
         <details class="analysis-method-note"><summary data-i18n="fc_all_fixed">固定六个月完整基准比较</summary>
-          <div style="overflow-x:auto"><table class="forecast-score-table"><thead><tr><th data-i18n="home_model_col">比较方案</th><th>WMAPE</th><th data-i18n="home_median_col">逐车系中位数WMAPE</th></tr></thead><tbody id="fc-fixed-rows"></tbody></table></div>
-          <p data-i18n="fc_fixed_context">原报告以近6月均值为对照；近12月均值在已保存朴素方法中测试WMAPE更低。全部列出用于结果解释，不通过测试集重新选模型。</p>
+          <div style="overflow-x:auto"><table class="forecast-score-table"><thead><tr><th data-i18n="home_model_col">比较方案</th><th>WMAPE</th><th data-i18n="home_median_col">逐车系中位数 WMAPE</th></tr></thead><tbody id="fc-fixed-rows"></tbody></table></div>
+          <p data-i18n="fc_fixed_context">近12月均值在已保存朴素方法中的测试WMAPE最低。表中列出全部参照结果，模型选型沿用验证期决定。</p>
         </details>
       </section>
 
       <section class="analysis-section" aria-labelledby="fc-signal-title">
-        <header class="analysis-section-head"><span>05</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">固定压力测试的信号结构</h2><p data-i18n="fc_signal_lead">下图解释固定六个月口碑增强模型，不代表滚动单月主模型包含口碑特征，也不构成销量因果效应估计。</p></div></header>
+        <header class="analysis-section-head"><span>05</span><div><h2 id="fc-signal-title" data-i18n="fc_signal_title">固定压力测试的信号结构</h2><p data-i18n="fc_signal_lead">采用SHAP分析固定六个月平台评分模型，展示销量历史、日历、配置和口碑特征的预测贡献。</p></div></header>
         <div class="forecast-signal-grid">
           <article class="analysis-panel">
             <div class="analysis-panel-head"><div><h3 data-i18n="fc_features_public">固定六个月口碑模型：前12项特征贡献</h3><p data-i18n="fc_features_public_note">平均绝对 SHAP 值，基于固定起点压力测试的对数销量预测；数值越大，该辅助模型越依赖该特征。</p></div></div>
@@ -138,13 +138,13 @@
           <aside class="forecast-signal-summary">
             <div><span>01</span><strong data-i18n="fc_signal_history">销量历史占主导</strong><p data-i18n="fc_signal_history_note">上月销量、近3月均值、前2月销量和近6月均值位列前四，历史惯性远高于其他信号。</p></div>
             <div><span>02</span><strong data-i18n="fc_signal_calendar">季节项提供补充</strong><p data-i18n="fc_signal_calendar_note">月份正弦与余弦项排在第5、第6位，用于刻画年度季节变化。</p></div>
-            <div><span>05</span><strong data-i18n="fc_signal_reviews">口碑只提供辅助信号</strong><p data-i18n="fc_signal_reviews_note">评论覆盖与平台评分特征进入前12，但贡献明显低于销量历史；它们只属于固定压力测试，不进入滚动主模型。</p></div>
+            <div><span>05</span><strong data-i18n="fc_signal_reviews">口碑只提供辅助信号</strong><p data-i18n="fc_signal_reviews_note">评论覆盖与平台评分特征进入前12，贡献明显低于销量历史。</p></div>
           </aside>
         </div>
       </section>
 
       <section class="analysis-section" id="sentiment-value" aria-labelledby="fc-review-value-title">
-        <header class="analysis-section-head"><span>06</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">口碑消融属于固定六个月压力测试，不改变滚动单月主结果；点估计改善，但稳定增益证据不足。</p></div></header>
+        <header class="analysis-section-head"><span>06</span><div><h2 id="fc-review-value-title" data-i18n="fc_review_value_title">固定压力测试中的口碑补充价值</h2><p data-i18n="fc_review_value_lead">在固定六个月协议下比较口碑增强与销量基线：点估计改善，稳定增益证据不足。</p></div></header>
 
         <div class="forecast-evidence-strip">
           <div><span data-i18n="fc_evidence_point">相对基线的点改善</span><strong id="fc-evidence-point">—</strong></div>
@@ -159,12 +159,12 @@
             <div id="chartBootstrap" class="analysis-chart"></div>
           </article>
           <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="fc_ablation_public">固定起点口碑消融</h3><p data-i18n="fc_ablation_public_note">样本与时间切分一致；保留既定模型及100棵树，不按当前测试分数重新选型。</p></div></div>
+            <div class="analysis-panel-head"><div><h3 data-i18n="fc_ablation_public">固定起点口碑消融</h3><p data-i18n="fc_ablation_public_note">各方案使用相同样本与时间切分，容量固定为100棵树；平台评分方案由验证期选定。</p></div></div>
             <div id="chartFusion" class="analysis-chart"></div>
           </article>
         </div>
 
-        <details class="analysis-method-note"><summary data-i18n="fc_method_summary">不确定性与数据来源</summary><p data-i18n="fc_source_mc"></p></details>
+        <details class="analysis-method-note"><summary data-i18n="fc_method_summary">不确定性与数据来源</summary><p data-i18n="fc_source_mc">滚动主结果测试期为2026年1月至6月；固定压力测试与不确定性区间采用同一时间窗口和5,000次车系聚类重采样。</p></details>
       </section>
     </main>
   </div>
@@ -173,7 +173,7 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/paper-theme.js?v=20260907-1"></script>
   <script src="static/js/common.js?v=20260905-1"></script>
-  <script src="static/js/i18n.js?v=20260908-1"></script>
+  <script src="static/js/i18n.js?v=20261006-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });
@@ -254,8 +254,8 @@
       }).join('');
       var aggregate = diagnostics.aggregate.find(function (m) { return m.method === 'pred'; });
       fcSetText('fc-aggregate-note', isEn
-        ? 'Monthly aggregate WMAPE for these 371 series: ' + fcPct(aggregate.monthly_aggregate_wmape) + '; six-month net bias: ' + fcPct(aggregate.six_month_net_bias_pct) + '. Net bias permits cancellation across months and is not monthly forecast accuracy or a national-market score.'
-        : '371车系按月汇总后的WMAPE为' + fcPct(aggregate.monthly_aggregate_wmape) + '，半年净偏差为' + fcPct(aggregate.six_month_net_bias_pct) + '。净偏差允许跨月份抵消，不能当作月度精度或全国市场预测得分。');
+        ? 'Monthly aggregate WMAPE for these 371 series: ' + fcPct(aggregate.monthly_aggregate_wmape) + '; six-month net bias: ' + fcPct(aggregate.six_month_net_bias_pct) + '. Net bias summarizes the signed total error across the six months and allows over- and underpredictions to cancel.'
+        : '371车系按月汇总后的WMAPE为' + fcPct(aggregate.monthly_aggregate_wmape) + '，半年净偏差为' + fcPct(aggregate.six_month_net_bias_pct) + '。净偏差汇总六个月的有符号总误差，允许高估与低估相互抵消。');
       var fixedNames = {
         LAST_VALUE: ['上月销量', 'Last observed sales'], SEASONAL_LAG12: ['去年同期', 'Same month last year'],
         ROLLING_MEAN_3: ['近3月均值', 'Trailing 3-month mean'], ROLLING_MEAN_6: ['近6月均值', 'Trailing 6-month mean'],

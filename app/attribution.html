@@ -33,30 +33,30 @@
       <section class="analysis-section" aria-labelledby="at-explain-title">
         <header class="analysis-section-head">
           <span>01</span>
-          <div><h2 id="at-explain-title" data-i18n="at_explain_title">配置增加了多少解释力？</h2><p data-i18n="at_explain_lead">在相同样本上逐步加入年份、品牌与配置，观察分组交叉验证 R² 的变化。</p></div>
+          <div><h2 id="at-explain-title" data-i18n="at_explain_title">配置的增量解释力</h2><p data-i18n="at_explain_lead">在相同样本上加入年份、品牌与配置，比较log1p(年度销量)尺度上的分组验证R²。</p></div>
         </header>
         <div class="product-evidence-strip">
           <div><span data-i18n="at_best_r2">完整模型对数销量 R²</span><strong id="at-r2">—</strong></div>
           <div><span data-i18n="at_config_lift">加入配置后的增量</span><strong id="at-lift">—</strong></div>
-          <div><span data-i18n="at_best_wmape">完整模型 WMAPE</span><strong id="at-wmape">—</strong><small>%</small></div>
+          <div><span data-i18n="at_best_wmape">完整模型年度截面 WMAPE（模块内辅助）</span><strong id="at-wmape">—</strong><small>%</small></div>
           <p id="at-concl"></p>
         </div>
         <div class="analysis-method-note">
           <h3 data-i18n="at_benchmark_title">年度销量误差的同口径参照</h3>
-          <div class="tbl-wrap"><table class="tbl"><thead><tr><th data-i18n="home_model_col"></th><th>WMAPE</th></tr></thead><tbody id="at-benchmark-rows"></tbody></table></div>
-          <p data-i18n="at_benchmark_note"></p>
+          <div class="tbl-wrap"><table class="tbl"><thead><tr><th data-i18n="home_model_col">比较方案</th><th>WMAPE</th></tr></thead><tbody id="at-benchmark-rows"></tbody></table></div>
+          <p data-i18n="at_benchmark_note">三项使用相同车系分组与折外样本，在原始销量尺度汇总绝对误差。年份中位数为朴素参照，年份＋品牌模型用于衡量配置的增量表现；完整模型误差更低，剩余误差仍较大。</p>
         </div>
         <div class="product-performance-grid">
           <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="at_cmp_title">年份、品牌与配置的消融比较</h3><p data-i18n="at_cmp_insight">同一646车系完整年度样本上逐步增加信息；误差线为五折结果的标准差。</p></div></div>
+            <div class="analysis-panel-head"><div><h3 data-i18n="at_cmp_title">年份、品牌与配置的消融比较</h3><p data-i18n="at_cmp_insight">在同一646车系完整年度样本上逐步增加信息；悬停可查看五折标准差、年度截面WMAPE与特征数。年度截面WMAPE用于模块内误差评估，与月度预测指标分别报告。</p></div></div>
             <div id="chartAblation" class="analysis-chart analysis-chart-tall"></div>
           </article>
           <aside class="analysis-reading">
             <h3 data-i18n="at_reading_title">结果解读</h3>
             <dl>
-              <div><dt>R² — log1p(sales)</dt><dd data-i18n="at_r2_explain">在log1p(年度销量)尺度计算，报告五折均值；0.239不是原始销量尺度的解释比例。</dd></div>
-              <div><dt>GroupKFold</dt><dd data-i18n="at_group_explain">同一车系的不同年份始终落在同一折，避免模型通过车系身份记忆测试样本。</dd></div>
-              <div><dt data-i18n="at_lift_label">配置增量</dt><dd data-i18n="at_lift_explain">对数销量R²增加0.169，不代表配置贡献16.9%的销量。</dd></div>
+              <div><dt>R² — log1p(sales)</dt><dd data-i18n="at_r2_explain">在log1p(年度销量)尺度上计算，报告五折均值，越高越好；折间标准差描述各验证折的差异。</dd></div>
+              <div><dt>GroupKFold</dt><dd data-i18n="at_group_explain">同一车系的各年份记录划入同一折，以车系为单位划分训练与验证样本。</dd></div>
+              <div><dt data-i18n="at_lift_label">配置增量</dt><dd data-i18n="at_lift_explain">对数销量R²比“年份＋品牌”增加0.169；原始销量尺度的WMAPE由合并折外预测计算。</dd></div>
             </dl>
           </aside>
         </div>
@@ -65,11 +65,11 @@
       <section class="analysis-section" aria-labelledby="at-feature-title">
         <header class="analysis-section-head">
           <span>02</span>
-          <div><h2 id="at-feature-title" data-i18n="at_feature_title">模型最依赖哪些配置？</h2><p data-i18n="at_feature_lead">特征重要性用于描述模型依赖程度，不表示某项配置会让销量上升或下降。</p></div>
+          <div><h2 id="at-feature-title" data-i18n="at_feature_title">主要配置特征</h2><p data-i18n="at_feature_lead">按特征重要性识别模型主要依赖的配置字段，并汇总年份、品牌和配置三类信息。</p></div>
         </header>
         <div class="product-feature-grid">
           <article class="analysis-panel">
-            <div class="analysis-panel-head"><div><h3 data-i18n="at_shap">前15项配置特征重要性</h3><p data-i18n="at_shap_insight">重要性为归一化的 XGBoost gain，基于使用该特征分裂时的平均损失降低；不是使用次数，也不提供影响方向。</p></div></div>
+            <div class="analysis-panel-head"><div><h3 data-i18n="at_shap">前15项配置特征重要性</h3><p data-i18n="at_shap_insight">重要性为归一化的XGBoost gain，基于使用该特征分裂时的平均损失降低。</p></div></div>
             <div id="chartShap" class="analysis-chart analysis-chart-tall"></div>
           </article>
           <article class="analysis-panel">
@@ -80,15 +80,15 @@
       </section>
 
       <section class="analysis-section" aria-labelledby="at-boundary-title">
-        <header class="analysis-section-head"><span>03</span><div><h2 id="at-boundary-title" data-i18n="at_boundary_title">结果的适用边界</h2><p data-i18n="at_boundary_lead">该模块用于年度截面解释分析，评估产品属性对跨车系销量差异的解释力，不承担因果识别或短期预测任务。</p></div></header>
+        <header class="analysis-section-head"><span>03</span><div><h2 id="at-boundary-title" data-i18n="at_boundary_title">分析范围与解释</h2><p data-i18n="at_boundary_lead">年度截面分析按车系留出验证，评估产品属性对跨车系销量差异的解释力。</p></div></header>
         <div class="product-boundaries">
-          <div><span>01</span><strong data-i18n="at_boundary_between">适合比较车系之间的差异</strong><p data-i18n="at_boundary_between_note">问题是“为什么不同车系的年度销量水平不同”，而不是“某车系下个月会涨还是会跌”。</p></div>
-          <div><span>02</span><strong data-i18n="at_boundary_assoc">特征重要性：预测依赖而非因果估计</strong><p data-i18n="at_boundary_assoc_note">配置特征与价格、品牌定位及目标人群存在共同变动，模型重要性用于描述预测依赖程度，不作为单项配置销量增量估计。</p></div>
+          <div><span>01</span><strong data-i18n="at_boundary_between">适合比较车系之间的差异</strong><p data-i18n="at_boundary_between_note">评价对象为已有年度样本中留出的车系；未来年份预测需另行检验。</p></div>
+          <div><span>02</span><strong data-i18n="at_boundary_assoc">配置与市场定位共同变化</strong><p data-i18n="at_boundary_assoc_note">配置与价格、品牌定位及目标人群存在共同变动；特征重要性描述模型依赖，不构成单项配置的因果效应。</p></div>
           <div><span>03</span><strong data-i18n="at_boundary_missing">缺失项也可能被模型利用</strong><p data-i18n="at_boundary_missing_note">部分高排名特征代表配置字段缺失，提示数据完整度本身包含市场分层信息。</p></div>
         </div>
-        <details class="analysis-method-note"><summary data-i18n="at_method_summary">查看模型与数据来源</summary><p data-i18n="at_method_note">目标为年度销量的 log1p 变换；模型使用 XGBoost，按车系进行五折 GroupKFold。特征重要性采用 XGBoost gain，而不是 SHAP 值。</p><p data-i18n="at_source_metr"></p><p data-i18n="at_source_shap"></p></details>
+        <details class="analysis-method-note"><summary data-i18n="at_method_summary">查看模型与数据来源</summary><p data-i18n="at_method_note">目标为年度销量的log1p变换；XGBoost采用按车系分组的五折GroupKFold。预处理在训练折内拟合，特征重要性采用XGBoost gain。</p><p data-i18n="at_source_metr">数据来源：data/processed/product/config_attribution_ablation.csv</p><p data-i18n="at_source_shap">数据来源：data/processed/product/config_importance_annual.csv</p></details>
       </section>
-      <aside class="analysis-method-note"><h3 data-i18n="at_use_title"></h3><p data-i18n="at_use_note"></p><a href="drilldown.html" data-i18n="at_use_link"></a></aside>
+      <aside class="analysis-method-note"><h3 data-i18n="at_use_title">产品比较的应用</h3><p data-i18n="at_use_note">配置排名用于定位需要比较的字段，再结合相近产品的销量轨迹和用户反馈复核。产品调整还需成本、实际成交价格与用户调研证据。</p><a href="drilldown.html" data-i18n="at_use_link">查看品牌与车系明细</a></aside>
     </main>
   </div>
 
@@ -96,7 +96,7 @@
   <script src="static/js/theme.js"></script>
   <script src="static/js/paper-theme.js?v=20260908-1"></script>
   <script src="static/js/common.js?v=20260905-1"></script>
-  <script src="static/js/i18n.js?v=20260908-2"></script>
+  <script src="static/js/i18n.js?v=20261006-1"></script>
   <script>
     try { window.I18N.apply(); } catch (e) {}
     document.querySelectorAll('[data-i18n]').forEach(function (el) { el.style.visibility = 'visible'; });

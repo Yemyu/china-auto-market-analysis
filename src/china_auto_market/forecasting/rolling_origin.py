@@ -1,7 +1,7 @@
-"""Evaluate the operational one-month rolling forecast without time leakage.
+"""Evaluate rolling one-month forecasts with fixed model parameters.
 
-This is the headline operating mode: before each forecast month, the previous
-month's realised sales are known. Model parameters remain fixed within each
+The evaluation assumes previous-month sales have been published before each
+forecast. Model parameters remain fixed within each
 six-month evaluation window; only the information cutoff advances month by
 month. The fixed-origin recursive protocol is retained as a stress test.
 """

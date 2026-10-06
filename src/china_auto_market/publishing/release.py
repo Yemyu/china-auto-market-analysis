@@ -1,4 +1,4 @@
-"""Validated, atomic release of pre-baked dashboard payloads."""
+"""Validate and atomically publish dashboard data."""
 
 from __future__ import annotations
 

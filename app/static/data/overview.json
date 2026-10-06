@@ -237,8 +237,8 @@
     },
     {
       "id": 2,
-      "name": "严格时间切分",
-      "en": "Strict Time Split",
+      "name": "时间划分",
+      "en": "Chronological Split",
       "status": "done"
     },
     {
@@ -289,7 +289,7 @@
     },
     {
       "zh": "截至2026-07，当前双信号预警0条、观察名单1条",
-      "en": "As of 2026-07, 0 dual-signal alerts and 1 watchlist candidates remain"
+      "en": "As of 2026-07, the dual-signal alert count is 0 and the watchlist count is 1"
     }
   ]
 }

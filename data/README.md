@@ -4,7 +4,7 @@
 
 # 📦 数据说明
 
-这里记录各模块使用的数据文件、样本范围和生成结果。原始平台数据仅用于学习、研究与项目展示；平台版权归相应来源方所有。
+本文说明数据文件、样本定义、分析结果和本地运行方式。平台数据用于学习、研究与项目展示，版权归相应来源方所有。
 
 ## 数据概况
 
@@ -14,20 +14,7 @@
 | 产品配置 | `raw/feature.csv` | 2,084 行 / 766 个车系 | 仓库内建模表；年度销量差异的产品属性分析 |
 | 车主评论 | `reviews/processed/` | 24,175 条 / 345 个车系 | 用户需求、风险监测与口碑辅助实验 |
 
-三个模块使用各自的样本筛选和评价口径，不将不同模块的指标直接横向比较。
-
-## 数据仓库与血缘
-
-本地完整工程链使用四个逻辑 MySQL 数据库：
-
-| 层 | 作用 | 主要输出 |
-|---|---|---|
-| `auto_raw` | 按来源批次原样留存并记录文件哈希 | 销量、配置、评论、标签和修复证据原始表 |
-| `auto_staging` | 标准化类型、统一车系、去重并执行时间可用性规则 | 标准销量、配置、评论与十维评论特征 |
-| `auto_mart` | 为稳定下游接口组织事实表、维表和主题表 | 预测、产品配置和用户需求数据集市 |
-| `auto_ops` | 横向保存运行、任务、质量结果和数据版本 | 批次状态、失败记录、血缘与发布清单 |
-
-公开仓库中的 CSV/JSON 是经过验证的便携快照，不要求浏览者连接本地数据库。完整本地数据链和便携公开快照使用相同的时间切分、样本定义和指标合同。
+三个模块分别筛选样本并评价结果。公开仓库提供 CSV、标签、分析摘要和看板 JSON；完整评论正文仅保存在本地。浏览看板、阅读 Notebook 和重建看板 JSON 均无需 MySQL。
 
 ## 目录结构
 
@@ -40,7 +27,7 @@
 | `processed/user_feedback/` | 用户需求与风险监测产物 |
 | `processed/data_quality/` | 结构、映射和来源审计的机器可读记录 |
 | `reviews/raw/` | 评论采集清单和来源层文件 |
-| `reviews/processed/` | 去标识语料、标签和时间特征 |
+| `reviews/processed/` | 去标识标签、时间特征和语料摘要；完整正文不随 Git 分发 |
 | `resources/` | 可复用的历史评论资源归档 |
 
 ## 建模输入
@@ -49,11 +36,11 @@
 
 - 粒度：车系 × 自然月；时间范围：2022-01—2026-06；
 - 主要字段：`series_id`、`series_name`、`brand`、`category`、`year`、`month`、`monthly_sales`；
-- 负销量记录为 0；排名、累计销量和网站展示价格等源站派生字段不作为预测特征。
+- 建模快照不含负销量记录；排名、累计销量和网站展示价格等源站派生字段不作为预测特征。
 
 ### 产品配置：`raw/feature.csv`
 
-- 粒度：车系 × 年款，不是 trim 级车型清单；
+- 粒度：车系 × 年款，未细分到具体配置版本；
 - 唯一键：`series_name, year`；共 84 个字段，年度销量可对齐 760 / 766 个车系；
 - 年度配置分析只使用销量源覆盖 12 个自然月的年份；当前为 2022—2025，共 646 个车系、1,510 条车系年记录；
 - 配置缺失具有结构性：例如纯电车型通常没有发动机参数，燃油车型通常没有电池参数，不应简单视为采集错误。
@@ -78,11 +65,11 @@
 | `split_index.csv` | 完整面板 | 每个车系月所属的数据段 |
 | `manifest.json` | — | 行数、特征、时间边界和防泄漏约束 |
 
-预测面板保留每个目标车系的自然月间隔，仅保存销量、日历和滞后；原始配置由模型读取并按训练窗口处理，不在共享切分或预测mart中保存全表编码。基础特征含1/2/3月滞后及3/6月均值，主模型另含12月滞后与12月均值。
+预测面板保留每个目标车系的自然月间隔，仅保存销量、日历和滞后；原始配置由模型读取并按训练窗口处理，不在共享切分或预测主题表中保存全表编码。基础特征含 1/2/3 月滞后及 3/6 月均值，主模型另含 12 月滞后与 12 月均值。
 
 主协议是滚动单月预测：每月预测下一个月，并使用已公布的上月真实销量。固定起点六个月协议从 2026-01 一次性递归预测，作为信息受限压力测试；两种协议分别评价。
 
-选定方案后，最终模型在train+val上重新拟合至2025-12，测试期不更新权重。销量模型在每个预测起点限定可用配置年份，按行连接不晚于其年份的最近记录，并仅在该模型实际训练行中拟合中位数与类别词表；预测窗口内配置冻结。未知类别记为−1，全缺数值列使用0占位，不因配置缺失删除销量样本。配置源没有年内发布时间，销量源也没有逐条历史发布与修订版本，因此年度代理对齐仍不等于完整历史点时重建。
+选定方案后，最终模型在 train+val 上重新拟合至 2025-12，测试期不更新权重。每个预测起点限制可用配置年份，各行匹配同年或更早年份的最近记录。中位数与类别词表仅在模型实际训练行中拟合，预测窗口内配置冻结。未知类别记为 −1，全缺数值列使用 0 占位，配置缺失的销量行仍保留。配置源缺少年内发布时间，销量源缺少历史发布与修订版本；对齐依据为年度代理规则。
 
 ## 主要产物
 
@@ -96,7 +83,7 @@
 | `review_feature_ablation_summary.csv` | 固定场景口碑特征消融 |
 | `forecast_robustness_summary.json` | 聚类 Bootstrap、分组误差和稳健性摘要 |
 
-当前保存的滚动结果为29.75%全局WMAPE、707.68辆MAE、1,700.38辆RMSE；固定六个月平台评分模型为38.09%WMAPE。`src/china_auto_market/forecasting/reporting.py`从逐行预测计算补充指标，供Notebook与看板共用。sMAPE保留全部行，双方为零时记0；MAPE只用正销量行。定义与完整对照见根目录[README.md](../README.md)。
+已保存的滚动预测结果为全局 WMAPE 29.75%、MAE 707.68 辆、RMSE 1,700.38 辆；固定六个月平台评分模型的 WMAPE 为 38.09%。MAE 和 RMSE 的单位为每个车系月的车辆数。Notebook 与看板均使用 `src/china_auto_market/forecasting/reporting.py` 对逐行预测计分：sMAPE 保留全部行，实际与预测均为零时记 0；MAPE 只计算正销量行。定义与完整对照见根目录 [README.md](../README.md)。
 
 ### 产品配置：`processed/product/`
 
@@ -104,7 +91,7 @@
 - `config_importance_annual.csv`：年度配置特征重要性。
 - `config_attribution_summary.json`：完整年份范围、样本规模和核心指标。
 
-该模块报告`log1p(年度销量)`尺度的五折R²均值和折间标准差；完整模型0.239，配置增量0.169。WMAPE使用还原为辆数的合并折外预测，不与月度预测直接比较，也不代表因果效应。
+该模块报告 `log1p(年度销量)` 尺度的五折 R² 均值和折间标准差；完整模型为 0.239，加入配置的增量为 0.169。WMAPE 使用还原为辆数的合并折外预测，评价年度跨车系关联，与月度预测采用不同任务和样本。
 
 ### 用户需求：`processed/user_feedback/`
 
@@ -119,57 +106,99 @@
 
 全文归档被 Git 忽略，仅在本地保留；公开仓库提交去标识标签和聚合结果。
 
-## 复现入口
+## 本地运行
 
-以下命令均在项目根目录执行。浏览看板不需要模型训练或本地数据库；生成JSON和重跑分析需要先在项目虚拟环境`.venv`中安装依赖。
+以下命令均在项目根目录执行。
 
-### 浏览已保存的看板
+### 浏览看板
 
-```bash
-python3 -m http.server 8000 --directory app
-```
-
-打开`http://localhost:8000`，直接读取仓库内的HTML与JSON，无需完整评论正文。
-
-### 从已有分析结果生成JSON
+只需 Python，即可读取仓库中的网页与 JSON：
 
 ```bash
-.venv/bin/python app/build_dashboard_data.py --output-dir artifacts/dashboard-preview
+python3 -m http.server 8000 --bind 127.0.0.1 --directory app
 ```
 
-此命令使用公开的已保存分析结果，不重新训练模型，也不读取本地完整评论语料。输出写入独立目录，不替换`app/static/data/`；现有网页仍显示原发布版本。输入版本或预测与统计摘要不一致时，构建会失败，不应跳过校验。
+打开 `http://localhost:8000`。浏览看板无需安装分析依赖或启动数据库。Windows 上如 Python 命令为 `python`，相应替换 `python3`。
 
-### 重新运行分析（需要额外来源与版本核验）
+### 配置分析环境
 
-下表是分析入口，不是一组可以无条件连续执行的发布命令。正式模型、统计和报告需要成套核验后才能更新；默认输出可能覆盖已有结果，重跑前应备份或使用入口支持的独立输出目录。
-
-| 环节 | 入口与条件 |
-|---|---|
-| 切分与评论时间特征 | `06_make_splits.py`、`32_build_temporal_review_features.py`；需要相应销量、配置或评论特征来源 |
-| 固定与滚动销量模型 | `33_evaluate_review_features.py --locked-capacity`、`48_evaluate_rolling_origin.py --test`；保持既定方案与时间切分，不按2026窗口重新选型 |
-| 配置分析 | `29_config_attribution.py`；需要配置与年度销量输入 |
-| 用户需求及监测 | `35_build_user_needs_and_alerts.py`；需要本地`data/reviews/processed/target_371_review_corpus.csv`完整语料，公开仓库不包含此文件 |
-
-预测生成并核验后，统计计算单独暂存：
+Python 版本要求为 3.11 或更高。使用虚拟环境安装 [requirements.txt](../requirements.txt) 中的依赖：
 
 ```bash
-.venv/bin/python scripts/34_analyze_forecast_robustness.py --output-dir artifacts/report-statistics
-.venv/bin/python scripts/39_evaluate_naive_forecast_baselines.py --output-dir artifacts/report-statistics
+python3 -m venv .venv
 ```
 
-**在此暂停核验。** 默认读取正式预测目录与切分；独立实验目录应同时通过`--forecast-dir`和`--split-dir`指定配套输入。输出先留在`artifacts/report-statistics`，核对样本键、模型版本、预测哈希与统计来源后，再由维护者同步整套正式结果并执行发布合同。看板构建器不会自动采用暂存统计，不能紧接着运行构建并把旧统计当成新结果。当前报告不使用上市曲线覆盖预测。
-
-如需完整评论标签流水线，请先按根目录 Notebook 和脚本注释准备评论语料；缺失评论标签的补标步骤为可选项。
-
-若拥有本地完整来源快照和独立 MySQL 实例，可按工程顺序运行：
+macOS / Linux 激活环境：
 
 ```bash
-.venv/bin/python scripts/initialize_mysql.py --apply
-.venv/bin/python scripts/ingest_raw.py --dataset all --mode full
-.venv/bin/python scripts/validate_raw.py
-.venv/bin/python scripts/rebuild_staging.py
-.venv/bin/python scripts/rebuild_core_marts.py
-.venv/bin/python scripts/validate_core_marts.py
+source .venv/bin/activate
 ```
 
-数据库凭据只通过本机加密 login path 读取，不接受命令行明文密码。隔离 MySQL 集成测试使用 `tests/fixtures/ci/` 下的虚构小样本验证相同 DDL、摄取、幂等和 staging 质量规则；它不能替代完整数据的业务评价。
+Windows 命令提示符激活环境：
+
+```bat
+.venv\Scripts\activate.bat
+```
+
+Windows 上也可使用 `py -3 -m venv .venv` 创建环境，所选 Python 同样需要满足版本要求。激活后安装依赖并打开 Notebook：
+
+```bash
+python -m pip install -r requirements.txt
+jupyter notebook
+```
+
+在 `notebook/` 中选择 [中文报告](../notebook/China_Auto_Market_Analysis.ipynb) 或 [英文报告](../notebook/China_Auto_Market_Analysis_EN.ipynb)。两份报告读取已保存的预测与分析结果，不执行模型训练。
+
+### 从已有分析结果重建看板 JSON
+
+在已激活的分析环境中运行：
+
+```bash
+python app/build_dashboard_data.py --output-dir artifacts/dashboard-preview
+```
+
+输出为 `artifacts/dashboard-preview/` 下的 8 个 JSON 文件。构建器读取公开的分析结果，检查预测、统计摘要和版本的一致性，无需完整评论正文。此输出目录用于检查生成结果，不替换正式网页读取的 `app/static/data/`。
+
+### 分析入口与输入要求
+
+下表列出各入口读取的输入和生成位置。使用 `python <入口>` 运行；除注明可指定输出目录的入口外，重跑会更新表中列出的已保存结果。完整评论正文 `data/reviews/processed/target_371_review_corpus.csv` 未包含在公开仓库中。
+
+| 分析 | 入口 | 输入与输出 |
+|---|---|---|
+| 时间切分 | `scripts/06_make_splits.py` | 读取销量建模快照和 `target_371_review_coverage.csv` 中的固定车系名单；默认写入 `data/processed/splits/`，可用 `--output-dir` 指定其他目录 |
+| 评论时间特征 | `scripts/32_build_temporal_review_features.py` | 读取切分、`review_aspect_labels.csv` 和评论可用性表；更新 `data/reviews/processed/` 中的固定与滚动特征及审计摘要 |
+| 固定六个月预测 | `scripts/33_evaluate_review_features.py --locked-capacity` | 读取切分、配置、已保存评论特征及模型选型摘要；默认写入 `data/processed/forecast/` 和 `assets/analysis/`，可用 `--output-dir` 将结果与图保存到其他目录 |
+| 滚动单月预测 | `scripts/48_evaluate_rolling_origin.py --test` | 读取切分、配置及已保存评论特征；默认写入 `data/processed/forecast/`，可用 `--output-dir` 指定其他目录 |
+| 年度配置分析 | `scripts/29_config_attribution.py` | 读取配置、销量及年度销量修正登记；更新 `data/processed/product/`、`assets/analysis/` 和年度销量修正审计表 |
+| 用户需求与监测 | `scripts/35_build_user_needs_and_alerts.py` | 读取完整评论正文、标签及车系元数据；更新 `data/processed/user_feedback/` 和 `assets/analysis/`，需要额外准备未公开正文 |
+
+固定预测的 `--locked-capacity` 沿用保存的树数与平台评分方案。滚动预测使用代码中既定的两套参数，在历史起点上评价；2026 窗口沿用原有时间切分，不作为新一轮调参数据。
+
+Bootstrap、SHAP 模型重放与误差诊断，以及朴素基准比较，可写入单独目录：
+
+```bash
+python scripts/34_analyze_forecast_robustness.py --output-dir artifacts/report-statistics
+python scripts/39_evaluate_naive_forecast_baselines.py --output-dir artifacts/report-statistics
+```
+
+两者默认读取 `data/processed/forecast/` 的固定预测及运行摘要和 `data/processed/splits/` 的切分。`--forecast-dir` 指定其他预测目录，`--split-dir` 指定基准或诊断所用的切分。34 的 SHAP 重放仍读取仓库默认建模面板、配置与评论特征，并核对其与保存预测的一致性；因此这两个参数不能单独切换完整模型输入。看板构建器读取正式分析目录，不会自动采用 `artifacts/report-statistics/` 中的结果。
+
+<details>
+<summary>可选：MySQL 数据仓库</summary>
+
+完整本地数据链使用四个逻辑 MySQL 数据库，与 CSV 路径采用相同的样本定义、时间切分和计分规则：
+
+| 层 | 作用 | 主要输出 |
+|---|---|---|
+| `auto_raw` | 保存来源批次和文件哈希 | 销量、配置、评论、标签和修正登记 |
+| `auto_staging` | 标准化、统一车系、去重和时间对齐 | 标准销量、配置、评论与十维特征 |
+| `auto_mart` | 组织事实表、维表和主题表 | 预测、产品配置和用户需求数据集市 |
+| `auto_ops` | 记录运行、任务、质量检查和版本 | 批次状态、血缘与发布清单 |
+
+运行此路径需要完整来源快照、独立的 MySQL 实例、MySQL 命令行客户端，以及使用 `mysql_config_editor` 配置的加密 login path。各入口通过 `--login-path` 指定连接，默认名称 `local-auto` 需要在运行机器上另行配置；凭据不包含在仓库中。客户端可从 `PATH` 查找，或通过 `MYSQL_CLIENT` 指定。
+
+入口依次为 `scripts/initialize_mysql.py`、`scripts/ingest_raw.py`、`scripts/validate_raw.py`、`scripts/rebuild_staging.py`、`scripts/rebuild_core_marts.py` 和 `scripts/validate_core_marts.py`。初始化默认只读，`--apply` 才创建表；已有项目数据库需要显式 `--allow-existing`。摄取、清洗和主题层重建会写入数据库，完整运行所需的原始评论等本地文件不随公开仓库分发。
+
+`tests/fixtures/ci/` 中的合成样本用于隔离 MySQL 集成检查，覆盖建表、幂等摄取和清洗质量规则。
+
+</details>

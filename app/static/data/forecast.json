@@ -8962,7 +8962,7 @@
     "en": "The headline task refreshes each month for a one-month-ahead forecast: rolling one-month seasonal XGBoost reaches 29.75% WMAPE, 11.24 pp below the last-observed-value naive baseline at 40.99%. The fixed six-month platform-rating model scores 38.09% and is reported separately as a stress test."
   },
   "feature_insight": {
-    "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择季节增强销量模型，该图用于描述模型依赖结构，不用于滚动主结果的因果识别。",
-    "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the seasonal sales model, so the chart describes model reliance and is not used for causal identification in the rolling result."
+    "zh": "固定六个月平台评分模型的SHAP贡献以销量滞后和滚动均值为主，日历、配置和口碑特征提供补充信号。",
+    "en": "SHAP contributions in the fixed six-month platform-rating model are dominated by sales lags and rolling means; calendar, specification, and review features provide supporting signals."
   }
 }

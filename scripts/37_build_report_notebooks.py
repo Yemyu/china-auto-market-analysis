@@ -56,7 +56,111 @@ def read_json(path):
     with open(path, "r", encoding="utf-8-sig") as handle:
         return json.load(handle)
 
-print("Report inputs: saved predictions and analysis tables")
+def bilingual_names(pairs):
+    return {key: labels[0 if ZH else 1] for key, labels in pairs.items()}
+
+MODEL_NAMES = bilingual_names({
+    "pred": ("季节增强 XGBoost", "Seasonal XGBoost"),
+    "SEASONAL_D5": ("季节增强 XGBoost", "Seasonal XGBoost"),
+    "BASE": ("基础 XGBoost", "Base XGBoost"),
+    "NAIVE": ("朴素基准", "Naive baseline"),
+    "LAST_VALUE": ("最近一次销量", "Last observed sales"),
+    "ROLLING_MEAN_3": ("近 3 月均值", "Trailing 3-month mean"),
+    "ROLLING_MEAN_6": ("近 6 月均值", "Trailing 6-month mean"),
+    "ROLLING_MEAN_12": ("近 12 月均值", "Trailing 12-month mean"),
+    "SEASONAL_LAG12": ("去年同期销量", "Same month last year"),
+    "PLATFORM_RATING_FIXED": ("XGBoost + 平台评分", "XGBoost + platform ratings"),
+    "LOCAL_LEXICON_FIXED": ("XGBoost + 本地词典", "XGBoost + local lexicon"),
+    "REVIEW_TEXT_FIXED": ("XGBoost + 文本口碑", "XGBoost + text review features"),
+    "REVIEW_RICH_FIXED": ("XGBoost + 扩展口碑特征", "XGBoost + extended review features"),
+    "ALL_SENTIMENT_FIXED": ("XGBoost + 组合口碑特征", "XGBoost + combined review features"),
+    "REVIEW_TEXT_ROLLING": ("XGBoost + 逐月更新评论", "XGBoost + monthly review updates"),
+    "GLOBAL_MEDIAN": ("全局中位数", "Global median"),
+    "YEAR_MEDIAN": ("分年份中位数", "Year-specific median"),
+})
+TABLE_COLUMNS = bilingual_names({
+    "method": ("方法", "Method"), "version": ("模型", "Model"),
+    "mode": ("预测方式", "Forecast protocol"), "origin": ("预测起点", "Forecast origin"),
+    "month": ("月份", "Month"), "group": ("分组", "Group"),
+    "series": ("车系数", "Series"), "rows": ("车系月数", "Series-months"),
+    "zero_actual_rows": ("零销量车系月数", "Zero-sales rows"),
+    "mape_rows": ("MAPE 样本数", "MAPE rows"),
+    "mae": ("MAE（辆）", "MAE (vehicles)"),
+    "rmse": ("RMSE（辆）", "RMSE (vehicles)"),
+    "median_absolute_error": ("绝对误差中位数（辆）", "Median absolute error (vehicles)"),
+    "p90_absolute_error": ("绝对误差 P90（辆）", "P90 absolute error (vehicles)"),
+    "wmape": ("WMAPE (%)", "WMAPE (%)"),
+    "mape_positive": ("正销量 MAPE (%)", "Positive-sales MAPE (%)"),
+    "smape": ("sMAPE (%)", "sMAPE (%)"),
+    "mean_error": ("平均有符号误差（辆）", "Mean signed error (vehicles)"),
+    "net_bias_pct": ("净偏差 (%)", "Net bias (%)"),
+    "gain_pp": ("WMAPE 改善（百分点）", "WMAPE improvement (pp)"),
+    "monthly_aggregate_wmape": ("月度汇总 WMAPE (%)", "Monthly aggregate WMAPE (%)"),
+    "six_month_net_bias_pct": ("半年累计净偏差 (%)", "Six-month net bias (%)"),
+    "method_type": ("方法类别", "Method type"), "scenario": ("信息条件", "Information scenario"),
+    "global_volume_weighted_WMAPE": ("全局 WMAPE (%)", "Global WMAPE (%)"),
+    "median_per_series_WMAPE": ("逐车系中位数 WMAPE (%)", "Median series WMAPE (%)"),
+    "validation_selected_n_estimators": ("树数", "Trees"),
+    "fixed_origin_validation_global_WMAPE": ("验证 WMAPE (%)", "Validation WMAPE (%)"),
+    "historical_origins": ("历史起点数", "Historical origins"),
+    "pooled_global_WMAPE": ("合并 WMAPE (%)", "Pooled WMAPE (%)"),
+    "n_estimators": ("树数", "Trees"), "max_depth": ("最大树深", "Maximum depth"),
+    "learning_rate": ("学习率", "Learning rate"), "subsample": ("行采样比例", "Row sampling fraction"),
+    "colsample_bytree": ("列采样比例", "Column sampling fraction"),
+    "min_child_weight": ("最小子节点权重", "Minimum child weight"),
+    "reg_lambda": ("L2 正则", "L2 regularization"), "reg_alpha": ("L1 正则", "L1 regularization"),
+    "R2_log_mean": ("对数销量 R² 均值", "Mean log-sales R²"),
+    "R2_log_std": ("折间标准差", "Fold standard deviation"),
+    "WMAPE_oof_global": ("合并折外 WMAPE (%)", "Pooled OOF WMAPE (%)"),
+    "WMAPE_mean": ("折均值 WMAPE (%)", "Mean fold WMAPE (%)"),
+    "WMAPE_fold_std": ("WMAPE 折间标准差", "WMAPE fold standard deviation"),
+    "n_features": ("特征数", "Features"),
+    "feature": ("配置特征", "Specification feature"), "gain": ("分裂收益", "Split gain"),
+    "series_name": ("车系", "Series"), "brand": ("品牌", "Brand"),
+    "current_reviews": ("当前窗口评论数", "Current-window reviews"),
+    "current_overall_score": ("文本综合倾向", "Text sentiment score"),
+    "score_change": ("文本倾向变化", "Text sentiment change"),
+    "platform_rating_change": ("平台评分变化", "Platform rating change"),
+    "text_rule_retrigger_probability": ("文本规则重触发比例", "Text-rule bootstrap share"),
+    "rating_decline_probability": ("评分下降重采样比例", "Rating-decline bootstrap share"),
+    "alert_status": ("状态", "Status"), "worst_aspect": ("主要维度", "Leading aspect"),
+    "risk_level": ("文本规则等级", "Text-rule level"),
+})
+VALUE_NAMES = bilingual_names({
+    "ROLLING_ONE_MONTH": ("滚动单月", "Rolling one-month"),
+    "NAIVE": ("朴素基准", "Naive baseline"),
+    "model": ("模型", "Model"), "naive": ("朴素基准", "Naive baseline"),
+    "fixed_origin_primary": ("固定起点", "Fixed origin"),
+    "rolling_origin_supplement": ("评论逐月更新", "Monthly review updates"),
+    "zero": ("零销量", "Zero sales"), "positive": ("正销量", "Positive sales"),
+    "watchlist": ("观察名单", "Watchlist"),
+    "corroborated": ("双信号预警", "Dual-signal alert"), "none": ("无预警", "No alert"),
+    "high": ("高", "High"), "medium": ("中", "Medium"), "low": ("低", "Low"),
+})
+ASPECT_NAMES = bilingual_names({
+    "space": ("空间", "Space"), "power": ("动力", "Powertrain performance"),
+    "control": ("操控", "Handling"), "comfort": ("舒适性", "Comfort"),
+    "fuel_consumption": ("能耗 / 油耗", "Energy / fuel use"),
+    "configuration": ("配置", "Equipment"), "intelligence": ("智能化", "Smart features"),
+    "value": ("性价比", "Value for money"), "appearance": ("外观", "Exterior"),
+    "interior": ("内饰", "Interior"), "overall": ("综合评价", "Overall"),
+})
+
+def presentation_table(frame):
+    shown = frame.copy()
+    for column in ("method", "version"):
+        if column in shown:
+            shown[column] = shown[column].replace(MODEL_NAMES)
+    for column in ("mode", "method_type", "scenario", "group", "alert_status", "risk_level"):
+        if column in shown:
+            shown[column] = shown[column].replace({**MODEL_NAMES, **VALUE_NAMES})
+    if "worst_aspect" in shown:
+        shown["worst_aspect"] = shown["worst_aspect"].replace(ASPECT_NAMES)
+    shown = shown.rename(columns={**MODEL_NAMES, **TABLE_COLUMNS},
+                         index={**MODEL_NAMES, **TABLE_COLUMNS})
+    shown.index.name = TABLE_COLUMNS.get(shown.index.name, shown.index.name)
+    shown.columns.name = TABLE_COLUMNS.get(shown.columns.name, shown.columns.name)
+    return shown
 """
 
 
@@ -85,7 +189,6 @@ config_summary = read_json(PRODUCT_DIR / "config_attribution_summary.json")
 aspects = pd.read_csv(FEEDBACK_DIR / "user_need_aspect_summary.csv", encoding="utf-8-sig")
 alerts = pd.read_csv(FEEDBACK_DIR / "sentiment_alerts.csv")
 monitor = read_json(FEEDBACK_DIR / "user_needs_alerts_summary.json")
-print("Loaded analysis artifacts.")
 """
 
 
@@ -103,7 +206,7 @@ if ZH:
         ["车型配置", f"{specs.series_name.nunique():,} 个车系 / {len(specs):,} 行"],
         ["严格评论语料", f"{corpus['temporally_eligible_reviews']:,} 条 / "
                          f"{corpus['target_series_with_any_review']} 个车系"],
-    ], columns=["数据底座", "规模"])
+    ], columns=["来源数据", "规模"])
 else:
     table = pd.DataFrame([
         ["Rolling one-month sales forecast", "371 series", "2,226 test series-months",
@@ -121,7 +224,7 @@ else:
         ["Vehicle specifications", f"{specs.series_name.nunique():,} series / {len(specs):,} rows"],
         ["Strict review corpus", f"{corpus['temporally_eligible_reviews']:,} reviews / "
                                  f"{corpus['target_series_with_any_review']} series"],
-    ], columns=["Data foundation", "Scale"])
+    ], columns=["Source data", "Scale"])
 display(table)
 display(source)
 """
@@ -136,9 +239,11 @@ panel = pd.concat([
 panel["date"] = pd.to_datetime(panel["date"])
 monthly = panel.groupby(["date", "split"], as_index=False)["monthly_sales"].sum()
 fig, ax = plt.subplots(figsize=(11, 4.8))
+split_names = {"train": "训练", "val": "验证", "test": "测试"} if ZH else {
+    "train": "Training", "val": "Validation", "test": "Test"}
 for split, color in [("train", COLORS["blue"]), ("val", COLORS["orange"]), ("test", COLORS["red"])]:
     part = monthly[monthly["split"] == split]
-    ax.plot(part["date"], part["monthly_sales"] / 1e6, color=color, lw=2.1, label=split.title())
+    ax.plot(part["date"], part["monthly_sales"] / 1e6, color=color, lw=2.1, label=split_names[split])
     ax.axvspan(part["date"].min(), part["date"].max(), color=color, alpha=0.06)
 ax.set(title=("371 车系月销量与两种预测协议的时间切分" if ZH else
               "Monthly sales and the two forecast protocols: 371 series"),
@@ -167,7 +272,7 @@ rolling_rows = [
     ("近3月均值（朴素）" if ZH else "Trailing 3-month mean (naive)", "ROLLING_MEAN_3"),
     ("近6月均值（朴素）" if ZH else "Trailing 6-month mean (naive)", "ROLLING_MEAN_6"),
     ("去年同期销量（朴素）" if ZH else "Same-month-last-year (naive)", "SEASONAL_LAG12"),
-    ("滚动单月季节增强 XGBoost（主结果）" if ZH else "Rolling one-month seasonal XGBoost (headline)", "pred"),
+    ("滚动单月季节增强 XGBoost（主模型）" if ZH else "Rolling one-month seasonal XGBoost", "pred"),
 ]
 rolling_table = pd.DataFrame([
     [label, wmape(rolling_test, column), median_wmape(rolling_test, column)]
@@ -175,8 +280,8 @@ rolling_table = pd.DataFrame([
 ], columns=[model_name, global_name, median_name])
 display(rolling_table.style.format({global_name: "{:.2f}%", median_name: "{:.2f}%"}))
 scores = pd.DataFrame(report["metrics"]).set_index("method")
-display(scores[["mae", "rmse", "median_absolute_error", "p90_absolute_error",
-                "mape_positive", "mape_rows", "smape"]].round(2))
+display(presentation_table(scores[["mae", "rmse", "median_absolute_error", "p90_absolute_error",
+                                  "mape_positive", "mape_rows", "smape"]]).round(2))
 fixed_row = pd.DataFrame([[
     "固定六个月平台评分模型（压力测试）" if ZH else "Fixed six-month platform-rating model (stress test)",
     selected_fixed["global_volume_weighted_WMAPE"], selected_fixed["median_per_series_WMAPE"],
@@ -201,10 +306,10 @@ origins = pd.read_csv(FORECAST_DIR / "rolling_origin_validation.csv")
 comparison = origins[origins["mode"].eq("ROLLING_ONE_MONTH")].pivot(
     index="origin", columns="version", values="global_volume_weighted_WMAPE")
 comparison["gain_pp"] = comparison["BASE"] - comparison["SEASONAL_D5"]
-display(comparison.round(3))
-display(pd.DataFrame(rolling_summary["model_params"]).T)
-display(pd.DataFrame(rolling_summary["validation_summary"])[[
-    "version", "mode", "historical_origins", "pooled_global_WMAPE"]].round(3))
+display(presentation_table(comparison).round(3))
+display(presentation_table(pd.DataFrame(rolling_summary["model_params"]).T))
+display(presentation_table(pd.DataFrame(rolling_summary["validation_summary"])[[
+    "version", "mode", "historical_origins", "pooled_global_WMAPE"]]).round(3))
 assert rolling_summary["test_used_for_selection"] is False
 assert np.isclose(scores.loc["pred", "wmape"],
                   rolling_summary["locked_test"]["global_volume_weighted_WMAPE"])
@@ -215,17 +320,18 @@ ERRORS = r"""
 monthly_scores = pd.DataFrame(report["monthly"])
 monthly_comparison = monthly_scores.pivot(index="month", columns="method", values="wmape")
 monthly_comparison["gain_pp"] = monthly_comparison["LAST_VALUE"] - monthly_comparison["pred"]
-display(monthly_comparison.round(2))
+display(presentation_table(monthly_comparison).round(2))
 fig, axes = plt.subplots(1, 2, figsize=(12, 4.2))
-monthly_comparison[["LAST_VALUE", "pred"]].plot(
+presentation_table(monthly_comparison[["LAST_VALUE", "pred"]]).plot(
     ax=axes[0], marker="o", color=[COLORS["gray"], COLORS["blue"]])
 axes[0].set(title=("逐月车系误差" if ZH else "Series-level error by month"),
             ylabel="WMAPE (%)", xlabel="")
-monthly_scores.pivot(index="month", columns="method", values="net_bias_pct").plot(
+presentation_table(monthly_scores.pivot(index="month", columns="method", values="net_bias_pct")).plot(
     ax=axes[1], marker="o", color=[COLORS["gray"], COLORS["blue"]])
 axes[1].axhline(0, color=COLORS["red"], lw=1)
 axes[1].set(title=("逐月汇总净偏差" if ZH else "Monthly aggregate net bias"),
-            ylabel="(prediction − actual) / actual (%)", xlabel="")
+            ylabel=("(预测 − 实际) / 实际 (%)" if ZH else
+                    "(prediction − actual) / actual (%)"), xlabel="")
 for ax in axes:
     ax.tick_params(axis="x", rotation=30)
     ax.legend(frameon=False)
@@ -233,23 +339,24 @@ fig.tight_layout()
 plt.show()
 
 segments = pd.DataFrame(report["segments"])
-display(segments[segments.group_type.eq("pre_test_size")][[
-    "group", "method", "series", "rows", "wmape", "mae", "smape"]].round(2))
-display(segments[segments.group_type.eq("actual_sales")][[
-    "group", "method", "rows", "wmape", "mae", "smape"]].round(2))
-display(pd.DataFrame(report["aggregate"]).set_index("method").round(2))
+display(presentation_table(segments[segments.group_type.eq("pre_test_size")][[
+    "group", "method", "series", "rows", "wmape", "mae", "smape"]]).round(2))
+display(presentation_table(segments[segments.group_type.eq("actual_sales")][[
+    "group", "method", "rows", "wmape", "mae", "smape"]]).round(2))
+display(presentation_table(pd.DataFrame(report["aggregate"]).set_index("method")).round(2))
 """
 
 
 FIXED = r"""
-display(benchmark[["method", "method_type", "global_volume_weighted_WMAPE",
-                   "median_per_series_WMAPE"]].round(3))
-display(forecast[["version", "scenario", "validation_selected_n_estimators",
-                  "fixed_origin_validation_global_WMAPE", "global_volume_weighted_WMAPE"]]
-        .sort_values(["scenario", "fixed_origin_validation_global_WMAPE"]).round(3))
+display(presentation_table(benchmark[["method", "method_type", "global_volume_weighted_WMAPE",
+                                     "median_per_series_WMAPE"]]).round(3))
+display(presentation_table(forecast[["version", "scenario", "validation_selected_n_estimators",
+                                   "fixed_origin_validation_global_WMAPE", "global_volume_weighted_WMAPE"]]
+        .sort_values(["scenario", "fixed_origin_validation_global_WMAPE"])).round(3))
 fixed_predictions = pd.read_csv(FORECAST_DIR / "review_feature_predictions.csv")
-display(pd.Series(prediction_metrics(fixed_predictions.loc[fixed_predictions.version.eq(selected_version)]),
-                  name=selected_version).to_frame().round(3))
+display(presentation_table(pd.Series(
+    prediction_metrics(fixed_predictions.loc[fixed_predictions.version.eq(selected_version)]),
+    name=selected_version).to_frame()).round(3))
 """
 
 
@@ -318,9 +425,10 @@ frame[name] = frame.variant.map({
     "CONFIG-ONLY": "仅配置" if ZH else "Specifications only",
 })
 wmape_column = "WMAPE_oof_global" if "WMAPE_oof_global" in frame.columns else "WMAPE_mean"
-display(frame[[name, "R2_log_mean", "R2_log_std", wmape_column, "n_features"]]
-        .style.format({"R2_log_mean": "{:.3f}", "R2_log_std": "{:.3f}",
-                       wmape_column: "{:.2f}%"}))
+display(presentation_table(frame[[name, "R2_log_mean", "R2_log_std", wmape_column, "n_features"]])
+        .style.format({TABLE_COLUMNS["R2_log_mean"]: "{:.3f}",
+                       TABLE_COLUMNS["R2_log_std"]: "{:.3f}",
+                       TABLE_COLUMNS[wmape_column]: "{:.2f}%"}))
 ordered = frame[frame.variant.isin(["YEAR-ONLY", "+BRAND", "+CONFIG"])]
 fig, ax = plt.subplots(figsize=(9.5, 4.5))
 bars = ax.bar(ordered[name], ordered.R2_log_mean,
@@ -332,9 +440,26 @@ ax.set(title=("年份、品牌与配置的增量解释力" if ZH else
        xlabel="", ylabel="GroupKFold R² — log1p(sales)")
 ax.bar_label(bars, fmt="%.3f", padding=4)
 plt.show()
-display(pd.read_csv(PRODUCT_DIR / "config_attribution_baselines.csv").round(3))
+display(presentation_table(pd.read_csv(PRODUCT_DIR / "config_attribution_baselines.csv")).round(3))
 importance = pd.read_csv(PRODUCT_DIR / "config_importance_annual.csv")
-display(importance[importance.block.eq("config")].sort_values("gain", ascending=False).head(12))
+feature_names = bilingual_names({
+    "engine_cylinder_arrangement_L": ("气缸排列：L", "Cylinder arrangement: L"),
+    "cylinder_material_铝": ("气缸材料：铝", "Cylinder material: aluminium"),
+    "steering_wheel_material_真皮": ("方向盘材料：真皮", "Steering wheel: leather"),
+    "center_screen_NA": ("中控屏：缺失", "Centre screen: missing"),
+    "center_screen_大屏": ("中控屏：大屏", "Centre screen: large"),
+    "oil_supply_直喷": ("供油方式：直喷", "Fuel injection: direct"),
+    "fuel_grade_95#": ("燃油标号：95#", "Fuel grade: 95#"),
+    "engine_intake_type_涡轮增压": ("进气方式：涡轮增压", "Engine aspiration: turbocharged"),
+    "door_open_way_平开门": ("车门：平开门", "Doors: hinged"),
+    "manufacturer_freq": ("厂商类别频次编码", "Manufacturer frequency encoding"),
+    "fast_charge_percent_60.0": ("快充比例：60%", "Fast-charge percentage: 60%"),
+    "gearbox_type_freq": ("变速箱类型频次编码", "Gearbox type frequency encoding"),
+})
+top_features = importance[importance.block.eq("config")].sort_values("gain", ascending=False).head(12)
+feature_table = top_features[["feature", "gain"]].copy()
+feature_table["feature"] = feature_table["feature"].replace(feature_names)
+display(presentation_table(feature_table).round(4))
 """
 
 
@@ -346,7 +471,7 @@ ax.barh(y-.18, ordered.mention_rate, height=.34, color=COLORS["light"],
         label=("提及率" if ZH else "Mention share"))
 ax.barh(y+.18, ordered.negative_rate_among_scored, height=.34, color=COLORS["red"],
         label=("负面率（有效评分内）" if ZH else "Negative share among scored"))
-labels_y = ordered.aspect_zh if ZH else ordered.aspect.str.replace("_", " ").str.title()
+labels_y = ordered.aspect.map(ASPECT_NAMES)
 ax.set_yticks(y, labels_y)
 ax.xaxis.set_major_formatter(lambda x, pos: f"{x:.0%}")
 ax.set(title=("十类用户需求：讨论热度与负面集中度" if ZH else
@@ -364,6 +489,7 @@ if ZH:
 else:
     top = top[["aspect", "mentioned_reviews", "scored_mentions", "negative_mentions",
                "mention_rate", "negative_rate_among_scored", "mean_polarity"]]
+    top["aspect"] = top["aspect"].map(ASPECT_NAMES)
     top.columns = ["Dimension", "Mention count", "Scored count", "Negative count",
                    "Mention share", "Negative share", "Mean polarity"]
     display(top.style.format({"Mention share": "{:.1%}", "Negative share": "{:.1%}",
@@ -391,9 +517,20 @@ else:
         ["Historical alert events", monitor["historical_alert_events"]],
     ], columns=["Item", "Value"])
 display(overview)
-display(current[["series_name", "brand", "current_reviews", "current_overall_score",
-                 "score_change", "platform_rating_change", "text_rule_retrigger_probability",
-                 "rating_decline_probability", "alert_status", "worst_aspect", "risk_level"]])
+current_table = current[["series_name", "brand", "current_reviews", "current_overall_score",
+                         "score_change", "platform_rating_change", "text_rule_retrigger_probability",
+                         "rating_decline_probability", "alert_status", "worst_aspect", "risk_level"]].copy()
+if not ZH:
+    current_table["brand"] = current_table["brand"].replace({"奥迪": "Audi"})
+    current_table["series_name"] = current_table["series_name"].replace({"奥迪Q4 e-tron": "Audi Q4 e-tron"})
+formatted_current = presentation_table(current_table)
+display(formatted_current.style.format({
+    TABLE_COLUMNS["current_overall_score"]: "{:.3f}",
+    TABLE_COLUMNS["score_change"]: "{:+.3f}",
+    TABLE_COLUMNS["platform_rating_change"]: "{:+.3f}",
+    TABLE_COLUMNS["text_rule_retrigger_probability"]: "{:.1%}",
+    TABLE_COLUMNS["rating_decline_probability"]: "{:.1%}",
+}))
 """
 
 
@@ -408,7 +545,7 @@ if ZH:
         ["最近 180 天有评论", f"{temporal['fixed_test_series_with_recent_180d_review']} 个车系",
          "其余保留缺失标记"],
         ["复用历史标签", f"{labels['historical_labeled_reviews']:,} 条", "保留来源与标签限制"],
-        ["补充标签", f"{labels['api_labeled_reviews']:,} 条", "结构校验与人工抽样"],
+        ["API 自动补充标签", f"{labels['api_labeled_reviews']:,} 条", "结构校验与人工抽样"],
     ], columns=["审计项", "结果", "处理"])
 else:
     audit = pd.DataFrame([
@@ -422,7 +559,7 @@ else:
          "Missingness retained elsewhere"],
         ["Reused historical labels", f"{labels['historical_labeled_reviews']:,}",
          "Source and label limitations retained"],
-        ["Newly supplemented labels", f"{labels['api_labeled_reviews']:,}",
+        ["Additional API-generated labels", f"{labels['api_labeled_reviews']:,}",
          "Schema checks and manual sampling"],
     ], columns=["Audit item", "Result", "Treatment"])
 display(audit)
@@ -433,39 +570,28 @@ TEXT = {
     "zh": {
         "title": """# 中国汽车市场分析：销量预测、产品配置与用户需求
 
-本 Notebook 从已保存的逐行预测重新计算误差，并结合历史回测、配置消融和评论监测结果回答三个问题：下月销量能预测到什么程度，配置提供了多少额外解释信息，哪些用户反馈值得复核。阅读顺序为样本与协议、结果、误差来源、适用范围。
-
-本次执行不重新训练模型。`scripts/48_evaluate_rolling_origin.py --test`负责滚动评估，`33_evaluate_review_features.py`负责固定场景消融，`29_config_attribution.py`负责年度配置分析。下文加载的CSV和JSON是这些程序的保存结果。代码单元中的`pred`表示季节增强XGBoost，`LAST_VALUE`表示上月销量基准。
+本报告使用公开月度销量、车型配置和车主评论，分析下月销量预测、年度产品差异和用户需求。误差指标由已保存的逐行预测计算，历史回测、配置消融和评论监测使用对应的分析结果。
 
 **研究期：** 2022-01—2026-07
 
 **预测测试期：** 2026-01—06
-**销量主任务：** 每月更新的下月预测；固定六个月为压力测试
-**主指标：** 全局 volume-weighted WMAPE""",
+
+**销量主任务：** 滚动单月预测；固定六个月为压力测试
+
+**主指标：** 全局销量加权 WMAPE""",
         "sample": """## 1. 三组分析样本
 
-三项分析的筛选条件不同。销量预测固定 371 个车系的完整自然月面板，年度配置只向不晚于目标年份的记录回退；产品配置分析要求完整年度销量与配置能够对齐，用户需求分析要求完整且可核验的评论正文。""",
+销量预测使用固定 371 个车系的完整自然月面板，配置按年份回溯到最近可用记录。产品配置分析要求完整年度销量与配置能够对齐；用户需求分析使用具有完整正文、发布时间和来源记录的评论。""",
 
-        "engineering": """### 数据工程与复现边界
+        "engineering": """### 报告输入
 
-完整本地链路按 `auto_raw → auto_staging → auto_mart` 分层处理，`auto_ops` 记录来源批次、任务、质量结果和数据版本。Airflow 串联摄取、质量检查、主题表、模型等价和静态 JSON 发布；critical 规则失败时不会替换看板数据。
-
-公开 Notebook 读取便携快照，因此不要求浏览者连接本地 MySQL。工程等价校验检查迁移前后数据和结果是否一致，不证明原研究设计没有局限。自动测试另用完全虚构的小型样本验证建库、幂等摄取、质量门禁和看板数据合同，不读取完整评论语料，也不访问外部网站。
-
-| 要检查的行为 | 实现与验证入口 | 作用 |
-|---|---|---|
-| 同一批数据重复加载 | `tests/integration/` | 检查幂等摄取，不因重跑增加重复行 |
-| 不合格数据不得发布 | `src/china_auto_market/quality/`、`tests/unit/` | 验证关键规则失败能阻断下游 |
-| 数据如何按顺序运行 | `dags/` | 查看依赖、重试和历史月份参数 |
-| 看板只接收完整版本 | `src/china_auto_market/publishing/` | 校验候选产物后替换本地发布目录 |
-
-这些行为比目录层次本身更能说明工程工作。Notebook负责解释数据产品，不代替数据库集成测试或完整训练。""",
+计算使用仓库中的 CSV 和 JSON，包括销量面板、保存预测、评论标签与统计摘要。完整评论正文仅保存在本地，本报告通过标签和汇总结果分析评论。文件清单、分析入口及环境要求见[数据说明](../data/README.md)。""",
 
         "forecast": """## 2. 月度销量预测
 
 开发切分为训练截至2025-06、验证2025-07—12、测试2026-01—06。模型方案选定后，使用训练与验证数据合并重新拟合至2025-12；测试六个月内权重固定，每次预测完成后将真实销量加入下一月历史。
 
-滚动协议假定预测时已拿到上月销量；固定六个月协议在2026-01起点一次性递归预测，后续滞后来自先前预测。两者的信息条件不同，差值不能被视为算法单独带来的提升。
+滚动协议使用预测时已公布的上月销量；固定六个月协议从 2026-01 起递归预测，后续销量滞后来自先前预测。两种任务分别评价。
 
 基础XGBoost含1/2/3月滞后、3/6月均值、日历和配置；季节方案增加12月滞后和12月均值，同时修改参数。目标均为`log1p(月销量)`，输出还原后截为非负。销量模型在每个预测起点限定可用配置年份，按行连接不晚于其年份的最近记录，并仅在该模型实际训练行中拟合中位数与类别词表；预测窗口内配置冻结。未知类别记为−1，全缺数值列使用0占位，不因配置缺失删除销量样本。配置源没有年内发布时间，销量源也没有逐条历史发布与修订版本，因此年度代理对齐仍不等于完整历史点时重建。年度配置模块使用独立的折内处理。""",
 
@@ -481,42 +607,42 @@ TEXT = {
 | 正销量MAPE | 仅在1,964个真实销量大于零的车系月上平均百分比误差 |
 | sMAPE | 全部行平均`200×|实际−预测|/(|实际|+|预测|)`；双方为零时记0 |
 
-同一数据集上WMAPE与MAE按固定比例换算；它们提供不同单位的解释，不能当作独立证据。MAPE容易被极小销量放大；不同方法的sMAPE统一保留双方为零的行，避免分母随模型变化。""",
+同一数据集上 WMAPE 与 MAE 按固定比例换算，分别提供相对误差和车辆数误差。MAPE 对极小销量敏感；sMAPE 保留实际与预测均为零的行，所有方法使用相同样本数。""",
 
         "historical": """### 历史起点与方案选择
 
-以下每个起点对应随后六个月的滚动单月预测。BASE与SEASONAL_D5既有特征差异，也有参数差异；表中增益属于整套方案比较。四个起点合并WMAPE改善0.957个百分点，最大单起点回归0.061个百分点，通过预设的0.5/1.0个百分点门槛。此表是模型选择证据，不是另外四个未参与选择的最终测试集。""",
+每个历史起点覆盖随后六个月的滚动单月预测。基础与季节增强 XGBoost 在特征和参数上均有差异，表中比较的是完整模型方案。四个起点合并 WMAPE 改善 0.957 个百分点，最差起点误差增加 0.061 个百分点，满足预设的合并改善至少 0.5、单起点退化不超过 1.0 个百分点的选型门槛。这四个窗口用于模型选择。""",
 
         "errors": """### 误差发生在哪里
 
-模型在六个测试月中胜出五个月，5月略弱于上月销量基准。下表Q1—Q4按2025年7—12月平均销量划分，分组在测试前固定，不按2026年真实销量调整。Q1的WMAPE为66.60%，Q4为28.02%，低销量车系仍难预测。
+模型在六个测试月中的五个月具有更低 WMAPE，5 月略高于上月销量基准。Q1—Q4 按 2025 年 7—12 月平均销量划分，分组在测试前固定。Q1 的 WMAPE 为 66.60%，Q4 为 28.02%，低销量车系仍难预测。
 
 零/正销量分组仅作事后诊断，不能提前用于模型路由。零销量组WMAPE和MAPE没有定义，以MAE、样本数观察其影响。小幅正预测即使只错不到1辆，也会在真实值为零时得到200%的sMAPE，解释了主模型全局sMAPE弱于基准、但MAE更低的现象。
 
-累计净偏差与绝对误差需要分开：371车系半年净偏差为−0.67%，按月先汇总再计算WMAPE为6.46%，逐车系月WMAPE为29.75%。前者可跨月份抵消，第二项可在同月车系之间抵消，第三项不允许这些抵消。这些都是本评估车系集合的描述，不代表全国市场，也不构成新的模型选优。""",
+371 个评价车系的半年净偏差为 −0.67%，月度汇总 WMAPE 为 6.46%，逐车系月 WMAPE 为 29.75%。净偏差允许跨月份抵消，月度汇总允许同月车系间抵消，逐车系月绝对误差保留每条记录的偏差。汇总指标描述本评价车系集合。""",
 
         "fixed": """### 固定六个月：朴素基准与口碑消融
 
-完整朴素比较包含近3/6/12月均值、上月销量及去年同期。平台评分模型38.09%的WMAPE，相对原近6月均值69.31%减少45.0%的绝对误差；近12月均值在当前朴素结果中测试WMAPE最低，为67.43%，对应减少43.5%。后一比较只报告观察结果，不声称已通过验证集选定这项基准。
+朴素比较包含近 3/6/12 月均值、最近一次销量及去年同期。平台评分模型的 WMAPE 为 38.09%；近 12 月均值的 67.43% 是保存的朴素方法中最低测试 WMAPE，对应绝对误差减少 43.5%。这项参照为测试结果的描述性比较，完整结果列于下表。
 
-口碑实验在相同车系和固定起点协议下加入平台评分、词典、文本或组合特征。沿用既定开发选型的平台评分方案及各方案100棵树，不根据当前验证排名或测试表现重选。平台评分方案的测试WMAPE为38.09%。`REVIEW_TEXT_ROLLING`只滚动更新评论信息，销量仍递归预测，不能与滚动销量主协议混为一谈。""",
+口碑实验在相同车系和固定起点协议下加入平台评分、词典、文本或组合特征。各方案使用既定的 100 棵树，主比较沿用已选平台评分方案。评论逐月更新方案只更新评论信息，销量滞后仍由递归预测产生。""",
 
         "uncertainty": """### 改善幅度与不确定性
 
 口碑增强属于固定六个月压力测试：点估计相对销量基线改善 0.980 个百分点，按车系重采样的 95% 区间为 −0.0047 至 2.2331 个百分点，稳定增益证据不足，因此定位为辅助信息。""",
         "importance": """### 固定场景口碑模型依赖哪些信息
 
-下面的平均绝对SHAP来自固定六个月口碑模型，解释其对数销量预测。它不是滚动主模型的重要性图，数值也不是某特征使销量增加的比例。相关特征之间可能分摊贡献；读图时应按模型与特征组解释。""",
+平均绝对 SHAP 描述固定六个月平台评分模型的对数销量预测，各组占比表示其模型归因贡献。相关特征可能分摊贡献；这些数值不表示销量增幅或准确率增益。""",
 
         "cold": """### 历史不足车系的边界
 
-固定起点前没有正销量历史的13个车系仍保留在评价中，使用同一个平台评分模型，不额外套用上市曲线。预测时未知的实际上市月份不能作为输入。这些车系的固定预测WMAPE约99.40%，说明现有历史与配置不足以可靠预测其放量过程。""",
+固定起点前没有正销量历史的 13 个车系使用同一个平台评分模型。该组固定预测 WMAPE 约 99.40%，现有历史与配置不足以可靠预测其销量爬坡。""",
         "config": """## 3. 产品配置与年度销量差异
 
 样本为646个车系、1,510条2022—2025完整车系年记录。五折GroupKFold将整个车系留在同一折，检验对未见车系的推广；它不检验跨未来年份的预测。每一折独立拟合缺失填充和编码，再以XGBoost拟合`log1p(年度销量)`。
 
 R²报告五折对数尺度得分的均值，误差线为折间标准差，不是置信区间。WMAPE使用还原为辆数后的全部折外预测，不取五折WMAPE的简单平均。后面的全局中位数与分年份中位数基准只使用各训练折目标值。""",
-        "config_read": """加入品牌后，对数销量R²从0.013升至0.070，加入配置后为0.239；增量0.169不是“配置占销量16.9%”。完整模型原尺度WMAPE为73.85%，优于分年份中位数87.21%，但绝对误差仍较大。
+        "config_read": """加入品牌后，对数销量 R² 从 0.013 升至 0.070，加入配置后为 0.239，增量为 0.169。完整模型原尺度 WMAPE 为 73.85%，低于分年份中位数的 87.21%，但绝对误差仍较大。
 
 前12项配置重要性使用gain，反映模型分裂收益，不提供效应方向或因果结论。价格、尺寸、动力与品牌定位存在共同变化，车系年汇总又掩盖版本差异。可据此筛选同类产品的比较维度，不能估计单项配置的销量回报。""",
         "needs": """## 4. 用户需求与口碑风险
@@ -526,66 +652,54 @@ R²报告五折对数尺度得分的均值，误差线为折间标准差，不�
 平台用户是自选择样本，负面率不代表所有车主的不满意率。历史零标签无法完全区分未提及、中性和解析回退，统一提及检测缓解了差异，仍不能等同于人工真值。既有抽查缺少独立代表性金标准，不足以估计标签F1。""",
         "alerts": """### 双信号风险监测
 
-文本规则先生成观察候选；只有在3,000次Bootstrap中至少70%可复现，且平台原始评分下降概率至少为80%时，才计为有效预警。所有记录仍只用于安排人工复核。
+文本规则先生成观察候选。3,000 次 Bootstrap 中，文本规则重触发比例至少为 70%、平台原始评分下降比例至少为 80% 的候选，进入双信号预警名单，供人工复核。
 
-最近完整监测月有123个车系达到相邻两个180天窗口各至少5条评论的门槛，占371个目标车系的33.2%。当前无双信号预警不表示所有车系均无风险。Bootstrap检验的是重采样下规则的稳定性，不是未来故障发生概率；尚无独立事件标签可计算预警准确率。""",
-        "audit": "## 5. 数据质量与时间可用性",
-        "dashboard": """## 6. 看板与复现
+最近完整监测月有 123 个车系达到相邻两个 180 天窗口各至少 5 条评论的门槛，占 371 个目标车系的 33.2%；该范围内无双信号预警，有 1 个观察候选。Bootstrap 衡量重采样下的规则稳定性，不是未来故障概率；尚无独立事件标签可计算预警准确率。""",
+        "audit": """## 5. 数据质量与评价范围
 
-看板是纯静态站点，读取 `app/static/data/` 中的预烘焙 JSON。完整六页截图见 `assets/dashboard/zh/`。
+评论分析复用历史标签，并以 API 自动生成标签补充未覆盖的评论。标签经过结构校验与人工抽样检查，来源与数量列于下表。
 
-![项目概览](../assets/dashboard/zh/01-overview.png)
+2026 年评价窗口已在开发过程中检查，本报告将其作为回顾性评价。口碑增益区间以已拟合模型和已观察月份为条件，不包含重新训练、方案选择及未来月份的不确定性。缺少配置年内发布时间和销量历史修订记录，也限制了完整历史点时重建。""",
+        "dashboard": """## 6. 结果浏览
 
-本地启动（在项目根目录执行）：
+六页[在线交互看板](https://yemyu.github.io/china-auto-market-analysis/)展示销量预测、产品配置、用户需求与车系详情，读取 `app/static/data/` 中的静态 JSON。页面截图保存在 `assets/dashboard/zh/`；本地浏览与分析环境见[数据说明](../data/README.md)。
 
-    python -m http.server 8000 --directory app""",
+![项目概览](../assets/dashboard/zh/01-overview.png)""",
 
         "conclusion": """## 7. 结论
 
-1. 滚动单月季节增强 XGBoost 是当前业务主结果；历史销量是主要信号，且相对同场景朴素基准有明确改善。
-2. 固定六个月平台评分模型保留为压力测试，与滚动单月协议分别评估。
-3. 产品配置能够提高年度销量差异的解释力；该结果属于样本外解释分析，其 WMAPE 为年度截面模块内辅助误差指标。
-4. 评论数据主要用于需求结构、风险监测和固定压力测试的辅助信息；提及率、正负倾向与样本量需要分开报告。
-5. 逐行预测、切分记录和完整正文门槛支持复查；配置预处理仅在训练窗口拟合，但缺失历史发布时间和修订版本仍限制回测解释，不能用工程等价验证替代方法审查。2026窗口已用于开发复核，不视为全新独立盲测。""",
+1. 滚动单月季节增强 XGBoost 的 WMAPE 为 29.75%，相对最近一次销量基准降低 27.4% 的绝对误差；低销量车系仍是主要难点。
+2. 固定六个月平台评分模型的 WMAPE 为 38.09%。口碑特征的增量为 0.980 个百分点，95% 区间跨零，尚不足以支持稳定增益。
+3. 产品配置将年度对数销量 R² 提高 0.169，适合筛选产品比较维度；汇总数据不足以估计单项配置的销量回报。
+4. 评论用于需求分析和风险复核。最近完整监测月覆盖 123 个车系，预警规则仍需独立事件标签验证。""",
     },
     "en": {
         "title": """# China Automotive Market Analysis: Sales Forecasting, Product Specifications, and User Needs
 
-This notebook rescores saved row-level predictions and examines historical comparisons, specification models and review monitoring. It reports the sample, evaluation design, results and error patterns before discussing possible uses.
-
-It does not retrain models. `scripts/48_evaluate_rolling_origin.py --test` runs rolling evaluation, `33_evaluate_review_features.py` evaluates fixed-origin review variants, and `29_config_attribution.py` fits annual specification models. The CSV and JSON inputs below are their saved outputs. In code and tables, `pred` is seasonal XGBoost and `LAST_VALUE` is the last-sales baseline.
+This report uses public monthly sales, vehicle specifications and owner reviews to examine next-month sales, annual product differences and user needs. Error metrics are calculated from saved row-level predictions; historical comparisons, specification ablations and review monitoring use the corresponding analysis results.
 
 **Study period:** 2022-01—2026-07
 
 **Forecast test:** 2026-01—06
-**Sales headline task:** monthly refreshed one-month-ahead forecast; fixed six-month stress test
+
+**Sales task:** rolling one-month-ahead forecast; fixed six-month stress test
+
 **Primary metric:** global volume-weighted WMAPE""",
         "sample": """## 1. Three analysis samples
 
-Forecasting uses a fixed 371-series natural-month panel and never falls forward to a specification record later than the target year; the specification analysis requires aligned complete-year sales and product attributes; the user-needs analysis requires complete and traceable review text.""",
+Forecasting uses a fixed 371-series calendar-month panel, with specifications carried forward from the most recent available year. Product analysis requires aligned full-year sales and specifications. User-needs analysis uses reviews with complete text, publication dates and source records.""",
 
-        "engineering": """### Data engineering and reproduction boundary
+        "engineering": """### Report inputs
 
-The complete local path follows `auto_raw → auto_staging → auto_mart`, while `auto_ops` records source batches, task attempts, quality results, and dataset versions. Airflow connects ingestion, quality gates, marts, model parity, and static JSON publication; a critical failure cannot replace dashboard data.
-
-The public notebook reads portable snapshots without requiring local MySQL. Migration parity checks establish that data and results remain unchanged, not that the original research design has no limitations. Automated checks use synthetic fixtures for schema creation, idempotent ingestion, quality gates and dashboard contracts without accessing external websites or the full review corpus.
-
-| Behaviour to inspect | Implementation or check | Purpose |
-|---|---|---|
-| Reloading the same batch | `tests/integration/` | Check that reruns do not duplicate rows |
-| Rejecting invalid data | `src/china_auto_market/quality/`, `tests/unit/` | Check that critical failures stop downstream publication |
-| Running dependent tasks | `dags/` | Inspect dependencies, retries and historical-month parameters |
-| Publishing a complete version | `src/china_auto_market/publishing/` | Validate candidates before replacing local dashboard data |
-
-These behaviours provide stronger evidence of engineering work than directory names alone. This notebook explains the data products; it does not replace database integration tests or model training.""",
+Calculations use CSV and JSON files in the repository: the sales panel, saved predictions, review labels and statistical summaries. Full review text is stored locally; this report analyses the labels and aggregates. File inventories, analysis commands and environment requirements are in the [data guide](../data/README_EN.md).""",
 
         "forecast": """## 2. Monthly sales forecasting
 
 The development split is training through June 2025, validation in July–December 2025, and testing in January–June 2026. After selection, the model is refitted on training plus validation through December 2025. Weights stay fixed during the six test months; observed sales enter history for the next forecast.
 
-Rolling evaluation assumes the previous month's sales are available. Fixed-origin evaluation forecasts six months from January, feeding predictions back into later lags. The difference between their scores is not an isolated algorithm improvement.
+The rolling protocol uses the previous month's published sales. The fixed six-month protocol starts in January 2026 and feeds predictions into subsequent sales lags. The two tasks are evaluated separately.
 
-BASE uses 1/2/3-month lags, 3/6-month means, calendar variables and specifications. The seasonal variant adds a 12-month lag and mean and changes parameters. Both fit log1p sales, invert the transform and clip predictions at zero. At each forecast origin, specification records are limited to years available before the origin and joined to rows without looking forward in year. Imputation medians and category vocabularies are fitted only on the model's eligible training rows; specifications stay fixed over the forecast window. Unknown categories use −1, entirely missing numeric columns use 0, and missing specifications do not remove sales observations. Within-year specification release dates and historical sales revisions are unavailable, so annual proxies do not establish complete point-in-time reconstruction. Annual specification analysis uses a separate fold-local pipeline.""",
+Base XGBoost uses 1/2/3-month lags, 3/6-month means, calendar variables and specifications. The seasonal variant adds a 12-month lag and mean and changes parameters. Both fit log1p sales, invert the transform and clip predictions at zero. At each forecast origin, specification records are limited to years available before the origin and joined to rows without looking forward in year. Imputation medians and category vocabularies are fitted only on the model's eligible training rows; specifications stay fixed over the forecast window. Unknown categories use −1, entirely missing numeric columns use 0, and missing specifications do not remove sales observations. Within-year specification release dates and historical sales revisions are unavailable, so annual proxies do not establish complete point-in-time reconstruction. Annual specification analysis uses a separate fold-local pipeline.""",
 
         "models": """### Model comparison
 
@@ -599,42 +713,42 @@ Seasonal XGBoost has 29.75% WMAPE versus 40.99% for last observed sales: 11.24 p
 | Positive-sales MAPE | Average percentage error across the 1,964 positive-actual rows |
 | sMAPE | Mean of `200×abs(actual−prediction)/(abs(actual)+abs(prediction))`; a zero/zero pair contributes 0 |
 
-On a fixed sample, WMAPE and MAE differ by a constant scale and are not independent evidence. MAPE can be dominated by tiny actuals. All methods retain zero/zero pairs in sMAPE so their denominators remain comparable.""",
+On a fixed sample, WMAPE and MAE differ by a constant scale, expressing relative error and error in vehicles respectively. MAPE is sensitive to very small sales. Zero/zero pairs remain in sMAPE, and every method uses the same row count.""",
 
         "historical": """### Historical origins and model selection
 
-Each origin covers six successive one-month forecasts. BASE and SEASONAL_D5 differ in both features and parameters, so this comparison evaluates the complete configurations. Pooled WMAPE improves by 0.957 points and the worst origin regresses by 0.061 points, passing the 0.5/1.0-point gates. These windows support model selection; they are not four additional untouched test sets.""",
+Each origin covers six successive one-month forecasts. Base and seasonal XGBoost differ in both features and parameters, so the comparison evaluates complete model configurations. Pooled WMAPE improves by 0.957 percentage points; the largest increase at an individual origin is 0.061 points. These pass the predefined selection thresholds: a pooled improvement of at least 0.5 points and no origin worsening by more than 1.0 point. The four windows were used for model selection.""",
 
         "errors": """### Where errors remain
 
-The model wins in five of six test months; May is slightly worse than last observed sales. Q1–Q4 are fixed from mean monthly sales in July–December 2025. Q1 WMAPE is 66.60% and Q4 is 28.02%; low-volume series remain difficult.
+The model has lower WMAPE in five of six test months; May is slightly higher than last observed sales. Q1–Q4 were defined before testing using mean monthly sales in July–December 2025. Q1 WMAPE is 66.60% and Q4 is 28.02%; low-volume series remain difficult.
 
 Zero/positive groups describe realised test outcomes, not information available for routing forecasts. WMAPE and MAPE are undefined for the zero-sales group; its row count and MAE measure the effect. Even a fractionally positive forecast yields 200% sMAPE when actual sales are zero. This explains why lower MAE can coexist with worse overall sMAPE.
 
-Six-month net bias for the 371-series cohort is −0.67%, monthly aggregate WMAPE is 6.46%, and series-month WMAPE is 29.75%. The first allows cancellation across months, the second within months, and the third neither. These describe this cohort rather than the entire Chinese market, and do not select a new model.""",
+Six-month net bias for the 371-series cohort is −0.67%, monthly aggregate WMAPE is 6.46%, and series-month WMAPE is 29.75%. Net bias allows errors to cancel across months; monthly aggregation allows cancellation between series within a month; series-month absolute error retains each row's discrepancy. The aggregate measures describe this evaluation cohort.""",
 
         "fixed": """### Fixed six-month forecasts: baselines and review variants
 
-The full naive comparison includes 3/6/12-month means, last sales and same month last year. The platform-rating model's 38.09% WMAPE reduces error by 45.0% versus the original six-month mean at 69.31%. The twelve-month mean has the lowest saved naive test WMAPE, 67.43%, giving a 43.5% reduction. This reports observed results without claiming validation selected that comparator.
+Naive comparators include trailing 3/6/12-month means, last observed sales and the same month last year. The platform-rating model has 38.09% WMAPE. The twelve-month mean has the lowest saved naive test WMAPE, 67.43%, giving a 43.5% reduction in absolute error. This is a descriptive comparison of test results; the full results appear below.
 
-Review experiments add platform ratings, lexicon, text or combined features on the same cohort and fixed-origin protocol. This evaluation retains the previously selected platform-rating model and 100 trees per variant, without reselection on the current scores. The platform-rating model has 38.09% test WMAPE. `REVIEW_TEXT_ROLLING` updates reviews while sales lags remain recursive; it is not the rolling sales task.""",
+Review experiments add platform ratings, lexicon, text or combined features on the same cohort and fixed-origin protocol. Each variant uses the specified 100 trees; the primary comparison uses the selected platform-rating model. The monthly review-update variant updates review information while sales lags remain recursive.""",
 
         "uncertainty": """### Improvement and uncertainty
 
 Review enhancement belongs to the fixed six-month stress test: its point estimate improves on the sales baseline by 0.980 percentage points, while the series-cluster 95% interval is −0.0047 to 2.2331 points. Evidence for a stable gain is insufficient, so it is classified as supporting information.""",
         "importance": """### Information used by the fixed-origin review model
 
-Mean absolute SHAP values below describe the fixed six-month review model's log-sales predictions. They are not importance scores for the rolling model or percentages of sales caused by each feature. Correlated predictors can share attribution; interpret these within the named model and feature family.""",
+Mean absolute SHAP values describe the fixed six-month platform-rating model's log-sales predictions. Group shares summarise model attribution; correlated predictors may share contributions. These values do not measure sales growth or accuracy gains.""",
 
         "cold": """### Series with no positive sales history
 
-Thirteen series have no positive sales history before the fixed origin. They remain in the evaluation and use the same platform-rating model, without a launch-curve override. A launch month that was unknown at the origin cannot be an input. Their fixed-origin WMAPE is about 99.40%; the available history and specifications do not reliably predict their sales ramp-up.""",
+Thirteen series have no positive sales history before the fixed origin and use the same platform-rating model. Their fixed-origin WMAPE is about 99.40%; the available history and specifications do not reliably predict their sales ramp-up.""",
         "config": """## 3. Product specifications and annual sales variation
 
 The sample has 646 series and 1,510 complete series-year records from 2022–2025. Five-fold GroupKFold holds out whole series, testing generalisation to unseen series rather than future years. Each fold fits its own imputation and encoding before XGBoost models log1p annual sales.
 
 R² is the mean log-scale fold score; error bars show fold standard deviations, not confidence intervals. WMAPE pools inverse-transformed out-of-fold predictions rather than averaging fold WMAPEs. Global and year-specific median baselines use only each training fold's targets.""",
-        "config_read": """Log-sales R² rises from 0.013 to 0.070 with brand and to 0.239 with specifications. The 0.169 increment is not a share of sales attributable to specifications. Raw-scale WMAPE is 73.85% versus 87.21% for year medians; substantial error remains.
+        "config_read": """Log-sales R² rises from 0.013 to 0.070 with brand and to 0.239 with specifications, an increment of 0.169. Raw-scale WMAPE is 73.85%, below the year-specific median baseline's 87.21%; substantial absolute error remains.
 
 The twelve leading specification features are ranked by gain, a measure of tree split improvement. This gives neither effect direction nor causal estimates. Price, size, power and brand positioning vary together, while annual series-level data hide trim differences. The results help choose dimensions for product comparisons, not estimate the sales return from a feature.""",
         "needs": """## 4. User needs and review risk
@@ -644,27 +758,26 @@ The eligible corpus contains 24,175 reviews from 345 series. Mention share uses 
 Reviews are self-selected, and negative share is not population dissatisfaction. Historical zero labels mix unmentioned, neutral and parsing fallback states. A common mention detector improves consistency but does not supply ground truth. Existing spot checks are not an independent representative benchmark, so label F1 is not established.""",
         "alerts": """### Dual-signal risk monitoring
 
-The text rule first creates watchlist candidates. A candidate counts as an active alert only when it reproduces in at least 70% of 3,000 bootstrap samples and the original platform-rating decline probability is at least 80%. Every record remains a manual-review input.
+The text rule identifies watchlist candidates. A candidate enters the dual-signal alert list for manual review when the text rule repeats in at least 70% of 3,000 bootstrap samples and original platform ratings decline in at least 80% of samples.
 
-In the latest complete month, 123 of 371 target series (33.2%) meet the minimum of five reviews in each of two adjacent 180-day windows. No current dual-signal alerts does not mean every series is risk-free. Bootstrap measures rule stability under resampling, not the probability of a future fault. Alert precision is not established against independent event labels.""",
-        "audit": "## 5. Data quality and temporal availability",
-        "dashboard": """## 6. Dashboard and reproduction
+In the latest complete month, 123 of 371 target series (33.2%) meet the minimum of five reviews in each of two adjacent 180-day windows. There are no dual-signal alerts and one watchlist candidate within this coverage. Bootstrap measures rule stability under resampling, not the probability of a future fault. Independent event labels are not available to estimate alert precision.""",
+        "audit": """## 5. Data quality and evaluation scope
 
-The dashboard is a static site backed by pre-baked JSON in `app/static/data/`. All six English captures are in `assets/dashboard/en/`.
+Review analysis reuses historical labels and supplements uncovered reviews with API-generated labels. Labels undergo schema checks and manual sampling; sources and counts appear below.
 
-![Project overview](../assets/dashboard/en/01-overview.png)
+The 2026 evaluation window has been examined during development and is reported as a retrospective evaluation. The review-gain interval is conditional on fitted models and observed months; it does not cover retraining, model selection or future months. Missing within-year specification release dates and historical sales revisions also limit full point-in-time reconstruction.""",
+        "dashboard": """## 6. Explore the results
 
-Launch from the repository root:
+The six-page [interactive dashboard](https://yemyu.github.io/china-auto-market-analysis/) presents sales forecasts, product specifications, user needs and series details using static JSON in `app/static/data/`. Page captures are in `assets/dashboard/en/`; local browsing and analysis setup are described in the [data guide](../data/README_EN.md).
 
-    python -m http.server 8000 --directory app""",
+![Project overview](../assets/dashboard/en/01-overview.png)""",
 
         "conclusion": """## 7. Conclusions
 
-1. Rolling one-month seasonal XGBoost is the current operational headline; sales history is the dominant signal and clearly improves on its same-scenario naive baseline.
-2. The fixed six-month platform-rating model is retained as a stress test and is evaluated separately from the rolling protocol.
-3. Product specifications improve the explanation of annual between-series variation; the result is an out-of-sample explanatory analysis and its WMAPE is a module-specific supporting metric.
-4. Review data is primarily used for demand structure, risk monitoring, and supporting information in the stress test; mention, polarity, and sample size should be reported separately.
-5. Saved predictions, split records and full-text criteria support inspection. Specification transforms are fitted within training windows; missing release dates and revisions still limit the backtest. The 2026 window has been examined during development and is not a new independent holdout.""",
+1. Rolling one-month seasonal XGBoost has 29.75% WMAPE, reducing absolute error by 27.4% versus last observed sales. Low-volume series remain the main difficulty.
+2. The fixed six-month platform-rating model has 38.09% WMAPE. Review features improve it by 0.980 percentage points, but the 95% interval crosses zero and does not establish a stable gain.
+3. Product specifications increase annual log-sales R² by 0.169 and help identify dimensions for product comparisons. Aggregate data cannot estimate the sales return from an individual feature.
+4. Reviews inform user-needs analysis and risk review. The latest complete monitoring month covers 123 series; alert rules still require validation against independent event labels.""",
     },
 }
 

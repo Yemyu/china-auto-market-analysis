@@ -31,7 +31,7 @@
     {
       "key": "center_screen_大屏",
       "name_zh": "中控屏：大屏",
-      "name_en": "Center screen: 大屏",
+      "name_en": "Center screen: Large screen",
       "importance": 0.0236,
       "color": "#ee5b5b"
     },
@@ -52,7 +52,7 @@
     {
       "key": "engine_intake_type_涡轮增压",
       "name_zh": "进气形式：涡轮增压",
-      "name_en": "Intake type: 涡轮增压",
+      "name_en": "Intake type: Turbocharged",
       "importance": 0.0156,
       "color": "#2c7be5"
     },
@@ -192,7 +192,7 @@
   },
   "top_example": null,
   "conclusion": {
-    "zh": "646车系、1,510条完整车系年记录中，对数销量R²的五折均值由0.070升至0.239，配置增量为0.169。它不表示配置贡献的销量比例。还原为辆数的折外预测WMAPE为73.85%；本分析检验未见车系的预测，不检验未来年份，也不估计因果效应。",
-    "en": "Across 646 series and 1,510 complete series-year rows, mean five-fold R² on log sales rises from 0.070 to 0.239; specifications add 0.169. This is not a share of sales attributable to specifications. Out-of-fold WMAPE in vehicle counts is 73.85%. Evaluation holds out series, not future years, and does not estimate causal effects."
+    "zh": "646车系、1,510条完整车系年记录中，加入配置后，对数销量R²的五折均值由0.070升至0.239，增量为0.169。按车系留出的折外预测，在原始销量尺度上的WMAPE为73.85%。",
+    "en": "Across 646 series and 1,510 complete series-year rows, adding specifications raises mean five-fold R² on log sales from 0.070 to 0.239, an increment of 0.169. Out-of-fold predictions for held-out series yield 73.85% WMAPE on the original sales scale."
   }
 }

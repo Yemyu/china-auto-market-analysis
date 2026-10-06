@@ -916,7 +916,7 @@
     ]
   },
   "conclusion": {
-    "zh": "24,175条评论显示：空间、能耗和动力最常被讨论；智能化负面率47.9%，舒适性负面率37.4%，是最集中的改进需求。",
-    "en": "Across 24,175 reviews, space, energy use, and power are discussed most; intelligence has a 47.9% negative rate and comfort 37.4%, making them the clearest improvement needs."
+    "zh": "24,175条评论中，空间、能耗和动力最常被讨论；智能化负面率47.9%、舒适性负面率37.4%，是负面反馈最集中的维度。",
+    "en": "Across 24,175 reviews, space, energy use, and power are discussed most. Negative shares are highest for intelligence at 47.9% and comfort at 37.4%."
   }
 }

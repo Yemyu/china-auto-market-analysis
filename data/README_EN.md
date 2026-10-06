@@ -4,7 +4,7 @@
 
 # 📦 Data guide
 
-This guide lists the files, sample definitions, and generated outputs used by each module. Source-platform data is provided for learning, research, and project demonstration; copyright remains with the respective sources.
+This guide describes the data files, sample definitions, analysis results, and local setup. Platform data is provided for learning, research, and project presentation; copyright remains with the respective sources.
 
 ## Dataset summary
 
@@ -14,20 +14,7 @@ This guide lists the files, sample definitions, and generated outputs used by ea
 | Specifications | `raw/feature.csv` | 2,084 rows / 766 series | Tracked modeling table; product-attribute analysis of annual sales variation |
 | Owner reviews | `reviews/processed/` | 24,175 reviews / 345 series | User needs, risk monitoring, and supporting forecast experiments |
 
-Each module has its own sample filter and evaluation protocol; metrics from different modules are not directly comparable.
-
-## Warehouse and lineage
-
-The complete local engineering path uses four logical MySQL databases:
-
-| Layer | Role | Main outputs |
-|---|---|---|
-| `auto_raw` | Preserve source-faithful batches and file hashes | Raw sales, specifications, reviews, labels, and repair evidence |
-| `auto_staging` | Standardize types, resolve series, deduplicate, and enforce availability | Standard sales, specifications, reviews, and ten-aspect features |
-| `auto_mart` | Provide stable facts, dimensions, and subject interfaces | Forecast, product, and user-needs marts |
-| `auto_ops` | Record runs, tasks, quality results, and versions across layers | Batch status, failures, lineage, and publication manifests |
-
-The CSV and JSON files in the public repository are validated portable snapshots and do not require a local database connection. The full local path and portable snapshots share the same time splits, sample definitions, and metric contracts.
+Each module has its own sample and evaluation protocol. The public repository includes CSV files, labels, analysis summaries, and dashboard JSON; the full review text is stored locally. Viewing the dashboard, reading the notebooks, and rebuilding dashboard JSON do not require MySQL.
 
 ## Directory structure
 
@@ -40,7 +27,7 @@ The CSV and JSON files in the public repository are validated portable snapshots
 | `processed/user_feedback/` | User-needs and risk-monitoring outputs |
 | `processed/data_quality/` | Machine-readable structural, mapping, and source audits |
 | `reviews/raw/` | Review collection manifests and source-layer files |
-| `reviews/processed/` | De-identified corpus, labels, and temporal features |
+| `reviews/processed/` | De-identified labels, temporal features, and corpus summaries; full text is not distributed through Git |
 | `resources/` | Reusable historical review-resource archive |
 
 ## Modeling inputs
@@ -53,7 +40,7 @@ The CSV and JSON files in the public repository are validated portable snapshots
 
 ### Product specifications: `raw/feature.csv`
 
-- Grain: series × model year, not a trim-level vehicle list.
+- Grain: series × model year, without separate records for individual trim levels.
 - Key: `series_name, year`; 84 fields; annual sales are alignable for 760 / 766 series.
 - Annual specification analysis uses only years with all 12 calendar months in the sales source; currently 2022–2025, covering 646 series and 1,510 series-year records.
 - Missingness is partly structural: battery fields are normally absent for combustion models and engine fields for battery-electric models. It should not be treated as a blanket collection error.
@@ -64,7 +51,7 @@ The public repository retains the audited monthly-sales modeling snapshot, the s
 
 Reviews enter temporal modeling only when the series is identifiable, publication time is parseable, the full text meets quality rules, and the review predates the relevant cutoff. The strict corpus contains 24,175 reviews across 345 series; missing coverage remains missing rather than being coded as neutral.
 
-Labels separate “dimension mentioned” from “polarity” for ten dimensions: appearance, interior, space, power, control, comfort, energy/fuel, configuration, intelligence, and value.
+Labels separate mentions from sentiment for ten dimensions: appearance, interior, space, power, handling, comfort, energy use, equipment, smart features, and value.
 
 ## Monthly forecast sample
 
@@ -78,11 +65,11 @@ Labels separate “dimension mentioned” from “polarity” for ten dimensions
 | `split_index.csv` | Complete panel | Split assignment for each series-month |
 | `manifest.json` | — | Row counts, features, cutoffs, and leakage constraints |
 
-The shared panel preserves natural-month spacing and stores only sales, calendar variables and lags. Models read raw specifications and fit their transforms within each training window; globally encoded specifications are not stored in the shared splits or forecast mart. BASE uses 1/2/3-month lags and 3/6-month means; the headline model also uses a 12-month lag and mean.
+The shared panel preserves calendar-month spacing and stores only sales, calendar variables, and lags. Models read raw specifications and fit preprocessing within each training window; globally encoded specifications are not stored in the shared splits or forecast mart. The base model uses 1/2/3-month lags and 3/6-month means; the primary model also uses a 12-month lag and mean.
 
-The headline protocol refreshes a one-month-ahead forecast each month using the latest realised previous-month sales. The fixed-origin protocol recursively forecasts six months from 2026-01 as an information-constrained stress test; the two protocols are evaluated separately.
+The primary task forecasts one month ahead using published previous-month sales. The fixed-origin task recursively forecasts six months from 2026-01 as an information-constrained stress test. The two tasks are evaluated separately.
 
-After selection, final models are refitted on train+val through December 2025; test weights stay fixed. At each forecast origin, specification records are limited to years available before the origin and joined to rows without looking forward in year. Imputation medians and category vocabularies are fitted only on the model's eligible training rows; specifications stay fixed over the forecast window. Unknown categories use −1, entirely missing numeric columns use 0, and missing specifications do not remove sales observations. Within-year specification release dates and historical sales revisions are unavailable, so annual proxies do not establish complete point-in-time reconstruction.
+After selection, final models are refitted on train+val through December 2025; weights remain fixed during evaluation. Each origin limits the available specification years, and rows are matched to the latest record from the same or an earlier year. Imputation medians and category vocabularies are fitted only on eligible training rows. Specifications stay fixed over the forecast window. Unknown categories use −1, entirely missing numeric columns use 0, and sales rows with missing specifications are retained. Within-year specification release dates and historical sales releases and revisions are unavailable; alignment uses annual proxies.
 
 ## Key outputs
 
@@ -96,15 +83,15 @@ After selection, final models are refitted on train+val through December 2025; t
 | `review_feature_ablation_summary.csv` | Fixed-scenario review-feature ablation |
 | `forecast_robustness_summary.json` | Cluster bootstrap, segment errors, and robustness summary |
 
-Saved rolling results are 29.75% WMAPE, 707.68 vehicles MAE and 1,700.38 vehicles RMSE; the fixed six-month method has 38.09% WMAPE. `src/china_auto_market/forecasting/reporting.py` rescores saved predictions for both the notebook and dashboard. sMAPE retains all rows, with zero/zero contributing 0; MAPE uses positive actuals only. See [README_EN.md](../README_EN.md) for definitions and comparisons.
+Saved rolling results are 29.75% global WMAPE, 707.68 vehicles MAE, and 1,700.38 vehicles RMSE; the fixed six-month platform-rating model has 38.09% WMAPE. MAE and RMSE are measured in vehicles per series-month. Both the notebook and dashboard score row-level predictions through `src/china_auto_market/forecasting/reporting.py`: sMAPE retains all rows, with zero actual and predicted sales contributing 0; MAPE uses positive actuals only. See [README_EN.md](../README_EN.md) for definitions and comparisons.
 
 ### Product specifications: `processed/product/`
 
 - `config_attribution_ablation.csv`: stepwise year, brand, and specification ablation;
 - `config_importance_annual.csv`: annual specification feature importance.
-- `config_attribution_summary.json`: complete-year range, sample size, and headline metrics.
+- `config_attribution_summary.json`: complete-year range, sample size, and main metrics.
 
-This module reports mean five-fold R² on `log1p(annual sales)` and fold standard deviation. Full-model R² is 0.239; specifications add 0.169. WMAPE pools out-of-fold predictions converted to vehicle counts. It is not directly comparable with monthly forecast WMAPE and does not estimate causal effects.
+This module reports mean five-fold R² on `log1p(annual sales)` and the standard deviation across folds. Full-model R² is 0.239; adding specifications increases it by 0.169. WMAPE pools out-of-fold predictions converted to vehicle counts. The task measures annual associations between series and uses a different sample and protocol from monthly forecasting.
 
 ### User needs: `processed/user_feedback/`
 
@@ -119,57 +106,99 @@ This module reports mean five-fold R² on `log1p(annual sales)` and fold standar
 
 The full-text archive is Git-ignored and remains local; the public repository contains de-identified labels and aggregates.
 
-## Reproduction entry point
+## Local setup
 
-Run commands from the project root. Viewing the dashboard requires neither model training nor a local database. JSON generation and analysis require dependencies installed in the project virtual environment, `.venv`.
+Run the following commands from the repository root.
 
-### View the saved dashboard
+### View the dashboard
 
-```bash
-python3 -m http.server 8000 --directory app
-```
-
-Open `http://localhost:8000`. This serves the repository's HTML and JSON without the full review corpus.
-
-### Generate JSON from saved analysis results
+Python can serve the included HTML and JSON directly:
 
 ```bash
-.venv/bin/python app/build_dashboard_data.py --output-dir artifacts/dashboard-preview
+python3 -m http.server 8000 --bind 127.0.0.1 --directory app
 ```
 
-This reads published analysis artifacts without retraining models or reading the local full-text corpus. Output is staged separately; it does not replace `app/static/data/`, and the existing website continues to show its published version. Inconsistent input versions or prediction/statistics metadata cause the build to fail; do not bypass these checks.
+Open `http://localhost:8000`. Viewing the dashboard does not require analysis dependencies or a database. On Windows, use `python` in place of `python3` if that is your Python command.
 
-### Rerun analyses: additional inputs and version checks required
+### Set up the analysis environment
 
-These are analysis entry points, not an unconditional sequence of release commands. Model outputs, statistics and reports must be verified together before publication. Default outputs may overwrite existing results; back them up or use separate output directories where supported.
-
-| Stage | Entry points and requirements |
-|---|---|
-| Splits and temporal review features | `06_make_splits.py`, `32_build_temporal_review_features.py`; require the corresponding sales, configuration or review-feature inputs |
-| Fixed and rolling forecasts | `33_evaluate_review_features.py --locked-capacity`, `48_evaluate_rolling_origin.py --test`; retain the selected specifications and time splits, without reselection on the 2026 window |
-| Product analysis | `29_config_attribution.py`; requires configuration and annual-sales inputs |
-| User needs and monitoring | `35_build_user_needs_and_alerts.py`; requires the local full corpus at `data/reviews/processed/target_371_review_corpus.csv`, which is not included in the public repository |
-
-After generating and verifying predictions, stage the statistical outputs separately:
+Python 3.11 or later is required. Create a virtual environment for the dependencies in [requirements.txt](../requirements.txt):
 
 ```bash
-.venv/bin/python scripts/34_analyze_forecast_robustness.py --output-dir artifacts/report-statistics
-.venv/bin/python scripts/39_evaluate_naive_forecast_baselines.py --output-dir artifacts/report-statistics
+python3 -m venv .venv
 ```
 
-**Pause here for verification.** These commands read the formal prediction and split directories by default. For a separate experiment, provide matching inputs through `--forecast-dir` and `--split-dir`. Keep outputs in `artifacts/report-statistics` until sample keys, model versions, prediction hashes and statistical sources have been checked. The maintainer must then synchronize the complete result set and run the release contract. The dashboard builder does not automatically read staged statistics; immediately rebuilding it is not a substitute for this step. The current report does not apply launch-curve overrides.
-
-For the full review-label pipeline, prepare the review corpus as described in the Notebook and script comments. Re-labeling missing review labels is optional.
-
-With the complete local source snapshots and an isolated MySQL instance, the engineering path runs in this order:
+Activate it on macOS / Linux:
 
 ```bash
-.venv/bin/python scripts/initialize_mysql.py --apply
-.venv/bin/python scripts/ingest_raw.py --dataset all --mode full
-.venv/bin/python scripts/validate_raw.py
-.venv/bin/python scripts/rebuild_staging.py
-.venv/bin/python scripts/rebuild_core_marts.py
-.venv/bin/python scripts/validate_core_marts.py
+source .venv/bin/activate
 ```
 
-Database credentials are read only through a local encrypted login path; plaintext command-line passwords are not accepted. The isolated MySQL integration test uses the fully synthetic fixtures under `tests/fixtures/ci/` to exercise the same DDL, ingestion, idempotency, and staging quality rules. Those fixtures do not replace full-data business evaluation.
+Activate it in Windows Command Prompt:
+
+```bat
+.venv\Scripts\activate.bat
+```
+
+On Windows, `py -3 -m venv .venv` can also create the environment; the selected Python must meet the version requirement. Once activated, install the dependencies and open Jupyter:
+
+```bash
+python -m pip install -r requirements.txt
+jupyter notebook
+```
+
+Choose the [Chinese report](../notebook/China_Auto_Market_Analysis.ipynb) or [English report](../notebook/China_Auto_Market_Analysis_EN.ipynb) in `notebook/`. Both notebooks read saved predictions and analysis results without training models.
+
+### Rebuild dashboard JSON from saved results
+
+With the analysis environment activated, run:
+
+```bash
+python app/build_dashboard_data.py --output-dir artifacts/dashboard-preview
+```
+
+This writes eight JSON files to `artifacts/dashboard-preview/`. The builder reads published analysis results and checks that predictions, statistical summaries, and versions agree; it does not require full review text. The output directory is for inspecting generated files and does not replace the live dashboard data in `app/static/data/`.
+
+### Analysis scripts and required inputs
+
+The table lists each script's inputs and output locations. Run a script with `python <entry point>`. Unless an alternative output directory is supported as noted below, rerunning a script updates the saved results at the listed locations. The full-text corpus, `data/reviews/processed/target_371_review_corpus.csv`, is not included in the public repository.
+
+| Analysis | Entry point | Inputs and outputs |
+|---|---|---|
+| Time splits | `scripts/06_make_splits.py` | Reads the monthly-sales snapshot and frozen series list in `target_371_review_coverage.csv`; writes to `data/processed/splits/` by default; supports `--output-dir` |
+| Temporal review features | `scripts/32_build_temporal_review_features.py` | Reads splits, `review_aspect_labels.csv`, and review-availability records; updates fixed and rolling features and audit summaries in `data/reviews/processed/` |
+| Fixed six-month forecast | `scripts/33_evaluate_review_features.py --locked-capacity` | Reads splits, specifications, saved review features, and model-selection summaries; writes to `data/processed/forecast/` and `assets/analysis/` by default; `--output-dir` places both results and figures in another directory |
+| Rolling one-month forecast | `scripts/48_evaluate_rolling_origin.py --test` | Reads splits, specifications, and saved review features; writes to `data/processed/forecast/` by default; supports `--output-dir` |
+| Annual specification analysis | `scripts/29_config_attribution.py` | Reads specifications, sales, and the annual-sales correction register; updates `data/processed/product/`, `assets/analysis/`, and the annual-sales repair audit |
+| User needs and monitoring | `scripts/35_build_user_needs_and_alerts.py` | Reads full review text, labels, and series metadata; updates `data/processed/user_feedback/` and `assets/analysis/`; requires the undistributed full-text corpus |
+
+For the fixed forecast, `--locked-capacity` retains the saved tree counts and platform-rating selection. Rolling evaluation uses the two parameter configurations defined in the code and evaluates them at historical origins. The original 2026 split remains an evaluation window rather than a new tuning dataset.
+
+Bootstrap analysis, model replay for SHAP, error diagnostics, and naive-baseline comparisons can write to a separate directory:
+
+```bash
+python scripts/34_analyze_forecast_robustness.py --output-dir artifacts/report-statistics
+python scripts/39_evaluate_naive_forecast_baselines.py --output-dir artifacts/report-statistics
+```
+
+Both scripts read fixed-origin predictions and run summaries from `data/processed/forecast/` and splits from `data/processed/splits/` by default. `--forecast-dir` selects another prediction directory; `--split-dir` selects splits for baselines or diagnostics. SHAP replay in script 34 still reads the repository's default modeling panel, specifications, and review features, then checks agreement with saved predictions. These two options alone therefore do not redirect all model inputs. The dashboard builder reads the published analysis directories and does not automatically use results from `artifacts/report-statistics/`.
+
+<details>
+<summary>Optional: MySQL warehouse</summary>
+
+The full local data pipeline uses four logical MySQL databases, with the same sample definitions, time splits, and scoring rules as the CSV path:
+
+| Layer | Role | Main outputs |
+|---|---|---|
+| `auto_raw` | Store source batches and file hashes | Sales, specifications, reviews, labels, and correction registers |
+| `auto_staging` | Standardize, resolve series, deduplicate, and align time | Standard sales, specifications, reviews, and ten-aspect features |
+| `auto_mart` | Organize facts, dimensions, and subject tables | Forecast, product, and user-needs marts |
+| `auto_ops` | Record runs, tasks, quality checks, and versions | Batch status, lineage, and publication manifests |
+
+This path requires complete source snapshots, an isolated MySQL instance, the MySQL command-line client, and an encrypted login path configured with `mysql_config_editor`. Scripts select the connection with `--login-path`; the default name, `local-auto`, must be configured on the machine running them. Credentials are not included in the repository. The client is located through `PATH` or the `MYSQL_CLIENT` environment variable.
+
+The entry points, in order, are `scripts/initialize_mysql.py`, `scripts/ingest_raw.py`, `scripts/validate_raw.py`, `scripts/rebuild_staging.py`, `scripts/rebuild_core_marts.py`, and `scripts/validate_core_marts.py`. Initialization is read-only by default; `--apply` creates the tables, and existing project databases require an explicit `--allow-existing`. Ingestion and rebuilding the staging and mart layers write to the database. Local sources such as full review text required for this path are not distributed with the public repository.
+
+Synthetic fixtures in `tests/fixtures/ci/` support isolated MySQL integration checks for table creation, idempotent ingestion, and staging quality rules.
+
+</details>

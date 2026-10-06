@@ -140,6 +140,8 @@ def _feature_label(feature: str) -> tuple[str, str]:
                 "铝": "Aluminum",
                 "插电式混合动力": "Plug-in hybrid",
                 "48V轻混系统": "48V mild hybrid",
+                "大屏": "Large screen",
+                "涡轮增压": "Turbocharged",
                 "真皮": "Leather",
                 "永磁同步": "Permanent-magnet synchronous",
                 "宝华韦健": "Bowers & Wilkins",
@@ -264,7 +266,7 @@ class DashboardData:
             ],
             "stages": [
                 {"id": 1, "name": "数据准备", "en": "Data Preparation", "status": "done"},
-                {"id": 2, "name": "严格时间切分", "en": "Strict Time Split", "status": "done"},
+                {"id": 2, "name": "时间划分", "en": "Chronological Split", "status": "done"},
                 {"id": 3, "name": "销量预测与消融", "en": "Forecasting & Ablation", "status": "done"},
                 {"id": 4, "name": "配置年度归因", "en": "Annual Config Attribution", "status": "done"},
                 {"id": 5, "name": "需求主题与预警", "en": "Needs & Alerts", "status": "done"},
@@ -276,7 +278,7 @@ class DashboardData:
                 {"zh": f"固定起点口碑增强点估计改善{review_point:.3f}个百分点，Bootstrap区间包含零，稳定增益证据不足，定位为辅助信息", "en": f"Fixed-origin review enhancement shows a {review_point:.3f} pp point estimate; the bootstrap interval includes zero, leaving evidence for a stable gain insufficient, so it is classified as supporting information"},
                 {"zh": f"{config_summary['series']}车系完整年度分析中，配置将对数销量分组交叉验证R²从{config_brand:.3f}提升到{config_full:.3f}", "en": f"Across {config_summary['series']} series with complete annual targets, specifications raise grouped-CV log-sales R² from {config_brand:.3f} to {config_full:.3f}"},
                 {"zh": "智能化与舒适性是负面反馈最集中的两个用户需求维度", "en": "Intelligence and comfort carry the highest complaint concentration"},
-                {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前双信号预警{needs['latest_active_alerts']}条、观察名单{needs['latest_watchlist_events']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, {needs['latest_active_alerts']} dual-signal alerts and {needs['latest_watchlist_events']} watchlist candidates remain"},
+                {"zh": f"截至{needs['latest_completed_monitoring_month'][:7]}，当前双信号预警{needs['latest_active_alerts']}条、观察名单{needs['latest_watchlist_events']}条", "en": f"As of {needs['latest_completed_monitoring_month'][:7]}, the dual-signal alert count is {needs['latest_active_alerts']} and the watchlist count is {needs['latest_watchlist_events']}"},
             ],
         }
 
@@ -404,8 +406,8 @@ class DashboardData:
                 "en": f"The headline task refreshes each month for a one-month-ahead forecast: rolling one-month seasonal XGBoost reaches {rolling_primary['wmape_vol']:.2f}% WMAPE, {rolling_naive['wmape_vol']-rolling_primary['wmape_vol']:.2f} pp below the last-observed-value naive baseline at {rolling_naive['wmape_vol']:.2f}%. The fixed six-month platform-rating model scores {fixed_selected:.2f}% and is reported separately as a stress test.",
             },
             "feature_insight": {
-                "zh": "特征贡献图来自固定六个月压力测试中的口碑增强模型；滚动主结果选择季节增强销量模型，该图用于描述模型依赖结构，不用于滚动主结果的因果识别。",
-                "en": "The feature-contribution chart comes from the fixed six-month stress-test review model; the rolling headline selects the seasonal sales model, so the chart describes model reliance and is not used for causal identification in the rolling result.",
+                "zh": "固定六个月平台评分模型的SHAP贡献以销量滞后和滚动均值为主，日历、配置和口碑特征提供补充信号。",
+                "en": "SHAP contributions in the fixed six-month platform-rating model are dominated by sales lags and rolling means; calendar, specification, and review features provide supporting signals.",
             },
         }
 
@@ -456,8 +458,8 @@ class DashboardData:
                 } for aspect in ASPECTS],
             },
             "conclusion": {
-                "zh": "24,175条评论显示：空间、能耗和动力最常被讨论；智能化负面率47.9%，舒适性负面率37.4%，是最集中的改进需求。",
-                "en": "Across 24,175 reviews, space, energy use, and power are discussed most; intelligence has a 47.9% negative rate and comfort 37.4%, making them the clearest improvement needs.",
+                "zh": "24,175条评论中，空间、能耗和动力最常被讨论；智能化负面率47.9%、舒适性负面率37.4%，是负面反馈最集中的维度。",
+                "en": "Across 24,175 reviews, space, energy use, and power are discussed most. Negative shares are highest for intelligence at 47.9% and comfort at 37.4%.",
             },
         }
 
@@ -508,8 +510,8 @@ class DashboardData:
             "wmape_by_variant": wmape_rows,
             "comparison": {"with": None, "without": None}, "top_example": None,
             "conclusion": {
-                "zh": f"{summary['series']}车系、{summary['rows']:,}条完整车系年记录中，对数销量R²的五折均值由{brand_r2:.3f}升至{config_r2:.3f}，配置增量为{config_r2-brand_r2:.3f}。它不表示配置贡献的销量比例。还原为辆数的折外预测WMAPE为{wmape_rows.get('+CONFIG', np.nan):.2f}%；本分析检验未见车系的预测，不检验未来年份，也不估计因果效应。",
-                "en": f"Across {summary['series']} series and {summary['rows']:,} complete series-year rows, mean five-fold R² on log sales rises from {brand_r2:.3f} to {config_r2:.3f}; specifications add {config_r2-brand_r2:.3f}. This is not a share of sales attributable to specifications. Out-of-fold WMAPE in vehicle counts is {wmape_rows.get('+CONFIG', np.nan):.2f}%. Evaluation holds out series, not future years, and does not estimate causal effects.",
+                "zh": f"{summary['series']}车系、{summary['rows']:,}条完整车系年记录中，加入配置后，对数销量R²的五折均值由{brand_r2:.3f}升至{config_r2:.3f}，增量为{config_r2-brand_r2:.3f}。按车系留出的折外预测，在原始销量尺度上的WMAPE为{wmape_rows.get('+CONFIG', np.nan):.2f}%。",
+                "en": f"Across {summary['series']} series and {summary['rows']:,} complete series-year rows, adding specifications raises mean five-fold R² on log sales from {brand_r2:.3f} to {config_r2:.3f}, an increment of {config_r2-brand_r2:.3f}. Out-of-fold predictions for held-out series yield {wmape_rows.get('+CONFIG', np.nan):.2f}% WMAPE on the original sales scale.",
             },
         }
 
@@ -613,8 +615,8 @@ class DashboardData:
             "monthly": [{"month": str(period), "count": int(count)} for period, count in monthly.items()],
             "risk_dist": [{"level": str(level), "count": int(count)} for level, count in risk.items()],
             "conclusion": {
-                "zh": f"历史{summary['historical_alert_candidates']}个文本候选中，{summary['historical_alert_events']}个通过重采样稳定性与平台评分同向验证。截至{summary['latest_completed_monitoring_month'][:7]}，{summary['latest_eligible_series']}个车系具备判定资格，当前双信号预警{summary['latest_active_alerts']}条、观察名单{summary['latest_watchlist_events']}条。预警是人工复核入口，不是故障定论。",
-                "en": f"Of {summary['historical_alert_candidates']} historical text candidates, {summary['historical_alert_events']} pass both bootstrap stability and same-direction platform-rating checks. As of {summary['latest_completed_monitoring_month'][:7]}, {summary['latest_eligible_series']} series are eligible, with {summary['latest_active_alerts']} dual-signal alerts and {summary['latest_watchlist_events']} watchlist candidates. Alerts are review candidates, not fault verdicts.",
+                "zh": f"历史{summary['historical_alert_candidates']}个文本候选中，{summary['historical_alert_events']}个通过重采样稳定性与平台评分同向验证。截至{summary['latest_completed_monitoring_month'][:7]}，{summary['latest_eligible_series']}个车系具备判定资格，当前双信号预警{summary['latest_active_alerts']}条、观察名单{summary['latest_watchlist_events']}条。预警用于安排人工复核。",
+                "en": f"Of {summary['historical_alert_candidates']} historical text candidates, {summary['historical_alert_events']} pass both bootstrap stability and same-direction platform-rating checks. As of {summary['latest_completed_monitoring_month'][:7]}, {summary['latest_eligible_series']} series are eligible; the dual-signal alert count is {summary['latest_active_alerts']} and the watchlist count is {summary['latest_watchlist_events']}. Alerts guide manual review.",
             },
         }
 

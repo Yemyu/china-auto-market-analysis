@@ -1,12 +1,16 @@
-# 分析图
+# 分析图 / Analysis figures
 
-图片来自 371 车系预测实验或 646 车系完整年度配置分析。该目录只保存报告使用的最终图。
+以下图片对应当前报告的固定六个月预测、年度配置和评论分析。
 
-| 文件 | 表达的结论 |
-|---|---|
-| `forecast_review_feature_ablation.png` | 固定六个月压力测试中的用户口碑消融，用于辅助分析，不纳入滚动主结果 |
-| `forecast_robustness.png` | 固定压力测试的车型簇 Bootstrap 区间、特征重要性及逐月改善稳定性 |
-| `product_config_attribution.png` | 配置对年度销量差异的增量解释力与重要属性 |
-| `user_needs_and_alerts.png` | 用户讨论重点、负面反馈集中维度和预警历史 |
+These figures cover fixed six-month forecasting, annual specification analysis, and owner feedback in the current report.
 
-滚动单月主结果的数值以 `data/processed/forecast/rolling_origin_test_predictions.csv` 和 `rolling_origin_summary.json` 为准；现有分析图用于固定压力测试、配置分析和需求监测的辅助解读。
+| 文件 / File | 内容 | Description |
+|---|---|---|
+| [forecast_review_feature_ablation.png](./forecast_review_feature_ablation.png) | 固定六个月预测的口碑特征比较 | Review-feature comparison for fixed six-month forecasts |
+| [forecast_robustness.png](./forecast_robustness.png) | 固定预测的 Bootstrap 区间、重要性与分月误差 | Bootstrap intervals, importance, and monthly errors for fixed-origin forecasts |
+| [config_attribution_ablation.png](./config_attribution_ablation.png) | 年度配置模型比较与配置特征 gain | Annual specification model comparison and feature gain |
+| [user_needs_and_alerts.png](./user_needs_and_alerts.png) | 用户讨论维度、负面反馈与监测记录 | Review dimensions, negative feedback, and monitoring records |
+
+滚动单月预测详见[评估摘要](../../data/processed/forecast/rolling_origin_summary.json)和[逐行预测](../../data/processed/forecast/rolling_origin_test_predictions.csv)。
+
+Rolling one-month results are available in the [evaluation summary](../../data/processed/forecast/rolling_origin_summary.json) and [row-level predictions](../../data/processed/forecast/rolling_origin_test_predictions.csv).

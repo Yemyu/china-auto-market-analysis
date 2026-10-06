@@ -1,4 +1,4 @@
-"""Lightweight schema checks for the pre-baked dashboard payloads."""
+"""Schema checks for generated dashboard data."""
 
 from __future__ import annotations
 

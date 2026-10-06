@@ -275,7 +275,7 @@
     }
   ],
   "conclusion": {
-    "zh": "历史60个文本候选中，12个通过重采样稳定性与平台评分同向验证。截至2026-07，123个车系具备判定资格，当前双信号预警0条、观察名单1条。预警是人工复核入口，不是故障定论。",
-    "en": "Of 60 historical text candidates, 12 pass both bootstrap stability and same-direction platform-rating checks. As of 2026-07, 123 series are eligible, with 0 dual-signal alerts and 1 watchlist candidates. Alerts are review candidates, not fault verdicts."
+    "zh": "历史60个文本候选中，12个通过重采样稳定性与平台评分同向验证。截至2026-07，123个车系具备判定资格，当前双信号预警0条、观察名单1条。预警用于安排人工复核。",
+    "en": "Of 60 historical text candidates, 12 pass both bootstrap stability and same-direction platform-rating checks. As of 2026-07, 123 series are eligible; the dual-signal alert count is 0 and the watchlist count is 1. Alerts guide manual review."
   }
 }

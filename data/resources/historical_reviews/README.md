@@ -1,6 +1,6 @@
 # 历史评论资源
 
-> **历史归档说明**：本页描述早期评论标签资源，服务于复现、抽样核验和扩展研究，不是当前销量主模型的独立结果。当前正式指标、预测口径和看板解释以根目录 [README.md](../../../README.md)、[数据说明](../../README.md) 和 `notebook/` 为准。
+本目录记录历史评论资源的结构、校验摘要和标签语义。全文归档保存在本地，公开文件为资源说明与 `manifest.json`。当前分析的数据入口见[数据说明](../../README.md)。
 
 ## 资源文件
 
@@ -35,3 +35,13 @@ reviews = pd.read_csv(
 因此 `0` 不能作为“未提及”或“中性”的可靠真值。建模使用 `data/reviews/processed/review_aspect_labels.csv`，其中单独保存统一的维度提及标记。
 
 历史调用使用 `deepseek-chat`。归档没有保留原始响应和 token 账单，只保留结构化标签及其来源字段。
+
+## English
+
+This directory documents a local historical review archive and its label definitions. The public repository includes this guide and `manifest.json`, but not the full-text archive.
+
+`review_absa_reference.csv.gz` contains 39,496 unique reviews across 490 series, including 28,724 reviews with ten-aspect labels. The current 371-series corpus reuses 16,538 of these labels. The manifest records counts, the time range, and a SHA-256 checksum.
+
+Historical labels use −1 for negative and 1 for positive sentiment. A zero was defined as an unmentioned aspect, but missing fields and parsing errors could also produce zero. The analysis therefore identifies mentions separately in `data/reviews/processed/review_aspect_labels.csv`.
+
+Historical annotation used `deepseek-chat`. The archive retains structured labels and their provenance, but not raw model responses or token billing records. See the [data guide](../../README_EN.md) for current analysis inputs.

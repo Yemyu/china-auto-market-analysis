@@ -1,13 +1,11 @@
-# 展示资产
+# 展示资产 / Figures and screenshots
 
-这里存放报告图片和看板截图，不保存模型运行时的临时输出。
+报告分析图与中英文看板截图。
 
-## 目录
+Analysis figures and dashboard screenshots in Chinese and English.
 
-- `analysis/`：报告使用的实验图；
-- `dashboard/zh/`：中文看板截图；
-- `dashboard/en/`：英文看板截图。
-
-## 选择原则
-
-仅保留直接支持结论的图：滚动单月销量主结果及其固定压力测试补充、固定场景稳健性、配置年销量分析、用户需求与风险预警，以及冷启动验证。数值型主结果以 `data/processed/forecast/rolling_origin_*.{json,csv}` 为准。
+| 目录 / Directory | 内容 / Contents |
+|---|---|
+| [analysis/](./analysis/) | 固定预测、配置与评论分析图 / Fixed-origin forecast, specification, and review figures |
+| [dashboard/zh/](./dashboard/zh/) | 中文六页看板截图 / Six dashboard pages in Chinese |
+| [dashboard/en/](./dashboard/en/) | 英文六页看板截图 / Six dashboard pages in English |
